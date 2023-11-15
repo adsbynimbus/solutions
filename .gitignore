@@ -1,0 +1,42 @@
+# Build
+bin/
+build/
+captures/
+classes/
+gen/
+schemas/
+.build/
+.externalNativeBuild/
+.gradle/
+.navigation/
+*.aab
+*.aar
+*.apk
+*.framework
+*.generated.swift
+*.hmap
+*.ipa
+*.keystore
+*.log
+*.xcframework
+*.zip
+
+# CocoaPods
+Podfile.lock
+Pods/
+
+# IDE
+.fleet/
+*.iml
+.idea/
+.vscode/
+*.xcworkspace
+xcuserdata/
+local.properties
+
+# OS
+.DS_Store
+
+# Swift Package Manager
+Packages/
+Package.resolved
