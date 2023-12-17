@@ -1,8 +1,8 @@
 [versions]
 android = "8.2.0"
-android-sdk-compile = "34"
-android-sdk-min = "26"
-android-sdk-target = "34"
+android-jvm = "17"
+android-min = "26"
+android-sdk = "34"
 
 compose = "1.5.4"
 compose-activity = "1.8.2"
@@ -10,7 +10,7 @@ compose-compiler = "1.5.6"
 compose-multiplatform = "1.5.11"
 
 kotlin = "1.9.21"
-kotlin-coroutines = "1.7.3"
+kotlin-coroutines = "1.8.0-RC2"
 
 [plugins]
 android-app = { id = "com.android.application", version.ref = "android" }

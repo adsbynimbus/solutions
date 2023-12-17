@@ -4,8 +4,16 @@ plugins {
     alias(libs.plugins.compose)
 }
 
+/* Allows for overriding Android Jvm version and compile sdk using gradle.properties */
+val androidJvmVersion = providers.gradleProperty("android.jvm").orElse(libs.versions.android.jvm)
+val androidCompileSdk = providers.gradleProperty("android.sdk").orElse(libs.versions.android.sdk)
+
 kotlin {
-    androidTarget()
+    androidTarget {
+        compilations.configureEach {
+            kotlinOptions.jvmTarget = androidJvmVersion.get()
+        }
+    }
 
     listOf(
         iosX64(),
@@ -17,8 +25,6 @@ kotlin {
             isStatic = true
         }
     }
-
-    jvmToolchain(17)
 
     sourceSets {
         commonMain.dependencies {
@@ -38,12 +44,10 @@ kotlin {
 }
 
 android {
-    compileSdk = libs.versions.android.sdk.compile.get().toInt()
-
     defaultConfig {
         applicationId = "adsbynimbus.solutions.app".also { namespace = it }
-        minSdk = libs.versions.android.sdk.min.get().toInt()
-        targetSdk = libs.versions.android.sdk.target.get().toInt()
+        minSdk = libs.versions.android.min.get().toInt()
+        targetSdk = androidCompileSdk.get().toInt().also { compileSdk = it }
         versionCode = 1
         versionName = "1.0"
         manifestPlaceholders["appName"] = "Nimbus"
@@ -56,6 +60,8 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
     }
+
+    compileOptions.targetCompatibility = JavaVersion.toVersion(androidJvmVersion.get())
 
     packaging.resources {
         excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -74,3 +80,6 @@ android {
         debugImplementation(libs.compose.ui.tooling)
     }
 }
+
+/* Fixes the Make Project menu option in Android Studio */
+tasks.register("testClasses")
