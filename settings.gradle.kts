@@ -17,14 +17,14 @@ dependencyResolutionManagement {
         mavenCentral()
         maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
     }
-    /* JetBrains Fleet IDE does not yet support AGP 8.2.0 */
-    if (providers.systemProperty("idea.vendor.name").orNull == "JetBrains") {
-        versionCatalogs.configureEach {
-            version("android", "8.1.4")
+    /* Allow for overriding Android Gradle Plugin for Studio Previews */
+    if (providers.systemProperty("idea.vendor.name").orNull != "JetBrains") {
+        providers.gradleProperty("android.gradle").let { agp ->
+            if (agp.isPresent) versionCatalogs.configureEach { version("android", agp.get()) }
         }
     }
 }
 
-rootProject.name = "solutions"
+rootProject.name = "nimbus-solutions"
 
 include(":app:compose")
