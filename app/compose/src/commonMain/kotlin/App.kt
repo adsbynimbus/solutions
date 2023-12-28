@@ -13,6 +13,7 @@ fun App() = NimbusTheme {
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
         ) {
             Button(onClick = { greetingText = "Compose: $platform" }) {
                 Text(greetingText)
