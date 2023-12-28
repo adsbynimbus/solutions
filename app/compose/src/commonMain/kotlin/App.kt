@@ -7,16 +7,13 @@ import androidx.compose.ui.*
 import androidx.compose.ui.graphics.*
 
 @Composable
-fun App() = NimbusTheme {
-    Surface {
-        var greetingText by remember { mutableStateOf("Hello World!") }
+fun App(content: @Composable () -> Unit = { }) = NimbusTheme {
+    Scaffold {
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Button(onClick = { greetingText = "Compose: $platform" }) {
-                Text(greetingText)
-            }
+            content()
         }
     }
 }
@@ -24,12 +21,15 @@ fun App() = NimbusTheme {
 @Composable
 fun NimbusTheme(content: @Composable () -> Unit) = MaterialTheme(
     colorScheme = darkColorScheme(
-        primary = Color(0xFFDB6FA3),   /* Pink */
-        secondary = Color(0xFF85D6DA), /* Teal */
+        primary = Pink,
+        secondary = Teal,
         background = Color.Black,
         surface = Color.Black,
     ),
     content = content,
 )
+
+val Pink = Color(0xFFDB6FA3)
+val Teal = Color(0xFF85D6DA)
 
 expect val platform: String

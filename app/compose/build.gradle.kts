@@ -1,3 +1,8 @@
+@file:Suppress("UnstableApiUsage")
+
+import com.android.build.api.variant.*
+
+
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.android.app)
@@ -34,8 +39,12 @@ kotlin {
             @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
             implementation(compose.components.resources)
             implementation(libs.kotlin.coroutines)
+            implementation(projects.bidding)
         }
         androidMain.dependencies {
+            implementation(libs.ads.google)
+            implementation(libs.androidx.startup)
+            implementation(libs.bundles.nimbus)
             implementation(libs.compose.activity)
             implementation(libs.compose.ui)
             implementation(libs.compose.ui.tooling.preview)
@@ -50,10 +59,10 @@ android {
         targetSdk = androidCompileSdk.get().toInt().also { compileSdk = it }
         versionCode = 1
         versionName = "1.0"
-        manifestPlaceholders["appName"] = "Nimbus"
     }
 
     buildFeatures {
+        buildConfig = true
         compose = true
     }
 
@@ -79,6 +88,21 @@ android {
     dependencies {
         debugImplementation(libs.compose.ui.tooling)
     }
+}
+
+val manifestValues = providers.gradlePropertiesPrefixedBy("solutions.manifest").map {
+    it.mapKeys { entry -> entry.key.removePrefix("solutions.manifest.") }
+}
+
+val buildConfigValues = providers.gradlePropertiesPrefixedBy("solutions.config").map {
+    it.mapKeys { entry -> entry.key.removePrefix("solutions.config.") }.mapValues {
+        entry -> BuildConfigField("String", "\"${entry.value}\"", "")
+    }
+}
+
+androidComponents.onVariants {
+    it.manifestPlaceholders.putAll(manifestValues)
+    it.buildConfigFields.set(buildConfigValues)
 }
 
 /* Fixes the Make Project menu option in Android Studio */

@@ -16,6 +16,11 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
+        /* Includes Nimbus Repository */
+        maven("https://adsbynimbus-public.s3.amazonaws.com/android/sdks") {
+            credentials { username = "*" }
+            content { includeGroupByRegex(".*\\.adsbynimbus.*") }
+        }
     }
     /* JetBrains Fleet IDE does not yet support AGP 8.2.0 */
     if (providers.systemProperty("idea.vendor.name").orNull == "JetBrains") {
@@ -28,3 +33,4 @@ dependencyResolutionManagement {
 rootProject.name = "solutions"
 
 include(":app:compose")
+include(":bidding")
