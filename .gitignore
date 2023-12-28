@@ -8,6 +8,7 @@ schemas/
 .build/
 .externalNativeBuild/
 .gradle/
+.kotlin/
 .navigation/
 *.aab
 *.aar
