@@ -15,12 +15,8 @@ kotlin {
         }
     }
 
-    listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach { iosTarget ->
-        iosTarget.binaries.framework {
+    configure(listOf(iosArm64(), iosSimulatorArm64())) {
+        binaries.framework {
             baseName = "Compose"
             isStatic = true
         }
@@ -34,6 +30,7 @@ kotlin {
             @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
             implementation(compose.components.resources)
             implementation(libs.kotlin.coroutines)
+            implementation(projects.nimbusKmm)
         }
         androidMain.dependencies {
             implementation(libs.compose.activity)

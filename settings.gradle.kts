@@ -15,6 +15,10 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven("https://adsbynimbus-public.s3.amazonaws.com/android/sdks") {
+            credentials { username = "*" }
+            content { includeGroupByRegex(".*\\.adsbynimbus.*") }
+        }
         maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
     }
     /* Allow for overriding Android Gradle Plugin for Studio Previews */
@@ -28,3 +32,4 @@ dependencyResolutionManagement {
 rootProject.name = "nimbus-solutions"
 
 include(":app:compose")
+include(":nimbus-kmm")

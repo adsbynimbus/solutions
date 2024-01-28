@@ -1,0 +1,4 @@
+language = Objective-C
+package = platform.NimbusKit
+compilerOpts = -framework NimbusKMM
+linkerOpts = -framework NimbusKMM
