@@ -31,6 +31,9 @@ dependencyResolutionManagement {
             }
         }
         mavenCentral()
+        maven("https://adsbynimbus-public.s3.amazonaws.com/android/sdks") {
+            content { includeGroupAndSubgroups("com.adsbynimbus") }
+        }
     }
     // Allows for overriding Android Tooling using gradle.properties
     versionCatalogs.configureEach {
@@ -42,3 +45,4 @@ dependencyResolutionManagement {
 rootProject.name = "nimbus-solutions"
 
 include(":app:compose")
+include(":nimbus-kmm")
