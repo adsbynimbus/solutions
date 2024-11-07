@@ -1,8 +1,15 @@
 [versions]
+ads-amazon = "9.10.3"
+ads-google = "23.5.0"
+ads-nimbus = "2.24.0"
+
 android = "8.7.2"
 android-jvm = "17"
 android-min = "26"
 android-sdk = "35"
+
+androidx-lifecycle = "2.8.7"
+androidx-startup = "1.2.0"
 
 compose = "1.7.5"
 compose-activity = "1.9.3"
@@ -19,8 +26,18 @@ kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "ko
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 
 [libraries]
+ads-amazon = { module = "com.amazon.android:aps-sdk", version.ref = "ads-amazon" }
+ads-google = { module = "com.google.android.gms:play-services-ads", version.ref = "ads-google" }
+ads-nimbus = { module = "com.adsbynimbus.android:nimbus", version.ref = "ads-nimbus" }
+ads-nimbus-google = { module = "com.adsbynimbus.android:extension-google", version.ref = "ads-nimbus" }
+androidx-lifecycle = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidx-lifecycle" }
+androidx-startup = { module = "androidx.startup:startup-runtime", version.ref = "androidx-startup" }
 compose-activity = { module = "androidx.activity:activity-compose", version.ref = "compose-activity" }
 compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
 compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
 compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
 kotlin-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin-coroutines" }
+
+[bundles]
+androidx = ["androidx-lifecycle", "androidx-startup"]
+dynamicPrice = ["ads-amazon", "ads-google", "ads-nimbus", "ads-nimbus-google"]

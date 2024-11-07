@@ -17,7 +17,7 @@ pluginManagement {
 }
 
 val isFleetIDE = providers.systemProperty("idea.vendor.name").filter { it == "JetBrains" }
-val androidGradleOverride = isFleetIDE.map { "8.7.0-alpha07" }
+val androidGradleOverride = isFleetIDE.map { "8.7.2" }
     .orElse(providers.gradleProperty("android.gradle"))
 val androidJvmOverride = providers.gradleProperty("android.jvm")
 
@@ -29,6 +29,9 @@ dependencyResolutionManagement {
                 includeGroupAndSubgroups("com.android")
                 includeGroupAndSubgroups("com.google")
             }
+        }
+        maven("https://adsbynimbus-public.s3.amazonaws.com/android/sdks") {
+            content { includeGroupByRegex(".*\\.adsbynimbus.*") }
         }
         mavenCentral()
     }
@@ -42,3 +45,4 @@ dependencyResolutionManagement {
 rootProject.name = "nimbus-solutions"
 
 include(":app:compose")
+include(":dynamic-price:android")
