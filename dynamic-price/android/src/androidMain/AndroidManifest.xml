@@ -44,7 +44,7 @@
             tools:node="merge">
             <!-- This entry makes AdsInitializer discoverable. -->
             <meta-data
-                android:name="${applicationId}.AdInitializer"
+                android:name="adsbynimbus.solutions.dynamicprice.app.AdInitializer"
                 android:value="androidx.startup" />
         </provider>
     </application>
