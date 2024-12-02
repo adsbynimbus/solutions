@@ -58,7 +58,10 @@ android {
         }
     }
 
-    compileOptions.targetCompatibility = JavaVersion.toVersion(libs.versions.android.jvm.get())
+    compileOptions {
+        sourceCompatibility = JavaVersion.toVersion(libs.versions.android.jvm.get())
+        targetCompatibility = JavaVersion.toVersion(libs.versions.android.jvm.get())
+    }
 
     packaging.resources {
         excludes += "/META-INF/{AL2.0,LGPL2.1}"
