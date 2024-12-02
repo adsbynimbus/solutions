@@ -1,7 +1,7 @@
 [versions]
 ads-amazon = "9.10.3"
 ads-google = "23.5.0"
-ads-nimbus = "2.24.0"
+ads-nimbus = "2.24.1"
 
 android = "8.7.2"
 android-jvm = "17"
