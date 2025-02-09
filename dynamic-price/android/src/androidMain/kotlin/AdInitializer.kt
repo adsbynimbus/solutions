@@ -5,8 +5,6 @@ import android.util.Log
 import androidx.startup.Initializer
 import com.adsbynimbus.Nimbus
 import com.amazon.device.ads.AdRegistration
-import com.amazon.device.ads.DTBAdNetwork
-import com.amazon.device.ads.DTBAdNetworkInfo
 import com.amazon.device.ads.MRAIDPolicy
 import com.google.android.gms.ads.MobileAds
 import kotlin.time.TimeSource.Monotonic
@@ -26,7 +24,6 @@ class AdInitializer : Initializer<Map<String, DynamicPriceAd>> {
             AdRegistration.getInstance(BuildConfig.AMAZON_APP_KEY, context)
             AdRegistration.setMRAIDSupportedVersions(arrayOf("1.0", "2.0", "3.0"))
             AdRegistration.setMRAIDPolicy(MRAIDPolicy.DFP)
-            AdRegistration.setAdNetworkInfo(DTBAdNetworkInfo(DTBAdNetwork.GOOGLE_AD_MANAGER))
             AdRegistration.enableTesting(true)
             //AdRegistration.enableLogging(true)
         }
