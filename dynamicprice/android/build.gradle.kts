@@ -21,7 +21,7 @@ kotlin {
     sourceSets {
         androidMain.dependencies {
             implementation(libs.bundles.androidx)
-            implementation(libs.bundles.dynamicPrice)
+            implementation(libs.bundles.dynamicprice)
             implementation(libs.kotlin.coroutines)
         }
     }

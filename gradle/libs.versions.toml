@@ -40,4 +40,4 @@ kotlin-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", 
 
 [bundles]
 androidx = ["androidx-lifecycle", "androidx-startup"]
-dynamicPrice = ["ads-amazon", "ads-google", "ads-nimbus", "ads-nimbus-google"]
+dynamicprice = ["ads-amazon", "ads-google", "ads-nimbus", "ads-nimbus-google"]
