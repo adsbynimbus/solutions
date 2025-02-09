@@ -12,6 +12,8 @@ import com.adsbynimbus.openrtb.enumerations.Position
 import com.adsbynimbus.openrtb.request.Format
 import com.adsbynimbus.request.NimbusRequest
 import com.adsbynimbus.request.NimbusRequest.Companion.forBannerAd
+import com.amazon.device.ads.DTBAdNetwork
+import com.amazon.device.ads.DTBAdNetworkInfo
 import com.amazon.device.ads.DTBAdRequest
 import com.amazon.device.ads.DTBAdSize
 import com.google.android.gms.ads.AdSize
@@ -39,7 +41,7 @@ val preloadScope = MainScope() + CoroutineName("AdPreLoader")
 fun preloadBanner(
     nimbusRequest: NimbusRequest = forBannerAd("Top Banner", Format.BANNER_320_50, Position.HEADER),
     amazonRequest: () -> DTBAdRequest = {
-        DTBAdRequest(appContext).apply {
+        DTBAdRequest(DTBAdNetworkInfo(DTBAdNetwork.GOOGLE_AD_MANAGER)).apply {
             setSizes(DTBAdSize(320, 50, BuildConfig.AMAZON_BANNER_SLOT_ID))
         }
     },
