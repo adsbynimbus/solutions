@@ -3,7 +3,7 @@ ads-amazon = "10.0.0"
 ads-google = "23.6.0"
 ads-nimbus = "2.26.0"
 
-android = "8.8.0"
+android = "8.8.1"
 android-jvm = "17"
 android-min = "26"
 android-sdk = "35"
@@ -12,7 +12,7 @@ androidx-collection = "1.4.5"
 androidx-lifecycle = "2.8.7"
 androidx-startup = "1.2.0"
 
-compose = "1.7.7"
+compose = "1.7.8"
 compose-activity = "1.10.0"
 compose-multiplatform = "1.7.3"
 
