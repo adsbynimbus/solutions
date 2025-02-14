@@ -1,4 +1,4 @@
-package adsbynimbus.solutions.app
+package adsbynimbus.solutions.compose.app
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
