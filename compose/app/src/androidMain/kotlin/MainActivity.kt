@@ -1,4 +1,4 @@
-package adsbynimbus.solutions.app
+package adsbynimbus.solutions.compose.app
 
 import android.os.*
 import androidx.activity.ComponentActivity

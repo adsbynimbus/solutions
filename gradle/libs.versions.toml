@@ -3,15 +3,16 @@ ads-amazon = "10.0.0"
 ads-google = "23.6.0"
 ads-nimbus = "2.26.0"
 
-android = "8.8.0"
+android = "8.8.1"
 android-jvm = "17"
 android-min = "26"
 android-sdk = "35"
 
+androidx-collection = "1.4.5"
 androidx-lifecycle = "2.8.7"
 androidx-startup = "1.2.0"
 
-compose = "1.7.7"
+compose = "1.7.8"
 compose-activity = "1.10.0"
 compose-multiplatform = "1.7.3"
 
@@ -30,6 +31,7 @@ ads-amazon = { module = "com.amazon.android:aps-sdk", version.ref = "ads-amazon"
 ads-google = { module = "com.google.android.gms:play-services-ads", version.ref = "ads-google" }
 ads-nimbus = { module = "com.adsbynimbus.android:nimbus", version.ref = "ads-nimbus" }
 ads-nimbus-google = { module = "com.adsbynimbus.android:extension-google", version.ref = "ads-nimbus" }
+androidx-collection = { module = "androidx.collection:collection", version.ref = "androidx-collection" }
 androidx-lifecycle = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidx-lifecycle" }
 androidx-startup = { module = "androidx.startup:startup-runtime", version.ref = "androidx-startup" }
 compose-activity = { module = "androidx.activity:activity-compose", version.ref = "compose-activity" }
@@ -39,5 +41,5 @@ compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview"
 kotlin-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin-coroutines" }
 
 [bundles]
-androidx = ["androidx-lifecycle", "androidx-startup"]
-dynamicPrice = ["ads-amazon", "ads-google", "ads-nimbus", "ads-nimbus-google"]
+androidx = ["androidx-collection", "androidx-lifecycle", "androidx-startup"]
+dynamicprice = ["ads-amazon", "ads-google", "ads-nimbus", "ads-nimbus-google"]

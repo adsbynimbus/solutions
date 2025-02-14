@@ -31,7 +31,7 @@ kotlin {
 
     iosTargets.configureEach {
         binaries.framework {
-            binaryOption("bundleId", "adsbynimbus.solutions.app")
+            binaryOption("bundleId", "adsbynimbus.solutions.compose.app")
             binaryOption("bundleShortVersionString", "1.0")
             binaryOption("bundleVersion", "1.0")
             baseName = "Compose"
@@ -59,12 +59,12 @@ android {
     compileSdk = libs.versions.android.sdk.get().toInt()
 
     defaultConfig {
-        applicationId = "adsbynimbus.solutions.app".also { namespace = it }
+        applicationId = "adsbynimbus.solutions.compose.app".also { namespace = it }
         minSdk = libs.versions.android.min.get().toInt()
         targetSdk = libs.versions.android.sdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
-        manifestPlaceholders["appName"] = "Nimbus"
+        manifestPlaceholders["appName"] = "Nimbus Compose"
     }
 
     buildFeatures {
