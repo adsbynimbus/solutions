@@ -34,6 +34,7 @@ Pods/
 .vscode/
 xcuserdata/
 local.properties
+!solutions.xcworkspace
 
 # OS
 .DS_Store

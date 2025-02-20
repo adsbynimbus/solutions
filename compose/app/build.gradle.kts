@@ -34,7 +34,7 @@ kotlin {
             binaryOption("bundleId", "adsbynimbus.solutions.compose.app")
             binaryOption("bundleShortVersionString", "1.0")
             binaryOption("bundleVersion", "1.0")
-            baseName = "Compose"
+            baseName = "Shared"
             isStatic = true
         }
     }
