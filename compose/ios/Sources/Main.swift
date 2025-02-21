@@ -1,4 +1,4 @@
-import Compose
+import Shared
 import SwiftUI
 import UIKit
 

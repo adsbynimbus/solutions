@@ -16,9 +16,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "7555FF7A242A565900829871"
-               BuildableName = "NimbusCompose.app"
-               BlueprintName = "NimbusCompose"
-               ReferencedContainer = "container:ios.xcodeproj">
+               BuildableName = "Compose.app"
+               BlueprintName = "Compose"
+               ReferencedContainer = "container:Compose.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -45,9 +45,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "7555FF7A242A565900829871"
-            BuildableName = "NimbusCompose.app"
-            BlueprintName = "NimbusCompose"
-            ReferencedContainer = "container:ios.xcodeproj">
+            BuildableName = "Compose.app"
+            BlueprintName = "Compose"
+            ReferencedContainer = "container:Compose.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -62,9 +62,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "7555FF7A242A565900829871"
-            BuildableName = "NimbusCompose.app"
-            BlueprintName = "NimbusCompose"
-            ReferencedContainer = "container:ios.xcodeproj">
+            BuildableName = "Compose.app"
+            BlueprintName = "Compose"
+            ReferencedContainer = "container:Compose.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
