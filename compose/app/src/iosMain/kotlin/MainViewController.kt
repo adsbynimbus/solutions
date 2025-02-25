@@ -1,8 +1,10 @@
 package adsbynimbus.solutions.compose.app
 
+import androidx.compose.ui.*
+import androidx.compose.ui.platform.*
 import androidx.compose.ui.window.ComposeUIViewController
-import platform.UIKit.*
 
-fun mainViewController() = ComposeUIViewController { App() }
-
-actual val platform: String = UIDevice.currentDevice.systemName()
+@OptIn(ExperimentalComposeUiApi::class)
+fun mainViewController() = ComposeUIViewController {
+    App(screenHeight = LocalWindowInfo.current.containerSize.height)
+}

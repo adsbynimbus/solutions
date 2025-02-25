@@ -47,3 +47,4 @@ rootProject.name = "nimbus-solutions"
 include(":compose:app")
 include(":dynamicprice:android")
 include(":omsdk:android")
+include(":nimbus-kmm")
