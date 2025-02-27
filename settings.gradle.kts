@@ -45,5 +45,5 @@ dependencyResolutionManagement {
 rootProject.name = "nimbus-solutions"
 
 include(":compose:app")
-include(":dynamic-price:android")
+include(":dynamicprice:android")
 include(":omsdk:android")
