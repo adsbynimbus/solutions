@@ -28,6 +28,7 @@ dependencyResolutionManagement {
                 includeGroupAndSubgroups("androidx")
                 includeGroupAndSubgroups("com.android")
                 includeGroupAndSubgroups("com.google")
+                includeGroupAndSubgroups("org.chromium")
             }
         }
         maven("https://adsbynimbus-public.s3.amazonaws.com/android/sdks") {
@@ -46,4 +47,5 @@ rootProject.name = "nimbus-solutions"
 
 include(":compose:app")
 include(":dynamicprice:android")
+include(":dynamicprice:nextgen")
 include(":omsdk:android")
