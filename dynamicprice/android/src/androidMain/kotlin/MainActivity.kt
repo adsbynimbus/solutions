@@ -1,4 +1,4 @@
-package adsbynimbus.solutions.dynamicprice.app
+package adsbynimbus.solutions.dynamicprice
 
 import android.os.Bundle
 import android.util.Log
