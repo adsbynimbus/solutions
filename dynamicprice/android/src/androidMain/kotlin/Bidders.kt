@@ -1,4 +1,4 @@
-package adsbynimbus.solutions.dynamicprice.app
+package adsbynimbus.solutions.dynamicprice
 
 import com.adsbynimbus.NimbusAdManager
 import com.adsbynimbus.lineitem.DEFAULT_BANNER

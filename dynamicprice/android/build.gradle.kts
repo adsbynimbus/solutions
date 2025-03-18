@@ -31,7 +31,7 @@ android {
     compileSdk = libs.versions.android.sdk.get().toInt()
 
     defaultConfig {
-        applicationId = "adsbynimbus.solutions.dynamicprice.app".also { namespace = it }
+        applicationId = "adsbynimbus.solutions.dynamicprice".also { namespace = it }
         minSdk = libs.versions.android.min.get().toInt()
         targetSdk = libs.versions.android.sdk.get().toInt()
         versionCode = 1

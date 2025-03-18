@@ -1,16 +1,16 @@
 [versions]
 ads-amazon = "10.1.0"
-ads-google = "24.0.0"
-ads-nimbus = "2.26.1"
+ads-google = "23.6.0"
+ads-nimbus = "2.27.0"
 
-android = "8.8.2"
-android-jvm = "17"
+android = "8.9.0"
+android-jvm = "19"
 android-min = "26"
-android-sdk = "35"
+android-sdk = "36"
 
-androidx-collection = "1.4.5"
+androidx-collection = "1.5.0"
 androidx-lifecycle = "2.8.7"
-androidx-navigation = "2.8.8"
+androidx-navigation = "2.8.9"
 androidx-startup = "1.2.0"
 
 compose = "1.7.8"

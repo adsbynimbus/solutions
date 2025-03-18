@@ -17,7 +17,7 @@ pluginManagement {
 }
 
 val isFleetIDE = providers.systemProperty("idea.vendor.name").filter { it == "JetBrains" }
-val androidGradleOverride = isFleetIDE.map { "8.7.2" }
+val androidGradleOverride = isFleetIDE.map { "8.7.3" }
     .orElse(providers.gradleProperty("android.gradle"))
 val androidJvmOverride = providers.gradleProperty("android.jvm")
 
