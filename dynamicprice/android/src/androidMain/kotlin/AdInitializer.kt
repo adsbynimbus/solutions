@@ -13,7 +13,7 @@ import kotlin.time.measureTime
 @Suppress("unused")
 class AdInitializer : Initializer<Map<String, DynamicPriceAd>> {
     override fun create(context: Context): Map<String, DynamicPriceAd> {
-        // Set appContext in AdLoader.kt to use for preloading ads
+        // Set appContext in DynamicPriceAd.kt to use for preloading ads
         appContext = context
         val nimbusStartup = measureTime {
             Nimbus.initialize(context, BuildConfig.PUBLISHER_KEY, BuildConfig.API_KEY)

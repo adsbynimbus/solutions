@@ -16,7 +16,7 @@ class MainActivity : ComponentActivity() {
             val preloadBanner = adCache["banner"] ?: return
             val startTime = Monotonic.markNow()
             // Must set the listener before attaching to the parent view
-            preloadBanner.adView.adListener = object : AdListener() {
+            preloadBanner.view.adListener = object : AdListener() {
                 override fun onAdLoaded() {
                     Log.i("Ads", "Loaded: ${Monotonic.markNow() - startTime}")
                 }
@@ -29,7 +29,7 @@ class MainActivity : ComponentActivity() {
                     Log.w("Ads", "Failed: ${p0.message}")
                 }
             }
-            addView(preloadBanner.adView)
+            addView(preloadBanner.view)
         })
     }
 }
