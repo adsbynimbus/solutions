@@ -48,7 +48,7 @@ val linearPriceMapping = DEFAULT_BANNER
 /** Loads a bid from Nimbus using the global NimbusAdManager instance */
 @JvmInline
 value class NimbusBidder(private val adRequest: NimbusRequest) : Bidder<NimbusResponse> {
-    // appContext is defined in AdLoader.kt and set in the AdInitializer
+    // appContext is defined in DynamicPriceAd.kt and set in the AdInitializer
     override suspend fun fetchBid(): Bid<NimbusResponse> =
         Bid(nimbusAdManager.makeRequest(appContext, adRequest))
 }
