@@ -7,4 +7,7 @@
    <FileRef
       location = "group:omsdk/ios/OMSDK.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:dynamicprice/ios/DynamicPrice.xcodeproj">
+   </FileRef>
 </Workspace>
