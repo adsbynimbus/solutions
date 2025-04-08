@@ -2,10 +2,10 @@
 
 Official Nimbus documentation can be found at [https://docs.adsbynimbus.com/docs/extended-documentation/dynamic-price](https://docs.adsbynimbus.com/docs/extended-documentation/dynamic-price)
 
-## Android
-
-An implementation showing how to run requests to Nimbus and Amazon in parallel when both
+Implementations showing how to run requests to Nimbus and Amazon in parallel when both
 bidders are used with Google Ad Manager.
+
+## Android
 
 #### [Bidders](android/src/androidMain/kotlin/Bidders.kt)
 
@@ -53,3 +53,15 @@ when (response) {
     }
 }
 ```
+
+## iOS
+
+#### [Bidders](ios/Sources/Bidders.swift)
+
+Contains classes and interfaces for running a parallel auction using Nimbus + Amazon and
+applying the key-value targeting from each bid to a `GAMRequest`.
+
+#### [DynamicPriceView](ios/Sources/DynamicPriceView.swift)
+
+Provides a wrapper implementation for the `GAMBannerView` that automatically manages the bidding
+process and refreshes ads every 30 seconds using a lifecycleScope.
