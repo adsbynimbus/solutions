@@ -10,7 +10,6 @@ import com.google.android.gms.ads.MobileAds
 import kotlin.time.TimeSource.Monotonic
 import kotlin.time.measureTime
 
-@Suppress("unused")
 class AdInitializer : Initializer<Map<String, DynamicPriceAd>> {
     override fun create(context: Context): Map<String, DynamicPriceAd> {
         // Set appContext in DynamicPriceAd.kt to use for preloading ads

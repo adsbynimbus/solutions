@@ -13,7 +13,6 @@ import com.adsbynimbus.render.VastRenderer
 import com.adsbynimbus.request.OkHttpNimbusClient
 import kotlin.time.measureTime
 
-@Suppress("unused")
 class AppInitializer : Initializer<Nimbus> {
     override fun create(context: Context): Nimbus = Nimbus.apply {
         val videoRenderer = VastRenderer()
