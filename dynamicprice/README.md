@@ -65,3 +65,7 @@ applying the key-value targeting from each bid to a `GAMRequest`.
 
 Provides a wrapper implementation for the `GAMBannerView` that automatically manages the bidding
 process and refreshes ads every 30 seconds when attached to the view hierarchy.
+
+## Next Gen
+
+Android Implementation of Dynamic Price using the Google Mobile Ads Next Gen SDK
