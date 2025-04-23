@@ -1,18 +1,15 @@
 package adsbynimbus.solutions.dynamicprice.util
 
-import adsbynimbus.solutions.dynamicprice.util.service.Network
-import adsbynimbus.solutions.dynamicprice.util.service.NetworkDao
-import androidx.room.ConstructedBy
-import androidx.room.Database
-import androidx.room.RoomDatabase
-import androidx.room.RoomDatabaseConstructor
+import adsbynimbus.solutions.dynamicprice.util.data.*
+import androidx.room.*
 import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import kotlinx.coroutines.Dispatchers
 
 @ConstructedBy(AppDatabaseConstructor::class)
-@Database(entities = [Network::class], version = 1)
+@Database(entities = [Network::class, Order::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun networkDao(): NetworkDao
+    abstract val networkDao: NetworkDao
+    abstract val ordersDao: OrdersDao
 }
 
 // The Room compiler generates the `actual` implementations.
@@ -23,5 +20,6 @@ expect object AppDatabaseConstructor : RoomDatabaseConstructor<AppDatabase> {
 
 fun getRoomDatabase(builder: RoomDatabase.Builder<AppDatabase>): AppDatabase = builder
     .setDriver(BundledSQLiteDriver())
+    .fallbackToDestructiveMigration(dropAllTables = false)
     .setQueryCoroutineContext(Dispatchers.IO)
     .build()

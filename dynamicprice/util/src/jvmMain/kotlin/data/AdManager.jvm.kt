@@ -1,4 +1,4 @@
-package adsbynimbus.solutions.dynamicprice.util.service
+package adsbynimbus.solutions.dynamicprice.util.data
 
 import com.google.api.ads.admanager.axis.factory.*
 import com.google.api.ads.admanager.axis.v202505.*
@@ -7,6 +7,7 @@ import com.google.api.ads.common.lib.auth.*
 import com.google.api.client.auth.oauth2.*
 
 class AdManagerAxisClient(
+    val network: Network,
     val session: AdManagerSession,
     private val services: AdManagerServices = AdManagerServices(),
 ) : AdManagerContext {
@@ -15,7 +16,7 @@ class AdManagerAxisClient(
         Advertiser(id = it.id, name = it.name)
     }
     override val orders: List<Order> get() = orderService.nimbusOrders.results.map {
-        Order(id = it.id, name = it.name)
+        Order(id = it.id, name = it.name, networkId = network.id)
     }
 
     override val networks: List<Network> get() = networkService.allNetworks.map {
@@ -31,18 +32,20 @@ class AdManagerAxisClient(
     inline fun <reified T> AdManagerServices.get(): T = get(session, T::class.java)
 }
 
-actual fun adManagerContext(keyPath: String, appName: String): AdManagerContext =
-    AdManagerAxisClient(AdManagerSession.Builder()
+actual fun adManagerContext(keyPath: String, appName: String, network: Network): AdManagerContext =
+    AdManagerAxisClient(network = network, session = AdManagerSession.Builder()
         .withOAuth2Credential(JsonKeyFile(keyPath).credential)
         .withApplicationName(appName)
-        .build())
+        .withNetworkCode(network.networkCode)
+        .build()
+    )
 
 
 val CompanyServiceInterface.nimbusAdvertisers: CompanyPage
     get() = findBy(name = "Nimbus").run(::getCompaniesByStatement)
 
 val OrderServiceInterface.nimbusOrders: OrderPage
-    get() = findBy(name = "Nimbus").run(::getOrdersByStatement)
+    get() = findBy(name = "Dynamic Price").run(::getOrdersByStatement)
 
 @JvmInline
 value class JsonKeyFile(val path: String) {
