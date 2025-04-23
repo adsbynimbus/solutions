@@ -38,6 +38,7 @@ kotlin {
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)
+            implementation(compose.material3AdaptiveNavigationSuite)
             implementation(compose.components.resources)
             implementation(libs.kotlin.coroutines)
             implementation(libs.bundles.androidx.room)
