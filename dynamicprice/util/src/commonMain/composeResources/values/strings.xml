@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Line Item Tool</string>
+    <string name="networks">Networks</string>
+    <string name="orders">Orders</string>
+</resources>

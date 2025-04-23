@@ -1,4 +1,4 @@
-package adsbynimbus.solutions.dynamicprice.util.service
+package adsbynimbus.solutions.dynamicprice.util.data
 
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
@@ -8,7 +8,11 @@ data class Network(
     @PrimaryKey val id: Long,
     val name: String,
     val networkCode: String,
-)
+) {
+    companion object {
+        val None = Network(id = 0, name = "None Selected", networkCode = "")
+    }
+}
 
 @Dao
 interface NetworkDao {

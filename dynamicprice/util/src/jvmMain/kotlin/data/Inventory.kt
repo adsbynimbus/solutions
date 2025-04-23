@@ -1,4 +1,4 @@
-package adsbynimbus.solutions.dynamicprice.util.service
+package adsbynimbus.solutions.dynamicprice.util.data
 
 import com.google.api.ads.admanager.axis.v202505.*
 
