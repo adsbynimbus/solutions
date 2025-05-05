@@ -19,7 +19,7 @@ extension DynamicPriceView {
 
     /// Convenience initializer for running Amazon and Nimbus as parallel bidders
     @inlinable public convenience init(
-        adSize: GADAdSize,
+        adSize: AdSize,
         adUnitId: String,
         apsRequest: APSAdRequest,
         nimbusRequest: NimbusRequest
@@ -38,7 +38,7 @@ extension DynamicPriceView {
         nimbusPosition: String
     ) -> DynamicPriceView {
         DynamicPriceView(
-            adSize: GADAdSizeBanner,
+            adSize: AdSizeBanner,
             adUnitId: googleAdUnitId,
             apsRequest: APSAdRequest(slotId: amazonSlotId, format: .banner),
             nimbusRequest: .forBannerAd(
@@ -56,7 +56,7 @@ extension DynamicPriceView {
         nimbusPosition: String
     ) -> DynamicPriceView {
         DynamicPriceView(
-            adSize: GADAdSizeMediumRectangle,
+            adSize: AdSizeMediumRectangle,
             adUnitId: googleAdUnitId,
             apsRequest: APSAdRequest(slotId: amazonSlotId, format: .MREC),
             nimbusRequest: .forBannerAd(
@@ -72,15 +72,15 @@ extension DynamicPriceView {
     googleAdUnitId: String,
     amazonSlotId: String,
     nimbusPosition: String,
-    appEventDelegate: GADAppEventDelegate,
-    fullScreenDelegate: GADFullScreenContentDelegate?
-) async -> GAMInterstitialAd? {
+    appEventDelegate: AppEventDelegate,
+    fullScreenDelegate: FullScreenContentDelegate?
+) async -> AdManagerInterstitialAd? {
     let bids = await [
         APSAdRequest(slotId: amazonSlotId, format: .interstitial).asBidder(),
         NimbusRequest.forInterstitialAd(position: nimbusPosition).asBidder()
     ].auction()
 
-    let request = GAMRequest()
+    let request = AdManagerRequest()
     request.customTargeting = [:]
 
     var nimbusBid: NimbusAd? = nil
@@ -98,7 +98,7 @@ extension DynamicPriceView {
     }
 
     return try? await withUnsafeThrowingContinuation { continuation in
-        GAMInterstitialAd.load(withAdManagerAdUnitID: googleAdUnitId, request: request) { ad, error in
+        AdManagerInterstitialAd.load(with: googleAdUnitId, request: request) { ad, error in
             if let error = error {
                 continuation.resume(throwing: error)
                 return
@@ -123,59 +123,59 @@ extension DynamicPriceView {
 }
 
 
-class GoogleInterstitialListener: NSObject, GADFullScreenContentDelegate, GADAppEventDelegate {
+class GoogleInterstitialListener: NSObject, FullScreenContentDelegate, AppEventDelegate {
 
-    public func interstitialAd(_ interstitialAd: GADInterstitialAd,
-                               didReceiveAppEvent name: String, withInfo info: String?) {
+    public func adView(_ interstitialAd: InterstitialAd,
+                       didReceiveAppEvent name: String, with info: String?) {
         interstitialAd.handleEventForNimbus(name: name, info: info)
     }
 
-    func ad(_ ad: GADFullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Error) {
+    func ad(_ ad: FullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Error) {
         print("ad:didFailToPresentFullScreenContentWithError: \(error.localizedDescription)")
     }
 
-       func adDidRecordImpression(_ ad: GADFullScreenPresentingAd) {
+    func adDidRecordImpression(_ ad: FullScreenPresentingAd) {
            print("adDidRecordImpression")
        }
 
-       func adDidRecordClick(_ ad: GADFullScreenPresentingAd) {
+    func adDidRecordClick(_ ad: FullScreenPresentingAd) {
            print("adDidRecordClick")
        }
 
-       func adWillPresentFullScreenContent(_ ad: GADFullScreenPresentingAd) {
+    func adWillPresentFullScreenContent(_ ad: FullScreenPresentingAd) {
            print("ad:adWillPresentFullScreenContent")
        }
 
-       func adWillDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {
+    func adWillDismissFullScreenContent(_ ad: FullScreenPresentingAd) {
            print("adWillDismissFullScreenContent")
        }
 
-       func adDidDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {
+    func adDidDismissFullScreenContent(_ ad: FullScreenPresentingAd) {
            print("adDidDismissFullScreenContent")
        }
 }
 
-class GoogleAdListener: NSObject, GADBannerViewDelegate {
-    public func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
+class GoogleAdListener: NSObject, BannerViewDelegate {
+    public func bannerViewDidReceiveAd(_ bannerView: BannerView) {
         Task { @MainActor in print("Ad Loaded \(bannerView.adUnitID ?? "")") }
     }
 
-    public func bannerView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: Error) {
+    public func bannerView(_ bannerView: BannerView, didFailToReceiveAdWithError error: Error) {
         Task { @MainActor in  print("Ad Error \(bannerView.adUnitID ?? "") \(error.localizedDescription)") }
     }
 
-    public func bannerViewDidRecordImpression(_ bannerView: GADBannerView) {
+    public func bannerViewDidRecordImpression(_ bannerView: BannerView) {
         Task { @MainActor in print("Ad Impression \(bannerView.adUnitID ?? "")") }
     }
 
-    public func bannerViewDidRecordClick(_ bannerView: GADBannerView) {
+    public func bannerViewDidRecordClick(_ bannerView: BannerView) {
         Task { @MainActor in print("Ad Clicked \(bannerView.adUnitID ?? "")") }
     }
 }
 
 extension APSAdRequest {
     @inlinable public convenience init(slotId: String, format: APSAdFormat) {
-        self.init(slotUUID: slotId)
+        self.init(slotUUID: slotId, adNetworkInfo: .init(networkName: .googleAdManager))
         setAdFormat(format)
     }
 }

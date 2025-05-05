@@ -40,7 +40,7 @@ public extension Collection where Element == any Bidder  {
 
 extension Bid {
 
-    func applyTargeting(to request: GAMRequest, priceMapping: NimbusGAMLinearPriceMapping) {
+    func applyTargeting(to request: AdManagerRequest, priceMapping: NimbusGAMLinearPriceMapping) {
         switch self {
         case let .nimbus(response):
             response.applyDynamicPrice(into: request, mapping: priceMapping)

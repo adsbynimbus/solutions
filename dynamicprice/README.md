@@ -59,11 +59,11 @@ when (response) {
 #### [Bidders](ios/Sources/Bidders.swift)
 
 Contains classes and interfaces for running a parallel auction using Nimbus + Amazon and
-applying the key-value targeting from each bid to a `GAMRequest`.
+applying the key-value targeting from each bid to a `AdManagerRequest`.
 
 #### [DynamicPriceView](ios/Sources/DynamicPriceView.swift)
 
-Provides a wrapper implementation for the `GAMBannerView` that automatically manages the bidding
+Provides a wrapper implementation for the `AdManagerBannerView` that automatically manages the bidding
 process and refreshes ads every 30 seconds when attached to the view hierarchy.
 
 ## Next Gen
