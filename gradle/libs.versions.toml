@@ -1,5 +1,5 @@
 [versions]
-ads-amazon = "10.1.1"
+ads-amazon = "11.0.0"
 ads-google = "24.2.0"
 ads-google-nextgen = "0.14.0-alpha01"
 ads-nimbus = "2.29.0"
@@ -9,6 +9,7 @@ android-jvm = "19"
 android-min = "26"
 android-sdk = "36"
 
+androidx-appcompat = "1.7.0"
 androidx-collection = "1.5.0"
 androidx-lifecycle = "2.8.7"
 androidx-navigation = "2.8.9"
@@ -40,6 +41,7 @@ ads-google = { module = "com.google.android.gms:play-services-ads", version.ref 
 ads-google-nextgen = { module = "com.google.android.libraries.ads.mobile.sdk:ads-mobile-sdk", version.ref = "ads-google-nextgen" }
 ads-nimbus = { module = "com.adsbynimbus.android:nimbus", version.ref = "ads-nimbus" }
 ads-nimbus-google = { module = "com.adsbynimbus.android:extension-google", version.ref = "ads-nimbus" }
+androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
 androidx-collection = { module = "androidx.collection:collection", version.ref = "androidx-collection" }
 androidx-lifecycle = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidx-lifecycle" }
 androidx-startup = { module = "androidx.startup:startup-runtime", version.ref = "androidx-startup" }
@@ -62,5 +64,19 @@ androidx-compose = [
     "compose-ui-tooling",
     "compose-ui-tooling-preview",
 ]
-dynamicprice = ["ads-amazon", "ads-google", "ads-nimbus", "ads-nimbus-google"]
-dynamicprice-nextgen = ["ads-amazon", "ads-google-nextgen", "ads-nimbus", "gson", "okhttp", "okio"]
+dynamicprice = [
+    "ads-amazon",
+    "ads-google",
+    "ads-nimbus",
+    "ads-nimbus-google",
+    "androidx-appcompat", # Referenced by Amazon but not included in build
+]
+dynamicprice-nextgen = [
+    "ads-amazon",
+    "ads-google-nextgen",
+    "ads-nimbus",
+    "androidx-appcompat", # Referenced by Amazon but not included in build
+    "gson",
+    "okhttp",
+    "okio",
+]
