@@ -11,26 +11,26 @@ import GoogleMobileAds
 fileprivate let refreshInterval: TimeInterval = 30
 
 @MainActor
-public class DynamicPriceView : UIView, GADAppEventDelegate {
+public class DynamicPriceView : UIView, AppEventDelegate {
 
     private let bidders: [any Bidder]
-    private let googleBanner: GAMBannerView
+    private let googleBanner: AdManagerBannerView
     private var lastRequestTime: Date = Date.distantPast
     private var refreshTask: Task<Void, Error>?
 
     /// Set this delegate to receive events from the GAMBannerView
-    public weak var delegate: GADBannerViewDelegate?
+    public weak var delegate: BannerViewDelegate?
 
     /// Set to true for banner ads if they refresh when not on the screen
     public var useOnScreenCheck = false
     
     public init(
-        adSize: GADAdSize,
+        adSize: AdSize,
         adUnitId: String,
         bidders: [any Bidder]
     ) {
         self.bidders = bidders
-        self.googleBanner = GAMBannerView(adSize: adSize)
+        self.googleBanner = AdManagerBannerView(adSize: adSize)
         super.init(frame: .zero)
         googleBanner.adUnitID = adUnitId
         googleBanner.appEventDelegate = self
@@ -47,7 +47,7 @@ public class DynamicPriceView : UIView, GADAppEventDelegate {
 
         let bids = await bidders.auction()
 
-        let request = GAMRequest()
+        let request = AdManagerRequest()
         request.customTargeting = [:]
 
         var nimbusBid: NimbusAd? = nil
@@ -73,9 +73,9 @@ public class DynamicPriceView : UIView, GADAppEventDelegate {
     }
 
     public nonisolated func adView(
-        _ banner: GADBannerView,
+        _ banner: BannerView,
         didReceiveAppEvent name: String,
-        withInfo info: String?
+        with info: String?
     ) {
        Task { @MainActor in googleBanner.handleEventForNimbus(name: name, info: info) }
     }
@@ -103,17 +103,12 @@ public class DynamicPriceView : UIView, GADAppEventDelegate {
         guard let parent = superview else { return }
         translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            topAnchor.constraint(greaterThanOrEqualTo: parent.topAnchor),
-            bottomAnchor.constraint(lessThanOrEqualTo: parent.bottomAnchor),
-            leftAnchor.constraint(greaterThanOrEqualTo: parent.leftAnchor),
-            rightAnchor.constraint(lessThanOrEqualTo: parent.rightAnchor),
-            centerXAnchor.constraint(equalTo: parent.centerXAnchor),
-            centerYAnchor.constraint(equalTo: parent.centerYAnchor),
-            // Might need to review these
-            topAnchor.constraint(equalTo: googleBanner.topAnchor),
-            bottomAnchor.constraint(lessThanOrEqualTo: googleBanner.bottomAnchor),
-            leftAnchor.constraint(greaterThanOrEqualTo: googleBanner.leftAnchor),
-            rightAnchor.constraint(lessThanOrEqualTo: googleBanner.rightAnchor),
+            topAnchor.constraint(equalTo: parent.topAnchor),
+            bottomAnchor.constraint(equalTo: parent.bottomAnchor),
+            leftAnchor.constraint(equalTo: parent.leftAnchor),
+            rightAnchor.constraint(equalTo: parent.rightAnchor),
+            googleBanner.centerXAnchor.constraint(equalTo: centerXAnchor),
+            googleBanner.centerYAnchor.constraint(equalTo: centerYAnchor),
         ])
     }
     

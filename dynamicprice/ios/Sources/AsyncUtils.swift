@@ -6,6 +6,7 @@
 //
 
 import NimbusRequestKit
+import Foundation
 
 extension Task where Success == Never, Failure == Never {
     @inlinable
