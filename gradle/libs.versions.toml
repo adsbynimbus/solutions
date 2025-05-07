@@ -4,7 +4,7 @@ ads-google = "24.2.0"
 ads-google-nextgen = "0.15.0-alpha01" # 0.15.1 Requires API Desugaring
 ads-nimbus = "2.29.0"
 
-android = "8.9.1"
+android = "8.10.0"
 android-jvm = "19"
 android-min = "26"
 android-sdk = "36"
