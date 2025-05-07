@@ -2,7 +2,7 @@
 ads-amazon = "10.1.1"
 ads-google = "24.2.0"
 ads-google-nextgen = "0.14.0-alpha01"
-ads-nimbus = "2.28.2"
+ads-nimbus = "2.29.0"
 
 android = "8.9.1"
 android-jvm = "19"
@@ -40,7 +40,6 @@ ads-google = { module = "com.google.android.gms:play-services-ads", version.ref 
 ads-google-nextgen = { module = "com.google.android.libraries.ads.mobile.sdk:ads-mobile-sdk", version.ref = "ads-google-nextgen" }
 ads-nimbus = { module = "com.adsbynimbus.android:nimbus", version.ref = "ads-nimbus" }
 ads-nimbus-google = { module = "com.adsbynimbus.android:extension-google", version.ref = "ads-nimbus" }
-ads-nimbus-vast = { module = "com.adsbynimbus.android:nimbus-vast", version.ref = "ads-nimbus" }
 androidx-collection = { module = "androidx.collection:collection", version.ref = "androidx-collection" }
 androidx-lifecycle = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidx-lifecycle" }
 androidx-startup = { module = "androidx.startup:startup-runtime", version.ref = "androidx-startup" }
@@ -55,7 +54,6 @@ okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
 okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
 
 [bundles]
-ads-nimbus = ["ads-nimbus", "ads-nimbus-vast"]
 androidx = ["androidx-collection", "androidx-lifecycle", "androidx-startup"]
 androidx-compose = [
     "compose-activity",

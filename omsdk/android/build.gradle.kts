@@ -24,9 +24,9 @@ kotlin {
             implementation(libs.kotlin.coroutines)
         }
         androidMain.dependencies {
+            implementation(libs.ads.nimbus)
             implementation(libs.bundles.androidx)
             implementation(libs.bundles.androidx.compose)
-            implementation(libs.bundles.ads.nimbus)
         }
     }
 }
