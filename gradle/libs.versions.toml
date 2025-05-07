@@ -1,7 +1,7 @@
 [versions]
 ads-amazon = "11.0.0"
 ads-google = "24.2.0"
-ads-google-nextgen = "0.14.0-alpha01"
+ads-google-nextgen = "0.15.0-alpha01" # 0.15.1 Requires API Desugaring
 ads-nimbus = "2.29.0"
 
 android = "8.9.1"
@@ -19,7 +19,7 @@ compose = "1.7.8"
 compose-activity = "1.10.1"
 compose-multiplatform = "1.7.3"
 
-gson = "2.13.0"
+gson = "2.13.1"
 
 kotlin = "2.1.20"
 kotlin-coroutines = "1.10.2"
