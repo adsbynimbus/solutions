@@ -2,7 +2,7 @@
 ads-amazon = "11.0.0"
 ads-google = "24.2.0"
 ads-google-nextgen = "0.15.0-alpha01" # 0.15.1 Requires API Desugaring
-ads-nimbus = "2.29.0"
+ads-nimbus = "2.29.1"
 
 android = "8.10.0"
 android-jvm = "19"
@@ -11,17 +11,17 @@ android-sdk = "36"
 
 androidx-appcompat = "1.7.0"
 androidx-collection = "1.5.0"
-androidx-lifecycle = "2.8.7"
-androidx-navigation = "2.8.9"
+androidx-lifecycle = "2.9.0"
+androidx-navigation = "2.9.0"
 androidx-startup = "1.2.0"
 
-compose = "1.8.0"
+compose = "1.8.1"
 compose-activity = "1.10.1"
 compose-multiplatform = "1.8.0"
 
 gson = "2.13.1"
 
-kotlin = "2.1.20"
+kotlin = "2.1.21"
 kotlin-coroutines = "1.10.2"
 
 okhttp = "4.12.0"
