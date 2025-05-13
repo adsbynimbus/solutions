@@ -1,9 +1,8 @@
 package adsbynimbus.solutions.dynamicprice
 
 import com.adsbynimbus.NimbusAdManager
-import com.adsbynimbus.google.dynamicPriceAdCache
 import com.adsbynimbus.lineitem.DEFAULT_BANNER
-import com.adsbynimbus.lineitem.targetingMap
+import com.adsbynimbus.lineitem.applyDynamicPrice
 import com.adsbynimbus.request.NimbusRequest
 import com.adsbynimbus.request.NimbusResponse
 import com.amazon.device.ads.AdType
@@ -62,12 +61,7 @@ value class ApsBidder(private val adRequest: () -> DTBAdRequest) : Bidder<DTBAdR
 /** Applies targeting values from a Bid to an AdManagerAdRequest.Builder */
 inline fun <reified T> Bid<out T>.applyTargeting(request: AdManagerAdRequest.Builder) {
     when (response) {
-        is NimbusResponse -> response.run {
-            dynamicPriceAdCache.put(auctionId, this)
-            targetingMap(linearPriceMapping).forEach {
-                request.addCustomTargeting(it.key, it.value)
-            }
-        }
+        is NimbusResponse -> request.applyDynamicPrice(ad = response, mapping = linearPriceMapping)
         is DTBAdResponse if response.adCount > 0 -> response.adManagerParams.forEach {
             request.addCustomTargeting(it.key, it.value)
         }
