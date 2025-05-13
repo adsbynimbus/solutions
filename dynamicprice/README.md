@@ -21,13 +21,20 @@ process and refreshes ads every 30 seconds using a lifecycleScope.
 
 [Migration Guide](https://developers.google.com/ad-manager/mobile-ads-sdk/android/migration#migrate-to-v24)
 
-Current versions of Nimbus and Amazon SDKs were compiled against Google Mobile Ads 23 and will crash
-at runtime when used with version 24 or higher due to the `addCustomTargeting` method moving from
-the `AdManagerAdRequest.Builder` to the super class `AbstractAdRequestBuilder<*>`.
+Support for Google Mobile Ads 24 is available starting from the following versions:
 
-A workaround for this has been implemented for both SDKs in [Bidders.applyTargeting](android/src/androidMain/kotlin/Bidders.kt#L63).
+- Nimbus Android: [2.30.0](https://docs.adsbynimbus.com/docs/sdk/android/changelog#id-2.30.0-5-13-25)
+- Amazon APS Android: [11.0.0](https://ams.amazon.com/webpublisher/uam/docs/aps-mobile/android/release-notes) (Link requires Login)
 
-###### Nimbus
+<details>
+<summary>Workaround for older SDK Versions</summary>
+<br/>
+Previous versions of the Nimbus and Amazon SDKs will crash at runtime when used with version 24 or
+higher due to the `addCustomTargeting` method moving from the `AdManagerAdRequest.Builder` to the
+super class `AbstractAdRequestBuilder<*>`.
+
+###### Nimbus - Requires 2.28.0 or higher
+Replace calls to `applyDynamicPrice` with it's method body
 ```kotlin
 when (response) {
     is NimbusResponse -> response.run {
@@ -40,7 +47,9 @@ when (response) {
 ```
 
 ###### Amazon
+Replace calls to `DTBAdUtil.INSTANCE.loadDTBParams` with it's method body
 ```kotlin
+/** Implementation of a private helper method used by loadDTBParams to retrieve kv pairs */
 inline val DTBAdResponse.adManagerParams: Map<String, List<String>>
     get() = when (dtbAds.first().dtbAdType) {
         AdType.VIDEO -> defaultVideoAdsRequestCustomParams.mapValues { listOf(it.value) }
@@ -53,6 +62,7 @@ when (response) {
     }
 }
 ```
+</details>
 
 ## iOS
 
