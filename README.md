@@ -1,3 +1,4 @@
+[![Build](https://github.com/adsbynimbus/solutions/actions/workflows/build.yml/badge.svg)](https://github.com/adsbynimbus/solutions/actions/workflows/build.yml)
 # Nimbus Solutions Engineering
 
 Official Nimbus documentation can be found at [https://docs.adsbynimbus.com/docs/](https://docs.adsbynimbus.com/docs/)
