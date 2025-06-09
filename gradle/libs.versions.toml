@@ -1,7 +1,7 @@
 [versions]
 ads-amazon = "11.0.0"
 ads-google = "24.3.0"
-ads-google-nextgen = "0.15.0-alpha01" # 0.15.1 Requires API Desugaring
+ads-google-nextgen = "0.16.0-alpha01"
 ads-nimbus = "2.30.0"
 
 android = "8.10.1"
