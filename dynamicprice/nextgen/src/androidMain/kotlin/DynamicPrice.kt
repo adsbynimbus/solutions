@@ -1,6 +1,8 @@
 package adsbynimbus.solutions.dynamicprice.nextgen
 
 import android.app.Activity
+import android.app.Activity.OVERRIDE_TRANSITION_CLOSE
+import android.os.Build
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
@@ -108,7 +110,7 @@ fun InterstitialAd.handleEventForNimbus(
                 controller.attachListener(
                     googleClickTracker = event.clickTracker,
                     onClick = { adEventCallback?.onAdClicked() },
-                    onDestroy = { destroy(activity = activity) }
+                    onDestroy = { activity.destroy() }
                 )
                 eventListener?.let { controller.listeners.add(it) }
                 controller.start()
@@ -122,7 +124,7 @@ fun InterstitialAd.handleEventForNimbus(
                 mediationAdError = null,
             )
         )
-        destroy(activity = Platform.currentActivity.get()!!)
+        Platform.currentActivity.get().takeIf { it is AdActivity }?.destroy()
     }
 }
 
@@ -201,11 +203,15 @@ suspend inline fun NimbusAd.renderInline(container: ViewGroup): AdController =
         })
     }
 
-@Suppress("Deprecation")
-private fun InterstitialAd.destroy(activity: Activity) {
-    activity.finish()
-    activity.overridePendingTransition(0, 0)
-    destroy()
+private fun Activity.destroy() {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+        overrideActivityTransition(OVERRIDE_TRANSITION_CLOSE, 0, 0)
+        finish()
+    } else {
+        finish()
+        @Suppress("DEPRECATION")
+        overridePendingTransition(0, 0)
+    }
 }
 
 internal val nimbusAdCache = LruCache<String, NimbusAd>(10)
