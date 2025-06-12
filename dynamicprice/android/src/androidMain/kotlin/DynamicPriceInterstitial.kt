@@ -24,6 +24,7 @@ val interstitialBidders = listOf(
     }
 )
 
+@Throws(RuntimeException::class)
 suspend fun Context.loadInterstitial(
     adUnitId: String,
     bidders: Collection<Bidder<*>>,
@@ -33,15 +34,10 @@ suspend fun Context.loadInterstitial(
         bids.forEach { it.applyTargeting(this) }
     }.build()
 
-    return suspendCoroutine { continuation ->
+    val interstitialAd = suspendCoroutine { continuation ->
         AdManagerInterstitialAd.load(this, adUnitId, request,
             object : AdManagerInterstitialAdLoadCallback() {
                 override fun onAdLoaded(ad: AdManagerInterstitialAd) {
-                    /* Set the appEventListener and call handleEventForNimbus */
-                    ad.appEventListener = AppEventListener { name, info ->
-                        /* handleEventForNimbus is called when Nimbus wins the auction */
-                        ad.handleEventForNimbus(name, info)
-                    }
                     continuation.resume(ad)
                 }
 
@@ -50,5 +46,10 @@ suspend fun Context.loadInterstitial(
                 }
             }
         )
+    }
+    // Set the appEventListener before returning the AdManagerInterstitialAd
+    return interstitialAd.apply {
+        // handleEventForNimbus is called when Nimbus wins the auction
+        appEventListener = AppEventListener { name, info -> handleEventForNimbus(name, info) }
     }
 }
