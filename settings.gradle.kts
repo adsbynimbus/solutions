@@ -49,4 +49,5 @@ rootProject.name = "nimbus-solutions"
 include(":compose:app")
 include(":dynamicprice:android")
 include(":dynamicprice:nextgen")
+include(":dynamicprice:nextgen:sdk")
 include(":omsdk:android")
