@@ -2,7 +2,11 @@ package adsbynimbus.solutions.dynamicprice
 
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity.BOTTOM
 import android.widget.FrameLayout
+import android.widget.FrameLayout.LayoutParams
+import android.widget.FrameLayout.LayoutParams.MATCH_PARENT
+import android.widget.FrameLayout.LayoutParams.WRAP_CONTENT
 import androidx.activity.ComponentActivity
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.LoadAdError
@@ -29,7 +33,7 @@ class MainActivity : ComponentActivity() {
                     Log.w("Ads", "Failed: ${p0.message}")
                 }
             }
-            addView(preloadBanner.view)
+            addView(preloadBanner.view, LayoutParams(MATCH_PARENT, WRAP_CONTENT, BOTTOM))
         })
     }
 }
