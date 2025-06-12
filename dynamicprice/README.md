@@ -17,6 +17,10 @@ applying the key-value targeting from each bid to an `AdManagerAdRequest.Builder
 Provides a wrapper implementation for the `AdManagerAdView` that automatically manages the bidding
 process and refreshes ads every 30 seconds using a lifecycleScope.
 
+#### [DynamicPriceInterstitial](android/src/androidMain/kotlin/DynamicPriceInterstitial.kt)
+
+Coroutine implementation for fetching bids and loading an `AdManagerInterstitialAd`.
+
 ### Google Mobile Ads 24
 
 [Migration Guide](https://developers.google.com/ad-manager/mobile-ads-sdk/android/migration#migrate-to-v24)
