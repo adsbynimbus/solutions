@@ -46,8 +46,6 @@ fun <T: BaseAdRequestBuilder<T>> BaseAdRequestBuilder<T>.applyDynamicPrice(
 ) {
     nimbusAdCache.put(nimbusAd.auctionId, nimbusAd)
     nimbusAd.targetingMap(mapping).forEach { putCustomTargeting(it.key, it.value) }
-    // Adds the type parameter since it is missing in the Android SDK
-    putCustomTargeting("na_type", nimbusAd.type())
 }
 
 /**
