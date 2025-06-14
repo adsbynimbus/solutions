@@ -94,25 +94,25 @@ fun BannerAd.handleEventForNimbus(
  * @param name passed from onAppEvent
  * @param data passed from onAppEvent
  * @param eventListener optional listener for Nimbus Ad events and errors
+ * @param activity optional context the ad is loaded in; current activity used as the default
  */
 fun InterstitialAd.handleEventForNimbus(
     name: String,
     data: String?,
     eventListener: AdController.Listener? = null,
+    activity: Activity? = Platform.currentActivity.get(),
 ) {
     data?.takeIf { name == "na_render" }?.runCatching {
         val event = jsonSerializer.decodeFromString<RenderEvent>(serializer(), this)
-        Platform.currentActivity.get()!!.let { activity ->
-            activity.runOnUiThread {
-                val controller = activity.loadBlockingAd(event.nimbusAd)!!
-                controller.attachListener(
-                    googleClickTracker = event.clickTracker,
-                    onClick = { adEventCallback?.onAdClicked() },
-                    onDestroy = { activity.destroy() }
-                )
-                eventListener?.let { controller.listeners.add(it) }
-                controller.start()
-            }
+        activity!!.runOnUiThread {
+            val controller = activity.loadBlockingAd(event.nimbusAd)!!
+            controller.attachListener(
+                googleClickTracker = event.clickTracker,
+                onClick = { adEventCallback?.onAdClicked() },
+                onDestroy = { activity.destroy() }
+            )
+            eventListener?.let { controller.listeners.add(it) }
+            controller.start()
         }
     }?.onFailure {
         adEventCallback?.onAdFailedToShowFullScreenContent(
@@ -122,7 +122,7 @@ fun InterstitialAd.handleEventForNimbus(
                 mediationAdError = null,
             )
         )
-        Platform.currentActivity.get().takeIf { it is AdActivity }?.destroy()
+        activity.takeIf { it is AdActivity }?.destroy()
     }
 }
 
