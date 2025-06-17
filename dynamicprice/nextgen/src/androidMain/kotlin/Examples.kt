@@ -158,7 +158,7 @@ fun loadRefreshingBanner(
                             eventCallback = eventCallback,
                         )?.apply {
                             bannerAd?.destroy()
-                            container.destroyNimbusAds()
+                            bannerAd?.dynamicPriceAd?.destroy()
                             container.removeAllViews()
                             container.addView(getView(activity))
                         }
@@ -167,7 +167,7 @@ fun loadRefreshingBanner(
             }
         } finally {
             bannerAd?.destroy()
-            container.destroyNimbusAds()
+            bannerAd?.dynamicPriceAd?.destroy()
             container.removeAllViews()
         }
     }

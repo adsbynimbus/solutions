@@ -85,7 +85,7 @@ class MainActivity : ComponentActivity() {
                             handleEventForNimbus(
                                 name = name,
                                 data = data,
-                                eventListener = object : AdController.Listener {
+                                listener = object : AdController.Listener {
                                     override fun onAdEvent(adEvent: AdEvent) {
                                         Log.i("Nimbus Ads", adEvent.name)
                                     }
