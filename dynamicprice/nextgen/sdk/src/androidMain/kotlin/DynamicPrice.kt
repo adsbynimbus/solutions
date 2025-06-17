@@ -1,4 +1,4 @@
-package adsbynimbus.solutions.dynamicprice.nextgen
+package com.adsbynimbus.dynamicprice.nextgen
 
 import android.app.Activity
 import android.app.Activity.OVERRIDE_TRANSITION_CLOSE

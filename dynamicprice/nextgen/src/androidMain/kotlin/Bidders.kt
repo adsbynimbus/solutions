@@ -2,6 +2,7 @@ package adsbynimbus.solutions.dynamicprice.nextgen
 
 import com.adsbynimbus.Nimbus
 import com.adsbynimbus.NimbusAdManager
+import com.adsbynimbus.dynamicprice.nextgen.applyDynamicPrice
 import com.adsbynimbus.lineitem.DEFAULT_BANNER
 import com.adsbynimbus.request.NimbusRequest
 import com.adsbynimbus.request.NimbusResponse

@@ -6,6 +6,8 @@ import android.util.Log
 import android.view.ViewGroup
 import androidx.core.view.doOnAttach
 import androidx.lifecycle.*
+import com.adsbynimbus.dynamicprice.nextgen.dynamicPriceAd
+import com.adsbynimbus.dynamicprice.nextgen.handleEventForNimbus
 import com.adsbynimbus.openrtb.enumerations.Position
 import com.adsbynimbus.openrtb.request.Format.Companion.BANNER_320_50
 import com.adsbynimbus.request.NimbusRequest.Companion.forBannerAd
@@ -20,13 +22,7 @@ import com.google.android.libraries.ads.mobile.sdk.common.AdLoadResult
 import com.google.android.libraries.ads.mobile.sdk.common.AdRequest
 import com.google.android.libraries.ads.mobile.sdk.interstitial.InterstitialAd
 import com.google.android.libraries.ads.mobile.sdk.interstitial.InterstitialAdEventCallback
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.isActive
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.supervisorScope
+import kotlinx.coroutines.*
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 import kotlin.time.TimeSource
