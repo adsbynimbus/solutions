@@ -24,6 +24,7 @@ kotlin {
             implementation(libs.bundles.androidx)
             implementation(libs.bundles.dynamicprice.nextgen)
             implementation(libs.kotlin.coroutines)
+            implementation(projects.dynamicprice.nextgen.sdk)
         }
     }
 }

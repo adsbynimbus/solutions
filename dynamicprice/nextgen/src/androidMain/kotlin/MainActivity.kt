@@ -7,6 +7,7 @@ import androidx.activity.ComponentActivity
 import androidx.lifecycle.lifecycleScope
 import adsbynimbus.solutions.dynamicprice.nextgen.databinding.ActivityMainBinding
 import com.adsbynimbus.NimbusError
+import com.adsbynimbus.dynamicprice.nextgen.handleEventForNimbus
 import com.adsbynimbus.render.AdController
 import com.adsbynimbus.render.AdEvent
 import com.google.android.libraries.ads.mobile.sdk.banner.*
