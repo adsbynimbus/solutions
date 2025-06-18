@@ -47,6 +47,8 @@ kotlin {
         languageVersion = KotlinVersion.KOTLIN_1_9
     }
 
+    explicitApi()
+
     sourceSets {
         androidMain.dependencies {
             implementation(libs.ads.nimbus)

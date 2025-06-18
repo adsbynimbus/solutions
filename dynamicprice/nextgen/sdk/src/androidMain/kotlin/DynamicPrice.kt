@@ -27,7 +27,7 @@ import com.google.android.libraries.ads.mobile.sdk.interstitial.InterstitialAd
 import kotlinx.coroutines.*
 
 /** Appends Nimbus Key Values to the Ad Manager request and caches the ad for rendering */
-fun <T: BaseAdRequestBuilder<T>> BaseAdRequestBuilder<T>.applyDynamicPrice(
+public fun <T: BaseAdRequestBuilder<T>> BaseAdRequestBuilder<T>.applyDynamicPrice(
     nimbusAd: NimbusResponse,
     mapping: Mapping,
 ) {
@@ -43,7 +43,7 @@ fun <T: BaseAdRequestBuilder<T>> BaseAdRequestBuilder<T>.applyDynamicPrice(
  * @param listener optional listener for Nimbus Ad events and errors
  * @param activity optional context the ad is loaded in; current activity used as the default
  */
-fun BannerAd.handleEventForNimbus(
+public fun BannerAd.handleEventForNimbus(
     name: String,
     data: String?,
     listener: AdController.Listener? = null,
@@ -62,7 +62,7 @@ fun BannerAd.handleEventForNimbus(
  * @param listener optional listener for Nimbus Ad events and errors
  * @param activity optional context the ad is loaded in; current activity used as the default
  */
-fun InterstitialAd.handleEventForNimbus(
+public fun InterstitialAd.handleEventForNimbus(
     name: String,
     data: String?,
     listener: AdController.Listener? = null,
@@ -88,11 +88,11 @@ fun InterstitialAd.handleEventForNimbus(
 }
 
 @JvmInline
-value class DynamicPriceAd(val adController: AdController) : java.io.Serializable {
-    fun destroy() = adController.destroy()
+public value class DynamicPriceAd(public val adController: AdController) : java.io.Serializable {
+    public fun destroy(): Unit = adController.destroy()
 }
 
-inline var Ad.dynamicPriceAd: DynamicPriceAd?
+public inline var Ad.dynamicPriceAd: DynamicPriceAd?
     get() = getSerializable(getResponseInfo().responseExtras, "na_render", DynamicPriceAd::class.java)
     internal set(value) {
         getResponseInfo().responseExtras.apply {
