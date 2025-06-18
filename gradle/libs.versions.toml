@@ -19,6 +19,7 @@ compose = "1.8.3"
 compose-activity = "1.10.1"
 compose-multiplatform = "1.8.2"
 
+dokka = "2.0.0"
 gson = "2.13.1"
 
 kotlin = "2.2.0"
@@ -31,6 +32,8 @@ okio = "3.13.0"
 android-app = { id = "com.android.application", version.ref = "android" }
 android-library = { id = "com.android.kotlin.multiplatform.library", version.ref = "android" }
 compose-multiplatform = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }
+dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
+dokka-javadoc = { id = "org.jetbrains.dokka-javadoc", version.ref = "dokka" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
