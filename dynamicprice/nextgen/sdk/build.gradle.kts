@@ -58,10 +58,12 @@ kotlin {
 }
 
 dokka {
-    moduleName = "Dynamic Price NextGen"
+    moduleName = "Dynamic Price Next Gen"
     dokkaGeneratorIsolation = ClassLoaderIsolation()
     dokkaSourceSets {
         named("androidMain") {
+            includes.from("Module.md")
+
             perPackageOption {
                 matchingRegex = """.*\.internal.*"""
                 suppress = true
