@@ -26,7 +26,7 @@ import com.google.android.libraries.ads.mobile.sdk.common.FullScreenContentError
 import com.google.android.libraries.ads.mobile.sdk.interstitial.InterstitialAd
 import kotlinx.coroutines.*
 
-/** Appends Nimbus Key Values to the Ad Manager request and caches the ad for rendering */
+/** Appends Nimbus Key Values to the Ad Manager request and caches the ad for rendering. */
 public fun <T: BaseAdRequestBuilder<T>> BaseAdRequestBuilder<T>.applyDynamicPrice(
     nimbusAd: NimbusResponse,
     mapping: Mapping,
@@ -36,12 +36,12 @@ public fun <T: BaseAdRequestBuilder<T>> BaseAdRequestBuilder<T>.applyDynamicPric
 }
 
 /**
- * Renders a Nimbus ad when the na_render app event is called
+ * Renders a [NimbusAd] when the `na_render` app event is called.
  *
- * @param name passed from onAppEvent
- * @param data passed from onAppEvent
- * @param listener optional listener for Nimbus Ad events and errors
- * @param activity optional context the ad is loaded in; current activity used as the default
+ * @param name event name passed from the `onAppEvent` callback.
+ * @param data associated event data passed from the `onAppEvent` callback.
+ * @param listener optional listener for Nimbus Ad events and errors.
+ * @param activity optional context the ad is loaded in; current activity used as the default.
  */
 public fun BannerAd.handleEventForNimbus(
     name: String,
@@ -55,12 +55,12 @@ public fun BannerAd.handleEventForNimbus(
 }
 
 /**
- * Renders a Nimbus Interstitial ad when the na_render app event is called
+ * Renders a [NimbusAd] when the `na_render` app event is called.
  *
- * @param name passed from onAppEvent
- * @param data passed from onAppEvent
- * @param listener optional listener for Nimbus Ad events and errors
- * @param activity optional context the ad is loaded in; current activity used as the default
+ * @param name event name passed from the `onAppEvent` callback.
+ * @param data associated event data passed from the `onAppEvent` callback.
+ * @param listener optional listener for Nimbus Ad events and errors.
+ * @param activity optional context the ad is loaded in; current activity used as the default.
  */
 public fun InterstitialAd.handleEventForNimbus(
     name: String,
@@ -87,11 +87,27 @@ public fun InterstitialAd.handleEventForNimbus(
     }
 }
 
+/**
+ * Wrapper for a Nimbus [AdController] associated with a NextGen [Ad] object.
+ *
+ * @see dynamicPriceAd
+ */
 @JvmInline
 public value class DynamicPriceAd(public val adController: AdController) : java.io.Serializable {
+    /** Destroys the associated [AdController]. */
     public fun destroy(): Unit = adController.destroy()
 }
 
+/**
+ * Retrieves the Nimbus rendered [DynamicPriceAd] if it won the auction.
+ *
+ * This accessor should be used to destroy the underlying `AdController` if one is present on an
+ * associated `BannerAd`; interstitials are destroyed automatically.
+ * ```
+ * bannerAd?.destroy()
+ * bannerAd?.dynamicPriceAd?.destroy()
+ * ```
+ */
 public inline var Ad.dynamicPriceAd: DynamicPriceAd?
     get() = getSerializable(getResponseInfo().responseExtras, "na_render", DynamicPriceAd::class.java)
     internal set(value) {
