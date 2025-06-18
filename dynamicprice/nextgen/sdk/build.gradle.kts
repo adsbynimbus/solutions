@@ -6,11 +6,22 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.dokka)
     alias(libs.plugins.dokka.javadoc)
+    `maven-publish`
+}
+
+val dokkaJavadocJar by tasks.registering(Jar::class) {
+    archiveClassifier.set("javadoc")
+    from(tasks.dokkaGeneratePublicationJavadoc.flatMap { it.outputDirectory })
+}
+
+val dokkaHtmlJar by tasks.registering(Jar::class) {
+    archiveClassifier.set("html-doc")
+    from(tasks.dokkaGeneratePublicationHtml.flatMap { it.outputDirectory })
 }
 
 kotlin {
     androidLibrary {
-        namespace = "com.adsbynimbus.dynamicprice.nextgen"
+        namespace = "$group.nextgen"
         compileSdk = libs.versions.android.sdk.get().toInt()
         minSdk = 24
 
@@ -19,6 +30,21 @@ kotlin {
                 compilerOptions.jvmTarget = JvmTarget.JVM_1_8
             }
         }
+
+        aarMetadata {
+            minCompileSdk = 35
+            minAgpVersion = "8.2.0" // Copied from NextGen metadata
+        }
+
+        mavenPublication {
+            artifact(dokkaJavadocJar)
+            artifact(dokkaHtmlJar)
+        }
+    }
+
+    compilerOptions {
+        apiVersion = KotlinVersion.KOTLIN_1_9
+        languageVersion = KotlinVersion.KOTLIN_1_9
     }
 
     sourceSets {
@@ -48,12 +74,9 @@ dokka {
     }
 }
 
-val dokkaJavadocJar by tasks.registering(Jar::class) {
-    archiveClassifier.set("javadoc")
-    from(tasks.dokkaGeneratePublicationJavadoc.flatMap { it.outputDirectory })
-}
-
-val dokkaHtmlJar by tasks.registering(Jar::class) {
-    archiveClassifier.set("html-doc")
-    from(tasks.dokkaGeneratePublicationHtml.flatMap { it.outputDirectory })
+publishing {
+    // Rename root publication to nextgen and android publication to nextgen-android
+    publications.withType<MavenPublication>().configureEach {
+        artifactId = "nextgen" + if (name != "kotlinMultiplatform") "-$name" else ""
+    }
 }
