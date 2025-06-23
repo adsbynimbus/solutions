@@ -2,7 +2,7 @@
 ads-amazon = "11.0.1"
 ads-google = "24.4.0"
 ads-google-nextgen = "0.16.0-alpha01"
-ads-nimbus = "2.30.0"
+ads-nimbus = "2.31.0"
 
 android = "8.10.1"
 android-jvm = "19"
