@@ -16,9 +16,10 @@ pluginManagement {
     }
 }
 
-val isFleetIDE = providers.systemProperty("idea.vendor.name").filter { it == "JetBrains" }
-val androidGradleOverride = isFleetIDE.map { "8.7.3" }
-    .orElse(providers.gradleProperty("android.gradle"))
+// Allows Android Gradle Plugin override if build is started from Android Studio or CI
+val androidGradleOverride = providers.gradleProperty("android.gradle").filter {
+    providers.systemProperty("idea.vendor.name").orNull != "JetBrains"
+}
 val androidJvmOverride = providers.gradleProperty("android.jvm")
 
 dependencyResolutionManagement {
