@@ -49,6 +49,7 @@ kotlin {
             implementation(compose.material3)
             implementation(compose.components.resources)
             implementation(libs.kotlin.coroutines)
+            implementation(projects.nimbusKmm)
         }
         androidMain.dependencies {
             implementation(libs.compose.activity)
