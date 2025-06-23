@@ -71,6 +71,7 @@ fun preloadBanner(
     loadBanner(
         builder = BannerAdRequest.Builder(BuildConfig.ADMANAGER_ADUNIT_ID, AdSize.BANNER),
         bidders = bidders,
+        eventCallback = object : BannerAdEventCallback { },
         bidderTimeout = timeout,
     )
 }
@@ -90,7 +91,7 @@ fun preloadBanner(
 suspend fun loadBanner(
     builder: BannerAdRequest.Builder,
     bidders: Collection<Bidder<*>>,
-    eventCallback: BannerAdEventCallback? = null,
+    eventCallback: BannerAdEventCallback,
     bidderTimeout: Duration = 3.seconds
 ): BannerAd? = supervisorScope {
     val (bids, auctionTime) = measureTimedValue { bidders.auction(timeout = bidderTimeout) }
@@ -110,7 +111,7 @@ suspend fun loadBanner(
                 override fun onAppEvent(name: String, data: String?) {
                     Log.v("Ads", "[${request.adUnitId}] AppEvent Received")
                     handleEventForNimbus(name, data)
-                    eventCallback?.onAppEvent(name, data)
+                    eventCallback.onAppEvent(name, data)
                 }
             }
         }
@@ -135,7 +136,7 @@ fun loadRefreshingBanner(
     container: ViewGroup,
     builder: () -> BannerAdRequest.Builder,
     bidders: Collection<Bidder<*>>,
-    eventCallback: BannerAdEventCallback? = null,
+    eventCallback: BannerAdEventCallback,
     preloadBanner: BannerAd? = null,
 ) = container.doOnAttach {
     val lifecycleOwner = it.findViewTreeLifecycleOwner() ?: throw Exception()
@@ -183,7 +184,7 @@ fun loadRefreshingBanner(
 suspend fun loadInterstitial(
     builder: AdRequest.Builder,
     bidders: Collection<Bidder<*>>,
-    eventCallback: InterstitialAdEventCallback? = null,
+    eventCallback: InterstitialAdEventCallback,
 ): InterstitialAd? = supervisorScope {
     val (bids, auctionTime) = measureTimedValue { bidders.auction() }
 
@@ -201,7 +202,7 @@ suspend fun loadInterstitial(
                 override fun onAppEvent(name: String, data: String?) {
                     Log.v("Ads", "[${request.adUnitId}] AppEvent Received")
                     handleEventForNimbus(name, data)
-                    eventCallback?.onAppEvent(name, data)
+                    eventCallback.onAppEvent(name, data)
                 }
             }
         }
