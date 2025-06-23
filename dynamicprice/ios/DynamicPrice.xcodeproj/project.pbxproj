@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 77;
+	objectVersion = 90;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -29,13 +29,11 @@
 /* Begin PBXFrameworksBuildPhase section */
 		961CA66B2CEA91D40084BE6A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				961CA69D2CEA93750084BE6A /* NimbusKit in Frameworks */,
 				964F21682DA057D8005105AB /* NimbusGAMKit in Frameworks */,
 				964F216F2DA0592C005105AB /* NimbusRequestAPSKit in Frameworks */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
@@ -70,8 +68,6 @@
 			);
 			buildRules = (
 			);
-			dependencies = (
-			);
 			fileSystemSynchronizedGroups = (
 				961CA6AD2CEA95C30084BE6A /* Sources */,
 			);
@@ -94,6 +90,7 @@
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1610;
 				LastUpgradeCheck = 1610;
+				ORGANIZATIONNAME = AdsByNimbus;
 				TargetAttributes = {
 					961CA66D2CEA91D40084BE6A = {
 						CreatedOnToolsVersion = 16.1;
@@ -112,7 +109,7 @@
 			packageReferences = (
 				961CA69B2CEA93750084BE6A /* XCRemoteSwiftPackageReference "nimbus-ios-sdk" */,
 			);
-			preferredProjectObjectVersion = 77;
+			preferredProjectObjectVersion = 90;
 			productRefGroup = 961CA6652CEA91D40084BE6A;
 			projectDirPath = "";
 			projectRoot = "";
@@ -125,15 +122,13 @@
 /* Begin PBXSourcesBuildPhase section */
 		961CA66A2CEA91D40084BE6A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		961CA6902CEA91D50084BE6A /* Debug */ = {
+		961CA6902CEA91D50084BE6A /* Debug configuration for PBXProject "DynamicPrice" */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 963ECC312CEB6354001C3012 /* Config.xcconfig */;
 			buildSettings = {
@@ -197,7 +192,7 @@
 			};
 			name = Debug;
 		};
-		961CA6912CEA91D50084BE6A /* Release */ = {
+		961CA6912CEA91D50084BE6A /* Release configuration for PBXProject "DynamicPrice" */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 963ECC312CEB6354001C3012 /* Config.xcconfig */;
 			buildSettings = {
@@ -254,7 +249,7 @@
 			};
 			name = Release;
 		};
-		961CA6932CEA91D50084BE6A /* Debug */ = {
+		961CA6932CEA91D50084BE6A /* Debug configuration for PBXNativeTarget "DynamicPrice" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -274,7 +269,7 @@
 			};
 			name = Debug;
 		};
-		961CA6942CEA91D50084BE6A /* Release */ = {
+		961CA6942CEA91D50084BE6A /* Release configuration for PBXNativeTarget "DynamicPrice" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -300,19 +295,17 @@
 		961CA6692CEA91D40084BE6A /* Build configuration list for PBXProject "DynamicPrice" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				961CA6902CEA91D50084BE6A /* Debug */,
-				961CA6912CEA91D50084BE6A /* Release */,
+				961CA6902CEA91D50084BE6A /* Debug configuration for PBXProject "DynamicPrice" */,
+				961CA6912CEA91D50084BE6A /* Release configuration for PBXProject "DynamicPrice" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		961CA6922CEA91D50084BE6A /* Build configuration list for PBXNativeTarget "DynamicPrice" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				961CA6932CEA91D50084BE6A /* Debug */,
-				961CA6942CEA91D50084BE6A /* Release */,
+				961CA6932CEA91D50084BE6A /* Debug configuration for PBXNativeTarget "DynamicPrice" */,
+				961CA6942CEA91D50084BE6A /* Release configuration for PBXNativeTarget "DynamicPrice" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
