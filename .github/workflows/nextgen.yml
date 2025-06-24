@@ -33,7 +33,6 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
         with:
           cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
-          dependency-graph: generate-and-submit
       - name: Set Version from Tag Name
         id: tag_name
         run: echo "VERSION=${GITHUB_REF/refs\/tags\/nextgen\//}" >> $GITHUB_OUTPUT
