@@ -16,6 +16,9 @@ jobs:
       group: ${{ github.workflow }}-${{ github.ref }}
       cancel-in-progress: true
     runs-on: macos-15
+    env:
+      ORG_GRADLE_PROJECT_openrtbUsername: ${{ github.actor }}
+      ORG_GRADLE_PROJECT_openrtbPassword: ${{ github.token }}
     steps:
       - name: Checkout sources
         uses: actions/checkout@v4

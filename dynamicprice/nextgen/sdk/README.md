@@ -30,9 +30,9 @@ GitHub Packages requires a username and personal access token for authentication
 
 ### Local Dev Environment
 
-The snippet above looks for a gradle property named `solutionsUsername` and `solutionsPassword` to authenticate
-for the repository named `solutions`. To prevent leaking credentials, these properties should be stored in your
-Gradle user home directory.
+The snippet above looks for a gradle property named `solutionsUsername` and `solutionsPassword` to
+authenticate for the repository named `solutions`. To prevent leaking credentials, these properties
+should be stored in your Gradle user home directory.
 
 #### ~/.gradle/gradle.properties
 
@@ -41,8 +41,8 @@ solutionsUsername=yourGithubUsername
 solutionsPassword=ghp_personalAccessTokenWithPackagesAccess
 ```
 
-You can also pass credentials directly in the maven repository definition using any type of Gradle provider.
-The name of the repository can be omitted when passing credentials directly.
+You can also pass credentials directly in the maven repository definition using any type of Gradle
+provider. The name of the repository can be omitted when passing credentials directly.
 
 ```kotlin
 dependencyResolutionManagement {
@@ -62,8 +62,8 @@ dependencyResolutionManagement {
 
 #### Github Actions
 
-Credentials can be passed directly to the Gradle build by declaring a top level environment variable with the
-GitHub workflow actor and token.
+Credentials can be passed directly to the Gradle build by declaring a top level environment variable
+with the GitHub workflow actor and token.
 
 ##### .github/workflows/build.yml
 ```yaml
@@ -71,6 +71,8 @@ env:
   ORG_GRADLE_PROJECT_solutionsUsername: ${{ github.actor }}
   ORG_GRADLE_PROJECT_solutionsPassword: ${{ github.token }}
 ```
+An example can be found in the [nextgen.yml](../../../.github/workflows/nextgen.yml) workflow.
+
 </details>
 
 #### build.gradle.kts
