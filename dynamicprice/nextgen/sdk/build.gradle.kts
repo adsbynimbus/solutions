@@ -84,4 +84,12 @@ publishing {
     publications.withType<MavenPublication>().configureEach {
         artifactId = "nextgen" + if (name != "kotlinMultiplatform") "-$name" else ""
     }
+    repositories {
+        providers.environmentVariable("GITHUB_REPOSITORY").orNull?.let {
+            maven("https://maven.pkg.github.com/$it") {
+                name = "github"
+                credentials(PasswordCredentials::class)
+            }
+        }
+    }
 }
