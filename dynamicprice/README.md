@@ -80,6 +80,6 @@ applying the key-value targeting from each bid to a `AdManagerRequest`.
 Provides a wrapper implementation for the `AdManagerBannerView` that automatically manages the bidding
 process and refreshes ads every 30 seconds when attached to the view hierarchy.
 
-## Next Gen
+## [Next Gen](nextgen)
 
-Android Implementation of Dynamic Price using the Google Mobile Ads Next Gen SDK
+Android Dynamic Price implementation and [SDK](nextgen/sdk) using the Google Mobile Ads Next Gen SDK.

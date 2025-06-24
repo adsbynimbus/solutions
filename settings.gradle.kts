@@ -32,6 +32,16 @@ dependencyResolutionManagement {
                 includeGroupAndSubgroups("org.chromium")
             }
         }
+        // If openrtb credentials are present, prefer GitHub Packages because it is free
+        if (providers.gradleProperty("openrtbUsername").isPresent) {
+            maven("https://maven.pkg.github.com/adsbynimbus/nimbus-openrtb") {
+                name = "openrtb"
+                credentials(PasswordCredentials::class)
+                content {
+                    includeGroup("com.adsbynimbus.openrtb")
+                }
+            }
+        }
         maven("https://adsbynimbus-public.s3.amazonaws.com/android/sdks") {
             content { includeGroupByRegex(".*\\.adsbynimbus.*") }
         }
@@ -49,4 +59,5 @@ rootProject.name = "nimbus-solutions"
 include(":compose:app")
 include(":dynamicprice:android")
 include(":dynamicprice:nextgen")
+include(":dynamicprice:nextgen:sdk")
 include(":omsdk:android")

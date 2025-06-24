@@ -1,4 +1,4 @@
-package adsbynimbus.solutions.dynamicprice.nextgen
+package com.adsbynimbus.dynamicprice.nextgen.internal
 
 import android.app.Activity
 import android.app.Activity.OVERRIDE_TRANSITION_CLOSE
@@ -9,20 +9,16 @@ import android.view.ViewGroup
 import android.webkit.WebView
 import androidx.annotation.WorkerThread
 import androidx.collection.LruCache
-import androidx.core.os.BundleCompat.getSerializable
 import androidx.core.view.allViews
 import com.adsbynimbus.NimbusAd
 import com.adsbynimbus.NimbusError
+import com.adsbynimbus.dynamicprice.nextgen.DynamicPriceAd
+import com.adsbynimbus.dynamicprice.nextgen.dynamicPriceAd
 import com.adsbynimbus.internal.Platform
 import com.adsbynimbus.internal.log
-import com.adsbynimbus.lineitem.Mapping
-import com.adsbynimbus.lineitem.targetingMap
 import com.adsbynimbus.render.*
-import com.adsbynimbus.render.Renderer.Companion.loadBlockingAd
-import com.adsbynimbus.request.NimbusResponse
 import com.google.android.libraries.ads.mobile.sdk.banner.BannerAd
 import com.google.android.libraries.ads.mobile.sdk.common.*
-import com.google.android.libraries.ads.mobile.sdk.common.FullScreenContentError.ErrorCode.MEDIATION_SHOW_ERROR
 import com.google.android.libraries.ads.mobile.sdk.interstitial.InterstitialAd
 import kotlinx.coroutines.*
 import kotlinx.serialization.*
@@ -35,99 +31,6 @@ import kotlin.coroutines.resumeWithException
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 import kotlin.use
-
-/** Appends Nimbus Key Values to the Ad Manager request and caches the ad for rendering */
-fun <T: BaseAdRequestBuilder<T>> BaseAdRequestBuilder<T>.applyDynamicPrice(
-    nimbusAd: NimbusResponse,
-    mapping: Mapping,
-) {
-    DynamicPriceRenderer.adCache.put(nimbusAd.auctionId, nimbusAd)
-    nimbusAd.targetingMap(mapping).forEach { putCustomTargeting(it.key, it.value) }
-}
-
-/**
- * Renders a Nimbus ad when the na_render app event is called
- *
- * @param name passed from onAppEvent
- * @param data passed from onAppEvent
- * @param listener optional listener for Nimbus Ad events and errors
- * @param activity optional context the ad is loaded in; current activity used as the default
- */
-fun BannerAd.handleEventForNimbus(
-    name: String,
-    data: String?,
-    listener: AdController.Listener? = null,
-    activity: Activity? = Platform.currentActivity.get(),
-) {
-    if (name == "na_render") DynamicPriceRenderer.render(this, data, listener) { nimbusAd ->
-        nimbusAd.renderInline(getView(activity!!).webViewParent)
-    }
-}
-
-/**
- * Renders a Nimbus Interstitial ad when the na_render app event is called
- *
- * @param name passed from onAppEvent
- * @param data passed from onAppEvent
- * @param listener optional listener for Nimbus Ad events and errors
- * @param activity optional context the ad is loaded in; current activity used as the default
- */
-fun InterstitialAd.handleEventForNimbus(
-    name: String,
-    data: String?,
-    listener: AdController.Listener? = null,
-    activity: Activity? = Platform.currentActivity.get(),
-) {
-    when (name) {
-        "na_render" -> DynamicPriceRenderer.render(this, data, listener) { nimbusAd ->
-            activity!!.loadBlockingAd(nimbusAd)!!
-        }
-        "na_show" -> DynamicPriceRenderer.renderScope.launch(Dispatchers.Main) {
-            dynamicPriceAd?.adController?.start() ?: run {
-                adEventCallback?.onAdFailedToShowFullScreenContent(
-                    FullScreenContentError(
-                        code = MEDIATION_SHOW_ERROR,
-                        message = "Nimbus controller failed to show",
-                        mediationAdError = null,
-                    )
-                )
-                maybeClearInterstitial(activity)
-            }
-        }
-    }
-}
-
-@JvmInline
-value class DynamicPriceAd(val adController: AdController) : java.io.Serializable {
-    fun destroy() = adController.destroy()
-}
-
-inline var Ad.dynamicPriceAd: DynamicPriceAd?
-    get() = getSerializable(getResponseInfo().responseExtras, "na_render", DynamicPriceAd::class.java)
-    internal set(value) {
-        getResponseInfo().responseExtras.apply {
-            if (value == null) remove("na_render") else putSerializable("na_render", value)
-        }
-    }
-
-internal inline val View.webViewParent: ViewGroup
-    get() = allViews.filterIsInstance<WebView>().first().parent as ViewGroup
-
-internal fun maybeClearInterstitial(activity: Activity? = Platform.currentActivity.get()) {
-    when {
-        activity !is AdActivity -> return
-        Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE -> activity.run {
-            overrideActivityTransition(OVERRIDE_TRANSITION_CLOSE, 0, 0)
-            finish()
-        }
-        else -> activity.run {
-            finish()
-            @Suppress("DEPRECATION")
-            overridePendingTransition(0, 0)
-        }
-    }
-}
-
 
 @Serializable
 internal class DynamicPriceRenderer(
@@ -202,6 +105,21 @@ internal class DynamicPriceRenderer(
             }
         })
 
+        fun maybeClearInterstitial(activity: Activity? = Platform.currentActivity.get()) {
+            when {
+                activity !is AdActivity -> return
+                Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE -> activity.run {
+                    overrideActivityTransition(OVERRIDE_TRANSITION_CLOSE, 0, 0)
+                    finish()
+                }
+                else -> activity.run {
+                    finish()
+                    @Suppress("DEPRECATION")
+                    overridePendingTransition(0, 0)
+                }
+            }
+        }
+
         val adCache = LruCache<String, NimbusAd>(10)
 
         @OptIn(ExperimentalSerializationApi::class)
@@ -216,7 +134,7 @@ internal class DynamicPriceRenderer(
 }
 
 @JvmInline @WorkerThread
-value class OneShotConnection(val connection: HttpURLConnection): AutoCloseable {
+internal value class OneShotConnection(val connection: HttpURLConnection): AutoCloseable {
     constructor(url: String, timeout: Duration = 30.seconds) : this(
         (URL(url).openConnection() as HttpURLConnection).apply {
             connectTimeout = timeout.inWholeMilliseconds.toInt()
@@ -228,8 +146,11 @@ value class OneShotConnection(val connection: HttpURLConnection): AutoCloseable 
     inline val responseCode: Int get() = runCatching { connection.responseCode }.getOrDefault(-1)
 }
 
+internal inline val View.webViewParent: ViewGroup
+    get() = allViews.filterIsInstance<WebView>().first().parent as ViewGroup
+
 /** Renders a Nimbus Ad into the provided ViewGroup */
-suspend inline fun NimbusAd.renderInline(container: ViewGroup): AdController {
+internal suspend inline fun NimbusAd.renderInline(container: ViewGroup): AdController {
     return suspendCancellableCoroutine { continuation ->
         Renderer.loadAd(
             this, container,
