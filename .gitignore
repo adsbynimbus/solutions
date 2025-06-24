@@ -18,6 +18,7 @@ schemas/
 *.hmap
 *.ipa
 *.keystore
+*.keys
 *.log
 *.xcframework
 *.zip

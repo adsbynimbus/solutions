@@ -15,6 +15,8 @@ androidx-lifecycle = "2.9.1"
 androidx-navigation = "2.9.0"
 androidx-startup = "1.2.0"
 
+api-admanager = "5.9.0"
+
 compose = "1.8.3"
 compose-activity = "1.10.1"
 compose-multiplatform = "1.8.2"
@@ -27,6 +29,8 @@ kotlin-coroutines = "1.10.2"
 
 okhttp = "4.12.0"
 okio = "3.13.0"
+
+slf4j = "2.0.17"
 
 [plugins]
 android-app = { id = "com.android.application", version.ref = "android" }
@@ -48,6 +52,8 @@ androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "a
 androidx-collection = { module = "androidx.collection:collection", version.ref = "androidx-collection" }
 androidx-lifecycle = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidx-lifecycle" }
 androidx-startup = { module = "androidx.startup:startup-runtime", version.ref = "androidx-startup" }
+api-admanager = { module = "com.google.api-ads:ads-lib", version.ref = "api-admanager" }
+api-admanager-axis = { module = "com.google.api-ads:dfp-axis", version.ref = "api-admanager" }
 compose-activity = { module = "androidx.activity:activity-compose", version.ref = "compose-activity" }
 compose-navigation = { module = "androidx.navigation:navigation-compose", version.ref = "androidx-navigation" }
 compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
@@ -57,6 +63,7 @@ gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 kotlin-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin-coroutines" }
 okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
 okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
+slf4j = { module = "org.slf4j:slf4j-simple", version.ref = "slf4j" }
 
 [bundles]
 androidx = ["androidx-collection", "androidx-lifecycle", "androidx-startup"]
@@ -67,6 +74,7 @@ androidx-compose = [
     "compose-ui-tooling",
     "compose-ui-tooling-preview",
 ]
+api-admanager = ["api-admanager", "api-admanager-axis"]
 dynamicprice = [
     "ads-amazon",
     "ads-google",
