@@ -6,11 +6,9 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
 }
 
-kotlin {
-    compilerOptions {
-        freeCompilerArgs.add("-Xwhen-guards")
-    }
+val githubActions = providers.environmentVariable("GITHUB_ACTIONS")
 
+kotlin {
     androidTarget {
         compilations.configureEach {
             compileTaskProvider.configure {
@@ -36,6 +34,10 @@ configurations.configureEach {
             because("11+ will not serve ads due to failed GMA 24+ check")
         }
     }
+}
+
+androidComponents.beforeVariants {
+    it.enable = name.contains("release", ignoreCase = true) || !githubActions.isPresent
 }
 
 android {

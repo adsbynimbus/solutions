@@ -5,11 +5,9 @@ plugins {
     alias(libs.plugins.android.app)
 }
 
-kotlin {
-    compilerOptions {
-        freeCompilerArgs.add("-Xwhen-guards")
-    }
+val githubActions = providers.environmentVariable("GITHUB_ACTIONS")
 
+kotlin {
     androidTarget {
         compilations.configureEach {
             compileTaskProvider.configure {
@@ -25,6 +23,10 @@ kotlin {
             implementation(libs.kotlin.coroutines)
         }
     }
+}
+
+androidComponents.beforeVariants {
+    it.enable = name.contains("release", ignoreCase = true) || !githubActions.isPresent
 }
 
 android {
