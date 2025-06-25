@@ -8,6 +8,8 @@ plugins {
     alias(libs.plugins.android.app)
 }
 
+val githubActions = providers.environmentVariable("GITHUB_ACTIONS")
+
 kotlin {
     androidTarget {
         compilations.configureEach {
@@ -26,7 +28,12 @@ kotlin {
     }
 
     iosTargets.configureEach {
-        binaries.framework {
+        binaries.framework(
+            buildList {
+                if (!githubActions.isPresent) add(DEBUG)
+                add(RELEASE)
+            })
+        {
             binaryOption("bundleId", "adsbynimbus.solutions.compose.app")
             binaryOption("bundleShortVersionString", "1.0")
             binaryOption("bundleVersion", "1.0")
@@ -49,6 +56,10 @@ kotlin {
             implementation(libs.compose.ui.tooling.preview)
         }
     }
+}
+
+androidComponents.beforeVariants {
+    it.enable = name.contains("release", ignoreCase = true) || !githubActions.isPresent
 }
 
 android {
