@@ -7,10 +7,6 @@ plugins {
 }
 
 kotlin {
-    compilerOptions {
-        freeCompilerArgs.add("-Xwhen-guards")
-    }
-
     androidTarget {
         compilations.configureEach {
             compileTaskProvider.configure {
