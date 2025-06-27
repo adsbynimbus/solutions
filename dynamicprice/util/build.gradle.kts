@@ -21,9 +21,9 @@ kotlin {
 
         @OptIn(ExperimentalKotlinGradlePluginApi::class)
         mainRun {
-            /* App Name    */ args("")
-            /* Network     */ args("")
-            /* Credentials */ args(layout.buildDirectory.file(credentialPath).get().asFile)
+            args(providers.gradleProperty("dynamicprice.util.appname").getOrElse(""))
+            args(providers.gradleProperty("dynamicprice.util.networkcode").getOrElse(""))
+            args(layout.buildDirectory.file(credentialPath).get().asFile)
             mainClass = "adsbynimbus.solutions.dynamicprice.util.AdManagerJvm"
         }
     }
