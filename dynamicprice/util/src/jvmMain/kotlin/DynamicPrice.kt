@@ -8,6 +8,42 @@ import kotlin.collections.addAll
 import kotlin.collections.windowed
 import kotlin.jvm.Throws
 
+suspend fun AdManagerAxisClient.setupDynamicPrice(
+    lineItemMapping: Collection<IntProgression>,
+    creativeSizes: Collection<Pair<Int, Int>>,
+    companyName: String = "Nimbus",
+    orderName: String = "Nimbus Dynamic Price"
+) = runCatching {
+    val nimbusCompany = findOrCreateNimbusCompany(name = companyName)
+    findOrCreateNimbusAuctionIdKey() // check creation but not required for rest of script
+    delay(1000)
+    val bidKey = findOrCreateNimbusBidKey()
+    val videoBidKey = findOrCreateNimbusVideoBidKey()
+    delay(1000)
+    val bidValues = findOrCreateBidValues(key = bidKey, ranges = lineItemMapping)
+    val videoValues = findOrCreateBidValues(key = videoBidKey, ranges = lineItemMapping)
+    val placement = findOrCreatePlacement(name = companyName)
+    val creatives = findOrCreateCreatives(
+        sizes = creativeSizes,
+        company = nimbusCompany,
+    )
+    if (creatives.size != creativeSizes.size) throw RuntimeException("Creatives not found")
+    val lineItems = createOrdersAndLines(
+        orderName = orderName,
+        company = nimbusCompany,
+        trafficker = userService.currentUser,
+        placement = placement,
+        creatives = creatives,
+        bidKey = bidKey,
+        bidValues = bidValues,
+        videoBidKey = videoBidKey,
+        videoBidValues = videoValues,
+        ranges = lineItemMapping
+    )
+    // This step takes a long time to complete
+    associateCreatives(lineItems, creatives)
+}
+
 /** Override `name` if more than 1 company found */
 suspend fun AdManagerAxisClient.findOrCreateNimbusCompany(
     name: String = "Nimbus",

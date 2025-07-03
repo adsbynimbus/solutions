@@ -27,36 +27,10 @@ actual suspend fun main(args: Array<String>) {
         Pair(300, 250),
         Pair(320, 480),
     )
-    context.runCatching {
-        val nimbusCompany = findOrCreateNimbusCompany(name = "Nimbus")
-        findOrCreateNimbusAuctionIdKey() // check creation but not required for rest of script
-        delay(1000)
-        val bidKey = findOrCreateNimbusBidKey()
-        val videoBidKey = findOrCreateNimbusVideoBidKey()
-        delay(1000)
-        val bidValues = findOrCreateBidValues(key = bidKey, ranges = lineItemMapping)
-        val videoValues = findOrCreateBidValues(key = videoBidKey, ranges = lineItemMapping)
-        val placement = findOrCreatePlacement(name = "Nimbus")
-        val creatives = findOrCreateCreatives(
-            sizes = supportedCreativeSizes,
-            company = nimbusCompany,
-        )
-        if (creatives.size != supportedCreativeSizes.size) throw RuntimeException("Creatives not found")
-        val lineItems = createOrdersAndLines(
-            orderName = "Nimbus Dynamic Price",
-            company = nimbusCompany,
-            trafficker = userService.currentUser,
-            placement = placement,
-            creatives = creatives,
-            bidKey = bidKey,
-            bidValues = bidValues,
-            videoBidKey = videoBidKey,
-            videoBidValues = videoValues,
-            ranges = lineItemMapping
-        )
-        // This step takes a long time to complete
-        associateCreatives(lineItems, creatives)
-    }.onFailure {
+    context.setupDynamicPrice(
+        lineItemMapping = lineItemMapping,
+        creativeSizes = supportedCreativeSizes,
+    ).onFailure {
         println(it.message)
         println(it)
     }
