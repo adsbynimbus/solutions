@@ -1,4 +1,4 @@
-package adsbynimbus.solutions.dynamicprice.util.data
+package adsbynimbus.solutions.dynamicprice.util.jobs
 
 /*
 fun AdManagerContext.setupDynamicPrice() {
