@@ -1,5 +1,10 @@
 package adsbynimbus.solutions.dynamicprice.util
 
+import adsbynimbus.solutions.dynamicprice.util.data.AdManager
+import adsbynimbus.solutions.dynamicprice.util.data.AdManagerAxisClient
+import adsbynimbus.solutions.dynamicprice.util.data.adManagerContext
+import adsbynimbus.solutions.dynamicprice.util.jobs.fixOrder
+import adsbynimbus.solutions.dynamicprice.util.jobs.updateOrders
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.window.Window
@@ -7,6 +12,9 @@ import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.io.File
 
 fun main() = application {
@@ -24,3 +32,9 @@ fun getDatabaseBuilder(): RoomDatabase.Builder<AppDatabase> = Room.databaseBuild
 
 @Composable @Preview
 fun LineItemAppPreview() = LineItemApp(getDatabaseBuilder())
+
+actual fun updateTextNow() {
+    CoroutineScope(Dispatchers.IO).launch {
+        (AdManager.context as AdManagerAxisClient).fixOrder()
+    }
+}

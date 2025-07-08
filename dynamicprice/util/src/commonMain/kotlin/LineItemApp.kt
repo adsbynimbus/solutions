@@ -105,7 +105,12 @@ fun Networks(
     ) {
         Button(onClick = {
             scope.launch {
-                database.networkDao.insert(AdManager.networks)
+                runCatching {
+                    // updateTextNow()
+                }.onFailure {
+                    print(it.stackTraceToString())
+                }
+
             }
         }) {
             Text("Refresh")

@@ -23,3 +23,5 @@ fun getRoomDatabase(builder: RoomDatabase.Builder<AppDatabase>): AppDatabase = b
     .fallbackToDestructiveMigration(dropAllTables = false)
     .setQueryCoroutineContext(Dispatchers.IO)
     .build()
+
+expect fun updateTextNow()

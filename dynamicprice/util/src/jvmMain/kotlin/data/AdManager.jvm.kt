@@ -23,11 +23,16 @@ class AdManagerAxisClient(
         Network(id = it.id, name = it.displayName, networkCode = it.networkCode)
     }
 
-    private val companiesService by lazy { services.get<CompanyServiceInterface>() }
-    private val orderService by lazy { services.get<OrderServiceInterface>() }
-    private val lineItemService by lazy { services.get<LineItemServiceInterface>() }
-    private val networkService by lazy { services.get<NetworkServiceInterface>() }
-    private val targetingService by lazy { services.get<CustomTargetingServiceInterface>() }
+    override val currentNetwork: Network
+        get() = networkService.currentNetwork.let {
+            Network(id = it.id, name = it.displayName, networkCode = it.networkCode)
+        }
+
+    val companiesService by lazy { services.get<CompanyServiceInterface>() }
+    val orderService by lazy { services.get<OrderServiceInterface>() }
+    val lineItemService by lazy { services.get<LineItemServiceInterface>() }
+    val networkService by lazy { services.get<NetworkServiceInterface>() }
+    val targetingService by lazy { services.get<CustomTargetingServiceInterface>() }
 
     inline fun <reified T> AdManagerServices.get(): T = get(session, T::class.java)
 }
@@ -35,8 +40,9 @@ class AdManagerAxisClient(
 actual fun adManagerContext(keyPath: String, appName: String, network: Network): AdManagerContext =
     AdManagerAxisClient(network = network, session = AdManagerSession.Builder()
         .withOAuth2Credential(JsonKeyFile(keyPath).credential)
-        .withApplicationName(appName)
-        .withNetworkCode(network.networkCode)
+        .withApplicationName(appName).apply {
+            if (network.networkCode.isNotEmpty()) withNetworkCode(network.networkCode)
+        }
         .build()
     )
 
