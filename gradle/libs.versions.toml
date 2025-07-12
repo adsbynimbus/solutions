@@ -2,7 +2,7 @@
 ads-amazon = "11.0.1"
 ads-google = "24.4.0"
 ads-google-nextgen = "0.17.0-alpha02"
-ads-nimbus = "2.31.0"
+ads-nimbus = "2.32.0"
 
 android = "8.10.1"
 android-jvm = "19"
@@ -12,7 +12,7 @@ android-sdk = "36"
 androidx-appcompat = "1.7.1"
 androidx-collection = "1.5.0"
 androidx-lifecycle = "2.9.1"
-androidx-navigation = "2.9.0"
+androidx-navigation = "2.9.1"
 androidx-startup = "1.2.0"
 
 api-admanager = "5.9.0"
@@ -27,8 +27,8 @@ gson = "2.13.1"
 kotlin = "2.2.0"
 kotlin-coroutines = "1.10.2"
 
-okhttp = "4.12.0"
-okio = "3.13.0"
+okhttp = "5.1.0"
+okio = "3.15.0"
 
 slf4j = "2.0.17"
 
