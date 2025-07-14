@@ -14,7 +14,8 @@ gcloud auth application-default login --scopes=https://www.googleapis.com/auth/a
 
 - dynamicprice.util.appname = Application name created in the Google cloud console
 - dynamicprice.util.network = Network code to apply Dynamic Price Setup
+- dynamicprice.util.orderid = Order ID to reconfigure with lines from $50-$125
 
 ```shell
-./gradlew :dynamicprice:util:jvmRun -Pdynamicprice.util.appname=AppName -Pdynamicprice.util.networkcode=23309463249
+./gradlew :dynamicprice:util:jvmRun -Pdynamicprice.util.appname= -Pdynamicprice.util.networkcode= -Pdynamicprice.util.orderid=
 ```
