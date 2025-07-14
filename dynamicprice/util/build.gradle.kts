@@ -23,8 +23,9 @@ kotlin {
         mainRun {
             args(providers.gradleProperty("dynamicprice.util.appname").getOrElse(""))
             args(providers.gradleProperty("dynamicprice.util.networkcode").getOrElse(""))
+            args(providers.gradleProperty("dynamicprice.util.orderid").getOrElse(""))
             args(layout.buildDirectory.file(credentialPath).get().asFile)
-            mainClass = "adsbynimbus.solutions.dynamicprice.util.AdManagerJvm"
+            mainClass = "adsbynimbus.solutions.dynamicprice.util.update.Reconfigure"
         }
     }
 

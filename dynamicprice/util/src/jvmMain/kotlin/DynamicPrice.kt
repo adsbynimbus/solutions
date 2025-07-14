@@ -12,7 +12,7 @@ suspend fun AdManagerAxisClient.setupDynamicPrice(
     lineItemMapping: Collection<IntProgression>,
     creativeSizes: Collection<Pair<Int, Int>>,
     companyName: String = "Nimbus",
-    orderName: String = "Nimbus Dynamic Price"
+    orderName: String = "Nimbus Dynamic Price",
 ) = runCatching {
     val nimbusCompany = findOrCreateNimbusCompany(name = companyName)
     findOrCreateNimbusAuctionIdKey() // check creation but not required for rest of script

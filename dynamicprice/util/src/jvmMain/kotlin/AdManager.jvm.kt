@@ -11,7 +11,7 @@ actual suspend fun main(args: Array<String>) {
     val context: AdManagerAxisClient = adManagerContext(
         appName = args[0],
         networkCode = args[1],
-        credential = args.getOrNull(2)?.let { JsonKeyFile(it).credential } ?: applicationDefaultCredential
+        credential = args.getOrNull(3)?.let { JsonKeyFile(it).credential } ?: applicationDefaultCredential
     )
     // Ranges should not overlap and should match the LinearPriceMapping used in app
     val lineItemMapping = listOf(
