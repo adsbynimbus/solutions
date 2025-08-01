@@ -40,4 +40,4 @@ jobs:
         if: github.repository == 'adsbynimbus/solutions'
         env:
           ORG_GRADLE_PROJECT_version: ${{ steps.tag_name.outputs.VERSION }}
-        run: ./gradlew :dynamicprice:nextgen:sdk:publish
+        run: ./gradlew :dynamicprice:nextgen:sdk:publish -Dkotlin.build.report.output=file
