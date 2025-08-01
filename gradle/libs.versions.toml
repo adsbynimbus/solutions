@@ -11,8 +11,8 @@ android-sdk = "36"
 
 androidx-appcompat = "1.7.1"
 androidx-collection = "1.5.0"
-androidx-lifecycle = "2.9.1"
-androidx-navigation = "2.9.1"
+androidx-lifecycle = "2.9.2"
+androidx-navigation = "2.9.3"
 androidx-startup = "1.2.0"
 
 api-admanager = "5.9.0"
