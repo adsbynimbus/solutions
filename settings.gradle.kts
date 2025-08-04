@@ -56,9 +56,9 @@ dependencyResolutionManagement {
 
 rootProject.name = "nimbus-solutions"
 
-include(":omsdk:android")
-include(":dynamicprice:util")
-include(":dynamicprice:nextgen:sdk")
-include(":dynamicprice:nextgen")
-include(":dynamicprice:android")
 include(":compose:app")
+include(":dynamicprice:android")
+include(":dynamicprice:nextgen")
+include(":dynamicprice:nextgen:sdk")
+include(":dynamicprice:util")
+include(":omsdk:android")
