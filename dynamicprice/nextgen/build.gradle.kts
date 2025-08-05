@@ -29,9 +29,15 @@ kotlin {
 
 configurations.configureEach {
     resolutionStrategy.eachDependency {
-        if (requested.module == libs.ads.amazon.get().module) {
-            useVersion("10.1.1")
-            because("11+ will not serve ads due to failed GMA 24+ check")
+        when (requested.module) {
+            libs.ads.amazon.get().module -> {
+                useVersion("10.1.1")
+                because("11+ will not serve ads due to failed GMA 24+ check")
+            }
+            libs.okhttp.get().module -> {
+                useVersion("4.12.0")
+                because("Google Next Gen references a class that does not exist in 5+")
+            }
         }
     }
 }
