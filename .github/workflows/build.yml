@@ -33,12 +33,13 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
         with:
           cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
+          cache-read-only: false
           dependency-graph: generate-and-submit
       - name: Build
         run: ./gradlew build
       - name: Upload build reports
         uses: actions/upload-artifact@v4
-        if: always()
+        if: ${{ !cancelled() }}
         with:
           name: build-reports
           path: '**/build/reports/'
