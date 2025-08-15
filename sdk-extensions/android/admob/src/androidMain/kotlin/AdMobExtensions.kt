@@ -24,7 +24,9 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 
 /**
- * Include AdMob adaptive banner in Nimbus auction.
+ * Include AdMob anchored adaptive banner in Nimbus auction.
+ *
+ * NOTE: This API is pre-release and subject to change when moved to the Nimbus SDK
  *
  * @param adUnitId ad unit id obtained from the AdMob dashboard
  */

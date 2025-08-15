@@ -1,4 +1,4 @@
-name: AdMob Adaptive Extensions
+name: AdMob Extensions
 
 on:
   push:
@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   build:
-    name: Publish Next Gen SDK
+    name: Publish AdMob Extensions SDK
     runs-on: ubuntu-latest
     env:
       ORG_GRADLE_PROJECT_githubUsername: ${{ github.actor }}

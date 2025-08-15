@@ -4,12 +4,12 @@ Provides support for AdMob adaptive banners
 
 ## Usage
 
-Replace calls to `NimbusRequest.withAdMobBanner` with `NimbusRequest.withAdMobAdaptiveBanner`
+Replace calls to `NimbusRequest.withAdMobBanner` with `NimbusRequest.withAdMobAnchoredBanner`
 
 ```kotlin
-lateinit var nimbusRequest: NimbusRequest
-
-nimbusRequest.withAdMobAdaptiveBanner(adUnitId)
+NimbusRequest.forBannerAd(position = ..., Format.BANNER_320_50, Position.FOOTER).apply {
+    withAdMobAnchoredBanner(adUnitId = "ca-pub...")
+}
 ```
 
 ## Manual Setup
@@ -29,6 +29,6 @@ Add the `com.adsbynimbus.solutions:extension-admob` module to you application or
 
 ```kotlin
 dependencies {
-    implementation("com.adsbynimbus.solutions:admob:2.33.0")
+    implementation("com.adsbynimbus.solutions:extension-admob:2.33.0")
 }
 ```
