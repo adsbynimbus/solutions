@@ -65,6 +65,12 @@ dependencies.constraints {
             because("BundleCompat.getSerializable added in 1.13.0")
         }
     }
+    androidMainImplementation(libs.okio) {
+        version {
+            require("[3.4.0,)")
+            because("Addresses CVE-2023-3635 reported on Okio 3.2.0")
+        }
+    }
 }
 
 dokka {
