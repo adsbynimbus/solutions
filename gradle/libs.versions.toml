@@ -1,7 +1,7 @@
 [versions]
 ads-amazon = "11.0.1"
 ads-google = "24.5.0"
-ads-google-nextgen = "0.18.0-beta01"
+ads-google-nextgen = "0.19.0-beta01"
 ads-nimbus = "2.33.0"
 
 android = "8.11.1"
@@ -11,6 +11,7 @@ android-sdk = "36"
 
 androidx-appcompat = "1.7.1"
 androidx-collection = "1.5.0"
+androidx-core = "1.17.0"
 androidx-lifecycle = "2.9.2"
 androidx-navigation = "2.9.3"
 androidx-startup = "1.2.0"
@@ -51,6 +52,7 @@ ads-nimbus-admob = { module = "com.adsbynimbus.android:extension-admob", version
 ads-nimbus-google = { module = "com.adsbynimbus.android:extension-google", version.ref = "ads-nimbus" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
 androidx-collection = { module = "androidx.collection:collection", version.ref = "androidx-collection" }
+androidx-core = { module = "androidx.core:core-ktx", version.ref = "androidx-core" }
 androidx-lifecycle = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidx-lifecycle" }
 androidx-startup = { module = "androidx.startup:startup-runtime", version.ref = "androidx-startup" }
 api-admanager = { module = "com.google.api-ads:ads-lib", version.ref = "api-admanager" }

@@ -81,6 +81,6 @@ Add the `com.adsbynimbus.dynamicprice:nextgen` module to you application or libr
 
 ```kotlin
 dependencies {
-    implementation("com.adsbynimbus.dynamicprice:nextgen:0.17.0")
+    implementation("com.adsbynimbus.dynamicprice:nextgen:0.19.0")
 }
 ```
