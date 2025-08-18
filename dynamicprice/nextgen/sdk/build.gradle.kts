@@ -58,6 +58,15 @@ kotlin {
     }
 }
 
+dependencies.constraints {
+    androidMainImplementation(libs.androidx.core) {
+        version {
+            require("[1.13.0,)")
+            because("BundleCompat.getSerializable added in 1.13.0")
+        }
+    }
+}
+
 dokka {
     moduleName = "Dynamic Price Next Gen"
     dokkaGeneratorIsolation = ClassLoaderIsolation()
