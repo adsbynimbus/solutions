@@ -104,7 +104,6 @@ fun App(
             startDestination = activity.appName,
             modifier = Modifier
                 .fillMaxSize()
-                .verticalScroll(rememberScrollState())
                 .padding(innerPadding)
         ) {
             composable(route = activity.appName) {
@@ -141,6 +140,9 @@ fun App(
                     }) {
                         Text(VideoInterstitial.screen)
                     }
+                    Button(onClick = { navController.navigate("list") }) {
+                        Text("Exposure Test")
+                    }
                     Text(
                         text = "If an ad does not appear when clicking a button Nimbus mimicked a no fill scenario, please back out and try again.",
                         modifier = Modifier.padding(8.dp),
@@ -161,6 +163,9 @@ fun App(
                     adManager = adManager,
                     modifier = Modifier.padding(4.dp).width(320.dp).height(480.dp),
                 )
+            }
+            composable(route = "list") {
+               ListWithAdInsertion(cells = items)
             }
         }
     }
