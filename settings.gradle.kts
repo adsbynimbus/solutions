@@ -67,3 +67,16 @@ include(":dynamicprice:nextgen:sdk")
 include(":dynamicprice:util")
 include(":omsdk:android")
 include(":sdk-extensions:android:admob")
+
+layout.rootDirectory.dir("../nimbus-android/library").asFile.takeIf { it.exists() }?.let {
+    includeBuild(it) {
+        dependencySubstitution {
+            substitute(module("com.adsbynimbus.android:nimbus-core")).using(project(":core"))
+            substitute(module("com.adsbynimbus.android:nimbus-render")).using(project(":render"))
+            substitute(module("com.adsbynimbus.android:nimbus-request")).using(project(":request"))
+            substitute(module("com.adsbynimbus.android:nimbus-static")).using(project(":static"))
+            substitute(module("com.adsbynimbus.android:nimbus-video")).using(project(":video"))
+            substitute(module("com.adsbynimbus.android:nimbus")).using(project(":all"))
+        }
+    }
+}
