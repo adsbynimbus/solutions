@@ -3,6 +3,7 @@
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {
+    includeBuild("../node_modules/@react-native/gradle-plugin")
     repositories {
         google {
             mavenContent {
@@ -15,6 +16,10 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
+
+plugins { id("com.facebook.react.settings") }
+
+//extensions.configure(com.facebook.react.ReactSettingsExtension){ ex -> ex.autolinkLibrariesFromCommand() }
 
 // Allows Android Gradle Plugin override if build is started from Android Studio or CI
 val androidGradleOverride = providers.gradleProperty("android.gradle").filter {
@@ -48,20 +53,18 @@ dependencyResolutionManagement {
         mavenCentral()
     }
     // Allows for overriding Android Tooling using gradle.properties
-    versionCatalogs.configureEach {
-        if (androidGradleOverride.isPresent) version("android", androidGradleOverride.get())
-        if (androidJvmOverride.isPresent) version("android-jvm", androidJvmOverride.get())
+    versionCatalogs {
+        create("libs") {
+            from(files("../../gradle/libs.versions.toml"))
+        }
+        configureEach {
+            if (androidGradleOverride.isPresent) version("android", androidGradleOverride.get())
+            if (androidJvmOverride.isPresent) version("android-jvm", androidJvmOverride.get())
+        }
     }
 }
 
-rootProject.name = "nimbus-solutions"
+rootProject.name = "reactnative"
 
-include(":compose:app")
-include(":dynamicprice:android")
-include(":dynamicprice:nextgen")
-include(":dynamicprice:nextgen:sdk")
-include(":dynamicprice:util")
-include(":omsdk:android")
-include(":sdk-extensions:android:admob")
-
-includeBuild("reactnative/android")
+include(":app")
+includeBuild("../node_modules/@react-native/gradle-plugin")

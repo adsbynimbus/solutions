@@ -37,8 +37,15 @@ xcuserdata/
 local.properties
 !solutions.xcworkspace
 
+# Node.js
+node_modules/
+
 # OS
 .DS_Store
+
+# React
+.metro-health-check*
+*.jsbundle
 
 # Swift Package Manager
 .swiftpm/
