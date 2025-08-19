@@ -4,9 +4,9 @@ build/
 captures/
 classes/
 gen/
-node_modules/
 schemas/
 .build/
+.cxx/
 .externalNativeBuild/
 .gradle/
 .kotlin/
@@ -39,8 +39,16 @@ local.properties
 local.xcconfig
 !solutions.xcworkspace
 
+# Node.js
+node_modules/
+package-lock.json
+
 # OS
 .DS_Store
+
+# React
+.metro-health-check*
+*.jsbundle
 
 # Swift Package Manager
 .swiftpm/

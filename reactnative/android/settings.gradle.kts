@@ -1,8 +1,7 @@
 @file:Suppress("UnstableApiUsage")
 
-enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
-
 pluginManagement {
+    includeBuild("../node_modules/@react-native/gradle-plugin") // Use modified gradle plugin
     repositories {
         google {
             mavenContent {
@@ -16,12 +15,20 @@ pluginManagement {
     }
 }
 
+plugins { id("com.facebook.react.settings") }
+
+val npx = providers.exec { commandLine("which", "npx") }.standardOutput.asText.get().trim()
+extensions.configure<com.facebook.react.ReactSettingsExtension> {
+    autolinkLibrariesFromCommand(
+        command = listOf(npx, "@react-native-community/cli", "config"),
+    )
+}
+
 // Allows Android Gradle Plugin override if build is started from Android Studio or CI
 val androidGradleOverride = providers.gradleProperty("android.gradle").filter {
     providers.systemProperty("idea.vendor.name").orNull != "JetBrains"
 }
 val androidJvmOverride = providers.gradleProperty("android.jvm")
-val kotlinOverride = providers.gradleProperty("kotlin.gradle")
 
 dependencyResolutionManagement {
     repositories {
@@ -30,8 +37,6 @@ dependencyResolutionManagement {
                 includeGroupAndSubgroups("androidx")
                 includeGroupAndSubgroups("com.android")
                 includeGroupAndSubgroups("com.google")
-                // The latest api-client binaries are not in the Google repo; recheck this later
-                excludeGroupAndSubgroups("com.google.api-client")
                 includeGroupAndSubgroups("org.chromium")
             }
         }
@@ -51,20 +56,18 @@ dependencyResolutionManagement {
         mavenCentral()
     }
     // Allows for overriding Android Tooling using gradle.properties
-    versionCatalogs.configureEach {
-        if (androidGradleOverride.isPresent) version("android", androidGradleOverride.get())
-        if (androidJvmOverride.isPresent) version("android-jvm", androidJvmOverride.get())
-        if (kotlinOverride.isPresent) version("kotlin", kotlinOverride.get())
+    versionCatalogs {
+        create("libs") {
+            from(files("../../gradle/libs.versions.toml"))
+        }
+        configureEach {
+            if (androidGradleOverride.isPresent) version("android", androidGradleOverride.get())
+            if (androidJvmOverride.isPresent) version("android-jvm", androidJvmOverride.get())
+        }
     }
 }
-rootProject.name = "nimbus-solutions"
 
-include(":compose:app")
-include(":dynamicprice:android")
-include(":dynamicprice:nextgen")
-include(":dynamicprice:nextgen:sdk")
-include(":dynamicprice:util")
-include(":omsdk:android")
-include(":sdk-extensions:android:admob")
+rootProject.name = "reactnative-android"
 
-includeBuild("reactnative")
+include("app")
+includeBuild("../node_modules/@react-native/gradle-plugin")
