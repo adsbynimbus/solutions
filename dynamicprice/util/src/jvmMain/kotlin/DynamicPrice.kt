@@ -217,7 +217,7 @@ suspend fun AdManagerAxisClient.findOrCreateCreatives(
             """.trimIndent()
         }
     }
-    if (newCreatives.size > 0) {
+    if (newCreatives.isNotEmpty()) {
         addAll(creativeService.createCreatives(newCreatives.toTypedArray()))
     }
 }
