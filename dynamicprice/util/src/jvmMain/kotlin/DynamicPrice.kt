@@ -327,5 +327,8 @@ suspend fun AdManagerAxisClient.associateCreatives(
             }
         }
     }
-    lineItemCreativeService.createLineItemCreativeAssociations(associations.toTypedArray())
+    associations.windowed(size = pageSize, step = pageSize, partialWindows = true).forEach {
+        lineItemCreativeService.createLineItemCreativeAssociations(it.toTypedArray())
+        delay(1000)
+    }
 }
