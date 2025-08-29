@@ -10,7 +10,7 @@ fun findBy(id: Long): Statement = statement {
 
 fun findBy(name: String): Statement = statement {
     where("name = :name")
-    withBindVariableValue("name", "$name")
+    withBindVariableValue("name", name)
 }.toStatement()
 
 fun findAllBy(name: String): Statement = statement {
