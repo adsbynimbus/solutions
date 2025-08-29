@@ -16,7 +16,7 @@ androidx-lifecycle = "2.9.2"
 androidx-navigation = "2.9.3"
 androidx-startup = "1.2.0"
 
-api-admanager = "5.9.0"
+api-admanager = "5.10.0"
 
 compose = "1.9.0"
 compose-activity = "1.10.1"
