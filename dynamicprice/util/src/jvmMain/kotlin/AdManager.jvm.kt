@@ -2,12 +2,10 @@
 package adsbynimbus.solutions.dynamicprice.util
 
 import com.google.api.ads.admanager.axis.factory.*
-import com.google.api.ads.admanager.axis.v202408.LineItemCreativeAssociationService
-import com.google.api.ads.admanager.axis.v202505.*
+import com.google.api.ads.admanager.axis.v202508.*
 import com.google.api.ads.admanager.lib.client.*
 import com.google.api.ads.common.lib.auth.*
 import com.google.api.client.auth.oauth2.*
-import kotlinx.coroutines.*
 
 actual suspend fun main(args: Array<String>) {
     val context: AdManagerAxisClient = adManagerContext(

@@ -1,7 +1,7 @@
 package adsbynimbus.solutions.dynamicprice.util
 
-import com.google.api.ads.admanager.axis.v202505.*
-import com.google.api.ads.admanager.axis.v202505.CustomTargetingKeyType.*
+import com.google.api.ads.admanager.axis.v202508.*
+import com.google.api.ads.admanager.axis.v202508.CustomTargetingKeyType.*
 import java.text.DecimalFormat
 import kotlinx.coroutines.delay
 import kotlin.collections.addAll
@@ -217,7 +217,7 @@ suspend fun AdManagerAxisClient.findOrCreateCreatives(
             """.trimIndent()
         }
     }
-    if (newCreatives.size > 0) {
+    if (newCreatives.isNotEmpty()) {
         addAll(creativeService.createCreatives(newCreatives.toTypedArray()))
     }
 }
@@ -327,5 +327,8 @@ suspend fun AdManagerAxisClient.associateCreatives(
             }
         }
     }
-    lineItemCreativeService.createLineItemCreativeAssociations(associations.toTypedArray())
+    associations.windowed(size = pageSize, step = pageSize, partialWindows = true).forEach {
+        lineItemCreativeService.createLineItemCreativeAssociations(it.toTypedArray())
+        delay(1000)
+    }
 }

@@ -1,7 +1,7 @@
 package adsbynimbus.solutions.dynamicprice.util
 
-import com.google.api.ads.admanager.axis.utils.v202505.*
-import com.google.api.ads.admanager.axis.v202505.*
+import com.google.api.ads.admanager.axis.utils.v202508.*
+import com.google.api.ads.admanager.axis.v202508.*
 
 fun findBy(id: Long): Statement = statement {
     where("id = :id")
@@ -10,7 +10,7 @@ fun findBy(id: Long): Statement = statement {
 
 fun findBy(name: String): Statement = statement {
     where("name = :name")
-    withBindVariableValue("name", "$name")
+    withBindVariableValue("name", name)
 }.toStatement()
 
 fun findAllBy(name: String): Statement = statement {
