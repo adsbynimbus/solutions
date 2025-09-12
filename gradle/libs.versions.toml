@@ -1,10 +1,10 @@
 [versions]
-ads-amazon = "11.0.1"
-ads-google = "24.5.0"
+ads-amazon = "11.0.4"
+ads-google = "24.6.0"
 ads-google-nextgen = "0.19.0-beta01"
-ads-nimbus = "2.33.0"
+ads-nimbus = "2.33.2"
 
-android = "8.11.1"
+android = "8.11.2"
 android-jvm = "19"
 android-min = "26"
 android-sdk = "36"
@@ -12,20 +12,22 @@ android-sdk = "36"
 androidx-appcompat = "1.7.1"
 androidx-collection = "1.5.0"
 androidx-core = "1.17.0"
-androidx-lifecycle = "2.9.2"
-androidx-navigation = "2.9.3"
+androidx-lifecycle = "2.9.3"
+androidx-navigation = "2.9.4"
 androidx-startup = "1.2.0"
 
 api-admanager = "5.10.0"
 
-compose = "1.9.0"
-compose-activity = "1.10.1"
-compose-multiplatform = "1.8.2"
+compose = "1.9.1"
+compose-activity = "1.11.0"
+compose-multiplatform = "1.9.0-rc02"
 
-dokka = "2.0.0"
+dokka = "2.1.0-Beta"
 gson = "2.13.1"
 
-kotlin = "2.2.10"
+iabtcf = "2.0.10"
+
+kotlin = "2.2.20"
 kotlin-coroutines = "1.10.2"
 
 okhttp = "5.1.0"
@@ -63,6 +65,7 @@ compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
 compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
 compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
+iabtcf = { module = "com.iabtcf:iabtcf-decoder", version.ref = "iabtcf" }
 kotlin-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin-coroutines" }
 okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
 okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
@@ -84,6 +87,7 @@ dynamicprice = [
     "ads-nimbus",
     "ads-nimbus-google",
     "androidx-appcompat", # Referenced by Amazon but not included in build
+    "iabtcf", # Referenced by Amazon but not included in build
 ]
 dynamicprice-nextgen = [
     "ads-amazon",

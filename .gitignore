@@ -4,6 +4,7 @@ build/
 captures/
 classes/
 gen/
+node_modules/
 schemas/
 .build/
 .externalNativeBuild/
