@@ -17,15 +17,20 @@ androidx-navigation = "2.9.4"
 androidx-startup = "1.2.0"
 
 api-admanager = "5.10.0"
+api-google-auth = "1.39.0"
+api-google-client = "2.8.1"
 
 compose = "1.9.1"
 compose-activity = "1.11.0"
 compose-multiplatform = "1.9.0-rc02"
 
-dokka = "2.1.0-Beta"
-gson = "2.13.1"
+commons-beanutils = "1.11.0"
+commmons-lang3 = "3.18.0"
 
+dokka = "2.1.0-Beta"
+gson = "2.13.2"
 iabtcf = "2.0.10"
+jackson = "2.20.0"
 
 kotlin = "2.2.20"
 kotlin-coroutines = "1.10.2"
@@ -59,6 +64,12 @@ androidx-lifecycle = { module = "androidx.lifecycle:lifecycle-runtime-ktx", vers
 androidx-startup = { module = "androidx.startup:startup-runtime", version.ref = "androidx-startup" }
 api-admanager = { module = "com.google.api-ads:ads-lib", version.ref = "api-admanager" }
 api-admanager-axis = { module = "com.google.api-ads:dfp-axis", version.ref = "api-admanager" }
+api-google-auth-credentials = { module = "com.google.auth:google-auth-library-credentials", version.ref = "api-google-auth" }
+api-google-auth-oauth2 = { module = "com.google.auth:google-auth-library-oauth2-http", version.ref = "api-google-auth" }
+api-google-client = { module = "com.google.api-client:google-api-client", version.ref = "api-google-client" }
+api-google-client-gson = { module = "com.google.api-client:google-api-client-gson", version.ref = "api-google-client" }
+commons-beanutils = { module = "commons-beanutils:commons-beanutils", version.ref = "commons-beanutils" }
+commons-lang3 = { module = "org.apache.commons:commons-lang3", version.ref = "commmons-lang3" }
 compose-activity = { module = "androidx.activity:activity-compose", version.ref = "compose-activity" }
 compose-navigation = { module = "androidx.navigation:navigation-compose", version.ref = "androidx-navigation" }
 compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
@@ -66,6 +77,7 @@ compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = 
 compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 iabtcf = { module = "com.iabtcf:iabtcf-decoder", version.ref = "iabtcf" }
+jackson = { module = "com.fasterxml.jackson.core:jackson-core", version.ref = "jackson" }
 kotlin-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin-coroutines" }
 okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
 okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
@@ -80,7 +92,18 @@ androidx-compose = [
     "compose-ui-tooling",
     "compose-ui-tooling-preview",
 ]
-api-admanager = ["api-admanager", "api-admanager-axis"]
+api-admanager = [
+    "api-admanager",
+    "api-admanager-axis",
+    "api-google-auth-credentials",
+    "api-google-auth-oauth2",
+    "api-google-client",
+    "api-google-client-gson",
+    "commons-beanutils",
+    "commons-lang3",
+    "gson",
+    "jackson",
+]
 dynamicprice = [
     "ads-amazon",
     "ads-google",

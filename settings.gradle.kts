@@ -29,6 +29,8 @@ dependencyResolutionManagement {
                 includeGroupAndSubgroups("androidx")
                 includeGroupAndSubgroups("com.android")
                 includeGroupAndSubgroups("com.google")
+                // The latest api-client binaries are not in the Google repo; recheck this later
+                excludeGroupAndSubgroups("com.google.api-client")
                 includeGroupAndSubgroups("org.chromium")
             }
         }
