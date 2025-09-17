@@ -50,24 +50,16 @@ public class DynamicPriceView : UIView, AppEventDelegate {
         let request = AdManagerRequest()
         request.customTargeting = [:]
 
-        var nimbusBid: NimbusAd? = nil
         bids.forEach {
-            switch $0 {
-            case let .nimbus(response):
-                response.applyDynamicPrice(into: request, mapping: priceMapping)
-                nimbusBid = response
-                break;
-            case let .aps(response):
-                response.customTargeting?.forEach {
-                    request.customTargeting?[$0.key] = $0.value
-                }
+            $0.applyTargeting(to: request, priceMapping: priceMapping)
+            if case .nimbus(let nimbusBid) = $0 {
+                googleBanner.applyDynamicPrice(
+                    requestManager: nimbusRequestManager,
+                    delegate: delegate,
+                    ad: nimbusBid
+                )
             }
         }
-
-        googleBanner.applyDynamicPrice(
-            requestManager: nimbusRequestManager,
-            delegate: delegate,
-            ad: nimbusBid)
 
         googleBanner.load(request)
     }
