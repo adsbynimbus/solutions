@@ -6,13 +6,12 @@
 //
 
 import DTBiOSSDK
-import GoogleMobileAds
+@preconcurrency import GoogleMobileAds
 @preconcurrency import NimbusGAMKit
 
 /// Fill in with your own price mapping
 public let priceMapping = NimbusGAMLinearPriceMapping(granularities: [])
 
-@MainActor
 public let nimbusRequestManager = NimbusRequestManager()
 
 extension DynamicPriceView {
@@ -83,19 +82,7 @@ extension DynamicPriceView {
     let request = AdManagerRequest()
     request.customTargeting = [:]
 
-    var nimbusBid: NimbusAd? = nil
-    bids.forEach {
-        switch $0 {
-        case let .nimbus(response):
-            response.applyDynamicPrice(into: request, mapping: priceMapping)
-            nimbusBid = response
-            break;
-        case let .aps(response):
-            response.customTargeting?.forEach {
-                request.customTargeting?[$0.key] = $0.value
-            }
-        }
-    }
+    bids.forEach { $0.applyTargeting(to: request, priceMapping: priceMapping) }
 
     return try? await withUnsafeThrowingContinuation { continuation in
         AdManagerInterstitialAd.load(with: googleAdUnitId, request: request) { ad, error in
@@ -108,11 +95,13 @@ extension DynamicPriceView {
 
             ad.fullScreenContentDelegate = fullScreenDelegate
             ad.appEventDelegate = appEventDelegate
-            if let nimbusBid = nimbusBid {
-                ad.applyDynamicPrice(
-                    ad: nimbusBid,
-                    requestManager: nimbusRequestManager,
-                    delegate: fullScreenDelegate)
+            bids.forEach {
+                if case .nimbus(let nimbusBid) = $0 {
+                    ad.applyDynamicPrice(
+                        ad: nimbusBid,
+                        requestManager: nimbusRequestManager,
+                        delegate: fullScreenDelegate)
+                }
             }
 
             Task { @MainActor in

@@ -38,7 +38,7 @@ public extension Collection where Element == any Bidder  {
     }
 }
 
-extension Bid {
+public extension Bid {
 
     func applyTargeting(to request: AdManagerRequest, priceMapping: NimbusGAMLinearPriceMapping) {
         switch self {
