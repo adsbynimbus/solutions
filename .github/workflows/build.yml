@@ -43,3 +43,35 @@ jobs:
         with:
           name: build-reports
           path: '**/build/reports/'
+
+  xcodebuild:
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+      cancel-in-progress: true
+    runs-on: macos-latest
+    env:
+      IOS_TARGET: 18.5
+      SIMULATOR_NAME: iPhone 16
+      XCODE_VERSION: 26.0
+    steps:
+      - name: Checkout SDK repo
+        uses: actions/checkout@v5
+      - name: Select Xcode Version
+        run: sudo xcode-select --switch /Applications/Xcode_${{ env.XCODE_VERSION }}.app
+      - name: Restore Build Cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            build
+            !build/Logs/**
+          key: ${{ runner.os }}-xcodebuild-${{ hashFiles('**/*.xc*') }}
+          restore-keys: |
+            ${{ runner.os }}-xcodebuild-
+      - name: Test
+        run: set -o pipefail && xcodebuild test -scheme Solutions -destination "platform=iOS Simulator,OS=${{ env.IOS_TARGET }},name=${{ env.SIMULATOR_NAME }}" -derivedDataPath build | xcbeautify
+      - name: Upload test results
+        if:  ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: xcodebuild-reports
+          path: '**/build/Logs/Test/'
