@@ -16,21 +16,38 @@ public protocol Bidder: Sendable {
 public enum Bid: Sendable {
     case nimbus(NimbusAd)
     case aps(APSAd)
+    case test
+}
+
+public enum AuctionError : Error {
+    case timeout
 }
 
 public extension Collection where Element == any Bidder  {
-    func auction() async -> [Bid] {
-        await withTaskGroup(of: Optional<Bid>.self, returning: [Bid].self) { group in
+
+    func auction(timeout: Duration = .milliseconds(3000)) async -> [Bid] {
+        await withThrowingTaskGroup(of: Bid.self, returning: [Bid].self) { group in
             for bidder in self {
-                group.addTask {
-                    try? await bidder.fetchBid()
-                }
+                group.addTask { try await bidder.fetchBid() }
+            }
+
+            group.addTask {
+                try await Task.sleep(until: .now + timeout)
+                try Task.checkCancellation()
+                throw AuctionError.timeout
             }
             
+            defer { group.cancelAll() }
+
             var bids: [Bid] = []
-            for await bid in group {
-                if let bid = bid {
-                    bids.append(bid)
+            for _ in 0 ..< self.count {
+                guard let result = await group.nextResult() else { break }
+                switch result {
+                    case .success(let bid): bids.append(bid)
+                    case .failure(let error): if case AuctionError.timeout = error {
+                        group.cancelAll()
+                        break
+                    }
                 }
             }
             return bids
@@ -48,43 +65,49 @@ public extension Bid {
             response.customTargeting?.forEach {
                 request.customTargeting?[$0.key] = $0.value
             }
+        case _: return
         }
     }
 }
 
 public final class NimbusBidder: Bidder {
-    class RequestListener : NimbusRequestManagerDelegate {
+    
+    final class RequestListener : NimbusRequestManagerDelegate, Sendable {
 
-        private let continuation: UnsafeContinuation<Bid, Error>
-
-        public init(_ continuation: UnsafeContinuation<Bid, Error>) {
-            self.continuation = continuation
-        }
+        nonisolated(unsafe) var continuation: UnsafeContinuation<Bid, Error>?
 
         func didCompleteNimbusRequest(request: NimbusRequest, ad: NimbusAd) {
-            continuation.resume(returning: .nimbus(ad))
+            continuation?.resume(returning: .nimbus(ad))
+            continuation = nil
         }
 
         func didFailNimbusRequest(request: NimbusRequest, error: NimbusError) {
-            continuation.resume(throwing: error)
+            continuation?.resume(throwing: error)
+            continuation = nil
         }
     }
 
     private let provider: @Sendable () -> NimbusRequest
-    private let requestManager = NimbusRequestManager()
-    
+
     public init(_ request: @autoclosure @escaping @Sendable () -> NimbusRequest) {
         provider = request
     }
-    
+
     public func fetchBid() async throws -> Bid {
-        var listener: RequestListener?
-        let result = try await withUnsafeThrowingContinuation { continuation in
-            listener = RequestListener(continuation)
-            requestManager.delegate = listener
-            requestManager.performRequest(request: provider())
+        let request = provider()
+        let requestManager = NimbusRequestManager()
+        let listener = RequestListener()
+        requestManager.delegate = listener
+        let bid = try await withTaskCancellationHandler {
+            try await withUnsafeThrowingContinuation { continuation in
+                listener.continuation = continuation
+                requestManager.performRequest(request: request)
+            }
+        } onCancel: {
+            listener.continuation?.resume(throwing: CancellationError())
+            listener.continuation = nil
         }
-        return result
+        return bid
     }
 }
 
@@ -94,20 +117,27 @@ public final class APSBidder: Bidder {
     public init(_ request: @autoclosure @escaping @Sendable () -> APSAdRequest) {
         provider = request
     }
-    
+
     public func fetchBid() async throws -> Bid {
         let request = provider()
-        let result: Bid = try await withUnsafeThrowingContinuation { continuation in
-            request.loadAd { adResponse, error in
-                if let error = error {
-                    continuation.resume(throwing: error)
-                    return
+        nonisolated(unsafe) var continuation: UnsafeContinuation<Bid, Error>?
+        let bid: Bid = try await withTaskCancellationHandler {
+            try await withUnsafeThrowingContinuation { c in
+                continuation = c
+                request.loadAd { adResponse, error in
+                    if let error = error {
+                        continuation?.resume(throwing: error)
+                    } else {
+                        continuation?.resume(returning: .aps(adResponse))
+                    }
+                    continuation = nil
                 }
-                
-                continuation.resume(returning: .aps(adResponse))
             }
+        } onCancel: {
+            continuation?.resume(throwing: CancellationError())
+            continuation = nil
         }
-        return result
+        return bid
     }
 }
 
