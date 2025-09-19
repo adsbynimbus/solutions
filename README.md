@@ -27,11 +27,11 @@ i.e. or passed via the command line.
 #### gradle.properties
 ```properties
 # Override the Android Gradle Plugin to a canary version
-android.gradle=8.13.0-alpha03
+android.gradle=9.0.0-alpha05
 # Override the bytecode used to build the project
 android.jvm=17
 ```
 #### CLI
 ```shell
-./gradlew build -Dandroid.gradle=8.13.0-alpha03 -Dandroid.jvm=17
+./gradlew build -Dandroid.gradle=9.0.0-alpha05 -Dandroid.jvm=17
 ```
