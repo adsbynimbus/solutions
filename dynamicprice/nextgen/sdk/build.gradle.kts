@@ -27,8 +27,7 @@ kotlin {
 
         compilations.configureEach {
             compileTaskProvider.configure {
-                // Casting works around a type issue with AGP 8.10.0 that is fixed in 8.12.0
-                (compilerOptions as KotlinJvmCompilerOptions).jvmTarget = JvmTarget.JVM_1_8
+                compilerOptions.jvmTarget = JvmTarget.JVM_1_8
             }
         }
 
