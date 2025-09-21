@@ -4,21 +4,20 @@ import android.os.*
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.*
 import androidx.compose.ui.tooling.preview.Preview
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        adsbynimbus.solutions.kmm.context = applicationContext
         setContent {
-            App()
+            App(screenHeight = LocalConfiguration.current.screenHeightDp)
         }
     }
 }
 
-actual val platform: String get() = "Android ${Build.VERSION.RELEASE}"
-
 @Preview @Composable
 fun AppPreview() {
-    App()
+    App(screenHeight = 480)
 }

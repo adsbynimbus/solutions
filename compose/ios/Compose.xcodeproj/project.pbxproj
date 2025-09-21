@@ -9,7 +9,23 @@
 /* Begin PBXBuildFile section */
 		058557BB273AAA24004C7B11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557BA273AAA24004C7B11 /* Assets.xcassets */; };
 		2152FB042600AC8F00CF470E /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* Main.swift */; };
+		96BCD1892D6E5D6600FE2589 /* NimbusKMM in Frameworks */ = {isa = PBXBuildFile; productRef = 96BCD1882D6E5D6600FE2589 /* NimbusKMM */; };
+		96BCD18B2D6E5D6600FE2589 /* NimbusKMM in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 96BCD1882D6E5D6600FE2589 /* NimbusKMM */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		96BCD18A2D6E5D6600FE2589 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				96BCD18B2D6E5D6600FE2589 /* NimbusKMM in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		058557BA273AAA24004C7B11 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -18,6 +34,17 @@
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AB3632DC29227652001CCB65 /* Config.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Config.xcconfig; path = ../../Config.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		96BCD1862D6E5D6100FE2589 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				96BCD1892D6E5D6600FE2589 /* NimbusKMM in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		7555FF72242A565900829871 = {
@@ -65,6 +92,8 @@
 				F36B1CEB2AD83DDC00CB74D5 /* Compile Kotlin Framework */,
 				7555FF77242A565900829871 /* Sources */,
 				7555FF79242A565900829871 /* Resources */,
+				96BCD1862D6E5D6100FE2589 /* Frameworks */,
+				96BCD18A2D6E5D6600FE2589 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -98,6 +127,9 @@
 			);
 			mainGroup = 7555FF72242A565900829871;
 			minimizedProjectReferenceProxies = 1;
+            packageReferences = (
+                96BCD1822D6E5D3000FE2589 /* XCLocalSwiftPackageReference "../../nimbus-kmm" */,
+            );
 			preferredProjectObjectVersion = 90;
 			productRefGroup = 7555FF7C242A565900829871 /* Products */;
 			projectDirPath = "";
@@ -336,6 +368,21 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		96BCD1822D6E5D3000FE2589 /* XCLocalSwiftPackageReference "../../nimbus-kmm" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "../../nimbus-kmm";
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		96BCD1882D6E5D6600FE2589 /* NimbusKMM */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 96BCD1822D6E5D3000FE2589 /* XCLocalSwiftPackageReference "../../nimbus-kmm" */;
+			productName = NimbusKMM;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 7555FF73242A565900829871 /* Project object */;
 }
