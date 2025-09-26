@@ -10,9 +10,9 @@
     "test": "jest"
   },
   "dependencies": {
+    "@react-native/new-app-screen": "0.81.4",
     "react": "19.1.1",
     "react-native": "0.81.4",
-    "@react-native/new-app-screen": "0.81.4",
     "react-native-safe-area-context": "^5.5.2"
   },
   "devDependencies": {
@@ -37,5 +37,6 @@
   },
   "engines": {
     "node": ">=20"
-  }
+  },
+  "packageManager": "yarn@4.10.3"
 }

@@ -42,6 +42,9 @@ local.xcconfig
 # Node.js
 node_modules/
 package-lock.json
+.pnp.*
+**/.yarn/*
+!**/.yarn/patches
 
 # OS
 .DS_Store

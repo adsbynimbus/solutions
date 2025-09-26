@@ -12,3 +12,6 @@
 *.bat text eol=crlf
 
 # For more information - https://help.github.com/articles/dealing-with-line-endings/
+
+/.yarn/releases/** binary
+/.yarn/plugins/** binary
