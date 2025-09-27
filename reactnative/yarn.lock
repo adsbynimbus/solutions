@@ -2019,6 +2019,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@react-native-community/cli-platform-android@patch:@react-native-community/cli-platform-android@npm%3A20.0.2#~/.yarn/patches/@react-native-community-cli-platform-android-npm-20.0.2-abc8c72770.patch":
+  version: 20.0.2
+  resolution: "@react-native-community/cli-platform-android@patch:@react-native-community/cli-platform-android@npm%3A20.0.2#~/.yarn/patches/@react-native-community-cli-platform-android-npm-20.0.2-abc8c72770.patch::version=20.0.2&hash=ebd5ff"
+  dependencies:
+    "@react-native-community/cli-config-android": "npm:20.0.2"
+    "@react-native-community/cli-tools": "npm:20.0.2"
+    chalk: "npm:^4.1.2"
+    execa: "npm:^5.0.0"
+    logkitty: "npm:^0.7.1"
+  checksum: 10c0/95abf9e66e2d02ffe5aa833edadacf586bf3efb6e8adf7b1cb8988d26a36057bbe399ad6afddf25168639314ade103b7ed270dbc4151ec55ae1e918af3847b15
+  languageName: node
+  linkType: hard
+
 "@react-native-community/cli-platform-apple@npm:20.0.2":
   version: 20.0.2
   resolution: "@react-native-community/cli-platform-apple@npm:20.0.2"
@@ -2283,6 +2296,13 @@ __metadata:
   version: 0.81.4
   resolution: "@react-native/gradle-plugin@npm:0.81.4"
   checksum: 10c0/f9cca8439009ea1edf077ac0dfe509cae614dfdbf645ad42b66bed300c8b1595c9dd9fffe04f2a6540cdc2b6119e253bd09267d4a748ed8084cb7221b1de9bdb
+  languageName: node
+  linkType: hard
+
+"@react-native/gradle-plugin@patch:@react-native/gradle-plugin@npm%3A0.81.4#~/.yarn/patches/@react-native-gradle-plugin-npm-0.81.4-964849f6eb.patch":
+  version: 0.81.4
+  resolution: "@react-native/gradle-plugin@patch:@react-native/gradle-plugin@npm%3A0.81.4#~/.yarn/patches/@react-native-gradle-plugin-npm-0.81.4-964849f6eb.patch::version=0.81.4&hash=9d9941"
+  checksum: 10c0/00e66b2c97363992ab18b203dfa4d04a5ac70256ccb29f5fb786791e7e050b9b8be2411bbe5add0c8b1e61936ce9b5c3b9d4bc87a681c37c55cf5354c4181fd9
   languageName: node
   linkType: hard
 
@@ -7452,13 +7472,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-safe-area-context@npm:^5.5.2":
+"react-native-safe-area-context@npm:5.6.1":
   version: 5.6.1
   resolution: "react-native-safe-area-context@npm:5.6.1"
   peerDependencies:
     react: "*"
     react-native: "*"
   checksum: 10c0/797ad7d749bd42cbec8e504d969de13e17ed48506c2fd5a639d05d78d88194c21d72b9dc4608e08a2e8edac23341802e7b4661875242dc3bdce3008cfda5bcbe
+  languageName: node
+  linkType: hard
+
+"react-native-safe-area-context@patch:react-native-safe-area-context@npm%3A5.6.1#~/.yarn/patches/react-native-safe-area-context-npm-5.6.1-8af8830f4e.patch":
+  version: 5.6.1
+  resolution: "react-native-safe-area-context@patch:react-native-safe-area-context@npm%3A5.6.1#~/.yarn/patches/react-native-safe-area-context-npm-5.6.1-8af8830f4e.patch::version=5.6.1&hash=cb625d"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 10c0/6b57a78d4460b40792d2e2d7c5785f171720e44f483df40a479af932b3a14e002480e6e77da599091056612cb3af81b98213958af5c9516b3822f2ab4ed6bbff
   languageName: node
   linkType: hard
 
@@ -7546,7 +7576,7 @@ __metadata:
     "@babel/preset-env": "npm:^7.25.3"
     "@babel/runtime": "npm:^7.25.0"
     "@react-native-community/cli": "npm:20.0.2"
-    "@react-native-community/cli-platform-android": "npm:20.0.2"
+    "@react-native-community/cli-platform-android": "patch:@react-native-community/cli-platform-android@npm%3A20.0.2#~/.yarn/patches/@react-native-community-cli-platform-android-npm-20.0.2-abc8c72770.patch"
     "@react-native-community/cli-platform-ios": "npm:20.0.2"
     "@react-native/babel-preset": "npm:0.81.4"
     "@react-native/eslint-config": "npm:0.81.4"
@@ -7561,7 +7591,7 @@ __metadata:
     prettier: "npm:2.8.8"
     react: "npm:19.1.1"
     react-native: "npm:0.81.4"
-    react-native-safe-area-context: "npm:^5.5.2"
+    react-native-safe-area-context: "patch:react-native-safe-area-context@npm%3A5.6.1#~/.yarn/patches/react-native-safe-area-context-npm-5.6.1-8af8830f4e.patch"
     react-test-renderer: "npm:19.1.1"
     typescript: "npm:^5.8.3"
   languageName: unknown

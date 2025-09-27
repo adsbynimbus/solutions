@@ -1,0 +1,95 @@
+diff --git a/gradle/libs.versions.toml b/gradle/libs.versions.toml
+index 7d5e2abd8341cb412c9761b13ef13838ec6f9741..18ea59933bea7dc4a1734d65285f12674d842bed 100644
+--- a/gradle/libs.versions.toml
++++ b/gradle/libs.versions.toml
+@@ -1,10 +1,10 @@
+ [versions]
+-agp = "8.11.0"
+-gson = "2.8.9"
++agp = "8.12.3"
++gson = "2.13.2"
+ guava = "31.0.1-jre"
+ javapoet = "1.13.0"
+ junit = "4.13.2"
+-kotlin = "2.1.20"
++kotlin = "2.2.20"
+ assertj = "3.25.1"
+ 
+ [libraries]
+diff --git a/gradle/wrapper/gradle-wrapper.properties b/gradle/wrapper/gradle-wrapper.properties
+index d4081da476bb3ee087bb538a0bb6718958af29a4..2e1113280ef142e60ad69ba98918fc408d759137 100644
+--- a/gradle/wrapper/gradle-wrapper.properties
++++ b/gradle/wrapper/gradle-wrapper.properties
+@@ -1,6 +1,6 @@
+ distributionBase=GRADLE_USER_HOME
+ distributionPath=wrapper/dists
+-distributionUrl=https\://services.gradle.org/distributions/gradle-8.14.3-bin.zip
++distributionUrl=https\://services.gradle.org/distributions/gradle-9.1.0-bin.zip
+ networkTimeout=10000
+ validateDistributionUrl=true
+ zipStoreBase=GRADLE_USER_HOME
+diff --git a/react-native-gradle-plugin/build.gradle.kts b/react-native-gradle-plugin/build.gradle.kts
+index f8e62cbd2e6020ef83bd18b21c4c4c55bcd58f23..4c06acaf408fe82a6b804360f037dd29e634c3ef 100644
+--- a/react-native-gradle-plugin/build.gradle.kts
++++ b/react-native-gradle-plugin/build.gradle.kts
+@@ -59,8 +59,6 @@ dependencies {
+ // nice message showing that JDK 11 (or 17) is required first
+ java { targetCompatibility = JavaVersion.VERSION_11 }
+ 
+-kotlin { jvmToolchain(17) }
+-
+ tasks.withType<KotlinCompile>().configureEach {
+   compilerOptions {
+     apiVersion.set(KotlinVersion.KOTLIN_1_8)
+diff --git a/settings-plugin/build.gradle.kts b/settings-plugin/build.gradle.kts
+index bd11ca694ac9cc3250f25620bcb25aa789694d7d..6d578ce4ac6282f176d2da30de5fdb06ee22ce3f 100644
+--- a/settings-plugin/build.gradle.kts
++++ b/settings-plugin/build.gradle.kts
+@@ -49,8 +49,6 @@ dependencies {
+ // nice message showing that JDK 11 (or 17) is required first
+ java { targetCompatibility = JavaVersion.VERSION_11 }
+ 
+-kotlin { jvmToolchain(17) }
+-
+ tasks.withType<KotlinCompile>().configureEach {
+   compilerOptions {
+     apiVersion.set(KotlinVersion.KOTLIN_1_8)
+diff --git a/settings.gradle.kts b/settings.gradle.kts
+index b3c46a3bf5eb21c0bb1c9435b5582aecbc57d57a..74834849f556d5ce1f94e7154b5fd38161ac255a 100644
+--- a/settings.gradle.kts
++++ b/settings.gradle.kts
+@@ -13,8 +13,6 @@ pluginManagement {
+   }
+ }
+ 
+-plugins { id("org.gradle.toolchains.foojay-resolver-convention").version("0.5.0") }
+-
+ include(
+     ":react-native-gradle-plugin",
+     ":settings-plugin",
+diff --git a/shared/build.gradle.kts b/shared/build.gradle.kts
+index 5a74b563a63c51b078929c37fca7dcc69d9da9f0..f535c515615bb0458eedfd304d6b3162469856b9 100644
+--- a/shared/build.gradle.kts
++++ b/shared/build.gradle.kts
+@@ -26,8 +26,6 @@ dependencies {
+ 
+ java { targetCompatibility = JavaVersion.VERSION_11 }
+ 
+-kotlin { jvmToolchain(17) }
+-
+ tasks.withType<KotlinCompile>().configureEach {
+   compilerOptions {
+     apiVersion.set(KotlinVersion.KOTLIN_1_8)
+diff --git a/shared-testutil/build.gradle.kts b/shared-testutil/build.gradle.kts
+index 4c1a1ecb29678ac57e89b8ebdb76d278f049948d..69b3883cfba4d82840bc41d4256144f7a93bd597 100644
+--- a/shared-testutil/build.gradle.kts
++++ b/shared-testutil/build.gradle.kts
+@@ -20,8 +20,6 @@ dependencies { implementation(libs.junit) }
+ 
+ java { targetCompatibility = JavaVersion.VERSION_11 }
+ 
+-kotlin { jvmToolchain(17) }
+-
+ tasks.withType<KotlinCompile>().configureEach {
+   compilerOptions {
+     apiVersion.set(KotlinVersion.KOTLIN_1_8)
