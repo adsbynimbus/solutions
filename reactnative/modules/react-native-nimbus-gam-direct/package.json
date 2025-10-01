@@ -1,0 +1,25 @@
+{
+  "name": "react-native-nimbus-gam-direct",
+  "version": "0.0.0",
+  "description": "Nimbus GAM Direct",
+  "main": "src/index",
+  "codegenConfig": {
+    "name": "NimbusGamDirectViewSpec",
+    "type": "all",
+    "jsSrcsDir": "src"
+  },
+  "author": " <> ()",
+  "license": "UNLICENSED",
+  "homepage": "#readme",
+  "devDependencies": {
+    "@react-native/babel-preset": "0.81.4",
+    "@types/react": "^19.1.0",
+    "react": "19.1.1",
+    "react-native": "0.81.4"
+  },
+  "create-react-native-library": {
+    "languages": "kotlin-objc",
+    "type": "fabric-view",
+    "version": "0.54.3"
+  }
+}

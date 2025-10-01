@@ -7472,6 +7472,12 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-nimbus-gam-direct@link:./modules/react-native-nimbus-gam-direct::locator=reactnative%40workspace%3A.":
+  version: 0.0.0-use.local
+  resolution: "react-native-nimbus-gam-direct@link:./modules/react-native-nimbus-gam-direct::locator=reactnative%40workspace%3A."
+  languageName: node
+  linkType: soft
+
 "react-native-safe-area-context@npm:5.6.1":
   version: 5.6.1
   resolution: "react-native-safe-area-context@npm:5.6.1"
@@ -7591,6 +7597,7 @@ __metadata:
     prettier: "npm:2.8.8"
     react: "npm:19.1.1"
     react-native: "npm:0.81.4"
+    react-native-nimbus-gam-direct: "link:./modules/react-native-nimbus-gam-direct"
     react-native-safe-area-context: "patch:react-native-safe-area-context@npm%3A5.6.1#~/.yarn/patches/react-native-safe-area-context-npm-5.6.1-8af8830f4e.patch"
     react-test-renderer: "npm:19.1.1"
     typescript: "npm:^5.8.3"
