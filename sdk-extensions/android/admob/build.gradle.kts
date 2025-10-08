@@ -48,6 +48,7 @@ kotlin {
     explicitApi()
 
     sourceSets {
+        removeIf { it.name == "commonTest" } // Fixes Unused Kotlin Source Sets warning
         androidMain.dependencies {
             implementation(libs.ads.nimbus)
             implementation(libs.ads.nimbus.admob)
