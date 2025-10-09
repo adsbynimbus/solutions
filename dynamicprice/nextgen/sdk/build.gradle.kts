@@ -27,7 +27,7 @@ kotlin {
 
         compilations.configureEach {
             compileTaskProvider.configure {
-                compilerOptions.jvmTarget = JvmTarget.JVM_1_8
+                compilerOptions.jvmTarget = JvmTarget.JVM_17
             }
         }
 
@@ -50,6 +50,7 @@ kotlin {
     explicitApi()
 
     sourceSets {
+        removeIf { it.name == "commonTest" } // Fixes Unused Kotlin Source Sets warning
         androidMain.dependencies {
             implementation(libs.ads.nimbus)
             implementation(libs.ads.google.nextgen)
