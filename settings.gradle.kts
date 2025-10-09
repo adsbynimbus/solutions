@@ -21,6 +21,7 @@ val androidGradleOverride = providers.gradleProperty("android.gradle").filter {
     providers.systemProperty("idea.vendor.name").orNull != "JetBrains"
 }
 val androidJvmOverride = providers.gradleProperty("android.jvm")
+val kotlinOverride = providers.gradleProperty("kotlin.gradle")
 
 dependencyResolutionManagement {
     repositories {
@@ -53,6 +54,7 @@ dependencyResolutionManagement {
     versionCatalogs.configureEach {
         if (androidGradleOverride.isPresent) version("android", androidGradleOverride.get())
         if (androidJvmOverride.isPresent) version("android-jvm", androidJvmOverride.get())
+        if (kotlinOverride.isPresent) version("kotlin", kotlinOverride.get())
     }
 }
 
