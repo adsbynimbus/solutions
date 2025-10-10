@@ -1,22 +1,12 @@
 package com.adsbynimbus.dynamicprice.nextgen
 
 import android.app.Activity
-import android.app.Activity.OVERRIDE_TRANSITION_CLOSE
-import android.os.Build
-import android.view.View
-import android.view.ViewGroup
-import android.webkit.WebView
-import androidx.annotation.WorkerThread
 import androidx.core.os.BundleCompat.getSerializable
-import androidx.core.view.allViews
+import androidx.core.view.*
 import com.adsbynimbus.NimbusAd
-import com.adsbynimbus.NimbusError
-import com.adsbynimbus.dynamicprice.nextgen.internal.DynamicPriceRenderer
-import com.adsbynimbus.dynamicprice.nextgen.internal.renderInline
-import com.adsbynimbus.dynamicprice.nextgen.internal.webViewParent
+import com.adsbynimbus.dynamicprice.nextgen.internal.*
 import com.adsbynimbus.internal.Platform
-import com.adsbynimbus.lineitem.Mapping
-import com.adsbynimbus.lineitem.targetingMap
+import com.adsbynimbus.lineitem.*
 import com.adsbynimbus.render.*
 import com.adsbynimbus.render.Renderer.Companion.loadBlockingAd
 import com.adsbynimbus.request.NimbusResponse
@@ -50,7 +40,17 @@ public fun BannerAd.handleEventForNimbus(
     activity: Activity? = Platform.currentActivity.get(),
 ) {
     if (name == "na_render") DynamicPriceRenderer.render(this, data, listener) { nimbusAd ->
-        nimbusAd.renderInline(getView(activity!!).webViewParent)
+        getView(activity!!).webViewParent.let {
+            nimbusAd.renderInline(it).apply {
+                if (nimbusAd.type() != "video") return@apply
+                it.getChildAt(0)?.doOnLayout { webView ->
+                    view?.updateLayoutParams {
+                        height = webView.height
+                        width = webView.width
+                    }
+                }
+            }
+        }
     }
 }
 
