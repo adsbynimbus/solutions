@@ -61,11 +61,16 @@ struct ContentView: View {
 }
 
 struct InlineView: UIViewControllerRepresentable {
-    let dynamicPriceView: DynamicPriceView
+    let viewProvider: () -> DynamicPriceView
     let listener = GoogleAdListener()
+    
+    init(dynamicPriceView: @autoclosure @escaping () -> DynamicPriceView) {
+        self.viewProvider = dynamicPriceView
+    }
 
-    func makeUIViewController(context: Context) -> some UIViewController {
+    func makeUIViewController(context: Context) -> UIViewController {
         let vc = UIViewController()
+        let dynamicPriceView = viewProvider()
         dynamicPriceView.delegate = listener
 
         vc.view.addSubview(dynamicPriceView)
