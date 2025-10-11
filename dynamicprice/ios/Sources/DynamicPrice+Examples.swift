@@ -145,8 +145,32 @@ class GoogleInterstitialListener: NSObject, FullScreenContentDelegate, AppEventD
 }
 
 class GoogleAdListener: NSObject, BannerViewDelegate {
+    var task : Task<Void, Never>?
     public func bannerViewDidReceiveAd(_ bannerView: BannerView) {
-        Task { @MainActor in print("Ad Loaded \(bannerView.adUnitID ?? "")") }
+        print("\(bannerView.adUnitID ?? "") Ad Loaded")
+        guard task == nil else { return }
+        task = Task { @MainActor in
+            let parent = bannerView.superview
+            await Task.sleep(seconds: 2)
+            print("\(bannerView.adUnitID ?? "") Ad Detached")
+            bannerView.removeFromSuperview()
+            await Task.sleep(seconds: 2)
+            print("\(bannerView.adUnitID ?? "") Ad Attached")
+            parent?.addSubview(bannerView)
+            await Task.sleep(seconds: 2)
+            print("\(bannerView.adUnitID ?? "") Ad Moved")
+            bannerView.frame = bannerView.frame.offsetBy(dx: 10, dy: 10)
+            await Task.sleep(seconds: 2)
+            print("\(bannerView.adUnitID ?? "") Ad Constraint Resized Up")
+            bannerView.translatesAutoresizingMaskIntoConstraints = false
+            bannerView.heightAnchor.constraint(equalToConstant: 251).isActive = true
+            await Task.sleep(seconds: 2)
+            print("\(bannerView.adUnitID ?? "") Ad Frame Resized To 0")
+            bannerView.frame = bannerView.frame.insetBy(dx: 0, dy: 1)
+            await Task.sleep(seconds: 2)
+            print("\(bannerView.adUnitID ?? "") Ad Resized Negative")
+            bannerView.frame = bannerView.frame.insetBy(dx: 0, dy: 1)
+        }
     }
 
     public func bannerView(_ bannerView: BannerView, didFailToReceiveAdWithError error: Error) {
