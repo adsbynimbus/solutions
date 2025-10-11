@@ -61,11 +61,16 @@ struct ContentView: View {
 }
 
 struct InlineView: UIViewControllerRepresentable {
-    let dynamicPriceView: DynamicPriceView
+    let viewProvider: () -> DynamicPriceView
     let listener = GoogleAdListener()
+    
+    init(dynamicPriceView: @autoclosure @escaping () -> DynamicPriceView) {
+        self.viewProvider = dynamicPriceView
+    }
 
-    func makeUIViewController(context: Context) -> some UIViewController {
+    func makeUIViewController(context: Context) -> UIViewController {
         let vc = UIViewController()
+        let dynamicPriceView = viewProvider()
         dynamicPriceView.delegate = listener
 
         vc.view.addSubview(dynamicPriceView)
@@ -78,10 +83,10 @@ struct InlineView: UIViewControllerRepresentable {
 
 extension UIApplication {
     var firstKeyWindow: UIWindow? {
-        connectedScenes.compactMap { $0 as? UIWindowScene }
+        connectedScenes
+            .compactMap { $0 as? UIWindowScene }
             .filter { $0.activationState == .foregroundActive }
             .first?.keyWindow
-
     }
 
     static var rootViewController: UIViewController? {

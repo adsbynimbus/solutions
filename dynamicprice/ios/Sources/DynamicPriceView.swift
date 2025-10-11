@@ -73,7 +73,7 @@ public class DynamicPriceView : UIView, AppEventDelegate {
     }
 
     public override func willMove(toWindow newWindow: UIWindow?) {
-        if window != nil { removeVisibilityListeners() }
+        removeVisibilityListeners()
         
         guard let newWindow = newWindow else {
             self.refreshTask?.cancel()
@@ -107,7 +107,7 @@ public class DynamicPriceView : UIView, AppEventDelegate {
     private func startRefresh() {
         guard refreshTask == nil || refreshTask?.isCancelled == true else { return }
         
-        refreshTask = Task { @MainActor in
+        refreshTask = Task {
             while !Task.isCancelled {
                 // If not on screen, sleep for 200 milliseconds and then check again
                 guard !useOnScreenCheck || isOnScreen else {
@@ -116,7 +116,8 @@ public class DynamicPriceView : UIView, AppEventDelegate {
                 }
 
                 await Task.sleep(seconds: refreshInterval - Date().timeIntervalSince(lastRequestTime))
-
+                guard !Task.isCancelled else { break }
+                
                 await loadAd()
             }
         }
