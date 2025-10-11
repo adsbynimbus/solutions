@@ -83,10 +83,10 @@ struct InlineView: UIViewControllerRepresentable {
 
 extension UIApplication {
     var firstKeyWindow: UIWindow? {
-        connectedScenes.compactMap { $0 as? UIWindowScene }
+        connectedScenes
+            .compactMap { $0 as? UIWindowScene }
             .filter { $0.activationState == .foregroundActive }
             .first?.keyWindow
-
     }
 
     static var rootViewController: UIViewController? {
