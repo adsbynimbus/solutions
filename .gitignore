@@ -36,6 +36,7 @@ Pods/
 .vscode/
 xcuserdata/
 local.properties
+local.xcconfig
 !solutions.xcworkspace
 
 # OS
