@@ -14,6 +14,8 @@ androidx-collection = "1.5.0"
 androidx-core = "1.17.0"
 androidx-lifecycle = "2.9.4"
 androidx-navigation = "2.9.5"
+androidx-room = "2.8.2"
+androidx-sqlite = "2.6.1"
 androidx-startup = "1.2.0"
 
 api-admanager = "5.10.0"
@@ -34,6 +36,7 @@ jackson = "2.20.0"
 
 kotlin = "2.2.20"
 kotlin-coroutines = "1.10.2"
+ksp = "2.2.20-2.0.4"
 
 okhttp = "5.2.0"
 okio = "3.16.0"
@@ -49,6 +52,8 @@ dokka-javadoc = { id = "org.jetbrains.dokka-javadoc", version.ref = "dokka" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+room = { id = "androidx.room", version.ref = "androidx-room" }
 
 [libraries]
 ads-amazon = { module = "com.amazon.android:aps-sdk", version.ref = "ads-amazon" }
@@ -61,6 +66,9 @@ androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "a
 androidx-collection = { module = "androidx.collection:collection", version.ref = "androidx-collection" }
 androidx-core = { module = "androidx.core:core-ktx", version.ref = "androidx-core" }
 androidx-lifecycle = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidx-lifecycle" }
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "androidx-room" }
+androidx-room-driver = { module = "androidx.sqlite:sqlite-bundled", version.ref = "androidx-sqlite" }
+androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "androidx-room" }
 androidx-startup = { module = "androidx.startup:startup-runtime", version.ref = "androidx-startup" }
 api-admanager = { module = "com.google.api-ads:ads-lib", version.ref = "api-admanager" }
 api-admanager-axis = { module = "com.google.api-ads:dfp-axis", version.ref = "api-admanager" }
@@ -92,6 +100,7 @@ androidx-compose = [
     "compose-ui-tooling",
     "compose-ui-tooling-preview",
 ]
+<<<<<<< HEAD
 api-admanager = [
     "api-admanager",
     "api-admanager-axis",
@@ -104,6 +113,10 @@ api-admanager = [
     "gson",
     "jackson",
 ]
+=======
+androidx-room = ["androidx-room-runtime", "androidx-room-driver"]
+api-admanager = ["api-admanager", "api-admanager-axis"]
+>>>>>>> 7233798 (Added compose to Dynamic Price util project)
 dynamicprice = [
     "ads-amazon",
     "ads-google",
