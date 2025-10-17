@@ -35,8 +35,8 @@ jackson = "2.20.0"
 kotlin = "2.2.20"
 kotlin-coroutines = "1.10.2"
 
-okhttp = "5.2.0"
-okio = "3.16.0"
+okhttp = "5.2.1"
+okio = "3.16.2"
 
 slf4j = "2.0.17"
 
