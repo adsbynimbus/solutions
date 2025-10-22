@@ -10,6 +10,7 @@
 		961CA69D2CEA93750084BE6A /* NimbusKit in Frameworks */ = {isa = PBXBuildFile; productRef = 961CA69C2CEA93750084BE6A /* NimbusKit */; };
 		964F21682DA057D8005105AB /* NimbusGAMKit in Frameworks */ = {isa = PBXBuildFile; productRef = 964F21672DA057D8005105AB /* NimbusGAMKit */; };
 		964F216F2DA0592C005105AB /* NimbusRequestAPSKit in Frameworks */ = {isa = PBXBuildFile; productRef = 964F216E2DA0592C005105AB /* NimbusRequestAPSKit */; };
+		96D6FE4D2EA85EAC00FA0463 /* OTPublishersHeadlessSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 96D6FE4C2EA85EAC00FA0463 /* OTPublishersHeadlessSDK */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +49,7 @@
 			files = (
 				961CA69D2CEA93750084BE6A /* NimbusKit in Frameworks */,
 				964F21682DA057D8005105AB /* NimbusGAMKit in Frameworks */,
+				96D6FE4D2EA85EAC00FA0463 /* OTPublishersHeadlessSDK in Frameworks */,
 				964F216F2DA0592C005105AB /* NimbusRequestAPSKit in Frameworks */,
 			);
 		};
@@ -91,6 +93,7 @@
 				961CA69C2CEA93750084BE6A /* NimbusKit */,
 				964F21672DA057D8005105AB /* NimbusGAMKit */,
 				964F216E2DA0592C005105AB /* NimbusRequestAPSKit */,
+				96D6FE4C2EA85EAC00FA0463 /* OTPublishersHeadlessSDK */,
 			);
 			productName = OMSDKValidator;
 			productReference = 96CD481F2D679BF70029C2B5 /* DynamicPrice.app */;
@@ -148,6 +151,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				961CA69B2CEA93750084BE6A /* XCRemoteSwiftPackageReference "nimbus-ios-sdk" */,
+				96D6FE4B2EA85EAC00FA0463 /* XCRemoteSwiftPackageReference "OTPublishersHeadlessSDK" */,
 			);
 			preferredProjectObjectVersion = 90;
 			productRefGroup = 961CA6652CEA91D40084BE6A;
@@ -435,6 +439,14 @@
 				minimumVersion = 2.31.0;
 			};
 		};
+		96D6FE4B2EA85EAC00FA0463 /* XCRemoteSwiftPackageReference "OTPublishersHeadlessSDK" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Zentrust/OTPublishersHeadlessSDK";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 202510.1.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -452,6 +464,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 961CA69B2CEA93750084BE6A /* XCRemoteSwiftPackageReference "nimbus-ios-sdk" */;
 			productName = NimbusRequestAPSKit;
+		};
+		96D6FE4C2EA85EAC00FA0463 /* OTPublishersHeadlessSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 96D6FE4B2EA85EAC00FA0463 /* XCRemoteSwiftPackageReference "OTPublishersHeadlessSDK" */;
+			productName = OTPublishersHeadlessSDK;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

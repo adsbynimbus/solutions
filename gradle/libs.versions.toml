@@ -20,6 +20,8 @@ api-admanager = "5.10.0"
 api-google-auth = "1.40.0"
 api-google-client = "2.8.1"
 
+cmp-onetrust = "202510.1.0.0"
+
 compose = "1.9.3"
 compose-activity = "1.11.0"
 compose-multiplatform = "1.9.1"
@@ -68,6 +70,7 @@ api-google-auth-credentials = { module = "com.google.auth:google-auth-library-cr
 api-google-auth-oauth2 = { module = "com.google.auth:google-auth-library-oauth2-http", version.ref = "api-google-auth" }
 api-google-client = { module = "com.google.api-client:google-api-client", version.ref = "api-google-client" }
 api-google-client-gson = { module = "com.google.api-client:google-api-client-gson", version.ref = "api-google-client" }
+cmp-onetrust = { module = "com.onetrust.cmp:native-sdk", version.ref = "cmp-onetrust" }
 commons-beanutils = { module = "commons-beanutils:commons-beanutils", version.ref = "commons-beanutils" }
 commons-lang3 = { module = "org.apache.commons:commons-lang3", version.ref = "commmons-lang3" }
 compose-activity = { module = "androidx.activity:activity-compose", version.ref = "compose-activity" }

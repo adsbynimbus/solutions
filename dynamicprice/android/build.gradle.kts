@@ -20,6 +20,7 @@ kotlin {
         androidMain.dependencies {
             implementation(libs.bundles.androidx)
             implementation(libs.bundles.dynamicprice)
+            implementation(libs.cmp.onetrust)
             implementation(libs.kotlin.coroutines)
         }
     }
