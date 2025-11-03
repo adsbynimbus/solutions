@@ -30,12 +30,12 @@ commmons-lang3 = "3.19.0"
 dokka = "2.1.0"
 gson = "2.13.2"
 iabtcf = "2.0.10"
-jackson = "2.20.0"
+jackson = "2.20.1"
 
 kotlin = "2.2.21"
 kotlin-coroutines = "1.10.2"
 
-okhttp = "5.2.1"
+okhttp = "5.3.0"
 okio = "3.16.2"
 
 slf4j = "2.0.17"
