@@ -22,12 +22,12 @@ import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.async
+import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.plus
 import java.lang.System.currentTimeMillis
-import kotlin.coroutines.coroutineContext
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.measureTimedValue
@@ -48,7 +48,7 @@ class DynamicPriceAd(
         val request = AdManagerAdRequest.Builder().apply {
             bids.forEach { it.applyTargeting(this) }
         }.build()
-        if (coroutineContext.isActive) loadAd(request)
+        if (currentCoroutineContext().isActive) loadAd(request)
         Log.i("Ads", "Auction Time: $auctionTime")
     }
 
