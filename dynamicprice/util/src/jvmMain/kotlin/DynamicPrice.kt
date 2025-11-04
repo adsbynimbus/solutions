@@ -83,7 +83,7 @@ suspend fun AdManagerAxisClient.findOrCreateKey(
 
 suspend fun AdManagerAxisClient.findOrCreateNimbusAuctionIdKey(): CustomTargetingKey = findOrCreateKey(
     name = "na_id",
-    displayName = "Nimbus Auction Id",
+    displayName = "Nimbus Auction ID",
     type = FREEFORM,
     reporting = ReportableType.OFF,
 )
