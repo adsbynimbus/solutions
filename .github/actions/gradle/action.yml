@@ -41,7 +41,7 @@ runs:
     - name: Setup Xcode
       if: runner.os == 'macOS'
       run: sudo xcode-select --switch /Applications/Xcode_${{ env.XCODE_VERSION }}.app
-      shell: unspecified
+      shell: bash
     - name: Run Task
       run: ./gradlew ${{ inputs.task }}
-      shell: unspecified
+      shell: bash

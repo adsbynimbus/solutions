@@ -4,7 +4,7 @@ inputs:
   destination:
     description: 'xcodebuild destination'
     required: false
-    default: "platform=iOS Simulator,OS=${{ env.IOS_TARGET }},name=${{ env.SIMULATOR_NAME }}"
+    default: 'platform=iOS Simulator,OS=${{ env.IOS_TARGET }},name=${{ env.SIMULATOR_NAME }}'
   scheme:
     description: 'xcodebuild scheme'
     required: false
@@ -18,7 +18,7 @@ runs:
   steps:
     - name: Setup Xcode
       run: sudo xcode-select --switch /Applications/Xcode_${{ env.XCODE_VERSION }}.app
-      shell: unspecified
+      shell: bash
     - name: Restore Build Cache
       uses: actions/cache@v4
       with:
@@ -30,5 +30,5 @@ runs:
           ${{ runner.os }}-xcodebuild-
     - name: Run xcodebuild
       run: set -o pipefail && xcodebuild ${{ inputs.task }} -scheme ${{ inputs.scheme }} -destination "${{ inputs.destination }}" -derivedDataPath build | xcbeautify
-      shell: unspecified
+      shell: bash
 
