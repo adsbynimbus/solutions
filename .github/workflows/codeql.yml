@@ -9,7 +9,7 @@ on:
     - cron: '55 23 * * 6'
 
 env:
-  XCODE_VERSION: '26.0'
+  XCODE_VERSION: '16.4' # 26 is not supported by CodeQL yet
 
 jobs:
   analyze:

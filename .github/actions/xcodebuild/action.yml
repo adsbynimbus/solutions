@@ -25,9 +25,9 @@ runs:
         path: |
           build
           !build/Logs/**
-        key: ${{ runner.os }}-xcodebuild-${{ hashFiles('**/*.xc*') }}
+        key: ${{ runner.os }}-xcodebuild-${{ env.XCODE_VERSION }}-${{ hashFiles('**/*.xc*') }}
         restore-keys: |
-          ${{ runner.os }}-xcodebuild-
+          ${{ runner.os }}-xcodebuild-${{ env.XCODE_VERSION }}
     - name: Run xcodebuild
       run: set -o pipefail && xcodebuild ${{ inputs.task }} -scheme ${{ inputs.scheme }} -destination "${{ inputs.destination }}" -derivedDataPath build | xcbeautify
       shell: bash
