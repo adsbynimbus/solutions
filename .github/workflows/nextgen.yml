@@ -13,6 +13,7 @@ jobs:
   build:
     name: Publish Next Gen SDK
     runs-on: ubuntu-latest
+    if: github.repository == 'adsbynimbus/solutions'
     env:
       ORG_GRADLE_PROJECT_githubUsername: ${{ github.actor }}
       ORG_GRADLE_PROJECT_githubPassword: ${{ github.token }}
@@ -24,20 +25,13 @@ jobs:
     steps:
       - name: Checkout sources
         uses: actions/checkout@v5
-      - name: Setup Java
-        uses: actions/setup-java@v5
-        with:
-          distribution: 'zulu'
-          java-version: '24'
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v5
-        with:
-          cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
       - name: Set Version from Tag Name
         id: tag_name
         run: echo "VERSION=${GITHUB_REF/refs\/tags\/nextgen\//}" >> $GITHUB_OUTPUT
       - name: Publish
-        if: github.repository == 'adsbynimbus/solutions'
+        uses: ./.github/actions/gradle
         env:
           ORG_GRADLE_PROJECT_version: ${{ steps.tag_name.outputs.VERSION }}
-        run: ./gradlew :dynamicprice:nextgen:sdk:publish
+        with:
+          cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
+          task: :dynamicprice:nextgen:sdk:publish
