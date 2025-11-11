@@ -6,12 +6,12 @@ on:
   pull_request:
     branches: [ "main" ]
   schedule:
-    - cron: "55 11 * * 6"
+    - cron: '55 23 * * 6'
 
 jobs:
   analyze:
     name: Analyze (${{ matrix.language }})
-    runs-on: ${{ (matrix.language == "swift" && "macos-latest") || "ubuntu-latest" }}
+    runs-on: ${{ (matrix.language == 'swift' && 'macos-latest') || 'ubuntu-latest' }}
     permissions:
       actions: read
       contents: read
@@ -26,7 +26,7 @@ jobs:
         - language: java-kotlin
           build-mode: autobuild
         - language: swift
-          build-mode: autobuild 
+          build-mode: autobuild
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
