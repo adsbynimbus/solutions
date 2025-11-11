@@ -4,7 +4,7 @@ inputs:
   destination:
     description: 'xcodebuild destination'
     required: false
-    default: 'platform=iOS Simulator,OS=${{ env.IOS_TARGET }},name=${{ env.SIMULATOR_NAME }}'
+    default: 'platform=iOS Simulator,OS=18.6,name=iPhone 16'
   scheme:
     description: 'xcodebuild scheme'
     required: false

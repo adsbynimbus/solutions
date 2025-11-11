@@ -16,8 +16,6 @@ concurrency:
 
 env:
   XCODE_VERSION: '26.0'
-  IOS_TARGET: '18.6'
-  SIMULATOR_NAME: 'iPhone 16'
 
 jobs:
   gradle:
