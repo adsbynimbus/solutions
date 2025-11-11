@@ -44,7 +44,7 @@ jobs:
       if: matrix.language == 'java-kotlin'
       uses: ./.github/actions/gradle
       with:
-        task: assemble --no-daemon # CodeQL cannot detect compilations from daemons
+        task: clean test --no-daemon # CodeQL cannot detect compilations from daemons
         cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
         cache-read-only: false
     - name: Run Xcode Build
