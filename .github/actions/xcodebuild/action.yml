@@ -1,0 +1,34 @@
+name: xcodebuild
+description: Configures and runs xcodebuild
+inputs:
+  destination:
+    description: 'xcodebuild destination'
+    required: false
+    default: 'platform=iOS Simulator,OS=18.6,name=iPhone 16'
+  scheme:
+    description: 'xcodebuild scheme'
+    required: false
+    default: 'Solutions'
+  task:
+    description: 'xcodebuild action'
+    required: false
+    default: 'build'
+runs:
+  using: "composite"
+  steps:
+    - name: Setup Xcode
+      run: sudo xcode-select --switch /Applications/Xcode_${{ env.XCODE_VERSION }}.app
+      shell: bash
+    - name: Restore Build Cache
+      uses: actions/cache@v4
+      with:
+        path: |
+          build
+          !build/Logs/**
+        key: ${{ runner.os }}-xcodebuild-${{ env.XCODE_VERSION }}-${{ hashFiles('**/*.xc*') }}
+        restore-keys: |
+          ${{ runner.os }}-xcodebuild-${{ env.XCODE_VERSION }}
+    - name: Run xcodebuild
+      run: set -o pipefail && xcodebuild ${{ inputs.task }} -scheme ${{ inputs.scheme }} -destination "${{ inputs.destination }}" -derivedDataPath build | xcbeautify
+      shell: bash
+

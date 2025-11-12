@@ -5,6 +5,8 @@ on:
   push:
     branches:
       - main
+  schedule:
+    - cron: '55 23 * * 6'
 
 permissions:
   contents: write
@@ -26,21 +28,12 @@ jobs:
     steps:
       - name: Checkout sources
         uses: actions/checkout@v5
-      - name: Setup Xcode
-        run: sudo xcode-select --switch /Applications/Xcode_${{ env.XCODE_VERSION }}.app
-      - name: Setup Java
-        uses: actions/setup-java@v5
-        with:
-          distribution: 'zulu'
-          java-version: '25'
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v5
+      - name: Build
+        uses: ./.github/actions/gradle
         with:
           cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
           cache-read-only: false
           dependency-graph: generate-and-submit
-      - name: Build
-        run: ./gradlew build
       - name: Upload build reports
         uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
@@ -50,25 +43,13 @@ jobs:
 
   xcodebuild:
     runs-on: macos-latest
-    env:
-      IOS_TARGET: 18.5
-      SIMULATOR_NAME: iPhone 16
     steps:
       - name: Checkout sources
         uses: actions/checkout@v5
-      - name: Setup Xcode
-        run: sudo xcode-select --switch /Applications/Xcode_${{ env.XCODE_VERSION }}.app
-      - name: Restore Build Cache
-        uses: actions/cache@v4
-        with:
-          path: |
-            build
-            !build/Logs/**
-          key: ${{ runner.os }}-xcodebuild-${{ hashFiles('**/*.xc*') }}
-          restore-keys: |
-            ${{ runner.os }}-xcodebuild-
       - name: Test
-        run: set -o pipefail && xcodebuild test -scheme Solutions -destination "platform=iOS Simulator,OS=${{ env.IOS_TARGET }},name=${{ env.SIMULATOR_NAME }}" -derivedDataPath build | xcbeautify
+        uses: ./.github/actions/xcodebuild
+        with:
+          task: test
       - name: Upload test results
         if:  ${{ !cancelled() }}
         uses: actions/upload-artifact@v4

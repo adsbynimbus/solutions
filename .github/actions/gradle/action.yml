@@ -1,0 +1,47 @@
+name: gradle
+description: Configures and runs a Gradle task
+inputs:
+  cache-encryption-key:
+    description: 'Setup Gradle cache-encyrption-key'
+    required: true
+  cache-read-only:
+    description: 'Setup Gradle cache-read-only'
+    required: false
+    default: ${{ github.ref != 'refs/heads/main' }}
+  dependency-graph:
+    description: 'Setup Gradle dependency-graph'
+    required: false
+    default: 'disabled'
+  jdk-vendor:
+    description: 'Setup Java distribution'
+    required: false
+    default: 'zulu'
+  jdk-version:
+    description: 'Setup Java java-version'
+    required: false
+    default: '25'
+  task:
+    description: 'Gradle Task'
+    required: false
+    default: 'build'
+runs:
+  using: "composite"
+  steps:
+    - name: Setup Java
+      uses: actions/setup-java@v5
+      with:
+        distribution: ${{ inputs.jdk-vendor }}
+        java-version: ${{ inputs.jdk-version }}
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v5
+      with:
+        cache-encryption-key: ${{ inputs.cache-encryption-key }}
+        cache-read-only: ${{ inputs.cache-read-only }}
+        dependency-graph: ${{ inputs.dependency-graph }}
+    - name: Setup Xcode
+      if: runner.os == 'macOS'
+      run: sudo xcode-select --switch /Applications/Xcode_${{ env.XCODE_VERSION }}.app
+      shell: bash
+    - name: Run Task
+      run: ./gradlew ${{ inputs.task }}
+      shell: bash
