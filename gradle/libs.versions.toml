@@ -22,7 +22,7 @@ api-google-client = "2.8.1"
 
 compose = "1.9.4"
 compose-activity = "1.11.0"
-compose-multiplatform = "1.9.2"
+compose-multiplatform = "1.9.3"
 
 commons-beanutils = "1.11.0"
 commmons-lang3 = "3.19.0"
