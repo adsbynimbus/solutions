@@ -22,8 +22,6 @@ env:
 jobs:
   gradle:
     runs-on: macos-latest
-    concurrency:
-      group: ${{ github.ref }}-java-kotlin
     env:
       ORG_GRADLE_PROJECT_openrtbUsername: ${{ github.actor }}
       ORG_GRADLE_PROJECT_openrtbPassword: ${{ github.token }}
@@ -45,8 +43,6 @@ jobs:
 
   xcodebuild:
     runs-on: macos-latest
-    concurrency:
-      group: ${{ github.ref }}-swift
     steps:
       - name: Checkout sources
         uses: actions/checkout@v5
