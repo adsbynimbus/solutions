@@ -27,7 +27,7 @@ jobs:
         - language: actions
           build-mode: none
         - language: java-kotlin
-          build-mode: manual
+          build-mode: autobuild
         - language: swift
           build-mode: manual
     steps:
@@ -38,12 +38,6 @@ jobs:
       with:
         languages: ${{ matrix.language }}
         build-mode: ${{ matrix.build-mode }}
-    - name: Run Gradle Build
-      if: matrix.language == 'java-kotlin'
-      uses: ./.github/actions/gradle
-      with:
-        task: assemble --no-daemon --no-build-cache # CodeQL requires actual compilation
-        cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
     - name: Run Xcode Build
       if: matrix.language == 'swift'
       uses: ./.github/actions/xcodebuild
