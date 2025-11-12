@@ -35,7 +35,7 @@ jobs:
           cache-read-only: false
           dependency-graph: generate-and-submit
       - name: Upload build reports
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         if: ${{ !cancelled() }}
         with:
           name: gradle-reports
@@ -52,7 +52,7 @@ jobs:
           task: test
       - name: Upload test results
         if:  ${{ !cancelled() }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: xcodebuild-reports
           path: '**/build/Logs/Test/'
