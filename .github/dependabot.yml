@@ -1,7 +1,7 @@
 version: 2
 
 registries:
-  github:
+  github-maven:
     type: maven-repository
     url: https://maven.pkg.github.com
     username: ${{ secrets.USER }}
@@ -15,6 +15,7 @@ updates:
 
   - package-ecosystem: "gradle"
     directory: "/"
+    registries: "*"
     schedule:
       interval: "daily"
     groups:
