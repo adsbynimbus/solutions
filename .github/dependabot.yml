@@ -4,7 +4,8 @@ registries:
   github:
     type: maven-repository
     url: https://maven.pkg.github.com
-    token: ${{ secrets.GHP }}
+    username: ${{ secrets.USER }}
+    password: ${{ secrets.GHP }}
 
 updates:
   - package-ecosystem: "github-actions"
