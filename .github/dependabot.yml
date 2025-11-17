@@ -22,12 +22,3 @@ updates:
       all:
         patterns:
           - "*"
-
-  - package-ecosystem: "swift"
-    directory: "/"
-    schedule:
-      interval: "daily"
-    groups:
-      all:
-        patterns:
-          - "*"
