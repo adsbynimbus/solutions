@@ -16,6 +16,8 @@ pluginManagement {
     }
 }
 
+val openrtbCredentials = providers.gradleProperty("openrtbUsername")
+
 // Allows Android Gradle Plugin override if build is started from Android Studio or CI
 val androidGradleOverride = providers.gradleProperty("android.gradle").filter {
     providers.systemProperty("idea.vendor.name").orNull != "JetBrains"
@@ -35,8 +37,20 @@ dependencyResolutionManagement {
                 includeGroupAndSubgroups("org.chromium")
             }
         }
+        exclusiveContent {
+            forRepository {
+                maven("https://adsbynimbus-public.s3.amazonaws.com/android/sdks")
+            }
+            filter {
+                includeGroupAndSubgroups("com.adsbynimbus.android")
+                includeGroup("com.iab.omid.library.adsbynimbus")
+                if (!openrtbCredentials.isPresent) {
+                    includeGroup("com.adsbynimbus.openrtb")
+                }
+            }
+        }
         // If openrtb credentials are present, prefer GitHub Packages because it is free
-        if (providers.gradleProperty("openrtbUsername").isPresent) {
+        if (openrtbCredentials.isPresent) {
             maven("https://maven.pkg.github.com/adsbynimbus/nimbus-openrtb") {
                 name = "openrtb"
                 credentials(PasswordCredentials::class)
@@ -44,9 +58,6 @@ dependencyResolutionManagement {
                     includeGroup("com.adsbynimbus.openrtb")
                 }
             }
-        }
-        maven("https://adsbynimbus-public.s3.amazonaws.com/android/sdks") {
-            content { includeGroupByRegex(".*\\.adsbynimbus.*") }
         }
         mavenCentral()
     }
