@@ -26,7 +26,7 @@ kotlin {
 }
 
 androidComponents.beforeVariants {
-    it.enable = name.contains("release", ignoreCase = true) || !githubActions.isPresent
+    it.enable = it.name.contains("release", ignoreCase = true) || !githubActions.isPresent
 }
 
 android {
