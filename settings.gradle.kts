@@ -27,14 +27,16 @@ val kotlinOverride = providers.gradleProperty("kotlin.gradle")
 
 dependencyResolutionManagement {
     repositories {
-        google {
-            mavenContent {
+        exclusiveContent {
+            forRepository {
+                google()
+            }
+            filter {
                 includeGroupAndSubgroups("androidx")
                 includeGroupAndSubgroups("com.android")
-                includeGroupAndSubgroups("com.google")
-                // The latest api-client binaries are not in the Google repo; recheck this later
-                excludeGroupAndSubgroups("com.google.api-client")
-                includeGroupAndSubgroups("org.chromium")
+                includeGroupAndSubgroups("com.google.android")
+                includeGroupAndSubgroups("com.google.net.cronet")
+                includeGroupAndSubgroups("org.chromium.net")
             }
         }
         exclusiveContent {
