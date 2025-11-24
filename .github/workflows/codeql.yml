@@ -27,7 +27,7 @@ jobs:
         - language: actions
           build-mode: none
         - language: java-kotlin
-          build-mode: autobuild
+          build-mode: manual
         - language: swift
           build-mode: manual
     steps:
@@ -38,6 +38,12 @@ jobs:
       with:
         languages: ${{ matrix.language }}
         build-mode: ${{ matrix.build-mode }}
+    - name: Run Gradle Build
+      if: matrix.language == 'java-kotlin'
+      uses: ./.github/actions/gradle
+      with:
+        task: clean test --no-daemon
+        cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
     - name: Run Xcode Build
       if: matrix.language == 'swift'
       uses: ./.github/actions/xcodebuild
