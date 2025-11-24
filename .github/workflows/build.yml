@@ -27,7 +27,7 @@ jobs:
       ORG_GRADLE_PROJECT_openrtbPassword: ${{ github.token }}
     steps:
       - name: Checkout sources
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
       - name: Build
         uses: ./.github/actions/gradle
         with:
@@ -45,7 +45,7 @@ jobs:
     runs-on: macos-latest
     steps:
       - name: Checkout sources
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
       - name: Test
         uses: ./.github/actions/xcodebuild
         with:
