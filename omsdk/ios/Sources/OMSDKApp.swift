@@ -1,5 +1,4 @@
 import NimbusKit
-import NimbusRenderVASTKit
 import SwiftUI
 
 @main
@@ -12,7 +11,6 @@ struct OMSDKApp: App {
         Nimbus.shared.logLevel = .info
         Nimbus.shared.testMode = true
 
-        Nimbus.shared.renderers[.forAuctionType(.video)] = NimbusVideoAdRenderer()
         Nimbus.shared.viewabilityProvider = .init(builder: NimbusAdViewabilityTrackerBuilder(
             verificationProviders: [UpdatedIABVerificationProvider()])
         )
