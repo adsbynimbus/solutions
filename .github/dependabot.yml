@@ -19,6 +19,40 @@ updates:
     schedule:
       interval: "daily"
     groups:
-      all:
+      ads:
+        patterns:
+          - "com.adsbynimbus*"
+          - "com.amazon*"
+          - "*play-services-ads"
+          - "*ads-mobile-sdk"
+          - "com.iabtcf*"
+# Only update Android Gradle Plugin patches to maintain compatibility with JetBrains IDEA
+      android-gradle:
+        patterns:
+          - "com.android.*"
+        update-types:
+          - "patch"
+      compose:
+        patterns:
+          - "org.jetbrains.compose"
+          - "androidx.compose*"
+          - "*-compose" # Covers activity-compose and navigation-compose
+      androidx:
+        patterns:
+          - "androidx.*"
+      kotlin:
+        patterns:
+          - "org.jetbrains.*"
+      admanager-api:
+        patterns:
+          - "com.google.api*"
+          - "com.google.auth*"
+          - "com.fasterxml*"
+          - "*gson"
+          - "*commons*"
+      networking:
+        patterns:
+          - "com.squareup*"
+      other:
         patterns:
           - "*"
