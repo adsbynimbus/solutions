@@ -29,6 +29,6 @@ runs:
         restore-keys: |
           ${{ runner.os }}-xcodebuild-${{ env.XCODE_VERSION }}
     - name: Run xcodebuild
-      run: set -o pipefail && xcodebuild ${{ inputs.task }} -scheme ${{ inputs.scheme }} -destination "${{ inputs.destination }}" -derivedDataPath build | xcbeautify
+      run: set -o pipefail && xcodebuild ${{ inputs.task }} -scheme ${{ inputs.scheme }} -destination "${{ inputs.destination }}" -derivedDataPath build | xcbeautify --renderer github-actions
       shell: bash
 
