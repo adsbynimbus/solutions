@@ -4,7 +4,7 @@ inputs:
   destination:
     description: 'xcodebuild destination'
     required: false
-    default: 'platform=iOS Simulator,OS=26.1,name=iPhone 17'
+    default: 'platform=iOS Simulator,OS=26.0.1,name=iPhone 17'
   scheme:
     description: 'xcodebuild scheme'
     required: false
