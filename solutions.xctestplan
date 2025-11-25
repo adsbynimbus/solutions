@@ -10,7 +10,8 @@
   ],
   "defaultOptions" : {
     "codeCoverage" : false,
-    "performanceAntipatternCheckerEnabled" : true
+    "performanceAntipatternCheckerEnabled" : true,
+    "testTimeoutsEnabled" : true
   },
   "testTargets" : [
     {
