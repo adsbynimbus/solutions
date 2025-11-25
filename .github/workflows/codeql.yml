@@ -19,8 +19,6 @@ jobs:
   analyze:
     name: Analyze (${{ matrix.language }})
     runs-on: ${{ (matrix.language == 'swift' && 'macos-latest') || 'ubuntu-latest' }}
-    concurrency:
-      group: ${{ github.ref }}-${{ matrix.language }}
     permissions:
       actions: read
       contents: read
