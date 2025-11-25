@@ -8,6 +8,10 @@ on:
   schedule:
     - cron: '55 23 * * 6'
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 env:
   XCODE_VERSION: '26.1'
 
