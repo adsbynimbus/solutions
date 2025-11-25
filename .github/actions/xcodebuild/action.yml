@@ -29,6 +29,11 @@ runs:
         restore-keys: |
           ${{ runner.os }}-xcodebuild-${{ env.XCODE_VERSION }}
     - name: Run xcodebuild
-      run: xcodebuild ${{ inputs.task }} -scheme ${{ inputs.scheme }} -destination "${{ inputs.destination }}" -derivedDataPath build | xcbeautify --renderer github-actions
+      run: |
+        NSUnbufferedIO=YES xcodebuild ${{ inputs.task }} \
+        -scheme ${{ inputs.scheme }} \
+        -destination "${{ inputs.destination }}" \
+        -derivedDataPath build \
+        2>&1 | xcbeautify --renderer github-actions
       shell: bash
 
