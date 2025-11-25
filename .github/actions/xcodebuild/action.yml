@@ -30,7 +30,7 @@ runs:
           ${{ runner.os }}-xcodebuild-${{ env.XCODE_VERSION }}
     - name: Run xcodebuild
       run: |
-        NSUnbufferedIO=YES xcodebuild ${{ inputs.task }} \
+        env NSUnbufferedIO=YES xcodebuild ${{ inputs.task }} \
         -scheme ${{ inputs.scheme }} \
         -destination "${{ inputs.destination }}" \
         -derivedDataPath build \
