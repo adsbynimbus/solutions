@@ -34,6 +34,7 @@ runs:
         env NSUnbufferedIO=YES xcodebuild ${{ inputs.task }} \
         -scheme ${{ inputs.scheme }} \
         -destination "${{ inputs.destination }}" \
+        -showBuildTimingSummary \
         2>&1 | xcbeautify --renderer github-actions
       shell: bash
 
