@@ -1,10 +1,10 @@
 name: xcodebuild
 description: Configures and runs xcodebuild
 inputs:
-  destination:
-    description: 'xcodebuild destination'
+  codesign:
+    description: 'Enable code-signing'
     required: false
-    default: 'platform=iOS Simulator,OS=26.0.1,name=iPhone 16'
+    default: 'NO'
   scheme:
     description: 'xcodebuild scheme'
     required: false
@@ -31,10 +31,11 @@ runs:
           ${{ runner.os }}-xcodebuild-${{ env.XCODE_VERSION }}
     - name: Run xcodebuild
       run: |
-        env NSUnbufferedIO=YES xcodebuild ${{ inputs.task }} \
+        device=`xcrun xctrace list devices 2>&1 | grep -oE 'iPhone.*?[^\(]+' | head -1 | sed 's/Simulator//g' | awk '{$1=$1;print}'`
+        xcodebuild ${{ inputs.task }} \
         -scheme ${{ inputs.scheme }} \
-        -destination "${{ inputs.destination }}" \
+        -destination "platform=iOS Simulator,name=$device" \
         -showBuildTimingSummary \
-        2>&1 | xcbeautify --renderer github-actions
+        CODE_SIGNING_ALLOWED=${{ inputs.codesign }} | xcbeautify --renderer github-actions
       shell: bash
 
