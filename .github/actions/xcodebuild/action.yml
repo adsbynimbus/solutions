@@ -1,6 +1,10 @@
 name: xcodebuild
 description: Configures and runs xcodebuild
 inputs:
+  codesign:
+    description: 'Enable code-signing'
+    required: false
+    default: 'NO'
   destination:
     description: 'xcodebuild destination'
     required: false
@@ -35,6 +39,7 @@ runs:
         -scheme ${{ inputs.scheme }} \
         -destination "${{ inputs.destination }}" \
         -showBuildTimingSummary \
+        CODE_SIGNING_ALLOWED=${{ inputs.codesign }} \
         2>&1 | xcbeautify --renderer github-actions
       shell: bash
 
