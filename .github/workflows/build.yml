@@ -55,4 +55,4 @@ jobs:
         uses: actions/upload-artifact@v5
         with:
           name: xcodebuild-reports
-          path: '**/build/Logs/Test/'
+          path: '~/Library/Developer/Xcode/DerivedData/**/Logs/Test/'
