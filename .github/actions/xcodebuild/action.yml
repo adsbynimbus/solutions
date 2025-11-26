@@ -35,11 +35,10 @@ runs:
           ${{ runner.os }}-xcodebuild-${{ env.XCODE_VERSION }}
     - name: Run xcodebuild
       run: |
-        env NSUnbufferedIO=YES xcodebuild ${{ inputs.task }} \
+        xcodebuild ${{ inputs.task }} \
         -scheme ${{ inputs.scheme }} \
         -destination "${{ inputs.destination }}" \
         -showBuildTimingSummary \
-        CODE_SIGNING_ALLOWED=${{ inputs.codesign }} \
-        2>&1 | xcbeautify --renderer github-actions
+        CODE_SIGNING_ALLOWED=${{ inputs.codesign }} | xcbeautify --renderer github-actions
       shell: bash
 
