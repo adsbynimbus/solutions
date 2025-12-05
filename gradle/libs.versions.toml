@@ -17,7 +17,7 @@ androidx-navigation = "2.9.6"
 androidx-startup = "1.2.0"
 
 api-admanager = "5.11.0"
-api-google-auth = "1.40.0"
+api-google-auth = "1.41.0"
 api-google-client = "2.8.1"
 
 compose = "1.10.0"
