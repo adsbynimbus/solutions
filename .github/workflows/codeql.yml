@@ -13,7 +13,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  XCODE_VERSION: '26.0'
+  XCODE_VERSION: '26.1'
 
 jobs:
   analyze:
