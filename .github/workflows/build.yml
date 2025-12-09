@@ -23,9 +23,6 @@ jobs:
   gradle:
     runs-on: macos-latest
     timeout-minutes: 45
-    env:
-      ORG_GRADLE_PROJECT_openrtbUsername: ${{ github.actor }}
-      ORG_GRADLE_PROJECT_openrtbPassword: ${{ github.token }}
     steps:
       - name: Checkout sources
         uses: actions/checkout@v6
