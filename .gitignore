@@ -4,7 +4,9 @@ build/
 captures/
 classes/
 gen/
+gradle-user-home/
 node_modules/
+profile-out*/
 schemas/
 .build/
 .externalNativeBuild/
@@ -17,6 +19,7 @@ schemas/
 *.framework
 *.generated.swift
 *.hmap
+*.hprof
 *.ipa
 *.keystore
 *.keys
