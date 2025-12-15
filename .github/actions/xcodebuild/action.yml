@@ -36,6 +36,6 @@ runs:
         -scheme ${{ inputs.scheme }} \
         -destination "platform=iOS Simulator,name=$device" \
         -showBuildTimingSummary \
-        -jobs 2 \
+        -jobs 1 \
         CODE_SIGNING_ALLOWED=${{ inputs.codesign }} | xcbeautify --renderer github-actions
       shell: bash
