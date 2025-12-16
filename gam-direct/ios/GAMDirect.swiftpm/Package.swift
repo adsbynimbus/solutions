@@ -43,6 +43,7 @@ let package = Package(
             name: "AppModule",
             dependencies: [
                 .product(name: "NimbusKit", package: "nimbus-ios-sdk"),
+                .product(name: "NimbusAdMobKit", package: "nimbus-ios-sdk"),
                 .product(name: "APS-SwiftPM", package: "aps-swiftpm"),
                 .product(name: "GoogleMobileAds", package: "swift-package-manager-google-mobile-ads")
             ],
