@@ -36,6 +36,5 @@ runs:
         -scheme ${{ inputs.scheme }} \
         -destination "platform=iOS Simulator,name=$device" \
         -showBuildTimingSummary \
-        -jobs 2 \
         CODE_SIGNING_ALLOWED=${{ inputs.codesign }}
       shell: bash
