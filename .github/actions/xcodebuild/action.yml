@@ -37,5 +37,5 @@ runs:
         -destination "platform=iOS Simulator,name=$device" \
         -jobs 2 \
         -showBuildTimingSummary \
-        CODE_SIGNING_ALLOWED=${{ inputs.codesign }} | xcbeautify --renderer github-actions --preserve-unbeautified
+        CODE_SIGNING_ALLOWED=${{ inputs.codesign }} | xcbeautify --renderer github-actions
       shell: bash
