@@ -35,7 +35,7 @@ runs:
         xcodebuild ${{ inputs.task }} \
         -scheme ${{ inputs.scheme }} \
         -destination "platform=iOS Simulator,name=$device" \
-        -parallelizeTargets
+        -jobs 5 \
         -showBuildTimingSummary \
         CODE_SIGNING_ALLOWED=${{ inputs.codesign }}
       shell: bash
