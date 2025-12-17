@@ -49,9 +49,9 @@ jobs:
         uses: ./.github/actions/xcodebuild
         with:
           task: test
-      - name: Upload test results
+      - name: Upload build reports
         if:  ${{ !cancelled() }}
         uses: actions/upload-artifact@v6
         with:
           name: xcodebuild-reports
-          path: '~/Library/Developer/Xcode/DerivedData/**/Logs/Test/'
+          path: '~/Library/Developer/Xcode/DerivedData/**/Logs/'

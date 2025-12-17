@@ -12,7 +12,7 @@ inputs:
   task:
     description: 'xcodebuild action'
     required: false
-    default: 'build'
+    default: 'build-for-testing'
 runs:
   using: "composite"
   steps:
@@ -35,7 +35,7 @@ runs:
         xcodebuild ${{ inputs.task }} \
         -scheme ${{ inputs.scheme }} \
         -destination "platform=iOS Simulator,name=$device" \
+        -jobs 2 \
         -showBuildTimingSummary \
         CODE_SIGNING_ALLOWED=${{ inputs.codesign }} | xcbeautify --renderer github-actions
       shell: bash
-
