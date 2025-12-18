@@ -20,7 +20,7 @@ runs:
       run: sudo xcode-select --switch /Applications/Xcode_${{ env.XCODE_VERSION }}.app
       shell: bash
     - name: Restore Build Cache
-      uses: actions/cache@v4
+      uses: actions/cache@v5
       with:
         path: |
           ~/Library/Developer/Xcode/DerivedData
