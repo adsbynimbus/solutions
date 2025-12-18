@@ -56,3 +56,6 @@ updates:
       other:
         patterns:
           - "*"
+    ignore:
+      - dependency-name: "com.android.*"
+        update-types: [ "version-update:semver-minor", "version-update:semver-major" ]
