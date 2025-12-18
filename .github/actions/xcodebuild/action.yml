@@ -25,6 +25,7 @@ runs:
         path: |
           ~/Library/Developer/Xcode/DerivedData
           ~/Library/Caches/org.swift.swiftpm
+          !~/Library/Developer/Xcode/DerivedData/ModuleCache.noindex
           !~/Library/Developer/Xcode/DerivedData/**/Logs/**
         key: ${{ runner.os }}-xcodebuild-${{ env.XCODE_VERSION }}-${{ hashFiles('**/*.xc*') }}
         restore-keys: |
