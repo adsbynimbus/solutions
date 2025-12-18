@@ -1,0 +1,18 @@
+name: kotlin
+description: Kotlin native cache
+outputs:
+  version:
+    description: "Kotlin Version"
+    value: ${{ steps.kotlin.outputs.VERSION }}
+runs:
+  using: "composite"
+  steps:
+    - name: Determine Kotlin Version
+      id: kotlin
+      run: echo VERSION=`grep "^kotlin =" gradle/libs.versions.toml | sed 's/[^"]*"\([^"]*\).*/\1/'` >> $GITHUB_OUTPUT
+      shell: bash
+    - name: Cache Kotlin Native
+      uses: actions/cache@v5
+      with:
+        path: ~/.konan
+        key: ${{ runner.os }}-konan-${{ steps.kotlin.outputs.VERSION }}

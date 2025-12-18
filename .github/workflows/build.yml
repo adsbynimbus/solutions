@@ -26,6 +26,8 @@ jobs:
     steps:
       - name: Checkout sources
         uses: actions/checkout@v6
+      - name: Cache Kotlin Native
+        uses: ./.github/actions/kotlin
       - name: Build
         uses: ./.github/actions/gradle
         with:
