@@ -11,7 +11,7 @@
       location = "group:dynamicprice/ios/DynamicPrice.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:gam-direct/ios/GAMDirect.swiftpm">
+      location = "group:gam-direct/ios/GAMDirect.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:solutions.xctestplan">
