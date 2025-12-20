@@ -42,3 +42,6 @@ android.jvm=19
 ```shell
 ./gradlew build -Dandroid.gradle=9.0.0 -Dandroid.jvm=19
 ```
+```shell
+xcodebuild -scheme Solutions -destination "platform=iOS Simulator,name=iPhone 17" build-for-testing | xcbeautify
+```
