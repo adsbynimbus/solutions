@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		961256F02EF5C4C800563553 /* APS-SwiftPM in Frameworks */ = {isa = PBXBuildFile; productRef = 961256EF2EF5C4C800563553 /* APS-SwiftPM */; };
 		961256F62EF5C4FD00563553 /* NimbusAdMobKit in Frameworks */ = {isa = PBXBuildFile; productRef = 961256F52EF5C4FD00563553 /* NimbusAdMobKit */; };
+		961A99602EF74BEB00C685AA /* NimbusRequestAPSKit in Frameworks */ = {isa = PBXBuildFile; productRef = 961A995F2EF74BEB00C685AA /* NimbusRequestAPSKit */; };
 		961CA69D2CEA93750084BE6A /* NimbusKit in Frameworks */ = {isa = PBXBuildFile; productRef = 961CA69C2CEA93750084BE6A /* NimbusKit */; };
 /* End PBXBuildFile section */
 
@@ -31,20 +31,13 @@
 			isa = PBXFrameworksBuildPhase;
 			files = (
 				961256F62EF5C4FD00563553 /* NimbusAdMobKit in Frameworks */,
-				961256F02EF5C4C800563553 /* APS-SwiftPM in Frameworks */,
 				961CA69D2CEA93750084BE6A /* NimbusKit in Frameworks */,
+				961A99602EF74BEB00C685AA /* NimbusRequestAPSKit in Frameworks */,
 			);
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		961256F42EF5C4FD00563553 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		961CA6652CEA91D40084BE6A = {
 			isa = PBXGroup;
 			children = (
@@ -52,7 +45,6 @@
 				963ECC312CEB6354001C3012 /* Config.xcconfig */,
 				963ECC342CEB64A9001C3012 /* Info.plist */,
 				96CD481F2D679BF70029C2B5 /* GAMDirect.app */,
-				961256F42EF5C4FD00563553 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -74,8 +66,8 @@
 			name = GAMDirect;
 			packageProductDependencies = (
 				961CA69C2CEA93750084BE6A /* NimbusKit */,
-				961256EF2EF5C4C800563553 /* APS-SwiftPM */,
 				961256F52EF5C4FD00563553 /* NimbusAdMobKit */,
+				961A995F2EF74BEB00C685AA /* NimbusRequestAPSKit */,
 			);
 			productName = OMSDKValidator;
 			productReference = 96CD481F2D679BF70029C2B5 /* GAMDirect.app */;
@@ -108,7 +100,6 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				961CA69B2CEA93750084BE6A /* XCRemoteSwiftPackageReference "nimbus-ios-sdk" */,
-				961256EE2EF5C4C800563553 /* XCLocalSwiftPackageReference "../../sdk-extensions/ios/aps-swiftpm" */,
 			);
 			preferredProjectObjectVersion = 90;
 			productRefGroup = 961CA6652CEA91D40084BE6A;
@@ -319,13 +310,6 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCLocalSwiftPackageReference section */
-		961256EE2EF5C4C800563553 /* XCLocalSwiftPackageReference "../../sdk-extensions/ios/aps-swiftpm" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = "../../sdk-extensions/ios/aps-swiftpm";
-		};
-/* End XCLocalSwiftPackageReference section */
-
 /* Begin XCRemoteSwiftPackageReference section */
 		961CA69B2CEA93750084BE6A /* XCRemoteSwiftPackageReference "nimbus-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
@@ -338,14 +322,15 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		961256EF2EF5C4C800563553 /* APS-SwiftPM */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = "APS-SwiftPM";
-		};
 		961256F52EF5C4FD00563553 /* NimbusAdMobKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 961CA69B2CEA93750084BE6A /* XCRemoteSwiftPackageReference "nimbus-ios-sdk" */;
 			productName = NimbusAdMobKit;
+		};
+		961A995F2EF74BEB00C685AA /* NimbusRequestAPSKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 961CA69B2CEA93750084BE6A /* XCRemoteSwiftPackageReference "nimbus-ios-sdk" */;
+			productName = NimbusRequestAPSKit;
 		};
 		961CA69C2CEA93750084BE6A /* NimbusKit */ = {
 			isa = XCSwiftPackageProductDependency;
