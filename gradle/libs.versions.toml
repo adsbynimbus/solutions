@@ -56,6 +56,7 @@ ads-google = { module = "com.google.android.gms:play-services-ads", version.ref 
 ads-google-nextgen = { module = "com.google.android.libraries.ads.mobile.sdk:ads-mobile-sdk", version.ref = "ads-google-nextgen" }
 ads-nimbus = { module = "com.adsbynimbus.android:nimbus", version.ref = "ads-nimbus" }
 ads-nimbus-admob = { module = "com.adsbynimbus.android:extension-admob", version.ref = "ads-nimbus" }
+ads-nimbus-aps = { module = "com.adsbynimbus.android:extension-aps", version.ref = "ads-nimbus" }
 ads-nimbus-google = { module = "com.adsbynimbus.android:extension-google", version.ref = "ads-nimbus" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
 androidx-collection = { module = "androidx.collection:collection", version.ref = "androidx-collection" }
@@ -120,4 +121,13 @@ dynamicprice-nextgen = [
     "gson",
     "okhttp",
     "okio",
+]
+gamdirect = [
+    "ads-amazon",
+    "ads-google",
+    "ads-nimbus",
+    "ads-nimbus-admob",
+    "ads-nimbus-aps",
+    "androidx-appcompat", # Referenced by Amazon but not included in build
+    "iabtcf", # Referenced by Amazon but not included in build
 ]
