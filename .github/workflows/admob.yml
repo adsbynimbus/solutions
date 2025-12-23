@@ -4,6 +4,7 @@ on:
   push:
     tags:
       - 'admob/**'
+      - 'admob-nextgen/**'
 
 permissions:
   contents: read
@@ -23,13 +24,15 @@ jobs:
     steps:
       - name: Checkout sources
         uses: actions/checkout@v6
-      - name: Set Version from Tag Name
+      - name: Set Version and Command from Tag Name
         id: tag_name
-        run: echo "VERSION=${GITHUB_REF/refs\/tags\/admob\//}" >> $GITHUB_OUTPUT
+        run: |
+          echo VERSION=`echo ${{ github.ref }} | sed 's@.*/@@'` >> $GITHUB_OUTPUT
+          echo PROJECT=`echo ${{ github.ref }} | sed -E 's|.*/([^/]*)/.*|\1|'` >> $GITHUB_OUTPUT
       - name: Publish
         uses: ./.github/actions/gradle
         env:
           ORG_GRADLE_PROJECT_version: ${{ steps.tag_name.outputs.VERSION }}
         with:
           cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
-          task: :sdk-extensions:android:admob:publish
+          task: :sdk-extensions:android:${{ steps.tag_name.outputs.PROJECT }}:publish
