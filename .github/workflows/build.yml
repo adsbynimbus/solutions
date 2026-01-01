@@ -1,4 +1,4 @@
-name: Build
+name: Build and Analyze
 
 on:
   pull_request:
@@ -9,31 +9,66 @@ on:
     - cron: '55 23 * * 6'
 
 permissions:
+  actions: read
   contents: write
   packages: read
+  security-events: write
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+defaults:
+  run:
+    shell: bash
+
 env:
   XCODE_VERSION: '26.1'
 
 jobs:
-  gradle:
-    runs-on: macos-latest
-    timeout-minutes: 45
+  actions:
+    runs-on: ubuntu-slim
+    timeout-minutes: 10
     steps:
-      - name: Checkout sources
+      - name: Checkout repository
         uses: actions/checkout@v6
-      - name: Cache Kotlin Native
-        uses: ./.github/actions/kotlin
-      - name: Build
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v4
+        with:
+          languages: actions
+          build-mode: none
+          queries: security-and-quality
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v4
+        with:
+          category: '/language:actions'
+
+  kotlin:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+      - name: Setup Gradle
         uses: ./.github/actions/gradle
         with:
           cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
           cache-read-only: false
           dependency-graph: generate-and-submit
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v4
+        with:
+          languages: java-kotlin
+          build-mode: manual
+          queries: security-and-quality
+      - name: Assemble
+        run: ./gradlew assemble --init-script gradle/codeql.init.gradle.kts
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v4
+        with:
+          category: '/language:java-kotlin'
+      - name: Build
+        run: ./gradlew build
       - name: Upload build reports
         uses: actions/upload-artifact@v6
         if: ${{ !cancelled() }}
@@ -41,19 +76,79 @@ jobs:
           name: gradle-reports
           path: '**/build/reports/'
 
-  xcodebuild:
+  multiplatform:
     runs-on: macos-latest
     timeout-minutes: 45
     steps:
       - name: Checkout sources
         uses: actions/checkout@v6
-      - name: Test
+      - name: Setup Gradle
+        uses: ./.github/actions/gradle
+        with:
+          cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
+          cache-read-only: false
+          dependency-graph: generate-and-submit
+      - name: Cache Kotlin Native
+        uses: ./.github/actions/kotlin
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v4
+        with:
+          languages: java-kotlin,swift
+          build-mode: manual
+          queries: security-and-quality
+      - name: Assemble
         uses: ./.github/actions/xcodebuild
         with:
-          task: test
+          scheme: Compose
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v4
+        with:
+          category: '/language:multiplatform'
+      - name: Test
+        run: |
+          device=`xcrun xctrace list devices 2>&1 | grep -oE 'iPhone.*?[^\(]+' | head -1 | sed 's/Simulator//g' | awk '{$1=$1;print}'`
+          xcodebuild test-without-building \
+          -scheme Compose \
+          -destination "platform=iOS Simulator,name=$device" \
+          -showBuildTimingSummary | xcbeautify --renderer github-actions
       - name: Upload build reports
-        if:  ${{ !cancelled() }}
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v6
+        with:
+          name: multiplatform-reports
+          path: |
+            '**/build/reports/'
+            '~/Library/Developer/Xcode/DerivedData/**/Logs/'
+
+  swift:
+    runs-on: macos-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v6
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v4
+        with:
+          languages: swift
+          build-mode: manual
+          queries: security-and-quality
+      - name: Assemble
+        uses: ./.github/actions/xcodebuild
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v4
+        with:
+          category: '/language:swift'
+      - name: Test
+        run: |
+          device=`xcrun xctrace list devices 2>&1 | grep -oE 'iPhone.*?[^\(]+' | head -1 | sed 's/Simulator//g' | awk '{$1=$1;print}'`
+          xcodebuild test-without-building \
+          -scheme Solutions \
+          -destination "platform=iOS Simulator,name=$device" \
+          -showBuildTimingSummary | xcbeautify --renderer github-actions
+      - name: Upload build reports
+        if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v6
         with:
           name: xcodebuild-reports
           path: '~/Library/Developer/Xcode/DerivedData/**/Logs/'
+
