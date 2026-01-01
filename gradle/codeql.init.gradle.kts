@@ -1,4 +1,5 @@
 allprojects {
+    extra["codeQL"] = true
     tasks.withType<JavaCompile>().configureEach {
         outputs.upToDateWhen { false }
     }
