@@ -6,7 +6,7 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
 }
 
-val codeQL = providers.provider { extra["codeQL"] }
+val codeQL = providers.provider { extra.properties["codeQL"] }
 val githubActions = providers.environmentVariable("GITHUB_ACTIONS")
 
 kotlin {

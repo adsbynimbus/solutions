@@ -7,7 +7,7 @@ plugins {
     alias(libs.plugins.android.app)
 }
 
-val codeQL = providers.provider { extra["codeQL"] }
+val codeQL = providers.provider { extra.properties["codeQL"] }
 val githubActions = providers.environmentVariable("GITHUB_ACTIONS")
 
 kotlin {
