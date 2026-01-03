@@ -84,9 +84,9 @@ jobs:
         uses: ./.github/actions/codeql
         with:
           language: swift
-          command: xcodebuild build-for-testing ${{ steps.xcodebuild.outputs.options }}
-      - name: Test
-        run: xcodebuild test-without-building ${{ steps.xcodebuild.outputs.options }}
+          command: xcodebuild -jobs 1 ${{ steps.xcodebuild.outputs.options }}
+      - name: Build
+        run: xcodebuild build test ${{ steps.xcodebuild.outputs.options }}
       - name: Upload build reports
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v6

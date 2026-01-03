@@ -23,7 +23,7 @@ runs:
       shell: bash
     - name: Compute Options
       id: options
-      run: echo "options=-scheme ${{ inputs.scheme }} -destination ${{ steps.destination.outputs.destination }} -jobs 2 -showBuildTimingSummary CODE_SIGNING_ALLOWED=${{ inputs.codesign }} | xcbeautify --renderer github-actions" >> $GITHUB_OUTPUT
+      run: echo "options=-scheme ${{ inputs.scheme }} -destination ${{ steps.destination.outputs.destination }} -showBuildTimingSummary CODE_SIGNING_ALLOWED=${{ inputs.codesign }} | xcbeautify --renderer github-actions" >> $GITHUB_OUTPUT
       shell: bash
 outputs:
   destination:
