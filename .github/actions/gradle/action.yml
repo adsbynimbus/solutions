@@ -11,7 +11,7 @@ inputs:
   dependency-graph:
     description: 'Setup Gradle dependency-graph'
     required: false
-    default: 'disabled'
+    default: ${{ startsWith(github.ref, 'refs/tags') && 'disabled' || 'generate-and-submit' }}
   jdk-vendor:
     description: 'Setup Java distribution'
     required: false

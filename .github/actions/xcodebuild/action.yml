@@ -9,34 +9,23 @@ inputs:
     description: 'xcodebuild scheme'
     required: false
     default: 'Solutions'
-  task:
-    description: 'xcodebuild action'
-    required: false
-    default: 'build-for-testing'
 runs:
   using: "composite"
   steps:
     - name: Setup Xcode
       run: sudo xcode-select --switch /Applications/Xcode_${{ env.XCODE_VERSION }}.app
       shell: bash
-    - name: Restore Build Cache
-      uses: actions/cache@v5
-      with:
-        path: |
-          ~/Library/Developer/Xcode/DerivedData
-          ~/Library/Caches/org.swift.swiftpm
-          !~/Library/Developer/Xcode/DerivedData/ModuleCache.noindex
-          !~/Library/Developer/Xcode/DerivedData/**/Logs/**
-        key: ${{ runner.os }}-xcodebuild-${{ env.XCODE_VERSION }}-${{ hashFiles('**/*.xc*') }}
-        restore-keys: |
-          ${{ runner.os }}-xcodebuild-${{ env.XCODE_VERSION }}
-    - name: Run xcodebuild
+    - name: Set Build Command Variables
+      id: command
       run: |
-        device=`xcrun xctrace list devices 2>&1 | grep -oE 'iPhone.*?[^\(]+' | head -1 | sed 's/Simulator//g' | awk '{$1=$1;print}'`
-        xcodebuild ${{ inputs.task }} \
-        -scheme ${{ inputs.scheme }} \
-        -destination "platform=iOS Simulator,name=$device" \
-        -jobs 2 \
-        -showBuildTimingSummary \
-        CODE_SIGNING_ALLOWED=${{ inputs.codesign }} | xcbeautify --renderer github-actions
+        echo target=`xcrun xctrace list devices 2>&1 | grep -oE 'iPhone.*?[^\(]+' | head -1 | sed 's/Simulator//g' | awk '{$1=$1;print}'` >> $GITHUB_OUTPUT
+        echo destination="platform=iOS Simulator,name=$target"
+        echo options="-scheme ${{ inputs.scheme }} -destination $destination -jobs 2 -showBuildTimingSummary CODE_SIGNING_ALLOWED=${{ inputs.codesign }} | xcbeautify --renderer github-actions"
       shell: bash
+outputs:
+  destination:
+    description: "Computed Destination"
+    value: ${{ steps.command.outputs.destination }}
+  options:
+    description: "Build Options"
+    value: ${{ steps.command.outputs.options }}

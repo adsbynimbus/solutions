@@ -32,16 +32,10 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v4
+      - name: Analyze
+        uses: ./.github/actions/codeql
         with:
-          languages: actions
-          build-mode: none
-          queries: security-and-quality
-      - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v4
-        with:
-          category: '/language:actions'
+          language: actions
 
   gradle:
     runs-on: ubuntu-latest
@@ -53,20 +47,11 @@ jobs:
         uses: ./.github/actions/gradle
         with:
           cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
-          cache-read-only: false
-          dependency-graph: generate-and-submit
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v4
+      - name: Analyze
+        uses: ./.github/actions/codeql
         with:
-          languages: java-kotlin
-          build-mode: manual
-          queries: security-and-quality
-      - name: Assemble
-        run: ./gradlew assemble --init-script gradle/codeql.init.gradle.kts
-      - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v4
-        with:
-          category: '/language:java-kotlin'
+          language: java-kotlin
+          command: ./gradlew assemble --init-script gradle/codeql.init.gradle.kts
       - name: Build
         run: ./gradlew build
       - name: Upload build reports
@@ -78,33 +63,42 @@ jobs:
 
   xcodebuild:
     runs-on: macos-latest
-    timeout-minutes: 45
+    timeout-minutes: 20
     steps:
       - name: Checkout sources
         uses: actions/checkout@v6
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v4
-        with:
-          languages: swift
-          build-mode: manual
-          queries: security-and-quality
-      - name: Assemble
+      - name: Setup Xcode
+        id: xcodebuild
         uses: ./.github/actions/xcodebuild
-      - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v4
+      - name: Restore Cache
+        uses: actions/cache/restore@v5
+        if: ${{ github.ref != 'refs/heads/main' }}
         with:
-          category: '/language:swift'
+          path: |
+            ~/Library/Developer/Xcode/DerivedData/CompilationCache.noindex
+            ~/Library/Developer/Xcode/DerivedData/**/SourcePackages
+          key: ${{ runner.os }}-xcodebuild-${{ env.XCODE_VERSION }}-${{ hashFiles('**/*.xc*') }}
+          restore-keys: |
+            ${{ runner.os }}-xcodebuild-${{ env.XCODE_VERSION }}
+      - name: Analyze
+        uses: ./.github/actions/codeql
+        with:
+          language: swift
+          command: xcodebuild build-for-testing ${{ steps.xcodebuild.outputs.options }}
       - name: Test
-        run: |
-          device=`xcrun xctrace list devices 2>&1 | grep -oE 'iPhone.*?[^\(]+' | head -1 | sed 's/Simulator//g' | awk '{$1=$1;print}'`
-          xcodebuild test-without-building \
-          -scheme Solutions \
-          -destination "platform=iOS Simulator,name=$device" \
-          -showBuildTimingSummary | xcbeautify --renderer github-actions
+        run: xcodebuild test-without-building ${{ steps.xcodebuild.outputs.options }}
       - name: Upload build reports
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v6
         with:
           name: xcodebuild-reports
           path: '~/Library/Developer/Xcode/DerivedData/**/Logs/'
+      - name: Save Cache
+        uses: actions/cache/save@v5
+        if: ${{ github.ref == 'refs/heads/main' }}
+        with:
+          path: |
+            ~/Library/Developer/Xcode/DerivedData/CompilationCache.noindex
+            ~/Library/Developer/Xcode/DerivedData/**/SourcePackages
+          key: ${{ steps.restore-cache.outputs.cache-primary-key }}
 
