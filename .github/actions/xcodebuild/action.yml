@@ -19,8 +19,8 @@ runs:
       id: command
       run: |
         echo target=`xcrun xctrace list devices 2>&1 | grep -oE 'iPhone.*?[^\(]+' | head -1 | sed 's/Simulator//g' | awk '{$1=$1;print}'` >> $GITHUB_OUTPUT
-        echo destination="platform=iOS Simulator,name=$target"
-        echo options="-scheme ${{ inputs.scheme }} -destination $destination -jobs 2 -showBuildTimingSummary CODE_SIGNING_ALLOWED=${{ inputs.codesign }} | xcbeautify --renderer github-actions"
+        echo destination=`echo "platform=iOS Simulator,name=$target"` >> $GITHUB_OUTPUT
+        echo options=`echo "-scheme ${{ inputs.scheme }} -destination $destination -jobs 2 -showBuildTimingSummary CODE_SIGNING_ALLOWED=${{ inputs.codesign }} | xcbeautify --renderer github-actions"` >> $GITHUB_OUTPUT
       shell: bash
 outputs:
   destination:
