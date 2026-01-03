@@ -23,8 +23,6 @@ runs:
         queries: ${{ inputs.checks }}
     - name: Trace Build
       if: ${{ inputs.command != 'none' }}
-      env:
-        GITHUB_DEPENDENCY_GRAPH_ENABLED: false
       run: ${{ inputs.command }}
       shell: bash
     - name: Stop Daemons

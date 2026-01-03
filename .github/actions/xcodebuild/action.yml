@@ -15,12 +15,15 @@ runs:
     - name: Setup Xcode
       run: sudo xcode-select --switch /Applications/Xcode_${{ env.XCODE_VERSION }}.app
       shell: bash
-    - name: Set Build Command Variables
-      id: command
+    - name: Compute Destination
+      id: destination
       run: |
-        echo target=`xcrun xctrace list devices 2>&1 | grep -oE 'iPhone.*?[^\(]+' | head -1 | sed 's/Simulator//g' | awk '{$1=$1;print}'` >> $GITHUB_OUTPUT
-        echo destination=`echo "platform=iOS Simulator,name=$target"` >> $GITHUB_OUTPUT
-        echo options=`echo "-scheme ${{ inputs.scheme }} -destination $destination -jobs 2 -showBuildTimingSummary CODE_SIGNING_ALLOWED=${{ inputs.codesign }} | xcbeautify --renderer github-actions"` >> $GITHUB_OUTPUT
+        target=`xcrun xctrace list devices 2>&1 | grep -oE 'iPhone.*?[^\(]+' | head -1 | sed 's/Simulator//g' | awk '{$1=$1;print}'`
+        echo "destination=platform=iOS Simulator,name=$target" >> $GITHUB_OUTPUT
+      shell: bash
+    - name: Compute Options
+      id: options
+      run: echo "options=-scheme ${{ inputs.scheme }} -destination ${{ steps.command.outputs.destination }} -jobs 2 -showBuildTimingSummary CODE_SIGNING_ALLOWED=${{ inputs.codesign }} | xcbeautify --renderer github-actions" >> $GITHUB_OUTPUT
       shell: bash
 outputs:
   destination:
