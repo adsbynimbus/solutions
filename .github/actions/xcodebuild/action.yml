@@ -23,12 +23,12 @@ runs:
       shell: bash
     - name: Compute Options
       id: options
-      run: echo "options=-scheme ${{ inputs.scheme }} -destination ${{ steps.command.outputs.destination }} -jobs 2 -showBuildTimingSummary CODE_SIGNING_ALLOWED=${{ inputs.codesign }} | xcbeautify --renderer github-actions" >> $GITHUB_OUTPUT
+      run: echo "options=-scheme ${{ inputs.scheme }} -destination ${{ steps.destination.outputs.destination }} -jobs 2 -showBuildTimingSummary CODE_SIGNING_ALLOWED=${{ inputs.codesign }} | xcbeautify --renderer github-actions" >> $GITHUB_OUTPUT
       shell: bash
 outputs:
   destination:
     description: "Computed Destination"
-    value: ${{ steps.command.outputs.destination }}
+    value: ${{ steps.destination.outputs.destination }}
   options:
     description: "Build Options"
-    value: ${{ steps.command.outputs.options }}
+    value: ${{ steps.options.outputs.options }}
