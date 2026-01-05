@@ -21,6 +21,8 @@ runs:
         languages: ${{ inputs.language }}
         build-mode: ${{ inputs.command == 'none' && 'none' || 'manual' }}
         queries: ${{ inputs.checks }}
+        ram: ${{ runner.os == 'macOS' && '2048' || '4096' }}
+        threads: ${{ runner.os == 'macOS' && '2' || '3' }}
     - name: Trace Build
       if: ${{ inputs.command != 'none' }}
       run: ${{ inputs.command }}
