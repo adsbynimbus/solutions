@@ -81,13 +81,18 @@ jobs:
           key: ${{ runner.os }}-xcodebuild-${{ env.XCODE_VERSION }}-${{ hashFiles('**/*.xc*') }}
           restore-keys: |
             ${{ runner.os }}-xcodebuild-${{ env.XCODE_VERSION }}-
+      - name: Restore SPM Cache
+        uses: actions/cache@v5
+        with:
+          path: ~/Library/Developer/Xcode/DerivedData/**/SourcePackages
+          key: ${{ runner.os }}-spm-${{ hashFiles('**/*.xc*') }}
+          restore-keys: |
+            ${{ runner.os }}-spm-
       - name: Analyze
         uses: ./.github/actions/codeql
         with:
           language: swift
-          command: xcodebuild build ${{ steps.xcodebuild.outputs.options }}
-      - name: Test
-        run: xcodebuild test ${{ steps.xcodebuild.outputs.options }}
+          command: xcodebuild test ${{ steps.xcodebuild.outputs.options }}
       - name: Upload build reports
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v6

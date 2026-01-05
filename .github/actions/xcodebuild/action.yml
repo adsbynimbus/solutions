@@ -25,20 +25,8 @@ runs:
       id: options
       run: echo "options=-scheme ${{ inputs.scheme }}
         -destination ${{ steps.destination.outputs.destination }}
-        -disableAutomaticPackageResolution
-        -skipPackageUpdates
         -jobs 2
         CODE_SIGNING_ALLOWED=${{ inputs.codesign }} | xcbeautify --renderer github-actions" >> $GITHUB_OUTPUT
-      shell: bash
-    - name: Restore SPM Cache
-      uses: actions/cache@v5
-      with:
-        path: ~/Library/Developer/Xcode/DerivedData/**/SourcePackages
-        key: ${{ runner.os }}-spm-${{ hashFiles('**/*.xc*') }}
-        restore-keys: |
-          ${{ runner.os }}-spm-
-    - name: Resolve Package Dependencies
-      run: xcodebuild -resolvePackageDependencies | xcbeautify --renderer github-actions
       shell: bash
 outputs:
   destination:
