@@ -23,7 +23,7 @@ defaults:
     shell: bash
 
 env:
-  XCODE_VERSION: '26.1'
+  XCODE_VERSION: '26.2'
 
 jobs:
   actions:
@@ -62,8 +62,10 @@ jobs:
           path: '**/build/reports/'
 
   xcodebuild:
-    runs-on: macos-latest
+    runs-on: macos-26
     timeout-minutes: 20
+    env:
+      NSUnbufferedIO: YES
     steps:
       - name: Checkout sources
         uses: actions/checkout@v6
@@ -84,7 +86,7 @@ jobs:
         uses: ./.github/actions/codeql
         with:
           language: swift
-          command: xcodebuild -jobs 1 ${{ steps.xcodebuild.outputs.options }}
+          command: xcodebuild ${{ steps.xcodebuild.outputs.options }}
       - name: Build
         run: xcodebuild build test ${{ steps.xcodebuild.outputs.options }}
       - name: Upload build reports
