@@ -38,7 +38,7 @@ runs:
         restore-keys: |
           ${{ runner.os }}-spm-
     - name: Resolve Package Dependencies
-      run: xcodebuild -resolvePackageDependencies -disablePackageRepositoryCache | xcbeautify --renderer github-actions
+      run: xcodebuild -resolvePackageDependencies | xcbeautify --renderer github-actions
       shell: bash
 outputs:
   destination:
