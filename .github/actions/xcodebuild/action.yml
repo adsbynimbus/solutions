@@ -30,7 +30,7 @@ runs:
         -skipPackageUpdates
         -jobs 2
         -showBuildTimingSummary
-        CODE_SIGNING_ALLOWED=${{ inputs.codesign }} >> $GITHUB_OUTPUT
+        CODE_SIGNING_ALLOWED=${{ inputs.codesign }}" >> $GITHUB_OUTPUT
       shell: bash
     - name: Restore SPM Cache
       uses: actions/cache@v5
