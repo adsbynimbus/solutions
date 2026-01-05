@@ -23,7 +23,7 @@ runs:
       shell: bash
     - name: Compute Options
       id: options
-      run: echo "options=-scheme ${{ inputs.scheme }} -destination ${{ steps.destination.outputs.destination }} -onlyUsePackageVersionsFromResolvedFile CODE_SIGNING_ALLOWED=${{ inputs.codesign }} | xcbeautify --renderer github-actions" >> $GITHUB_OUTPUT
+      run: echo "options=-scheme ${{ inputs.scheme }} -destination ${{ steps.destination.outputs.destination }} -disableAutomaticPackageResolution CODE_SIGNING_ALLOWED=${{ inputs.codesign }} | xcbeautify --renderer github-actions" >> $GITHUB_OUTPUT
       shell: bash
     - name: Restore SPM Cache
       uses: actions/cache@v5
@@ -32,6 +32,9 @@ runs:
         key: ${{ runner.os }}-spm-${{ hashFiles('**/*.xc*') }}
         restore-keys: |
           ${{ runner.os }}-spm-
+    - name: Resolve Package Dependencies
+      run: xcodebuild -resolvePackageDependencies | xcbeautify --renderer github-actions
+      shell: bash
 outputs:
   destination:
     description: "Computed Destination"

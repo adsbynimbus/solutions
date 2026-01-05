@@ -63,7 +63,7 @@ jobs:
 
   xcodebuild:
     runs-on: macos-26
-    timeout-minutes: 20
+    timeout-minutes: 25
     env:
       NSUnbufferedIO: YES
     steps:
@@ -80,8 +80,6 @@ jobs:
           key: ${{ runner.os }}-xcodebuild-${{ env.XCODE_VERSION }}-${{ hashFiles('**/*.xc*') }}
           restore-keys: |
             ${{ runner.os }}-xcodebuild-${{ env.XCODE_VERSION }}-
-      - name: Resolve Package Dependencies
-        run: xcodebuild -resolvePackageDependencies
       - name: Analyze
         uses: ./.github/actions/codeql
         with:
