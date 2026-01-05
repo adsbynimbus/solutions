@@ -26,9 +26,11 @@ runs:
       run: echo "options=-scheme ${{ inputs.scheme }}
         -destination ${{ steps.destination.outputs.destination }}
         -disableAutomaticPackageResolution
-        -disablePackageRepositoryCache
+        -onlyUsePackageVersionsFromResolvedFile
         -skipPackageUpdates
-        CODE_SIGNING_ALLOWED=${{ inputs.codesign }} | xcbeautify --renderer github-actions" >> $GITHUB_OUTPUT
+        -jobs 2
+        -showBuildTimingSummary
+        CODE_SIGNING_ALLOWED=${{ inputs.codesign }} >> $GITHUB_OUTPUT
       shell: bash
     - name: Restore SPM Cache
       uses: actions/cache@v5

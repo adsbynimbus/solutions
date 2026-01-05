@@ -86,7 +86,7 @@ jobs:
           language: swift
           command: xcodebuild build-for-testing ${{ steps.xcodebuild.outputs.options }}
       - name: Test
-        run: xcodebuild test-without-building ${{ steps.xcodebuild.outputs.options }}
+        run: xcodebuild test-without-building ${{ steps.xcodebuild.outputs.options }} | xcbeautify --renderer github-actions
       - name: Upload build reports
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v6
