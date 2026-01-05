@@ -66,6 +66,7 @@ jobs:
     timeout-minutes: 25
     env:
       NSUnbufferedIO: YES
+      SWIFTPM_MAX_CONCURRENT_OPERATIONS: 2
     steps:
       - name: Checkout sources
         uses: actions/checkout@v6
