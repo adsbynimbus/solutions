@@ -72,16 +72,16 @@ jobs:
       - name: Setup Xcode
         id: xcodebuild
         uses: ./.github/actions/xcodebuild
-      - name: Restore Cache
+      - name: Restore Compilation Cache
         uses: actions/cache/restore@v5
         if: ${{ github.ref != 'refs/heads/main' }}
         with:
-          path: |
-            ~/Library/Developer/Xcode/DerivedData/CompilationCache.noindex
-            ~/Library/Developer/Xcode/DerivedData/**/SourcePackages
+          path: ~/Library/Developer/Xcode/DerivedData/CompilationCache.noindex
           key: ${{ runner.os }}-xcodebuild-${{ env.XCODE_VERSION }}-${{ hashFiles('**/*.xc*') }}
           restore-keys: |
-            ${{ runner.os }}-xcodebuild-${{ env.XCODE_VERSION }}
+            ${{ runner.os }}-xcodebuild-${{ env.XCODE_VERSION }}-
+      - name: Resolve Package Dependencies
+        run: xcodebuild -resolvePackageDependencies
       - name: Analyze
         uses: ./.github/actions/codeql
         with:
@@ -95,12 +95,10 @@ jobs:
         with:
           name: xcodebuild-reports
           path: '~/Library/Developer/Xcode/DerivedData/**/Logs/'
-      - name: Save Cache
+      - name: Save Compilation Cache
         uses: actions/cache/save@v5
         if: ${{ github.ref == 'refs/heads/main' }}
         with:
-          path: |
-            ~/Library/Developer/Xcode/DerivedData/CompilationCache.noindex
-            ~/Library/Developer/Xcode/DerivedData/**/SourcePackages
+          path: ~/Library/Developer/Xcode/DerivedData/CompilationCache.noindex
           key: ${{ steps.restore-cache.outputs.cache-primary-key }}
 
