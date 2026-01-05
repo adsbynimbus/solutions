@@ -25,6 +25,9 @@ runs:
       id: options
       run: echo "options=-scheme ${{ inputs.scheme }} -destination ${{ steps.destination.outputs.destination }} -scmProvider system -packageAuthorizationProvider netrc CODE_SIGNING_ALLOWED=${{ inputs.codesign }} | xcbeautify --renderer github-actions" >> $GITHUB_OUTPUT
       shell: bash
+    - name: Write netrc file
+      run: echo -e "machine github.com\n  login oauth2\n  password $GITHUB_TOKEN\n\n" > ~/.netrc
+      shell: bash
     - name: Restore SPM Cache
       uses: actions/cache@v5
       with:
