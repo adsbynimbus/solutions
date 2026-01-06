@@ -18,13 +18,6 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-defaults:
-  run:
-    shell: bash
-
-env:
-  XCODE_VERSION: '26.2'
-
 jobs:
   actions:
     runs-on: ubuntu-slim
@@ -62,43 +55,46 @@ jobs:
           path: '**/build/reports/'
 
   xcodebuild:
-    runs-on: macos-26
+    name: xcodebuild ${{ matrix.action }}
+    strategy:
+      fail-fast: false
+      matrix:
+        action: ['build', 'analyze']
+    runs-on: ${{ matrix.action == 'build' && 'macos-latest' || 'macos-15-intel' }}
     timeout-minutes: 20
     env:
       NSUnbufferedIO: YES
+      XCODE_VERSION: '26.1'
     steps:
       - name: Checkout sources
         uses: actions/checkout@v6
       - name: Setup Xcode
         id: xcodebuild
         uses: ./.github/actions/xcodebuild
-      - name: Restore Compilation Cache
-        uses: actions/cache/restore@v5
-        if: ${{ github.ref != 'refs/heads/main' }}
-        with:
-          path: ~/Library/Developer/Xcode/DerivedData/CompilationCache.noindex
-          key: ${{ runner.os }}-xcodebuild-${{ env.XCODE_VERSION }}-${{ hashFiles('**/*.xc*') }}
-          restore-keys: |
-            ${{ runner.os }}-xcodebuild-${{ env.XCODE_VERSION }}-
       - name: Restore SPM Cache
         uses: actions/cache@v5
         with:
           path: ~/Library/Developer/Xcode/DerivedData/**/SourcePackages
-          key: ${{ runner.os }}-spm-${{ hashFiles('**/*.xc*') }}
-          restore-keys: |
-            ${{ runner.os }}-spm-
-      - name: Test
-        run: xcodebuild test ${{ steps.xcodebuild.outputs.options }}
+          key: ${{ runner.os }}-${{ runner.arch }}-spm-${{ hashFiles('**/*.xc*') }}
+          restore-keys: ${{ runner.os }}-${{ runner.arch }}-spm-
+      - name: Restore Compilation Cache
+        uses: actions/cache/restore@v5
+        if: ${{ github.ref != 'refs/heads/main' || matrix.action == 'build' }}
+        with:
+          path: ~/Library/Developer/Xcode/DerivedData/CompilationCache.noindex
+          key: ${{ runner.os }}-${{ runner.arch }}-xcodebuild-${{ env.XCODE_VERSION }}-${{ hashFiles('**/*.xc*') }}
+          restore-keys: ${{ runner.os }}-${{ runner.arch }}-xcodebuild-${{ env.XCODE_VERSION }}-
       - name: Analyze
+        if: ${{ matrix.action == 'analyze' }}
         uses: ./.github/actions/codeql
         with:
           language: swift
-          command: |
-            rm -rf ~/Library/Developer/Xcode/DerivedData/CompilationCache.noindex
-            ./solutions.xcworkspace/xcshareddata/scripts/clean-primary-build.sh
-            xcodebuild -onlyUsePackageVersionsFromResolvedFile -skipPackageUpdates ${{ steps.xcodebuild.outputs.options }}
+          command: xcodebuild ${{ steps.xcodebuild.outputs.options }}
+      - name: Build
+        if: ${{ matrix.action == 'build' }}
+        run: xcodebuild build test ${{ steps.xcodebuild.outputs.options }}
       - name: Upload build reports
-        if: ${{ !cancelled() }}
+        if: ${{ !cancelled() && matrix.action == 'build' }}
         uses: actions/upload-artifact@v6
         with:
           name: xcodebuild-reports
