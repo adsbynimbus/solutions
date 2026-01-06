@@ -5,6 +5,14 @@ inputs:
     description: 'Enable code-signing'
     required: false
     default: 'NO'
+  command:
+    description: 'xcodebuild command'
+    required: false
+    default: 'build'
+  compilation-cache:
+    description: 'store compilation cache'
+    required: false
+    default: ${{ github.ref != 'refs/heads/main' }}
   scheme:
     description: 'xcodebuild scheme'
     required: false
@@ -25,22 +33,29 @@ runs:
         target=`xcrun xctrace list devices 2>&1 | grep -oE 'iPhone.*?[^\(]+' | head -1 | sed 's/Simulator//g' | awk '{$1=$1;print}'`
         echo "destination='platform=iOS Simulator,name=$target'" >> $GITHUB_OUTPUT
       shell: bash
-    - name: Compute Options
-      id: options
-      run: echo "options=-scheme ${{ inputs.scheme }}
+    - name: Compute command
+      id: command
+      run: echo command="xcodebuild ${{ inputs.command }} -scheme ${{ inputs.scheme }}
         -destination ${{ steps.destination.outputs.destination }}
         -jobs 2
         CODE_SIGNING_ALLOWED=${{ inputs.codesign }}
         NSUnbufferedIO=YES
         SWIFTPM_MAX_CONCURRENT_OPERATIONS=2 | xcbeautify --renderer github-actions" >> $GITHUB_OUTPUT
       shell: bash
-    - name: Restore SPM Cache
+    - name: SPM Cache
       uses: actions/cache@v5
       with:
         path: ~/Library/Developer/Xcode/DerivedData/**/SourcePackages
         key: ${{ runner.os }}-${{ runner.arch }}-spm-${{ hashFiles('**/*.xc*') }}
         restore-keys: ${{ runner.os }}-${{ runner.arch }}-spm-
+    - name: Compilation Cache
+      uses: actions/cache@v5
+      if: ${{ inputs.compilation-cache }}
+      with:
+        path: ~/Library/Developer/Xcode/DerivedData/CompilationCache.noindex
+        key: ${{ runner.os }}-${{ runner.arch }}-xcodebuild-${{ env.XCODE_VERSION }}-${{ hashFiles('**/*.xc*') }}
+        restore-keys: ${{ runner.os }}-${{ runner.arch }}-xcodebuild-${{ env.XCODE_VERSION }}-
 outputs:
-  options:
-    description: "Build Options"
-    value: ${{ steps.options.outputs.options }}
+  command:
+    description: "Build Command"
+    value: ${{ steps.command.outputs.command }}
