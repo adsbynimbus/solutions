@@ -5,10 +5,6 @@ inputs:
     description: 'Enable code-signing'
     required: false
     default: 'NO'
-  device:
-    description: 'Test Simulator'
-    required: false
-    default: 'iPhone 16'
   scheme:
     description: 'xcodebuild scheme'
     required: false
@@ -19,10 +15,16 @@ runs:
     - name: Setup Xcode
       run: sudo xcode-select --switch /Applications/Xcode_${{ env.XCODE_VERSION }}.app
       shell: bash
+    - name: Compute Destination
+      id: destination
+      run: |
+        target=`xcrun xctrace list devices 2>&1 | grep -oE 'iPhone.*?[^\(]+' | head -1 | sed 's/Simulator//g' | awk '{$1=$1;print}'`
+        echo "destination='platform=iOS Simulator,name=$target'" >> $GITHUB_OUTPUT
+      shell: bash
     - name: Compute Options
       id: options
       run: echo "options=-scheme ${{ inputs.scheme }}
-        -destination 'platform=iOS Simulator,name=${{ inputs.device }}'
+        -destination ${{ steps.destination.outputs.destination }}
         -jobs 2
         CODE_SIGNING_ALLOWED=${{ inputs.codesign }} | xcbeautify --renderer github-actions" >> $GITHUB_OUTPUT
       shell: bash
