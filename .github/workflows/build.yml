@@ -60,11 +60,12 @@ jobs:
       fail-fast: false
       matrix:
         action: ['build', 'analyze']
-    runs-on: ${{ matrix.action == 'build' && 'macos-latest' || 'macos-15-intel' }}
+    runs-on: macos-26
     timeout-minutes: 20
     env:
       NSUnbufferedIO: YES
-      XCODE_VERSION: '26.1'
+      SWIFTPM_MAX_CONCURRENT_OPERATIONS: 2
+      XCODE_VERSION: '26.2'
     steps:
       - name: Checkout sources
         uses: actions/checkout@v6

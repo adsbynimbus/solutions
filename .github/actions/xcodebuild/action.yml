@@ -33,9 +33,6 @@ runs:
         key: ${{ runner.os }}-${{ runner.arch }}-spm-${{ hashFiles('**/*.xc*') }}
         restore-keys: ${{ runner.os }}-${{ runner.arch }}-spm-
 outputs:
-  destination:
-    description: "Computed Destination"
-    value: ${{ steps.destination.outputs.destination }}
   options:
     description: "Build Options"
     value: ${{ steps.options.outputs.options }}
