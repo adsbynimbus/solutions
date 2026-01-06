@@ -12,7 +12,7 @@ inputs:
   compilation-cache:
     description: 'store compilation cache'
     required: false
-    default: ${{ github.ref != 'refs/heads/main' }}
+    default: ${{ github.ref == 'refs/heads/main' }}
   scheme:
     description: 'xcodebuild scheme'
     required: false
@@ -50,11 +50,11 @@ runs:
         restore-keys: ${{ runner.os }}-${{ runner.arch }}-spm-
     - name: Compilation Cache
       uses: actions/cache@v5
-      if: ${{ inputs.compilation-cache }}
+      if: ${{ inputs.compilation-cache != 'false' }}
       with:
         path: ~/Library/Developer/Xcode/DerivedData/CompilationCache.noindex
-        key: ${{ runner.os }}-${{ runner.arch }}-xcodebuild-${{ env.XCODE_VERSION }}-${{ hashFiles('**/*.xc*') }}
-        restore-keys: ${{ runner.os }}-${{ runner.arch }}-xcodebuild-${{ env.XCODE_VERSION }}-
+        key: ${{ runner.os }}-${{ runner.arch }}-xcodebuild-${{ inputs.version }}-${{ hashFiles('**/*.xc*') }}
+        restore-keys: ${{ runner.os }}-${{ runner.arch }}-xcodebuild-${{ inputs.version }}-
 outputs:
   command:
     description: "Build Command"
