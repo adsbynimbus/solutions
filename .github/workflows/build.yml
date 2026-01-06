@@ -88,11 +88,16 @@ jobs:
           key: ${{ runner.os }}-spm-${{ hashFiles('**/*.xc*') }}
           restore-keys: |
             ${{ runner.os }}-spm-
+      - name: Test
+        run: xcodebuild test ${{ steps.xcodebuild.outputs.options }}
       - name: Analyze
         uses: ./.github/actions/codeql
         with:
           language: swift
-          command: xcodebuild test ${{ steps.xcodebuild.outputs.options }}
+          command: |
+            rm -rf ~/Library/Developer/Xcode/DerivedData/CompilationCache.noindex
+            ./solutions.xcworkspace/xcshareddata/scripts/clean-primary-build.sh
+            xcodebuild ${{ steps.xcodebuild.outputs.options }}
       - name: Upload build reports
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v6
@@ -105,4 +110,3 @@ jobs:
         with:
           path: ~/Library/Developer/Xcode/DerivedData/CompilationCache.noindex
           key: ${{ steps.restore-cache.outputs.cache-primary-key }}
-
