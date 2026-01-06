@@ -43,6 +43,7 @@ jobs:
           cache-read-only: true
       - name: Setup Xcode
         id: xcodebuild
+        if: matrix.language == 'swift'
         uses: ./.github/actions/xcodebuild
         with:
           compilation-cache: false
