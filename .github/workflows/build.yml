@@ -1,4 +1,4 @@
-name: Build and Analyze
+name: Build
 
 on:
   pull_request:
@@ -9,31 +9,14 @@ on:
     - cron: '55 23 * * 6'
 
 permissions:
-  actions: read
   contents: write
   packages: read
-  security-events: write
-
-defaults:
-  run:
-    shell: bash
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  actions:
-    runs-on: ubuntu-slim
-    timeout-minutes: 10
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v6
-      - name: Analyze
-        uses: ./.github/actions/codeql
-        with:
-          language: actions
-
   gradle:
     runs-on: ubuntu-latest
     timeout-minutes: 20
@@ -44,14 +27,10 @@ jobs:
         uses: ./.github/actions/gradle
         with:
           cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
-      - name: Analyze
-        uses: ./.github/actions/codeql
-        with:
-          language: java-kotlin
-          command: ./gradlew assemble --init-script gradle/codeql.init.gradle.kts
+          dependency-graph: generate-and-submit
       - name: Build
         run: ./gradlew build
-      - name: Upload build reports
+      - name: Upload reports
         uses: actions/upload-artifact@v6
         if: ${{ !cancelled() }}
         with:
@@ -59,48 +38,25 @@ jobs:
           path: '**/build/reports/'
 
   xcodebuild:
-    name: xcode${{ matrix.action }}
-    strategy:
-      fail-fast: false
-      matrix:
-        action: ['build', 'analyze']
-    runs-on: ${{ matrix.action == 'build' && 'macos-latest' || 'macos-15-intel' }}
+    runs-on: macos-latest
     timeout-minutes: 20
-    env:
-      NSUnbufferedIO: YES
-      SWIFTPM_MAX_CONCURRENT_OPERATIONS: 2
-      XCODE_VERSION: '26.1'
     steps:
       - name: Checkout sources
         uses: actions/checkout@v6
       - name: Setup Xcode
         id: xcodebuild
         uses: ./.github/actions/xcodebuild
-      - name: Restore Compilation Cache
-        uses: actions/cache/restore@v5
-        if: ${{ github.ref != 'refs/heads/main' || matrix.action == 'build' }}
+      - name: Setup Compilation Cache
+        uses: actions/cache@v5
         with:
           path: ~/Library/Developer/Xcode/DerivedData/CompilationCache.noindex
           key: ${{ runner.os }}-${{ runner.arch }}-xcodebuild-${{ env.XCODE_VERSION }}-${{ hashFiles('**/*.xc*') }}
           restore-keys: ${{ runner.os }}-${{ runner.arch }}-xcodebuild-${{ env.XCODE_VERSION }}-
-      - name: Analyze
-        if: ${{ matrix.action == 'analyze' }}
-        uses: ./.github/actions/codeql
-        with:
-          language: swift
-          command: xcodebuild ${{ steps.xcodebuild.outputs.options }}
       - name: Build
-        if: ${{ matrix.action == 'build' }}
         run: xcodebuild build test ${{ steps.xcodebuild.outputs.options }}
-      - name: Upload build reports
-        if: ${{ !cancelled() && matrix.action == 'build' }}
+      - name: Upload reports
+        if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v6
         with:
           name: xcodebuild-reports
           path: '~/Library/Developer/Xcode/DerivedData/**/Logs/'
-      - name: Save Compilation Cache
-        uses: actions/cache/save@v5
-        if: ${{ github.ref == 'refs/heads/main' }}
-        with:
-          path: ~/Library/Developer/Xcode/DerivedData/CompilationCache.noindex
-          key: ${{ steps.restore-cache.outputs.cache-primary-key }}

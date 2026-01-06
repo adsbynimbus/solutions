@@ -9,11 +9,15 @@ inputs:
     description: 'xcodebuild scheme'
     required: false
     default: 'Solutions'
+  version:
+    description: 'xcode version'
+    required: false
+    default: '26.1'
 runs:
   using: "composite"
   steps:
     - name: Setup Xcode
-      run: sudo xcode-select --switch /Applications/Xcode_${{ env.XCODE_VERSION }}.app
+      run: sudo xcode-select --switch /Applications/Xcode_${{ inputs.version }}.app
       shell: bash
     - name: Compute Destination
       id: destination
@@ -26,7 +30,9 @@ runs:
       run: echo "options=-scheme ${{ inputs.scheme }}
         -destination ${{ steps.destination.outputs.destination }}
         -jobs 2
-        CODE_SIGNING_ALLOWED=${{ inputs.codesign }} | xcbeautify --renderer github-actions" >> $GITHUB_OUTPUT
+        CODE_SIGNING_ALLOWED=${{ inputs.codesign }}
+        NSUnbufferedIO=YES
+        SWIFTPM_MAX_CONCURRENT_OPERATIONS=2 | xcbeautify --renderer github-actions" >> $GITHUB_OUTPUT
       shell: bash
     - name: Restore SPM Cache
       uses: actions/cache@v5
