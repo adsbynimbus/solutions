@@ -78,8 +78,6 @@ jobs:
           path: ~/Library/Developer/Xcode/DerivedData/CompilationCache.noindex
           key: ${{ runner.os }}-${{ runner.arch }}-xcodebuild-${{ env.XCODE_VERSION }}-${{ hashFiles('**/*.xc*') }}
           restore-keys: ${{ runner.os }}-${{ runner.arch }}-xcodebuild-${{ env.XCODE_VERSION }}-
-      - name: Resolve Package Dependencies
-        run: xcodebuild -resolvePackageDependencies ${{ steps.xcodebuild.outputs.options }}
       - name: Analyze
         if: ${{ matrix.action == 'analyze' }}
         uses: ./.github/actions/codeql
