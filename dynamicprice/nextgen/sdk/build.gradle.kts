@@ -9,6 +9,8 @@ plugins {
     `maven-publish`
 }
 
+val codeQL = providers.provider { extra.properties["codeQL"] }
+
 val dokkaJavadocJar by tasks.registering(Jar::class) {
     archiveClassifier.set("javadoc")
     from(tasks.dokkaGeneratePublicationJavadoc.flatMap { it.outputDirectory })
@@ -34,6 +36,10 @@ kotlin {
         aarMetadata {
             minCompileSdk = 35
             minAgpVersion = "8.2.0" // Copied from NextGen metadata
+        }
+
+        lint {
+            checkReleaseBuilds = !codeQL.isPresent
         }
 
         mavenPublication {

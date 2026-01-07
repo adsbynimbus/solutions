@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
 }
 
+val codeQL = providers.provider { extra.properties["codeQL"] }
 val githubActions = providers.environmentVariable("GITHUB_ACTIONS")
 
 kotlin {
@@ -73,7 +74,7 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = true
+            isMinifyEnabled = !codeQL.isPresent
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 layout.projectDirectory.file("src/androidMain/proguard-rules.txt"),
@@ -84,6 +85,10 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.toVersion(libs.versions.android.jvm.get())
         targetCompatibility = JavaVersion.toVersion(libs.versions.android.jvm.get())
+    }
+
+    lint {
+        checkReleaseBuilds = !codeQL.isPresent
     }
 
     packaging.resources {

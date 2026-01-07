@@ -23,13 +23,14 @@ jobs:
     steps:
       - name: Checkout sources
         uses: actions/checkout@v6
+      - name: Setup Gradle
+        uses: ./.github/actions/gradle
+        with:
+          cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
       - name: Set Version from Tag Name
         id: tag_name
         run: echo "VERSION=${GITHUB_REF/refs\/tags\/nextgen\//}" >> $GITHUB_OUTPUT
       - name: Publish
-        uses: ./.github/actions/gradle
         env:
           ORG_GRADLE_PROJECT_version: ${{ steps.tag_name.outputs.VERSION }}
-        with:
-          cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
-          task: :dynamicprice:nextgen:sdk:publish
+        run: ./gradlew :dynamicprice:nextgen:sdk:publish

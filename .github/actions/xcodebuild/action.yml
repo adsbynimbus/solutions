@@ -5,38 +5,57 @@ inputs:
     description: 'Enable code-signing'
     required: false
     default: 'NO'
+  command:
+    description: 'xcodebuild command'
+    required: false
+    default: 'build'
+  compilation-cache:
+    description: 'store compilation cache'
+    required: false
+    default: ${{ github.ref == 'refs/heads/main' }}
   scheme:
     description: 'xcodebuild scheme'
     required: false
     default: 'Solutions'
-  task:
-    description: 'xcodebuild action'
+  version:
+    description: 'xcode version'
     required: false
-    default: 'build-for-testing'
+    default: '26.1'
 runs:
   using: "composite"
   steps:
     - name: Setup Xcode
-      run: sudo xcode-select --switch /Applications/Xcode_${{ env.XCODE_VERSION }}.app
+      run: sudo xcode-select --switch /Applications/Xcode_${{ inputs.version }}.app
       shell: bash
-    - name: Restore Build Cache
+    - name: Compute Destination
+      id: destination
+      run: |
+        target=`xcrun xctrace list devices 2>&1 | grep -oE 'iPhone.*?[^\(]+' | head -1 | sed 's/Simulator//g' | awk '{$1=$1;print}'`
+        echo "destination='platform=iOS Simulator,name=$target'" >> $GITHUB_OUTPUT
+      shell: bash
+    - name: Compute command
+      id: command
+      run: echo command="env NSUnbufferedIO=YES SWIFTPM_MAX_CONCURRENT_OPERATIONS=2
+        xcodebuild ${{ inputs.command }}
+        -scheme ${{ inputs.scheme }}
+        -destination ${{ steps.destination.outputs.destination }}
+        -jobs 2
+        CODE_SIGNING_ALLOWED=${{ inputs.codesign }} | xcbeautify --renderer github-actions" >> $GITHUB_OUTPUT
+      shell: bash
+    - name: SPM Cache
       uses: actions/cache@v5
       with:
-        path: |
-          ~/Library/Developer/Xcode/DerivedData
-          ~/Library/Caches/org.swift.swiftpm
-          !~/Library/Developer/Xcode/DerivedData/ModuleCache.noindex
-          !~/Library/Developer/Xcode/DerivedData/**/Logs/**
-        key: ${{ runner.os }}-xcodebuild-${{ env.XCODE_VERSION }}-${{ hashFiles('**/*.xc*') }}
-        restore-keys: |
-          ${{ runner.os }}-xcodebuild-${{ env.XCODE_VERSION }}
-    - name: Run xcodebuild
-      run: |
-        device=`xcrun xctrace list devices 2>&1 | grep -oE 'iPhone.*?[^\(]+' | head -1 | sed 's/Simulator//g' | awk '{$1=$1;print}'`
-        xcodebuild ${{ inputs.task }} \
-        -scheme ${{ inputs.scheme }} \
-        -destination "platform=iOS Simulator,name=$device" \
-        -jobs 2 \
-        -showBuildTimingSummary \
-        CODE_SIGNING_ALLOWED=${{ inputs.codesign }} | xcbeautify --renderer github-actions
-      shell: bash
+        path: ~/Library/Developer/Xcode/DerivedData/**/SourcePackages
+        key: ${{ runner.os }}-${{ runner.arch }}-spm-${{ hashFiles('**/*.xc*') }}
+        restore-keys: ${{ runner.os }}-${{ runner.arch }}-spm-
+    - name: Compilation Cache
+      uses: actions/cache@v5
+      if: ${{ inputs.compilation-cache != 'false' }}
+      with:
+        path: ~/Library/Developer/Xcode/DerivedData/CompilationCache.noindex
+        key: ${{ runner.os }}-${{ runner.arch }}-xcodebuild-${{ inputs.version }}-${{ hashFiles('**/*.xc*') }}
+        restore-keys: ${{ runner.os }}-${{ runner.arch }}-xcodebuild-${{ inputs.version }}-
+outputs:
+  command:
+    description: "Build Command"
+    value: ${{ steps.command.outputs.command }}

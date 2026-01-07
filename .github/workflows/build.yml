@@ -16,25 +16,21 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-env:
-  XCODE_VERSION: '26.1'
-
 jobs:
   gradle:
-    runs-on: macos-latest
-    timeout-minutes: 45
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
-      - name: Checkout sources
+      - name: Checkout repository
         uses: actions/checkout@v6
-      - name: Cache Kotlin Native
-        uses: ./.github/actions/kotlin
-      - name: Build
+      - name: Setup Gradle
         uses: ./.github/actions/gradle
         with:
           cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
-          cache-read-only: false
           dependency-graph: generate-and-submit
-      - name: Upload build reports
+      - name: Build
+        run: ./gradlew build
+      - name: Upload reports
         uses: actions/upload-artifact@v6
         if: ${{ !cancelled() }}
         with:
@@ -43,16 +39,19 @@ jobs:
 
   xcodebuild:
     runs-on: macos-latest
-    timeout-minutes: 45
+    timeout-minutes: 20
     steps:
       - name: Checkout sources
         uses: actions/checkout@v6
-      - name: Test
+      - name: Setup Xcode
+        id: xcodebuild
         uses: ./.github/actions/xcodebuild
         with:
-          task: test
-      - name: Upload build reports
-        if:  ${{ !cancelled() }}
+          command: 'build test'
+      - name: Build
+        run: ${{ steps.xcodebuild.outputs.command }}
+      - name: Upload reports
+        if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v6
         with:
           name: xcodebuild-reports

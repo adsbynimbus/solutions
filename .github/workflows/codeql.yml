@@ -12,14 +12,11 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-env:
-  XCODE_VERSION: '26.1'
-
 jobs:
   analyze:
     name: Analyze (${{ matrix.language }})
-    runs-on: ${{ (matrix.language == 'swift' && 'macos-latest') || 'ubuntu-latest' }}
-    timeout-minutes: 45
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 20
     permissions:
       actions: read
       contents: read
@@ -29,31 +26,38 @@ jobs:
       fail-fast: false
       matrix:
         include:
-        - language: actions
-          build-mode: none
-        - language: java-kotlin
-          build-mode: manual
-        - language: swift
-          build-mode: manual
+          - language: actions
+            runner: ubuntu-slim
+          - language: java-kotlin
+            runner: ubuntu-latest
+          - language: swift
+            runner: macos-15-intel
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v6
-    - name: Initialize CodeQL
-      uses: github/codeql-action/init@v4
-      with:
-        languages: ${{ matrix.language }}
-        build-mode: ${{ matrix.build-mode }}
-    - name: Run Gradle Build
-      if: matrix.language == 'java-kotlin'
-      uses: ./.github/actions/gradle
-      with:
-        task: assemble --no-daemon --no-build-cache # CodeQL requires actual compilation
-        cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
-        cache-read-only: false
-    - name: Run Xcode Build
-      if: matrix.language == 'swift'
-      uses: ./.github/actions/xcodebuild
-    - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v4
-      with:
-        category: "/language:${{matrix.language}}"
+      - name: Checkout repository
+        uses: actions/checkout@v6
+      - name: Setup Gradle
+        if: matrix.language == 'java-kotlin'
+        uses: ./.github/actions/gradle
+        with:
+          cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
+          cache-read-only: true
+      - name: Setup Xcode
+        id: xcodebuild
+        if: matrix.language == 'swift'
+        uses: ./.github/actions/xcodebuild
+        with:
+          compilation-cache: false
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v4
+        with:
+          languages: ${{ matrix.language }}
+          build-mode: ${{ matrix.language == 'actions' && 'none' || 'manual' }}
+          queries: security-and-quality
+      - name: Build
+        if: matrix.language != 'actions'
+        run: ${{ matrix.language == 'java-kotlin' && './gradlew assemble --init-script gradle/codeql.init.gradle.kts' || steps.xcodebuild.outputs.command }}
+        shell: bash
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v4
+        with:
+          category: "/language:${{ matrix.language }}"
