@@ -12,7 +12,7 @@ inputs:
   compilation-cache:
     description: 'store compilation cache'
     required: false
-    default: ${{ github.ref == 'refs/heads/main' }}
+    default: 'true'
   scheme:
     description: 'xcodebuild scheme'
     required: false
