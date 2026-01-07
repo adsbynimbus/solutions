@@ -35,12 +35,12 @@ runs:
       shell: bash
     - name: Compute command
       id: command
-      run: echo command="xcodebuild ${{ inputs.command }} -scheme ${{ inputs.scheme }}
+      run: echo command="env NSUnbufferedIO=YES SWIFTPM_MAX_CONCURRENT_OPERATIONS=2
+        xcodebuild ${{ inputs.command }}
+        -scheme ${{ inputs.scheme }}
         -destination ${{ steps.destination.outputs.destination }}
         -jobs 2
-        CODE_SIGNING_ALLOWED=${{ inputs.codesign }}
-        NSUnbufferedIO=YES
-        SWIFTPM_MAX_CONCURRENT_OPERATIONS=2 | xcbeautify --renderer github-actions" >> $GITHUB_OUTPUT
+        CODE_SIGNING_ALLOWED=${{ inputs.codesign }} | xcbeautify --renderer github-actions" >> $GITHUB_OUTPUT
       shell: bash
     - name: SPM Cache
       uses: actions/cache@v5
