@@ -62,6 +62,15 @@ kotlin {
     }
 }
 
+dependencies.constraints {
+    androidMainImplementation(libs.okio) {
+        version {
+            require("[3.4.0,)")
+            because("Addresses CVE-2023-3635 reported on Okio 3.2.0")
+        }
+    }
+}
+
 dokka {
     moduleName = "AdMob NextGen"
     dokkaGeneratorIsolation = ClassLoaderIsolation()
