@@ -41,8 +41,13 @@ runs:
     - name: Clean Kotlin Native Directory
       run: rm -rf ~/.konan
       shell: bash
-    - name: Cache Kotlin Native
-      uses: actions/cache@v5
+    - name: Restore Kotlin Native
+      uses: actions/cache/restore@v5
+      id: kotlin-cache
       with:
         path: ~/.konan
-        key: ${{ runner.os }}-${{ runner.arch }}-konan-${{ steps.kotlin.outputs.VERSION }}
+        key: konan-${{ steps.kotlin.outputs.VERSION }}-${{ runner.os }}-${{ runner.arch }}
+outputs:
+  kotlin-cache-key:
+    description: "Kotlin Cache Key"
+    value: ${{ steps.kotlin-cache.outputs.cache-primary-key }}

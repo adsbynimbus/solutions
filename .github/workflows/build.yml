@@ -16,6 +16,9 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+env:
+  NSUnbufferedIO: YES
+
 jobs:
   gradle:
     runs-on: ubuntu-latest
@@ -24,12 +27,20 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
       - name: Setup Gradle
+        id: gradle
         uses: ./.github/actions/gradle
         with:
           cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
           dependency-graph: generate-and-submit
       - name: Build
         run: ./gradlew build
+        shell: bash
+      - name: Cache Kotlin Native
+        uses: actions/cache/save@v5
+        if: ${{ github.ref == 'refs/heads/main' }}
+        with:
+          path: ~/.konan
+          key: ${{ steps.gradle.outputs.kotlin-cache-key }}
       - name: Upload reports
         uses: actions/upload-artifact@v6
         if: ${{ !cancelled() }}
@@ -46,10 +57,11 @@ jobs:
       - name: Setup Xcode
         id: xcodebuild
         uses: ./.github/actions/xcodebuild
-        with:
-          command: 'build test'
       - name: Build
-        run: ${{ steps.xcodebuild.outputs.command }}
+        run: |
+          xcodebuild build-for-testing ${{ steps.xcodebuild.outputs.options }}
+          xcodebuild test-without-building ${{ steps.xcodebuild.outputs.options }}
+        shell: bash
       - name: Upload reports
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v6
