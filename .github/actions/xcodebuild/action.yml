@@ -35,7 +35,7 @@ runs:
       shell: bash
     - name: Compute command
       id: command
-      run: echo command="env NSUnbufferedIO=YES
+      run: echo command="env NSUnbufferedIO=YES SWIFTPM_MAX_CONCURRENT_OPERATIONS=2
         xcodebuild ${{ inputs.command }}
         -scheme ${{ inputs.scheme }}
         -destination ${{ steps.destination.outputs.destination }}
