@@ -24,12 +24,19 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
       - name: Setup Gradle
+        id: gradle
         uses: ./.github/actions/gradle
         with:
           cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
           dependency-graph: generate-and-submit
       - name: Build
         run: ./gradlew build
+      - name: Cache Kotlin Native
+        uses: actions/cache/save@v5
+        if: ${{ github.ref == 'refs/heads/main' }}
+        with:
+          path: ~/.konan
+          key: ${{ steps.gradle.outputs.kotlin-cache-key }}
       - name: Upload reports
         uses: actions/upload-artifact@v6
         if: ${{ !cancelled() }}
