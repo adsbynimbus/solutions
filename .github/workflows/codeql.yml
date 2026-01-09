@@ -14,6 +14,7 @@ concurrency:
 
 env:
   NSUnbufferedIO: YES
+  SWIFTPM_MAX_CONCURRENT_OPERATIONS: 3
 
 jobs:
   analyze:
