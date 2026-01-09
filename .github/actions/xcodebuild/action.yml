@@ -39,7 +39,6 @@ runs:
         xcodebuild ${{ inputs.command }}
         -scheme ${{ inputs.scheme }}
         -destination ${{ steps.destination.outputs.destination }}
-        -jobs 2
         ${{ inputs.codeql == 'YES' && '-disableAutomaticPackageResolution -skipPackageUpdates -skipPackageSignatureValidation -skipPackagePluginValidation -skipMacroValidation COMPILATION_CACHE_ENABLE_CACHING=NO' || '' }}
         CODE_SIGNING_ALLOWED=${{ inputs.codesign }} | xcbeautify --renderer github-actions" >> $GITHUB_OUTPUT
       shell: bash
