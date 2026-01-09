@@ -35,13 +35,12 @@ runs:
       shell: bash
     - name: Compute command
       id: command
-      run: echo command="env NSUnbufferedIO=YES SWIFTPM_MAX_CONCURRENT_OPERATIONS=2
+      run: echo command="env NSUnbufferedIO=YES SWIFTPM_MAX_CONCURRENT_OPERATIONS=1
         xcodebuild ${{ inputs.command }}
         -scheme ${{ inputs.scheme }}
         -destination ${{ steps.destination.outputs.destination }}
         -jobs 2
-        -disablePackageRepositoryCache
-        ${{ inputs.codeql == 'YES' && '-quiet -skipPackageUpdates -skipPackageSignatureValidation -skipPackagePluginValidation -skipMacroValidation COMPILATION_CACHE_ENABLE_CACHING=NO' || '' }}
+        ${{ inputs.codeql == 'YES' && '-skipPackageUpdates -skipPackageSignatureValidation -skipPackagePluginValidation -skipMacroValidation COMPILATION_CACHE_ENABLE_CACHING=NO' || '' }}
         CODE_SIGNING_ALLOWED=${{ inputs.codesign }} | xcbeautify --renderer github-actions" >> $GITHUB_OUTPUT
       shell: bash
     - name: Build Cache
@@ -54,7 +53,7 @@ runs:
         restore-keys: xcodebuild-${{ runner.os }}-${{ runner.arch }}-
     - name: Clean
       if: inputs.codeql == 'YES' && github.ref == 'refs/heads/main'
-      run: xcodebuild clean -scheme ${{ inputs.scheme }} -disablePackageRepositoryCache | xcbeautify --renderer github-actions
+      run: xcodebuild clean -scheme ${{ inputs.scheme }} | xcbeautify --renderer github-actions
       shell: bash
 outputs:
   command:

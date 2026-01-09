@@ -51,6 +51,7 @@ jobs:
           languages: ${{ matrix.language }}
           build-mode: ${{ matrix.language == 'actions' && 'none' || 'manual' }}
           queries: security-and-quality
+          threads: ${{ matrix.language == 'actions' && 1 || 3 }}
       - name: Build
         if: matrix.language != 'actions'
         run: ${{ matrix.language == 'java-kotlin' && './gradlew assemble --init-script gradle/codeql.init.gradle.kts' || steps.xcodebuild.outputs.command }}
