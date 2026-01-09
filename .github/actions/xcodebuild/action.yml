@@ -5,18 +5,10 @@ inputs:
     description: 'Enable code-signing'
     required: false
     default: 'NO'
-  command:
-    description: 'xcodebuild command'
-    required: false
-    default: 'build'
   codeql:
     description: 'CodeQL build'
     required: false
     default: ${{ contains(github.workflow, 'codeql') && 'YES' || 'NO' }}
-  parallelism:
-    description: 'Max concurrent jobs'
-    required: false
-    default: ${{ contains(runner.arch, 'ARM') && 2 || 3 }}
   scheme:
     description: 'xcodebuild scheme'
     required: false
@@ -38,12 +30,10 @@ runs:
         echo "destination='platform=iOS Simulator,name=$target'" >> $GITHUB_OUTPUT
       shell: bash
     - name: Compute command
-      id: command
-      run: echo command="env NSUnbufferedIO=YES SWIFTPM_MAX_CONCURRENT_OPERATIONS=${{ inputs.parallelism }}
-        xcodebuild ${{ inputs.command }}
-        -scheme ${{ inputs.scheme }}
+      id: options
+      run: echo options="-scheme ${{ inputs.scheme }}
         -destination ${{ steps.destination.outputs.destination }}
-        -jobs ${{ inputs.parallelism }}
+        -jobs ${{ contains(runner.arch, 'ARM') && 2 || 3 }}
         ${{ inputs.codeql == 'YES' && '-skipPackageUpdates -skipPackageSignatureValidation -skipPackagePluginValidation -skipMacroValidation COMPILATION_CACHE_ENABLE_CACHING=NO' || '' }}
         CODE_SIGNING_ALLOWED=${{ inputs.codesign }} | xcbeautify --renderer github-actions" >> $GITHUB_OUTPUT
       shell: bash
@@ -60,6 +50,6 @@ runs:
       run: xcodebuild clean -scheme ${{ inputs.scheme }} | xcbeautify --renderer github-actions
       shell: bash
 outputs:
-  command:
-    description: "Build Command"
-    value: ${{ steps.command.outputs.command }}
+  options:
+    description: "Build options"
+    value: ${{ steps.options.outputs.options }}

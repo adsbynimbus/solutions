@@ -16,6 +16,9 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+env:
+  NSUnbufferedIO: YES
+
 jobs:
   gradle:
     runs-on: ubuntu-latest
@@ -54,10 +57,10 @@ jobs:
       - name: Setup Xcode
         id: xcodebuild
         uses: ./.github/actions/xcodebuild
-        with:
-          command: 'build test'
       - name: Build
-        run: ${{ steps.xcodebuild.outputs.command }}
+        run: |
+          xcodebuild build-for-testing ${{ steps.xcodebuild.outputs.options }}
+          xcodebuild test-without-building ${{ steps.xcodebuild.outputs.options }}
         shell: bash
       - name: Upload reports
         if: ${{ !cancelled() }}
