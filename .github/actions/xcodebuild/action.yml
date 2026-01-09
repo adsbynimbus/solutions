@@ -9,10 +9,10 @@ inputs:
     description: 'xcodebuild command'
     required: false
     default: 'build'
-  compilation-cache:
-    description: 'store compilation cache'
+  codeql:
+    description: 'CodeQL build'
     required: false
-    default: 'true'
+    default: ${{ contains(github.workflow, 'codeql') && 'YES' || 'NO' }}
   scheme:
     description: 'xcodebuild scheme'
     required: false
@@ -35,26 +35,26 @@ runs:
       shell: bash
     - name: Compute command
       id: command
-      run: echo command="env NSUnbufferedIO=YES SWIFTPM_MAX_CONCURRENT_OPERATIONS=2
+      run: echo command="env NSUnbufferedIO=YES
         xcodebuild ${{ inputs.command }}
         -scheme ${{ inputs.scheme }}
         -destination ${{ steps.destination.outputs.destination }}
         -jobs 2
+        ${{ inputs.codeql == 'YES' && '-disableAutomaticPackageResolution -skipPackageUpdates -skipPackageSignatureValidation -skipPackagePluginValidation -skipMacroValidation COMPILATION_CACHE_ENABLE_CACHING=NO' || '' }}
         CODE_SIGNING_ALLOWED=${{ inputs.codesign }} | xcbeautify --renderer github-actions" >> $GITHUB_OUTPUT
       shell: bash
-    - name: SPM Cache
+    - name: Cache
       uses: actions/cache@v5
       with:
-        path: ~/Library/Developer/Xcode/DerivedData/**/SourcePackages
-        key: ${{ runner.os }}-${{ runner.arch }}-spm-${{ hashFiles('**/*.xc*') }}
-        restore-keys: ${{ runner.os }}-${{ runner.arch }}-spm-
-    - name: Compilation Cache
-      uses: actions/cache@v5
-      if: ${{ inputs.compilation-cache != 'false' }}
-      with:
-        path: ~/Library/Developer/Xcode/DerivedData/CompilationCache.noindex
-        key: ${{ runner.os }}-${{ runner.arch }}-xcodebuild-${{ inputs.version }}-${{ hashFiles('**/*.xc*') }}
-        restore-keys: ${{ runner.os }}-${{ runner.arch }}-xcodebuild-${{ inputs.version }}-
+        path: |
+          ~/Library/Developer/Xcode/DerivedData
+          !~/Library/Developer/Xcode/DerivedData/**/Logs/**
+        key: ${{ runner.os }}-${{ runner.arch }}-xcodebuild-${{ hashFiles('**/*.xc*') }}
+        restore-keys: ${{ runner.os }}-${{ runner.arch }}-xcodebuild-
+    - name: Clean
+      if: inputs.codeql == 'YES'
+      run: env NSUnbufferedIO=YES xcodebuild clean -scheme ${{ inputs.scheme }} | xcbeautify --renderer github-actions
+      shell: bash
 outputs:
   command:
     description: "Build Command"
