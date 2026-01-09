@@ -46,7 +46,7 @@ runs:
       id: kotlin-cache
       with:
         path: ~/.konan
-        key: ${{ runner.os }}-${{ runner.arch }}-konan-${{ steps.kotlin.outputs.VERSION }}
+        key: konan-${{ steps.kotlin.outputs.VERSION }}-${{ runner.os }}-${{ runner.arch }}
 outputs:
   kotlin-cache-key:
     description: "Kotlin Cache Key"

@@ -49,8 +49,8 @@ runs:
         path: |
           ~/Library/Developer/Xcode/DerivedData
           !~/Library/Developer/Xcode/DerivedData/**/Logs/**
-        key: ${{ runner.os }}-${{ runner.arch }}-xcodebuild-${{ hashFiles('**/*.xc*') }}
-        restore-keys: ${{ runner.os }}-${{ runner.arch }}-xcodebuild-
+        key: xcodebuild-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('**/*.xc*', '**/*.swift') }}
+        restore-keys: xcodebuild-${{ runner.os }}-${{ runner.arch }}-
     - name: Clean
       if: inputs.codeql == 'YES'
       run: env NSUnbufferedIO=YES xcodebuild clean -scheme ${{ inputs.scheme }} | xcbeautify --renderer github-actions
