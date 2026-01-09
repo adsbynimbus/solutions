@@ -53,8 +53,8 @@ runs:
         key: xcodebuild-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('**/*.xc*', '**/*.swift') }}
         restore-keys: xcodebuild-${{ runner.os }}-${{ runner.arch }}-
     - name: Clean
-      if: inputs.codeql == 'YES'
-      run: env NSUnbufferedIO=YES xcodebuild clean -scheme ${{ inputs.scheme }} | xcbeautify --renderer github-actions
+      if: inputs.codeql == 'YES' && github.ref == 'refs/heads/main'
+      run: xcodebuild clean -scheme ${{ inputs.scheme }} -disablePackageRepositoryCache | xcbeautify --renderer github-actions
       shell: bash
 outputs:
   command:
