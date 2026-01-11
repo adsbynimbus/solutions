@@ -1,4 +1,5 @@
 [![Build](https://github.com/adsbynimbus/solutions/actions/workflows/build.yml/badge.svg)](https://github.com/adsbynimbus/solutions/actions/workflows/build.yml)
+[![CodeQL Analysis](https://github.com/adsbynimbus/solutions/actions/workflows/codeql.yml/badge.svg)](https://github.com/adsbynimbus/solutions/actions/workflows/codeql.yml)
 # Nimbus Solutions Engineering
 
 Official Nimbus documentation can be found at [https://docs.adsbynimbus.com/docs/](https://docs.adsbynimbus.com/docs/)
