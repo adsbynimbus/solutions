@@ -48,6 +48,9 @@ runs:
         path: ~/.konan
         key: konan-${{ steps.kotlin.outputs.VERSION }}-${{ runner.os }}-${{ runner.arch }}
 outputs:
+  kotlin-cache-hit:
+    description: "Kotlin Cache Hit"
+    value: ${{ !steps.kotlin-cache.outputs.cache-hit }}
   kotlin-cache-key:
     description: "Kotlin Cache Key"
     value: ${{ steps.kotlin-cache.outputs.cache-primary-key }}

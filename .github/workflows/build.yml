@@ -37,7 +37,7 @@ jobs:
         shell: bash
       - name: Cache Kotlin Native
         uses: actions/cache/save@v5
-        if: ${{ github.ref == 'refs/heads/main' }}
+        if: ${{ github.ref == 'refs/heads/main' && steps.gradle.outcome.kotlin-cache-hit != 'true' }}
         with:
           path: ~/.konan
           key: ${{ steps.gradle.outputs.kotlin-cache-key }}
@@ -62,6 +62,15 @@ jobs:
           xcodebuild build-for-testing ${{ steps.xcodebuild.outputs.options }}
           xcodebuild test-without-building ${{ steps.xcodebuild.outputs.options }}
         shell: bash
+      - name: Cache DerivedData
+        uses: actions/cache/save@v5
+        if: ${{ github.ref == 'refs/heads/main' && steps.gradle.outcome.build-cache-hit != 'true' }}
+        with:
+          path: |
+            ~/Library/Developer/Xcode/DerivedData
+            !~/Library/Developer/Xcode/DerivedData/**/Logs/**
+            !**/*.xcbuilddata
+          key: ${{ steps.gradle.outputs.build-cache-key }}
       - name: Upload reports
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v6
