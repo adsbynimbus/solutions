@@ -64,13 +64,13 @@ jobs:
         shell: bash
       - name: Cache DerivedData
         uses: actions/cache/save@v5
-        if: ${{ github.ref == 'refs/heads/main' && steps.gradle.outcome.build-cache-hit != 'true' }}
+        if: ${{ github.ref == 'refs/heads/main' && steps.xcodebuild.outcome.build-cache-hit != 'true' }}
         with:
           path: |
             ~/Library/Developer/Xcode/DerivedData
             !~/Library/Developer/Xcode/DerivedData/**/Logs/**
             !**/*.xcbuilddata
-          key: ${{ steps.gradle.outputs.build-cache-key }}
+          key: ${{ steps.xcodebuild.outputs.build-cache-key }}
       - name: Upload reports
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v6
