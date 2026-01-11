@@ -60,7 +60,7 @@ jobs:
         if: matrix.language != 'actions'
         run: >-
           ${{ matrix.language == 'java-kotlin'
-              && './gradlew assemble --init-script gradle/codeql.init.gradle.kts'
+              && './gradlew assemble --init-script gradle/codeql.init.gradle.kts -Dorg.gradle.configuration-cache.read-only=true'
               || format('xcodebuild {0} COMPILATION_CACHE_ENABLE_CACHING=NO -skipMacroValidation
                   -skipPackageSignatureValidation -skipPackagePluginValidation {1}',
                   (github.ref == 'refs/heads/main' && 'clean build' || 'build'),
