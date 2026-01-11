@@ -5,6 +5,10 @@ inputs:
     description: 'Enable code-signing'
     required: false
     default: 'NO'
+  jobs:
+    description: 'Number of concurrent jobs to run'
+    required: false
+    default: ${{ contains(runner.arch, 'ARM') && 2 || 3 }}
   scheme:
     description: 'xcodebuild scheme'
     required: false
@@ -29,7 +33,7 @@ runs:
       id: options
       run: echo options="-scheme ${{ inputs.scheme }}
         -destination ${{ steps.destination.outputs.destination }}
-        -jobs ${{ contains(runner.arch, 'ARM') && 2 || 3 }}
+        -jobs ${{ inputs.jobs }}
         CODE_SIGNING_ALLOWED=${{ inputs.codesign }} | xcbeautify --renderer github-actions" >> $GITHUB_OUTPUT
       shell: bash
     - name: Build Cache

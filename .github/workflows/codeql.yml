@@ -50,6 +50,8 @@ jobs:
         id: xcodebuild
         if: matrix.language == 'swift'
         uses: ./.github/actions/xcodebuild
+        with:
+          jobs: 1
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v4
         with:
