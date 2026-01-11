@@ -42,10 +42,14 @@ runs:
           !**/*.xcbuilddata
         key: xcodebuild-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('**/*.xc*', '**/*.swift') }}
         restore-keys: xcodebuild-${{ runner.os }}-${{ runner.arch }}-
+    - name: Resolve Package Dependencies
+      if: steps.build-cache.outputs.cache-hit != 'true'
+      run: xcodebuild -resolvePackageDependencies ${{ steps.options.outputs.options }}
+      shell: bash
 outputs:
   build-cache-hit:
     description: "Build Cache Hit"
-    value: ${{ !steps.build-cache.outputs.cache-hit }}
+    value: ${{ steps.build-cache.outputs.cache-hit }}
   build-cache-key:
     description: "Build Cache Key"
     value: ${{ steps.build-cache.outputs.cache-primary-key }}
