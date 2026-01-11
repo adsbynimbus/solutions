@@ -5,10 +5,6 @@ inputs:
     description: 'Enable code-signing'
     required: false
     default: 'NO'
-  jobs:
-    description: 'Number of concurrent jobs to run'
-    required: false
-    default: ${{ contains(runner.arch, 'ARM') && 2 || 3 }}
   scheme:
     description: 'xcodebuild scheme'
     required: false
@@ -33,7 +29,7 @@ runs:
       id: options
       run: echo options="-scheme ${{ inputs.scheme }}
         -destination ${{ steps.destination.outputs.destination }}
-        -jobs ${{ inputs.jobs }}
+        -jobs ${{ contains(runner.arch, 'ARM') && 2 || 3 }}
         CODE_SIGNING_ALLOWED=${{ inputs.codesign }} | xcbeautify --renderer github-actions" >> $GITHUB_OUTPUT
       shell: bash
     - name: Build Cache
@@ -46,6 +42,10 @@ runs:
           !**/*.xcbuilddata
         key: xcodebuild-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('**/*.xc*', '**/*.swift') }}
         restore-keys: xcodebuild-${{ runner.os }}-${{ runner.arch }}-
+    - name: Resolve Package Dependencies
+      if: steps.build-cache.outputs.cache-hit != 'true'
+      run: xcodebuild -resolvePackageDependencies ${{ steps.options.outputs.options }}
+      shell: bash
 outputs:
   build-cache-hit:
     description: "Build Cache Hit"
