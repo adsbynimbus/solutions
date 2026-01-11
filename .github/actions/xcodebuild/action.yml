@@ -33,14 +33,22 @@ runs:
         CODE_SIGNING_ALLOWED=${{ inputs.codesign }} | xcbeautify --renderer github-actions" >> $GITHUB_OUTPUT
       shell: bash
     - name: Build Cache
-      uses: actions/cache@v5
+      id: build-cache
+      uses: actions/cache/restore@v5
       with:
         path: |
           ~/Library/Developer/Xcode/DerivedData
           !~/Library/Developer/Xcode/DerivedData/**/Logs/**
+          !**/*.xcbuilddata
         key: xcodebuild-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('**/*.xc*', '**/*.swift') }}
         restore-keys: xcodebuild-${{ runner.os }}-${{ runner.arch }}-
 outputs:
+  build-cache-hit:
+    description: "Build Cache Hit"
+    value: ${{ !steps.build-cache.outputs.cache-hit }}
+  build-cache-key:
+    description: "Build Cache Key"
+    value: ${{ steps.build-cache.outputs.cache-primary-key }}
   options:
     description: "Build options"
     value: ${{ steps.options.outputs.options }}
