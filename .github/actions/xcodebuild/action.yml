@@ -49,7 +49,7 @@ runs:
 outputs:
   build-cache-hit:
     description: "Build Cache Hit"
-    value: ${{ !steps.build-cache.outputs.cache-hit }}
+    value: ${{ steps.build-cache.outputs.cache-hit }}
   build-cache-key:
     description: "Build Cache Key"
     value: ${{ steps.build-cache.outputs.cache-primary-key }}
