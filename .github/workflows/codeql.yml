@@ -15,6 +15,8 @@ concurrency:
 env:
   NSUnbufferedIO: YES
   SWIFTPM_MAX_CONCURRENT_OPERATIONS: 3
+  # Override Kotlin Gradle since CodeQL does not support 2.3.0 yet
+  ORG_GRADLE_PROJECT_kotlin.gradle: '2.2.21'
 
 jobs:
   analyze:
