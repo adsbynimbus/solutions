@@ -5,10 +5,6 @@ inputs:
     description: 'Enable code-signing'
     required: false
     default: 'NO'
-  codeql:
-    description: 'CodeQL build'
-    required: false
-    default: ${{ contains(github.workflow, 'codeql') && 'YES' || 'NO' }}
   scheme:
     description: 'xcodebuild scheme'
     required: false
@@ -34,7 +30,6 @@ runs:
       run: echo options="-scheme ${{ inputs.scheme }}
         -destination ${{ steps.destination.outputs.destination }}
         -jobs ${{ contains(runner.arch, 'ARM') && 2 || 3 }}
-        ${{ inputs.codeql == 'YES' && '-skipPackageUpdates -skipPackageSignatureValidation -skipPackagePluginValidation -skipMacroValidation COMPILATION_CACHE_ENABLE_CACHING=NO' || '' }}
         CODE_SIGNING_ALLOWED=${{ inputs.codesign }} | xcbeautify --renderer github-actions" >> $GITHUB_OUTPUT
       shell: bash
     - name: Build Cache
@@ -45,10 +40,6 @@ runs:
           !~/Library/Developer/Xcode/DerivedData/**/Logs/**
         key: xcodebuild-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('**/*.xc*', '**/*.swift') }}
         restore-keys: xcodebuild-${{ runner.os }}-${{ runner.arch }}-
-    - name: Clean
-      if: inputs.codeql == 'YES' && github.ref == 'refs/heads/main'
-      run: xcodebuild clean -scheme ${{ inputs.scheme }} | xcbeautify --renderer github-actions
-      shell: bash
 outputs:
   options:
     description: "Build options"
