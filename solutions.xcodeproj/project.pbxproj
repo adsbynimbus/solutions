@@ -24,15 +24,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		96017EE52F1593D800498FF4 /* Compose.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Compose.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		96017EE62F1593D800498FF4 /* DynamicPrice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DynamicPrice.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		96017EE72F1593D800498FF4 /* OMSDK.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OMSDK.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		96017EE82F1593D800498FF4 /* DynamicPriceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DynamicPriceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9647ABD02F1559C1007BA118 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9647B9692F156123007BA118 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		96D5BE3C2F15A841000282D3 /* alltests.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = alltests.xctestplan; sourceTree = "<group>"; };
 		96E07B882F156AFA00720748 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		96E08CD42F156CF500720748 /* Tests */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Tests; sourceTree = "<group>"; };
 		96E08CE12F157A2B00720748 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
-		96E08CE52F157A8F00720748 /* DynamicPrice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = DynamicPrice.app; path = "/Users/jason/Work/nimbus-solutions/build/Debug-iphoneos/DynamicPrice.app"; sourceTree = "<absolute>"; };
-		96E08CE62F157AC500720748 /* Compose.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Compose.app; path = "/Users/jason/Work/nimbus-solutions/build/Debug-iphoneos/Compose.app"; sourceTree = "<absolute>"; };
-		96E08CE72F157AC500720748 /* OMSDK.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = OMSDK.app; path = "/Users/jason/Work/nimbus-solutions/build/Debug-iphoneos/OMSDK.app"; sourceTree = "<absolute>"; };
-		96E08D0E2F157EE000720748 /* DynamicPriceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = DynamicPriceTests.xctest; path = "/Users/jason/Work/nimbus-solutions/build/Debug-iphoneos/DynamicPrice.app/PlugIns/DynamicPriceTests.xctest"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -133,6 +134,7 @@
 		9647ABA32F155875007BA118 = {
 			isa = PBXGroup;
 			children = (
+				96D5BE3C2F15A841000282D3 /* alltests.xctestplan */,
 				9647ABD52F1559CA007BA118 /* Compose */,
 				9647B95A2F156035007BA118 /* DynamicPrice */,
 				9647BA0C2F156A70007BA118 /* OMSDK */,
@@ -146,6 +148,7 @@
 				9647ABD02F1559C1007BA118 /* Info.plist */,
 				96E08CF92F157DC600720748 /* Resources */,
 				96E08CFB2F157DC600720748 /* Sources */,
+				96017EE52F1593D800498FF4 /* Compose.app */,
 			);
 			name = Compose;
 			path = compose/ios;
@@ -157,6 +160,8 @@
 				9647B9692F156123007BA118 /* Info.plist */,
 				96E08CF72F157DC000720748 /* Sources */,
 				96E08CD42F156CF500720748 /* Tests */,
+				96017EE62F1593D800498FF4 /* DynamicPrice.app */,
+				96017EE82F1593D800498FF4 /* DynamicPriceTests.xctest */,
 			);
 			name = DynamicPrice;
 			path = dynamicprice/ios;
@@ -167,6 +172,7 @@
 			children = (
 				96E07B882F156AFA00720748 /* Info.plist */,
 				96E08CF02F157DBA00720748 /* Sources */,
+				96017EE72F1593D800498FF4 /* OMSDK.app */,
 			);
 			name = OMSDK;
 			path = omsdk/ios;
@@ -187,7 +193,7 @@
 			);
 			name = Compose;
 			productName = Compose;
-			productReference = 96E08CE62F157AC500720748 /* Compose.app */;
+			productReference = 96017EE52F1593D800498FF4 /* Compose.app */;
 			productType = "com.apple.product-type.application";
 		};
 		9647B9762F156246007BA118 /* DynamicPrice */ = {
@@ -206,7 +212,7 @@
 				96E08CDF2F15799000720748 /* NimbusRequestAPSKit */,
 			);
 			productName = DynamicPrice;
-			productReference = 96E08CE52F157A8F00720748 /* DynamicPrice.app */;
+			productReference = 96017EE62F1593D800498FF4 /* DynamicPrice.app */;
 			productType = "com.apple.product-type.application";
 		};
 		96E085D02F156C7000720748 /* OMSDK */ = {
@@ -223,7 +229,7 @@
 				96E08CD82F15797C00720748 /* NimbusKit */,
 			);
 			productName = OMSDK;
-			productReference = 96E08CE72F157AC500720748 /* OMSDK.app */;
+			productReference = 96017EE72F1593D800498FF4 /* OMSDK.app */;
 			productType = "com.apple.product-type.application";
 		};
 		96E08D0D2F157EE000720748 /* DynamicPriceTests */ = {
@@ -241,7 +247,7 @@
 			);
 			name = DynamicPriceTests;
 			productName = DynamicPriceTests;
-			productReference = 96E08D0E2F157EE000720748 /* DynamicPriceTests.xctest */;
+			productReference = 96017EE82F1593D800498FF4 /* DynamicPriceTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */

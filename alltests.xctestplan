@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "77D8E4CA-EF4D-4DAF-B57D-C63DFB551C92",
+      "name" : "AllTests",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:solutions.xcodeproj",
+        "identifier" : "96E08D0D2F157EE000720748",
+        "name" : "DynamicPriceTests"
+      }
+    }
+  ],
+  "version" : 1
+}
