@@ -61,7 +61,7 @@ jobs:
         run: >-
           ${{ matrix.language == 'java-kotlin'
               && './gradlew assemble --init-script gradle/codeql.init.gradle.kts -Dorg.gradle.configuration-cache.read-only=true'
-              || format('xcodebuild {0} COMPILATION_CACHE_ENABLE_CACHING=NO EAGER_LINKING=NO {1} {2}',
+              || format('xcodebuild {0} COMPILATION_CACHE_ENABLE_CACHING=NO SWIFT_ENABLE_EXPLICIT_MODULES=NO CLANG_ENABLE_EXPLICIT_MODULES=NO {1} {2}',
                   (github.ref == 'refs/heads/main' && 'clean build' || 'build'),
                   '-skipMacroValidation -skipPackageSignatureValidation -skipPackagePluginValidation -skipPackageUpdates',
                   steps.xcodebuild.outputs.options
