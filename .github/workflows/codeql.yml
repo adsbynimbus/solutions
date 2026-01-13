@@ -38,13 +38,14 @@ jobs:
               -Dorg.gradle.configuration-cache.read-only=true
               ${{ vars.CODEQL_KOTLIN && format('-Dkotlin.gradle={0}', vars.CODEQL_KOTLIN) || '' }}
           - language: swift
-            runner: ${{ github.ref == 'refs/heads/main' && 'macos-15-intel' || 'macos-latest' }}
+            runner: macos-15-intel
             command: >-
               xcodebuild -disableAutomaticPackageResolution
-              -skipMacroValidation -skipPackagePluginValidation
+              -skipMacroValidation -skipPackagePluginValidation -skipPackageUpdates
               COMPILATION_CACHE_ENABLE_CACHING=NO
-              ${{ github.ref == 'refs/heads/main' && 'CLANG_ENABLE_EXPLICIT_MODULES=NO
-              SWIFT_ENABLE_EXPLICIT_MODULES=NO SWIFT_EMIT_LOC_STRINGS=NO' || '' }}
+              CLANG_ENABLE_EXPLICIT_MODULES=NO
+              SWIFT_ENABLE_EXPLICIT_MODULES=NO
+              SWIFT_EMIT_LOC_STRINGS=NO
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
