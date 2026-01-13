@@ -35,8 +35,17 @@ jobs:
             runner: ubuntu-slim
           - language: java-kotlin
             runner: ubuntu-latest
+            command: >-
+              ./gradlew assemble --init-script gradle/codeql.init.gradle.kts
+              -Dorg.gradle.configuration-cache.read-only=true
           - language: swift
             runner: ${{ github.ref == 'refs/heads/main' && 'macos-15-intel' || 'macos-latest' }}
+            command: >-
+              xcodebuild -skipMacroValidation -skipPackagePluginValidation
+              COMPILATION_CACHE_ENABLE_CACHING=NO
+              CLANG_ENABLE_EXPLICIT_MODULES=NO
+              SWIFT_ENABLE_EXPLICIT_MODULES=NO
+              SWIFT_EMIT_LOC_STRINGS=NO
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
@@ -58,15 +67,7 @@ jobs:
           queries: security-and-quality
       - name: Build
         if: matrix.language != 'actions'
-        run: >-
-          ${{ matrix.language == 'java-kotlin'
-              && './gradlew assemble --init-script gradle/codeql.init.gradle.kts -Dorg.gradle.configuration-cache.read-only=true'
-              || format('xcodebuild {0} COMPILATION_CACHE_ENABLE_CACHING=NO SWIFT_ENABLE_EXPLICIT_MODULES=NO CLANG_ENABLE_EXPLICIT_MODULES=NO {1} {2}',
-                  (github.ref == 'refs/heads/main' && 'clean build' || 'build'),
-                  '-skipMacroValidation -skipPackageSignatureValidation -skipPackagePluginValidation -skipPackageUpdates',
-                  steps.xcodebuild.outputs.options
-                )
-          }}
+        run: ${{ matrix.command }} ${{ matrix.language == 'swift' && steps.xcodebuild.outputs.options || '' }}
         shell: bash
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v4
