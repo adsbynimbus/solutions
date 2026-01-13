@@ -20,6 +20,10 @@ inputs:
     description: 'Setup Java java-version'
     required: false
     default: '25'
+  kotlin-version:
+    description: 'Kotlin version used for build'
+    required: false
+    default: ''
 runs:
   using: "composite"
   steps:
@@ -36,7 +40,9 @@ runs:
         dependency-graph: ${{ inputs.dependency-graph }}
     - name: Determine Kotlin Version
       id: kotlin
-      run: echo VERSION=`grep "^kotlin =" gradle/libs.versions.toml | sed 's/[^"]*"\([^"]*\).*/\1/'` >> $GITHUB_OUTPUT
+      run: |
+        kotlinCatalog=`grep "^kotlin =" gradle/libs.versions.toml | sed 's/[^"]*"\([^"]*\).*/\1/'`
+        echo VERSION=${{ inputs.kotlin-version && inputs.kotlin-version || '$kotlinCatalog' }} >> $GITHUB_OUTPUT
       shell: bash
     - name: Clean Kotlin Native Directory
       run: rm -rf ~/.konan

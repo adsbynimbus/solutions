@@ -60,7 +60,7 @@ jobs:
       - name: Build
         run: |
           xcodebuild build-for-testing ${{ steps.xcodebuild.outputs.options }}
-          xcodebuild test-without-building ${{ steps.xcodebuild.outputs.options }}
+          xcodebuild test-without-building -disableAutomaticPackageResolution ${{ steps.xcodebuild.outputs.options }}
         shell: bash
       - name: Cache DerivedData
         uses: actions/cache/save@v5

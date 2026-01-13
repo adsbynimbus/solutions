@@ -14,14 +14,12 @@ concurrency:
 
 env:
   NSUnbufferedIO: YES
-  # Override Kotlin Gradle since CodeQL does not support 2.3.0 yet
-  ORG_GRADLE_PROJECT_kotlin.gradle: '2.2.21'
 
 jobs:
   analyze:
     name: Analyze (${{ matrix.language }})
     runs-on: ${{ matrix.runner }}
-    timeout-minutes: 30
+    timeout-minutes: 40
     permissions:
       actions: read
       contents: read
@@ -35,8 +33,20 @@ jobs:
             runner: ubuntu-slim
           - language: java-kotlin
             runner: ubuntu-latest
+            command: >-
+              ./gradlew assemble --init-script gradle/codeql.init.gradle.kts
+              -Dorg.gradle.configuration-cache.read-only=true
+              ${{ vars.CODEQL_KOTLIN && format('-Dkotlin.gradle={0}', vars.CODEQL_KOTLIN) || '' }}
           - language: swift
-            runner: macos-latest
+            runner: macos-15-intel
+            command: >-
+              xcodebuild -disableAutomaticPackageResolution
+              -skipMacroValidation -skipPackagePluginValidation -skipPackageUpdates
+              COMPILATION_CACHE_ENABLE_CACHING=NO
+              CLANG_ENABLE_EXPLICIT_MODULES=NO
+              SWIFT_ENABLE_EXPLICIT_MODULES=NO
+              SWIFT_EMIT_LOC_STRINGS=NO
+              SDK_STAT_CACHE_ENABLE=NO
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
@@ -46,10 +56,13 @@ jobs:
         with:
           cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
           cache-read-only: true
+          kotlin-version: ${{ vars.CODEQL_KOTLIN }}
       - name: Setup Xcode
         id: xcodebuild
         if: matrix.language == 'swift'
         uses: ./.github/actions/xcodebuild
+        with:
+          resolve-packages: true
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v4
         with:
@@ -58,15 +71,7 @@ jobs:
           queries: security-and-quality
       - name: Build
         if: matrix.language != 'actions'
-        run: >-
-          ${{ matrix.language == 'java-kotlin'
-              && './gradlew assemble --init-script gradle/codeql.init.gradle.kts -Dorg.gradle.configuration-cache.read-only=true'
-              || format('xcodebuild {0} COMPILATION_CACHE_ENABLE_CACHING=NO EAGER_LINKING=NO {1} {2}',
-                  (github.ref == 'refs/heads/main' && 'clean build' || 'build'),
-                  '-skipMacroValidation -skipPackageSignatureValidation -skipPackagePluginValidation -skipPackageUpdates',
-                  steps.xcodebuild.outputs.options
-                )
-          }}
+        run: ${{ matrix.command }} ${{ matrix.language == 'swift' && steps.xcodebuild.outputs.options || '' }}
         shell: bash
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v4

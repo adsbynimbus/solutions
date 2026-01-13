@@ -5,6 +5,10 @@ inputs:
     description: 'Enable code-signing'
     required: false
     default: 'NO'
+  resolve-packages:
+    description: 'Run the package resolution step'
+    required: false
+    default: 'false'
   scheme:
     description: 'xcodebuild scheme'
     required: false
@@ -43,7 +47,7 @@ runs:
         key: xcodebuild-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('**/*.xc*', '**/*.swift') }}
         restore-keys: xcodebuild-${{ runner.os }}-${{ runner.arch }}-
     - name: Resolve Package Dependencies
-      if: steps.build-cache.outputs.cache-hit != 'true'
+      if: inputs.resolve-packages == 'true'
       run: xcodebuild -resolvePackageDependencies ${{ steps.options.outputs.options }}
       shell: bash
 outputs:
