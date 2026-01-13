@@ -40,7 +40,8 @@ jobs:
           - language: swift
             runner: ${{ github.ref == 'refs/heads/main' && 'macos-15-intel' || 'macos-latest' }}
             command: >-
-              xcodebuild -skipMacroValidation -skipPackagePluginValidation
+              xcodebuild -disableAutomaticPackageResolution
+              -skipMacroValidation -skipPackagePluginValidation
               COMPILATION_CACHE_ENABLE_CACHING=NO
               CLANG_ENABLE_EXPLICIT_MODULES=NO
               SWIFT_ENABLE_EXPLICIT_MODULES=NO
@@ -59,6 +60,8 @@ jobs:
         id: xcodebuild
         if: matrix.language == 'swift'
         uses: ./.github/actions/xcodebuild
+        with:
+          resolve-packages: true
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v4
         with:
