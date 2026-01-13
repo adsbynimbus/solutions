@@ -56,6 +56,9 @@
 			);
 			buildRules = (
 			);
+			dependencies = (
+				9635C8A22F16BFBE00A7D208 /* PBXTargetDependency */,
+			);
 			fileSystemSynchronizedGroups = (
 				961CA6AD2CEA95C30084BE6A /* Sources */,
 			);
@@ -112,6 +115,13 @@
 			);
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		9635C8A22F16BFBE00A7D208 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 9635C8A12F16BFBE00A7D208 /* NimbusKit */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		961CA6902CEA91D50084BE6A /* Debug configuration for PBXProject "OMSDK" */ = {
@@ -317,6 +327,11 @@
 
 /* Begin XCSwiftPackageProductDependency section */
 		961CA69C2CEA93750084BE6A /* NimbusKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 961CA69B2CEA93750084BE6A /* XCRemoteSwiftPackageReference "nimbus-ios-sdk" */;
+			productName = NimbusKit;
+		};
+		9635C8A12F16BFBE00A7D208 /* NimbusKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 961CA69B2CEA93750084BE6A /* XCRemoteSwiftPackageReference "nimbus-ios-sdk" */;
 			productName = NimbusKit;
