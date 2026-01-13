@@ -83,11 +83,6 @@
 			);
 			buildRules = (
 			);
-			dependencies = (
-				9635C8942F16BFAA00A7D208 /* PBXTargetDependency */,
-				9635C8962F16BFAA00A7D208 /* PBXTargetDependency */,
-				9635C89E2F16BFAA00A7D208 /* PBXTargetDependency */,
-			);
 			fileSystemSynchronizedGroups = (
 				961CA6AD2CEA95C30084BE6A /* Sources */,
 			);
@@ -187,18 +182,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		9635C8942F16BFAA00A7D208 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = 9635C8932F16BFAA00A7D208 /* NimbusGAMKit */;
-		};
-		9635C8962F16BFAA00A7D208 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = 9635C8952F16BFAA00A7D208 /* NimbusKit */;
-		};
-		9635C89E2F16BFAA00A7D208 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = 9635C89D2F16BFAA00A7D208 /* NimbusRequestAPSKit */;
-		};
 		96ABDE802E7B054C00D7FEDF /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 961CA66D2CEA91D40084BE6A /* DynamicPrice */;
@@ -465,21 +448,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 961CA69B2CEA93750084BE6A /* XCRemoteSwiftPackageReference "nimbus-ios-sdk" */;
 			productName = NimbusKit;
-		};
-		9635C8932F16BFAA00A7D208 /* NimbusGAMKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 961CA69B2CEA93750084BE6A /* XCRemoteSwiftPackageReference "nimbus-ios-sdk" */;
-			productName = NimbusGAMKit;
-		};
-		9635C8952F16BFAA00A7D208 /* NimbusKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 961CA69B2CEA93750084BE6A /* XCRemoteSwiftPackageReference "nimbus-ios-sdk" */;
-			productName = NimbusKit;
-		};
-		9635C89D2F16BFAA00A7D208 /* NimbusRequestAPSKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 961CA69B2CEA93750084BE6A /* XCRemoteSwiftPackageReference "nimbus-ios-sdk" */;
-			productName = NimbusRequestAPSKit;
 		};
 		964F21672DA057D8005105AB /* NimbusGAMKit */ = {
 			isa = XCSwiftPackageProductDependency;
