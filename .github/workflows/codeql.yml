@@ -36,7 +36,7 @@ jobs:
           - language: java-kotlin
             runner: ubuntu-latest
           - language: swift
-            runner: macos-latest
+            runner: ${{ github.ref == 'refs/heads/main' && 'macos-15-intel' || 'macos-latest' }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
