@@ -43,9 +43,8 @@ jobs:
               xcodebuild -disableAutomaticPackageResolution
               -skipMacroValidation -skipPackagePluginValidation
               COMPILATION_CACHE_ENABLE_CACHING=NO
-              CLANG_ENABLE_EXPLICIT_MODULES=NO
-              SWIFT_ENABLE_EXPLICIT_MODULES=NO
-              SWIFT_EMIT_LOC_STRINGS=NO
+              ${{ github.ref == 'refs/heads/main' && 'CLANG_ENABLE_EXPLICIT_MODULES=NO
+              SWIFT_ENABLE_EXPLICIT_MODULES=NO SWIFT_EMIT_LOC_STRINGS=NO' || '' }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
