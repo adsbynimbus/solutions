@@ -19,7 +19,7 @@ jobs:
   analyze:
     name: Analyze (${{ matrix.language }})
     runs-on: ${{ matrix.runner }}
-    timeout-minutes: 30
+    timeout-minutes: 40
     permissions:
       actions: read
       contents: read
@@ -46,6 +46,7 @@ jobs:
               CLANG_ENABLE_EXPLICIT_MODULES=NO
               SWIFT_ENABLE_EXPLICIT_MODULES=NO
               SWIFT_EMIT_LOC_STRINGS=NO
+              SDK_STAT_CACHE_ENABLE=NO
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
