@@ -14,8 +14,6 @@ concurrency:
 
 env:
   NSUnbufferedIO: YES
-  # Override Kotlin Gradle since CodeQL does not support 2.3.0 yet
-  ORG_GRADLE_PROJECT_kotlin.gradle: '2.2.21'
 
 jobs:
   analyze:
@@ -38,6 +36,7 @@ jobs:
             command: >-
               ./gradlew assemble --init-script gradle/codeql.init.gradle.kts
               -Dorg.gradle.configuration-cache.read-only=true
+              ${{ vars.CODEQL_KOTLIN && format('-Dkotlin.gradle={0}', vars.CODEQL_KOTLIN) || '' }}
           - language: swift
             runner: ${{ github.ref == 'refs/heads/main' && 'macos-15-intel' || 'macos-latest' }}
             command: >-
@@ -55,6 +54,7 @@ jobs:
         with:
           cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
           cache-read-only: true
+          kotlin-version: ${{ vars.CODEQL_KOTLIN }}
       - name: Setup Xcode
         id: xcodebuild
         if: matrix.language == 'swift'
