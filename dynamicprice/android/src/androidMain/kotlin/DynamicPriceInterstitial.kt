@@ -16,7 +16,6 @@ import com.google.android.gms.ads.admanager.AppEventListener
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
-import kotlin.coroutines.suspendCoroutine
 
 val interstitialBidders = listOf(
     NimbusBidder { forInterstitialAd("Interstitial") },

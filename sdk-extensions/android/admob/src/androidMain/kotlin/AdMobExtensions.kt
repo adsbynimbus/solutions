@@ -1,12 +1,10 @@
 package com.adsbynimbus.solutions.admob
 
 import android.content.Context
-import android.util.Log
 import androidx.core.os.bundleOf
 import com.adsbynimbus.Nimbus
 import com.adsbynimbus.NimbusError
 import com.adsbynimbus.NimbusError.ErrorType.NETWORK_ERROR
-import com.adsbynimbus.internal.log
 import com.adsbynimbus.openrtb.request.User
 import com.adsbynimbus.render.AdMobRenderer.admob
 import com.adsbynimbus.request.NimbusRequest
