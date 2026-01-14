@@ -61,7 +61,7 @@ class MainActivity : ComponentActivity() {
                         bidders = interstitialBidders,
                         eventCallback = interstitialCallback,
                     )?.also {
-                        text = "Show Interstitial"
+                        setText(R.string.showInterstitial)
                     }
                 }
             }
