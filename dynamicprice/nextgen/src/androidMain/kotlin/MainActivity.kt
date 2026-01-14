@@ -68,13 +68,14 @@ class MainActivity : ComponentActivity() {
         }
         lifecycleScope.launch {
             val startTime = Monotonic.markNow()
+            val preloadBanner = adCache["banner"]
             loadRefreshingBanner(
                 activity = this@MainActivity,
                 container = binding.adFrame,
                 builder = { BannerAdRequest.Builder(ADMANAGER_ADUNIT_ID, AdSize.BANNER) },
                 bidders = bannerBidders,
                 eventCallback = object : BannerAdEventCallback, AdEventCallback by delegate { },
-                preloadBanner = adCache["banner"]?.await()?.apply {
+                preloadBanner = preloadBanner?.await()?.apply {
                     // Must set the listener before attaching to the parent view
                     adEventCallback = object : BannerAdEventCallback, AdEventCallback by delegate {
                         override fun onAdImpression() {
