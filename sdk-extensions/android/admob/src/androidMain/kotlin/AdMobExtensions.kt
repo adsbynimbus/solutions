@@ -30,7 +30,7 @@ import kotlin.jvm.Throws
  * @param adUnitId ad unit id obtained from the AdMob dashboard
  */
 public fun NimbusRequest.withAdMobAnchoredBanner(adUnitId: String): NimbusRequest = apply {
-    interceptors.removeIf { it is AdMobAdaptiveDemandProvider }
+    interceptors.removeAll { it is AdMobAdaptiveDemandProvider }
     interceptors += AdMobAdaptiveDemandProvider(adUnitId)
 }
 
