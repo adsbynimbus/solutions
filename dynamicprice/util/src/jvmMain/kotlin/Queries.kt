@@ -25,4 +25,4 @@ inline fun statement(query: StatementBuilder.() -> Unit): StatementBuilder =
         also(query)
     }
 
-inline val pageSize get() = StatementBuilder.SUGGESTED_PAGE_LIMIT
+const val pageSize = StatementBuilder.SUGGESTED_PAGE_LIMIT

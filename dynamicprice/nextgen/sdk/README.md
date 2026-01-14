@@ -30,7 +30,7 @@ GitHub Packages requires a username and personal access token for authentication
 
 ### Local Dev Environment
 
-The snippet above looks for a gradle property named `solutionsUsername` and `solutionsPassword` to
+The snippet above looks for a Gradle property named `solutionsUsername` and `solutionsPassword` to
 authenticate for the repository named `solutions`. To prevent leaking credentials, these properties
 should be stored in your Gradle user home directory.
 
@@ -60,7 +60,7 @@ dependencyResolutionManagement {
 }
 ```
 
-#### Github Actions
+#### GitHub Actions
 
 Credentials can be passed directly to the Gradle build by declaring a top level environment variable
 with the GitHub workflow actor and token.

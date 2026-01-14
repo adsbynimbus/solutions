@@ -12,7 +12,7 @@ gcloud auth application-default login --scopes=https://www.googleapis.com/auth/a
 
 #### Parameters
 
-- dynamicprice.util.appname = Application name created in the Google cloud console
+- dynamicprice.util.appname = Application name created in the Google Cloud console
 - dynamicprice.util.network = Network code to apply Dynamic Price Setup
 
 ```shell

@@ -16,7 +16,7 @@ NimbusRequest.forBannerAd(position = ..., Format.BANNER_320_50, Position.FOOTER)
 
 ## Manual Setup
 
-Copy [src/androidMain/kotlin/AdMobExtensions.kt](src/androidMain/kotlin/AdMobExtensions.kt) into your
+Copy [src/androidMain/kotlin/AdMobNextGenExtensions.kt](src/androidMain/kotlin/AdMobNextGenExtensions.kt) into your
 project and replace the package name before referencing `withAdMobAdaptiveBanner`
 
 ##

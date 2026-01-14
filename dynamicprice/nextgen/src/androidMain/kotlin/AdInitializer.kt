@@ -34,7 +34,7 @@ class AdInitializer : Initializer<Map<String, Deferred<BannerAd?>>> {
             //AdRegistration.enableLogging(true)
         }
 
-        adCache.put("banner", preloadBanner(bidders = bannerBidders))
+        adCache["banner"] = preloadBanner(bidders = bannerBidders)
 
         val googleStart = Monotonic.markNow()
         CoroutineScope(Dispatchers.IO).launch {

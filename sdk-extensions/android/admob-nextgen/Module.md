@@ -1,4 +1,4 @@
-# Module Admob Nextgen
+# Module AdMob Next Gen
 
 SDK Extensions for Google Bidding Next Gen
 

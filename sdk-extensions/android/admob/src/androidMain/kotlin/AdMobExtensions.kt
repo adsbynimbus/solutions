@@ -1,12 +1,10 @@
 package com.adsbynimbus.solutions.admob
 
 import android.content.Context
-import android.util.Log
 import androidx.core.os.bundleOf
 import com.adsbynimbus.Nimbus
 import com.adsbynimbus.NimbusError
 import com.adsbynimbus.NimbusError.ErrorType.NETWORK_ERROR
-import com.adsbynimbus.internal.log
 import com.adsbynimbus.openrtb.request.User
 import com.adsbynimbus.render.AdMobRenderer.admob
 import com.adsbynimbus.request.NimbusRequest
@@ -22,6 +20,7 @@ import com.google.android.gms.ads.query.QueryInfoGenerationCallback
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
+import kotlin.jvm.Throws
 
 /**
  * Include AdMob anchored adaptive banner in Nimbus auction.
@@ -31,12 +30,12 @@ import kotlin.coroutines.resumeWithException
  * @param adUnitId ad unit id obtained from the AdMob dashboard
  */
 public fun NimbusRequest.withAdMobAnchoredBanner(adUnitId: String): NimbusRequest = apply {
-    interceptors.removeIf { it is AdMobAdaptiveDemandProvider }
+    interceptors.removeAll { it is AdMobAdaptiveDemandProvider }
     interceptors += AdMobAdaptiveDemandProvider(adUnitId)
 }
 
 internal class AdMobAdaptiveDemandProvider(val adUnitId: String) : AsyncInterceptor {
-    override suspend fun interceptRequest(request: NimbusRequest): NimbusRequestChange? =
+    override suspend fun interceptRequest(request: NimbusRequest): NimbusRequestChange =
         NimbusRequestChange(userChanges = User.Extension(admob_gde_signals = gdeAdaptiveSignals()))
 
     override fun onAdResponse(nimbusResponse: NimbusResponse) {
@@ -47,6 +46,7 @@ internal class AdMobAdaptiveDemandProvider(val adUnitId: String) : AsyncIntercep
 internal inline val Context.screenWidthDp: Int
     get() = resources.displayMetrics.let { (it.widthPixels / it.density).toInt() }
 
+@Throws(Exception::class)
 internal suspend fun AdMobAdaptiveDemandProvider.gdeAdaptiveSignals(): String =
     suspendCancellableCoroutine { continuation ->
         val adaptiveSize = Nimbus.applicationContext.let {

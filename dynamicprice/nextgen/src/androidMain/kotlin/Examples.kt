@@ -54,7 +54,7 @@ val bannerBidders = listOf(
 /**
  * Starts the auction of a BannerAd request for use at app startup.
  *
- * This example uses a 1 second timeout for the auction in cases where a low banner impression
+ * This example uses a 1-second timeout for the auction in cases where a low banner impression
  * time is critical due to users quickly exiting the application.
  *
  * @param bidders Bidders participating in the auction
@@ -171,7 +171,7 @@ fun loadRefreshingBanner(
 }
 
 /**
- * Runs an auction with a 3 second timeout and loads an Interstitial ad.
+ * Runs an auction with a 3-second timeout and loads an Interstitial ad.
  *
  * @param builder A new instance should be used for each request
  * @param bidders Bidders participating in the auction

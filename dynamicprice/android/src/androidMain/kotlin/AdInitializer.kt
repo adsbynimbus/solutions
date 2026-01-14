@@ -27,7 +27,7 @@ class AdInitializer : Initializer<Map<String, DynamicPriceAd>> {
             //AdRegistration.enableLogging(true)
         }
 
-        adCache.put("banner", preloadBanner())
+        adCache["banner"] = preloadBanner()
 
         val googleStart = Monotonic.markNow()
         MobileAds.initialize(context) {

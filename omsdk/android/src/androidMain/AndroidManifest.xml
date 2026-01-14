@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
 
     <application
+        android:icon="@drawable/ic_launcher"
         android:label="${appName}"
         android:networkSecurityConfig="@xml/network_security_config"
         android:supportsRtl="true"

@@ -13,9 +13,9 @@ import com.google.android.gms.ads.admanager.AdManagerAdRequest
 import com.google.android.gms.ads.admanager.AdManagerInterstitialAd
 import com.google.android.gms.ads.admanager.AdManagerInterstitialAdLoadCallback
 import com.google.android.gms.ads.admanager.AppEventListener
+import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
-import kotlin.coroutines.suspendCoroutine
 
 val interstitialBidders = listOf(
     NimbusBidder { forInterstitialAd("Interstitial") },
@@ -34,15 +34,15 @@ suspend fun Context.loadInterstitial(
         bids.forEach { it.applyTargeting(this) }
     }.build()
 
-    val interstitialAd = suspendCoroutine { continuation ->
+    val interstitialAd = suspendCancellableCoroutine { continuation ->
         AdManagerInterstitialAd.load(this, adUnitId, request,
             object : AdManagerInterstitialAdLoadCallback() {
                 override fun onAdLoaded(ad: AdManagerInterstitialAd) {
-                    continuation.resume(ad)
+                    if (continuation.isActive) continuation.resume(ad)
                 }
 
                 override fun onAdFailedToLoad(p0: LoadAdError) {
-                    continuation.resumeWithException(RuntimeException(p0.message))
+                    if (continuation.isActive) continuation.resumeWithException(RuntimeException(p0.message))
                 }
             }
         )

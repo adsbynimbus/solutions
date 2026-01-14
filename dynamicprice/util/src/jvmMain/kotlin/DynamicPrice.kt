@@ -118,7 +118,7 @@ suspend fun AdManagerAxisClient.findOrCreateBidValues(
             values.increaseOffsetBy(pageSize)
             delay(1000)
         }
-    } while (existing > 0 && values.offset < existing)
+    } while (values.offset < existing)
     val valuesToCreate = ranges.flatMap { it.toList() }
         .filter { value -> find { it.name.toInt() == value } == null }
         .map {
@@ -196,16 +196,16 @@ suspend fun AdManagerAxisClient.findOrCreateCreatives(
             creatives.increaseOffsetBy(pageSize)
             delay(1000)
         }
-    } while (existing > 0 && creatives.offset < existing)
+    } while (creatives.offset < existing)
     val newCreatives = sizes.filter { (width, height) ->
         find { it.size.width == width && it.size.height == height } == null
     }.map { (width, height) ->
         ThirdPartyCreative().also {
             it.name = "$name ${width}x${height}"
-            it.size = Size().also {
-                it.width = width
-                it.height = height
-                it.isAspectRatio = false
+            it.size = Size().also { s ->
+                s.width = width
+                s.height = height
+                s.isAspectRatio = false
             }
             it.advertiserId = company.id
             it.snippet = """
