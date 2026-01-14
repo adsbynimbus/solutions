@@ -202,10 +202,10 @@ suspend fun AdManagerAxisClient.findOrCreateCreatives(
     }.map { (width, height) ->
         ThirdPartyCreative().also {
             it.name = "$name ${width}x${height}"
-            it.size = Size().also {
-                it.width = width
-                it.height = height
-                it.isAspectRatio = false
+            it.size = Size().also { s ->
+                s.width = width
+                s.height = height
+                s.isAspectRatio = false
             }
             it.advertiserId = company.id
             it.snippet = """
