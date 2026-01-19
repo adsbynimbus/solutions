@@ -52,20 +52,15 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            implementation(compose.runtime)
-            implementation(compose.foundation)
-            implementation(compose.material3)
-            implementation(compose.components.resources)
+            implementation(libs.bundles.compose)
             implementation(libs.kotlin.coroutines)
-            implementation("org.jetbrains.compose.ui:ui-tooling-preview:1.10.0")
         }
         androidMain.dependencies {
-            implementation(libs.compose.activity)
-            implementation(libs.compose.ui)
+            implementation(libs.androidx.compose.activity)
         }
     }
 }
 
 dependencies {
-    androidRuntimeClasspath("org.jetbrains.compose.ui:ui-tooling:1.10.0")
+    androidRuntimeClasspath(libs.compose.ui.tooling)
 }

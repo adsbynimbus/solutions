@@ -4,7 +4,6 @@ plugins {
     alias(libs.plugins.android.app)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.compose.multiplatform)
 }
 
 val codeQL = providers.provider { extra.properties["codeQL"] }
@@ -69,5 +68,4 @@ dependencies {
     implementation(libs.bundles.androidx)
     implementation(libs.bundles.androidx.compose)
     implementation(libs.kotlin.coroutines)
-    debugImplementation(libs.compose.ui.tooling)
 }
