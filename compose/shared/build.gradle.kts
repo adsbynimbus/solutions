@@ -9,7 +9,6 @@ plugins {
 }
 
 val codeQL = providers.provider { extra.properties["codeQL"] }
-val githubActions = providers.environmentVariable("GITHUB_ACTIONS")
 
 kotlin {
     androidLibrary {
@@ -27,27 +26,12 @@ kotlin {
         }
     }
 
-    val iosTargets = objects.namedDomainObjectSet(KotlinNativeTarget::class).apply {
-        add(iosArm64())
-        add(iosSimulatorArm64())
+    iosArm64()
+    iosSimulatorArm64()
 
-        // Optionally add x64 support if kotlin.mpp.x64 is present in gradle.properties
-        if (providers.gradleProperty("kotlin.mpp.x64").orNull.toBoolean()) add(iosX64())
-    }
-
-    iosTargets.configureEach {
-        binaries.framework(
-            buildList {
-                if (!githubActions.isPresent) add(DEBUG)
-                add(RELEASE)
-            })
-        {
-            binaryOption("bundleId", "adsbynimbus.solutions.compose.app")
-            binaryOption("bundleShortVersionString", "1.0")
-            binaryOption("bundleVersion", "1.0")
-            baseName = "Shared"
-            isStatic = true
-        }
+    swiftExport {
+        moduleName = "Shared"
+        flattenPackage = "adsbynimbus.solutions.compose"
     }
 
     sourceSets {
