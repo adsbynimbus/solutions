@@ -7,17 +7,17 @@ bidders are used with Google Ad Manager.
 
 ## Android
 
-#### [Bidders](android/src/androidMain/kotlin/Bidders.kt)
+#### [Bidders](android/src/main/kotlin/Bidders.kt)
 
 Contains classes and interfaces for running a parallel auction using any number of bidders and
 applying the key-value targeting from each bid to an `AdManagerAdRequest.Builder`.
 
-#### [DynamicPriceAd](android/src/androidMain/kotlin/DynamicPriceAd.kt)
+#### [DynamicPriceAd](android/src/main/kotlin/DynamicPriceAd.kt)
 
 Provides a wrapper implementation for the `AdManagerAdView` that automatically manages the bidding
 process and refreshes ads every 30 seconds using a lifecycleScope.
 
-#### [DynamicPriceInterstitial](android/src/androidMain/kotlin/DynamicPriceInterstitial.kt)
+#### [DynamicPriceInterstitial](android/src/main/kotlin/DynamicPriceInterstitial.kt)
 
 Coroutine implementation for fetching bids and loading an `AdManagerInterstitialAd`.
 
