@@ -5,18 +5,25 @@ plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.compose.multiplatform)
-    alias(libs.plugins.android.app)
+    alias(libs.plugins.android.library)
 }
 
 val codeQL = providers.provider { extra.properties["codeQL"] }
 val githubActions = providers.environmentVariable("GITHUB_ACTIONS")
 
 kotlin {
-    androidTarget {
+    androidLibrary {
+        namespace = "adsbynimbus.solutions.compose"
+        compileSdk = libs.versions.android.sdk.get().toInt()
+        minSdk = libs.versions.android.min.get().toInt()
         compilations.configureEach {
             compileTaskProvider.configure {
                 compilerOptions.jvmTarget = JvmTarget.fromTarget(libs.versions.android.jvm.get())
             }
+        }
+
+        lint {
+            checkReleaseBuilds = !codeQL.isPresent
         }
     }
 
@@ -50,55 +57,15 @@ kotlin {
             implementation(compose.material3)
             implementation(compose.components.resources)
             implementation(libs.kotlin.coroutines)
+            implementation("org.jetbrains.compose.ui:ui-tooling-preview:1.10.0")
         }
         androidMain.dependencies {
             implementation(libs.compose.activity)
             implementation(libs.compose.ui)
-            implementation(libs.compose.ui.tooling.preview)
         }
-    }
-}
-
-androidComponents.beforeVariants {
-    it.enable = it.name.contains("release", ignoreCase = true) || !githubActions.isPresent
-}
-
-android {
-    compileSdk = libs.versions.android.sdk.get().toInt()
-
-    defaultConfig {
-        applicationId = "adsbynimbus.solutions.compose.app".also { namespace = it }
-        minSdk = libs.versions.android.min.get().toInt()
-        targetSdk = libs.versions.android.sdk.get().toInt()
-        versionCode = 1
-        versionName = "1.0"
-        manifestPlaceholders["appName"] = "Nimbus Compose"
-    }
-
-    buildFeatures {
-        compose = true
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = !codeQL.isPresent
-        }
-    }
-
-    compileOptions{
-        sourceCompatibility = JavaVersion.toVersion(libs.versions.android.jvm.get())
-        targetCompatibility = JavaVersion.toVersion(libs.versions.android.jvm.get())
-    }
-
-    lint {
-        checkReleaseBuilds = !codeQL.isPresent
-    }
-
-    packaging.resources {
-        excludes += "/META-INF/{AL2.0,LGPL2.1}"
     }
 }
 
 dependencies {
-    debugImplementation(libs.compose.ui.tooling)
+    androidRuntimeClasspath("org.jetbrains.compose.ui:ui-tooling:1.10.0")
 }
