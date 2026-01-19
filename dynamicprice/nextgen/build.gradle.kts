@@ -1,51 +1,13 @@
 import org.jetbrains.kotlin.gradle.dsl.*
 
 plugins {
-    alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.android.app)
+    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.serialization)
 }
 
 val codeQL = providers.provider { extra.properties["codeQL"] }
 val githubActions = providers.environmentVariable("GITHUB_ACTIONS")
-
-kotlin {
-    androidTarget {
-        compilations.configureEach {
-            compileTaskProvider.configure {
-                compilerOptions.jvmTarget = JvmTarget.fromTarget(libs.versions.android.jvm.get())
-            }
-        }
-    }
-
-    sourceSets {
-        androidMain.dependencies {
-            implementation(libs.bundles.androidx)
-            implementation(libs.bundles.dynamicprice.nextgen)
-            implementation(libs.kotlin.coroutines)
-            implementation(projects.dynamicprice.nextgen.sdk)
-        }
-    }
-}
-
-configurations.configureEach {
-    resolutionStrategy.eachDependency {
-        when (requested.module) {
-            libs.ads.amazon.get().module -> {
-                useVersion("10.1.1")
-                because("11+ will not serve ads due to failed GMA 24+ check")
-            }
-            libs.okhttp.get().module -> {
-                useVersion("4.12.0")
-                because("Google Next Gen references a class that does not exist in 5+")
-            }
-        }
-    }
-}
-
-androidComponents.beforeVariants {
-    it.enable = it.name.contains("release", ignoreCase = true) || !githubActions.isPresent
-}
 
 android {
     compileSdk = libs.versions.android.sdk.get().toInt()
@@ -93,5 +55,37 @@ android {
 
     packaging.resources {
         excludes += "/META-INF/{AL2.0,LGPL2.1}"
+    }
+}
+
+androidComponents.beforeVariants {
+    it.enable = it.name.contains("release", ignoreCase = true) || !githubActions.isPresent
+}
+
+kotlin.target.compilations.configureEach {
+    compileTaskProvider.configure {
+        compilerOptions.jvmTarget = JvmTarget.fromTarget(libs.versions.android.jvm.get())
+    }
+}
+
+dependencies {
+    implementation(libs.bundles.androidx)
+    implementation(libs.bundles.dynamicprice.nextgen)
+    implementation(libs.kotlin.coroutines)
+    implementation(projects.dynamicprice.nextgen.sdk)
+}
+
+configurations.configureEach {
+    resolutionStrategy.eachDependency {
+        when (requested.module) {
+            libs.ads.amazon.get().module -> {
+                useVersion("10.1.1")
+                because("11+ will not serve ads due to failed GMA 24+ check")
+            }
+            libs.okhttp.get().module -> {
+                useVersion("4.12.0")
+                because("Google Next Gen references a class that does not exist in 5+")
+            }
+        }
     }
 }
