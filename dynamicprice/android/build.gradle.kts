@@ -1,34 +1,12 @@
 import org.jetbrains.kotlin.gradle.dsl.*
 
 plugins {
-    alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.android.app)
+    alias(libs.plugins.kotlin.android)
 }
 
 val codeQL = providers.provider { extra.properties["codeQL"] }
 val githubActions = providers.environmentVariable("GITHUB_ACTIONS")
-
-kotlin {
-    androidTarget {
-        compilations.configureEach {
-            compileTaskProvider.configure {
-                compilerOptions.jvmTarget = JvmTarget.fromTarget(libs.versions.android.jvm.get())
-            }
-        }
-    }
-
-    sourceSets {
-        androidMain.dependencies {
-            implementation(libs.bundles.androidx)
-            implementation(libs.bundles.dynamicprice)
-            implementation(libs.kotlin.coroutines)
-        }
-    }
-}
-
-androidComponents.beforeVariants {
-    it.enable = it.name.contains("release", ignoreCase = true) || !githubActions.isPresent
-}
 
 android {
     compileSdk = libs.versions.android.sdk.get().toInt()
@@ -76,4 +54,20 @@ android {
     packaging.resources {
         excludes += "/META-INF/{AL2.0,LGPL2.1}"
     }
+}
+
+androidComponents.beforeVariants {
+    it.enable = it.name.contains("release", ignoreCase = true) || !githubActions.isPresent
+}
+
+kotlin.target.compilations.configureEach {
+    compileTaskProvider.configure {
+        compilerOptions.jvmTarget = JvmTarget.fromTarget(libs.versions.android.jvm.get())
+    }
+}
+
+dependencies {
+    implementation(libs.bundles.androidx)
+    implementation(libs.bundles.dynamicprice)
+    implementation(libs.kotlin.coroutines)
 }
