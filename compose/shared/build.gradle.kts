@@ -1,5 +1,7 @@
+@file:OptIn(org.jetbrains.kotlin.gradle.swiftexport.ExperimentalSwiftExportDsl::class)
+
 import org.jetbrains.kotlin.gradle.dsl.*
-import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
+import org.jetbrains.kotlin.gradle.plugin.mpp.apple.swiftexport.SWIFT_EXPORT_COROUTINES_SUPPORT_TURNED_ON
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
@@ -32,6 +34,9 @@ kotlin {
     swiftExport {
         moduleName = "Shared"
         flattenPackage = "adsbynimbus.solutions.compose"
+        configure {
+            settings.put(SWIFT_EXPORT_COROUTINES_SUPPORT_TURNED_ON, "true")
+        }
     }
 
     sourceSets {
