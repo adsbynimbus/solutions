@@ -1,43 +1,13 @@
 import org.jetbrains.kotlin.gradle.dsl.*
 
 plugins {
-    alias(libs.plugins.kotlin.multiplatform)
-    alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.compose.multiplatform)
     alias(libs.plugins.android.app)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.compose)
 }
 
 val codeQL = providers.provider { extra.properties["codeQL"] }
 val githubActions = providers.environmentVariable("GITHUB_ACTIONS")
-
-kotlin {
-    androidTarget {
-        compilations.configureEach {
-            compileTaskProvider.configure {
-                compilerOptions.jvmTarget = JvmTarget.fromTarget(libs.versions.android.jvm.get())
-            }
-        }
-    }
-
-    sourceSets {
-        commonMain.dependencies {
-            implementation(compose.runtime)
-            implementation(compose.foundation)
-            implementation(compose.materialIconsExtended)
-            implementation(compose.material3)
-            implementation(libs.kotlin.coroutines)
-        }
-        androidMain.dependencies {
-            implementation(libs.ads.nimbus)
-            implementation(libs.bundles.androidx)
-            implementation(libs.bundles.androidx.compose)
-        }
-    }
-}
-
-androidComponents.beforeVariants {
-    it.enable = it.name.contains("release", ignoreCase = true) || !githubActions.isPresent
-}
 
 android {
     compileSdk = libs.versions.android.sdk.get().toInt()
@@ -83,6 +53,19 @@ android {
     }
 }
 
+androidComponents.beforeVariants {
+    it.enable = it.name.contains("release", ignoreCase = true) || !githubActions.isPresent
+}
+
+kotlin.target.compilations.configureEach {
+    compileTaskProvider.configure {
+        compilerOptions.jvmTarget = JvmTarget.fromTarget(libs.versions.android.jvm.get())
+    }
+}
+
 dependencies {
-    debugImplementation(libs.compose.ui.tooling)
+    implementation(libs.ads.nimbus)
+    implementation(libs.bundles.androidx)
+    implementation(libs.bundles.androidx.compose)
+    implementation(libs.kotlin.coroutines)
 }
