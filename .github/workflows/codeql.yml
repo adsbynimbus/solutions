@@ -43,6 +43,8 @@ jobs:
               swift build --build-tests
               --triple x86_64-apple-ios16.0-simulator
               --sdk "`xcrun --sdk iphonesimulator --show-sdk-path`"
+              --jobs 3
+              --disable-automatic-resolution
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
@@ -53,6 +55,9 @@ jobs:
           cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
           cache-read-only: true
           kotlin-version: ${{ vars.CODEQL_KOTLIN }}
+      - name: Setup Swift Package
+        if: matrix.language == 'swift'
+        run: swift package resolve
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v4
         with:
