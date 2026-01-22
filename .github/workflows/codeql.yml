@@ -40,7 +40,7 @@ jobs:
           - language: swift
             runner: macos-15-intel
             command: >-
-              xcodebuild -disableAutomaticPackageResolution
+              xcodebuild -workspace .swiftpm/xcode/package.xcworkspace
               -skipMacroValidation -skipPackagePluginValidation -skipPackageUpdates
               COMPILATION_CACHE_ENABLE_CACHING=NO
               CLANG_ENABLE_EXPLICIT_MODULES=NO
@@ -62,7 +62,7 @@ jobs:
         if: matrix.language == 'swift'
         uses: ./.github/actions/xcodebuild
         with:
-          resolve-packages: true
+          scheme: solutions-Package
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v4
         with:
