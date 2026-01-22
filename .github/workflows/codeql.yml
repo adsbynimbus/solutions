@@ -38,12 +38,11 @@ jobs:
               -Dorg.gradle.configuration-cache.read-only=true
               ${{ vars.CODEQL_KOTLIN && format('-Pkotlin.gradle={0}', vars.CODEQL_KOTLIN) || '' }}
           - language: swift
-            runner: macos-15-intel
+            runner: macos-latest
             command: >-
               swift build --build-tests
-              --triple x86_64-apple-ios16.0-simulator
+              --triple arm64-apple-ios16.0-simulator
               --sdk "`xcrun --sdk iphonesimulator --show-sdk-path`"
-              --jobs 3
               --disable-automatic-resolution
     steps:
       - name: Checkout repository
