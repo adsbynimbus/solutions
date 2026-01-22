@@ -53,9 +53,9 @@ jobs:
           cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
           cache-read-only: true
           kotlin-version: ${{ vars.CODEQL_KOTLIN }}
-      - name: Setup Swift
-        if: matrix.language == 'swift'
-        uses: swift-actions/setup-swift@v3
+      #- name: Setup Swift
+      #  if: matrix.language == 'swift'
+      #  uses: swift-actions/setup-swift@v3
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v4
         with:
