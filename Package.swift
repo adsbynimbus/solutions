@@ -10,7 +10,7 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "dynamicprice",
+            name: "DynamicPrice",
             dependencies: [
                 .product(name: "NimbusKit", package: "nimbus-ios-sdk"),
                 .product(name: "NimbusRequestAPSKit", package: "nimbus-ios-sdk"),
@@ -19,12 +19,12 @@ let package = Package(
             path: "dynamicprice/ios/Sources",
         ),
         .testTarget(
-            name: "dynamicprice-tests",
-            dependencies: ["dynamicprice"],
+            name: "DynamicPriceTests",
+            dependencies: ["DynamicPrice"],
             path: "dynamicprice/ios/Tests",
         ),
         .target(
-            name: "omsdk",
+            name: "OMSDK",
             dependencies: [.product(name: "NimbusKit", package: "nimbus-ios-sdk")],
             path: "omsdk/ios/Sources",
         )
