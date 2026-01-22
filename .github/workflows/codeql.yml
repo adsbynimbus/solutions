@@ -68,7 +68,7 @@ jobs:
         with:
           languages: ${{ matrix.language }}
           build-mode: ${{ matrix.language == 'actions' && 'none' || 'manual' }}
-          queries: security-and-quality
+          config-file: ./.github/codeql/config.yml
       - name: Build
         if: matrix.language != 'actions'
         run: ${{ matrix.command }} ${{ matrix.language == 'swift' && steps.xcodebuild.outputs.options || '' }}
