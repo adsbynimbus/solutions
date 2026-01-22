@@ -1,5 +1,5 @@
-// swift-tools-version: 6.2
-
+// swift-tools-version: 6.1
+// Code QL Runner has Swift 6.1 installed, check the runner reference before updating
 import PackageDescription
 
 let package = Package(
