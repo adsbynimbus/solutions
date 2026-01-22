@@ -1,0 +1,12 @@
+name: "CodeQL Config"
+
+queries:
+  - uses: security-and-quality
+query-filters:
+  - exclude:
+      id: java/android/backup-enabled
+  - exclude:
+      id: java/android/webview-debugging-enabled
+  - exclude:
+      # Content Access in advertising is common, disable for now to mitigate false positives
+      id: java/android/websettings-allow-content-access
