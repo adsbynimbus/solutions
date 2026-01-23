@@ -19,6 +19,7 @@ let package = Package(
                 .product(name: "NimbusGAMKit", package: "nimbus-ios-sdk"),
             ],
             path: ".github/codeql",
+            exclude: ["config.yml"],
         ),
         .target(
             name: "DynamicPrice",

@@ -47,7 +47,9 @@ jobs:
               swift build
               --triple x86_64-apple-ios16.0-simulator
               --sdk "`xcrun --sdk iphonesimulator --show-sdk-path`"
+              --disable-dead-strip
               --jobs 3
+              -debug-info-format none
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
@@ -67,9 +69,10 @@ jobs:
           languages: ${{ matrix.language }}
           build-mode: ${{ matrix.language == 'actions' && 'none' || 'manual' }}
           config-file: ./.github/codeql/config.yml
+          ram: 3917 # Value used by ubuntu-slim
       - name: Build
         if: matrix.language != 'actions'
-        run: ${{ matrix.command }} ${{ matrix.language == 'swift' && '--build-tests' || '' }}
+        run: ${{ matrix.command }} ${{ matrix.language == 'swift' && '--build-tests --force-resolved-versions --skip-update' || '' }}
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v4
         with:
