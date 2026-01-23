@@ -12,10 +12,6 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-defaults:
-  run:
-    shell: bash
-
 env:
   NSUnbufferedIO: YES
 
@@ -47,7 +43,7 @@ jobs:
               swift build --build-tests
               --triple x86_64-apple-ios16.0-simulator
               --sdk "`xcrun --sdk iphonesimulator --show-sdk-path`"
-              --jobs 2
+              --jobs 3
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
@@ -67,6 +63,7 @@ jobs:
       - name: Build
         if: matrix.language != 'actions'
         run: ${{ matrix.command }}
+        shell: bash
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v4
         with:
