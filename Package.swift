@@ -9,18 +9,6 @@ let package = Package(
         .package(url: "https://github.com/adsbynimbus/nimbus-ios-sdk", exact: "2.32.1"),
     ],
     targets: [
-        // This target builds the simple AsyncUtils.swift file and includes the same products
-        // to pre-compile the SPM modules so only code in this project is scanned
-        .target(
-            name: "CodeQLPackages",
-            dependencies: [
-                .product(name: "NimbusKit", package: "nimbus-ios-sdk"),
-                .product(name: "NimbusRequestAPSKit", package: "nimbus-ios-sdk"),
-                .product(name: "NimbusGAMKit", package: "nimbus-ios-sdk"),
-            ],
-            path: ".github/codeql",
-            exclude: ["config.yml"],
-        ),
         .target(
             name: "DynamicPrice",
             dependencies: [

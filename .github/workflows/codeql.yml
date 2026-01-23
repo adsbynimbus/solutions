@@ -44,10 +44,10 @@ jobs:
           - language: swift
             runner: macos-15-intel
             command: >-
-              swift build
+              swift build --build-tests
               --triple x86_64-apple-ios16.0-simulator
               --sdk "`xcrun --sdk iphonesimulator --show-sdk-path`"
-              --jobs 3
+              --jobs 2
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
@@ -58,9 +58,6 @@ jobs:
           cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
           cache-read-only: true
           kotlin-version: ${{ vars.CODEQL_KOTLIN }}
-      - name: Setup Swift Package
-        if: matrix.language == 'swift'
-        run: ${{ matrix.command }} --target CodeQLPackages
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v4
         with:
@@ -69,7 +66,7 @@ jobs:
           config-file: ./.github/codeql/config.yml
       - name: Build
         if: matrix.language != 'actions'
-        run: ${{ matrix.command }} ${{ matrix.language == 'swift' && '--build-tests' || '' }}
+        run: ${{ matrix.command }}
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v4
         with:
