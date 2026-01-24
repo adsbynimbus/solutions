@@ -33,7 +33,6 @@ runs:
       id: options
       run: echo options="-scheme ${{ inputs.scheme }}
         -destination ${{ steps.destination.outputs.destination }}
-        -jobs ${{ contains(runner.arch, 'ARM') && 2 || 3 }}
         CODE_SIGNING_ALLOWED=${{ inputs.codesign }} | xcbeautify --renderer github-actions" >> $GITHUB_OUTPUT
       shell: bash
     - name: Build Cache

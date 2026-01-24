@@ -1,6 +1,8 @@
 import SwiftUI
 
+#if !SWIFT_PACKAGE
 @main
+#endif
 struct DynamicPriceApp: App {
 
     init () {
