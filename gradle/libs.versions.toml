@@ -4,7 +4,7 @@ ads-google = "24.9.0"
 ads-google-nextgen = "0.22.0-beta04"
 ads-nimbus = "2.35.2"
 
-android = "8.12.3"
+android = "9.0.0"
 android-jvm = "19"
 android-min = "26"
 android-sdk = "36"
@@ -49,7 +49,6 @@ android-library = { id = "com.android.kotlin.multiplatform.library", version.ref
 compose-multiplatform = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }
 dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
 dokka-javadoc = { id = "org.jetbrains.dokka-javadoc", version.ref = "dokka" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }

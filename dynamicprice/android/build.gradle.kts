@@ -2,7 +2,6 @@ import org.jetbrains.kotlin.gradle.dsl.*
 
 plugins {
     alias(libs.plugins.android.app)
-    alias(libs.plugins.kotlin.android)
 }
 
 val codeQL = providers.provider { extra.properties["codeQL"] }
