@@ -48,6 +48,7 @@ android {
 
     lint {
         checkReleaseBuilds = !codeQL.isPresent
+        sarifReport = true
     }
 
     packaging.resources {

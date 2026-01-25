@@ -38,6 +38,7 @@ kotlin {
 
         lint {
             checkReleaseBuilds = !codeQL.isPresent
+            sarifReport = true
         }
 
         mavenPublication {
