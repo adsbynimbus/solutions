@@ -33,10 +33,13 @@ jobs:
             runner: ubuntu-slim
           - language: java-kotlin
             runner: ubuntu-latest
+            # The blank line between Gradle commands is required when using >-
             command: >-
               ./gradlew assemble --init-script gradle/codeql.init.gradle.kts
               -Dorg.gradle.configuration-cache.read-only=true
               ${{ vars.CODEQL_KOTLIN && format('-Pkotlin.gradle={0}', vars.CODEQL_KOTLIN) || '' }}
+
+              ./gradlew --stop
           - language: swift
             runner: macos-15-intel
             command: >-
