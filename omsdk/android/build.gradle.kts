@@ -32,10 +32,7 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = !codeQL.isPresent
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                layout.projectDirectory.file("src/androidMain/proguard-rules.txt"),
-            )
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"))
         }
     }
 
