@@ -35,24 +35,12 @@ updates:
       compose:
         patterns:
           - "org.jetbrains.compose"
-          - "androidx.compose*"
-          - "*-compose" # Covers activity-compose and navigation-compose
       androidx:
         patterns:
           - "androidx.*"
       kotlin:
         patterns:
           - "org.jetbrains.*"
-      admanager-api:
-        patterns:
-          - "com.google.api*"
-          - "com.google.auth*"
-          - "com.fasterxml*"
-          - "*gson"
-          - "*commons*"
-      networking:
-        patterns:
-          - "com.squareup*"
       other:
         patterns:
           - "*"
