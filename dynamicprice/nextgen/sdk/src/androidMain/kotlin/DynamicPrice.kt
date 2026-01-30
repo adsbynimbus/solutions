@@ -40,6 +40,7 @@ public fun BannerAd.handleEventForNimbus(
     activity: Activity? = Platform.currentActivity.get(),
 ) {
     if (name == "na_render") DynamicPriceRenderer.render(this, data, listener) { nimbusAd ->
+        @Suppress("Deprecation") // Revisit this on next SDK update
         getView(activity!!).webViewParent.let {
             nimbusAd.renderInline(it).apply {
                 if (nimbusAd.type() != "video") return@apply
