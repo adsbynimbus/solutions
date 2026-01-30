@@ -62,4 +62,5 @@ kotlin.target.compilations.configureEach {
 dependencies {
     implementation(projects.compose.shared)
     implementation(libs.bundles.androidx)
+    implementation(libs.bundles.androidx.compose)
 }

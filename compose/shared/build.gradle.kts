@@ -45,9 +45,6 @@ kotlin {
             implementation(libs.bundles.compose)
             implementation(libs.kotlin.coroutines)
         }
-        androidMain.dependencies {
-            implementation(libs.androidx.compose.activity)
-        }
     }
 }
 
