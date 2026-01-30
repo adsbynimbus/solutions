@@ -92,8 +92,8 @@ inline fun <reified T> Bid<out T>.applyTargeting(request: BaseAdRequestBuilder<*
 }
 
 inline val BaseRequest.keyValues: String
-    get() = customTargeting.entries.joinToString(
-        separator = ",\n",
-        prefix = "[\n",
-        postfix = "]",
-    )
+    get() = customTargeting.entries.takeIf { it.isNotEmpty() }?.joinToString(
+        separator = ",\n  ",
+        prefix = "[\n  ",
+        postfix = "\n]",
+    ) ?: "[]"
