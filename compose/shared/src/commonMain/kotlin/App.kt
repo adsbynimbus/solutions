@@ -5,6 +5,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
 import androidx.compose.ui.graphics.*
+import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
 fun App() = NimbusTheme {
@@ -34,3 +35,8 @@ fun NimbusTheme(content: @Composable () -> Unit) = MaterialTheme(
 )
 
 expect val platform: String
+
+@Preview @Composable
+fun AppPreview() {
+    App()
+}
