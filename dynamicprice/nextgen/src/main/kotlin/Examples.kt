@@ -3,8 +3,6 @@ package adsbynimbus.solutions.dynamicprice.nextgen
 import adsbynimbus.solutions.dynamicprice.nextgen.BuildConfig.AMAZON_BANNER_SLOT_ID
 import android.app.Activity
 import android.util.Log
-import android.view.ViewGroup
-import androidx.core.view.doOnAttach
 import androidx.lifecycle.*
 import com.adsbynimbus.dynamicprice.nextgen.dynamicPriceAd
 import com.adsbynimbus.dynamicprice.nextgen.handleEventForNimbus
@@ -18,15 +16,13 @@ import com.amazon.aps.ads.model.ApsAdFormat.BANNER
 import com.amazon.aps.ads.model.ApsAdFormat.INTERSTITIAL
 import com.amazon.aps.ads.model.ApsAdNetwork.GOOGLE_AD_MANAGER
 import com.google.android.libraries.ads.mobile.sdk.banner.*
-import com.google.android.libraries.ads.mobile.sdk.common.AdLoadResult
-import com.google.android.libraries.ads.mobile.sdk.common.AdRequest
+import com.google.android.libraries.ads.mobile.sdk.common.*
 import com.google.android.libraries.ads.mobile.sdk.interstitial.InterstitialAd
 import com.google.android.libraries.ads.mobile.sdk.interstitial.InterstitialAdEventCallback
 import kotlinx.coroutines.*
-import kotlin.time.Duration
+import kotlin.coroutines.resume
+import kotlin.time.*
 import kotlin.time.Duration.Companion.seconds
-import kotlin.time.TimeSource
-import kotlin.time.measureTimedValue
 
 /** Caches ads loaded in one activity for use in another */
 val adCache = mutableMapOf<String, Deferred<BannerAd?>>()
@@ -64,13 +60,38 @@ fun preloadBanner(
     bidders: Collection<Bidder<*>>,
     timeout: Duration = 1.seconds,
 ): Deferred<BannerAd?> = MainScope().async {
-    loadBanner(
-        builder = BannerAdRequest.Builder(BuildConfig.ADMANAGER_ADUNIT_ID, AdSize.BANNER),
-        bidders = bidders,
-        eventCallback = object : BannerAdEventCallback { },
-        bidderTimeout = timeout,
-    )
+    val (bids, auctionTime) = measureTimedValue { bidders.auction(timeout = timeout) }
+
+    val request = BannerAdRequest.Builder(BuildConfig.ADMANAGER_ADUNIT_ID, AdSize.BANNER).run {
+        bids.forEach { it.applyTargeting(this) }
+        build()
+    }
+
+    val (bannerAd, requestTime) = measureTimedValue { BannerAdPreloader.loadAdAsync(request) }
+
+    Log.v("Ads", "[${request.adUnitId}] Auction: $auctionTime AdRequest: $requestTime, Params: ${request.keyValues}")
+
+    return@async bannerAd
 }
+
+suspend fun BannerAdPreloader.Companion.loadAdAsync(adRequest: BannerAdRequest): BannerAd? =
+    pollAd(adRequest.adUnitId) ?: suspendCancellableCoroutine {
+        start(
+            preloadId = adRequest.adUnitId,
+            preloadConfiguration = PreloadConfiguration(request = adRequest, bufferSize = 1),
+            preloadCallback = object : PreloadCallback {
+                override fun onAdFailedToPreload(preloadId: String, adError: LoadAdError) {
+                    if (it.isActive) it.resume(null)
+                }
+
+                override fun onAdPreloaded(preloadId: String, responseInfo: ResponseInfo) {
+                    if (it.isActive) it.resume(pollAd(adRequest.adUnitId))
+                }
+
+                override fun onAdsExhausted(preloadId: String) { }
+            }
+        )
+    }
 
 /**
  * Runs an auction with the specified timeout and loads a Banner ad.
@@ -84,11 +105,11 @@ fun preloadBanner(
  * @param eventCallback listener for BannerAd events fired from Google
  * @param bidderTimeout 3 seconds is ideal for handling transient device conditions
  */
-suspend fun loadBanner(
+suspend fun AdView.loadBanner(
     builder: BannerAdRequest.Builder,
     bidders: Collection<Bidder<*>>,
     eventCallback: BannerAdEventCallback,
-    bidderTimeout: Duration = 3.seconds
+    bidderTimeout: Duration = 3.seconds,
 ): BannerAd? = supervisorScope {
     val (bids, auctionTime) = measureTimedValue { bidders.auction(timeout = bidderTimeout) }
 
@@ -97,75 +118,78 @@ suspend fun loadBanner(
         build()
     }
 
-    val (adResponse, requestTime) = measureTimedValue { BannerAd.load(request) }
+    val (adResponse, requestTime) = measureTimedValue {
+        suspendCancellableCoroutine { continuation ->
+            val callback = object : AdLoadCallback<BannerAd> {
+                override fun onAdFailedToLoad(adError: LoadAdError) {
+                    continuation.resume(null)
+                }
 
-    Log.v("Ads", "[${request.adUnitId}] Auction: $auctionTime AdRequest: $requestTime")
-
-    when (adResponse) {
-        is AdLoadResult.Success<BannerAd> -> adResponse.ad.apply {
-            adEventCallback = object : BannerAdEventCallback by eventCallback {
-                override fun onAppEvent(name: String, data: String?) {
-                    Log.v("Ads", "[${request.adUnitId}] AppEvent Received")
-                    handleEventForNimbus(name, data)
-                    eventCallback.onAppEvent(name, data)
+                override fun onAdLoaded(ad: BannerAd) {
+                    ad.adEventCallback = object : BannerAdEventCallback by eventCallback {
+                        override fun onAppEvent(name: String, data: String?) {
+                            Log.v("Ads", "[${request.adUnitId}] AppEvent Received")
+                            ad.handleEventForNimbus(name, data)
+                            eventCallback.onAppEvent(name, data)
+                        }
+                    }
+                    continuation.resume(ad)
                 }
             }
-        }
-        is AdLoadResult.Failure<*> -> null.also {
-            Log.i("Ads", "[${request.adUnitId}] ${adResponse.error.message}")
+            loadAd(adRequest = request, adLoadCallback = callback)
         }
     }
+
+    Log.v("Ads", "[${request.adUnitId}] Auction: $auctionTime AdRequest: $requestTime, Params: ${request.keyValues}")
+
+    return@supervisorScope adResponse
 }
 
 /**
  * Refreshes the BannerAd every 30 seconds while the container is in view.
  *
  * @param activity The hosting activity of the refreshing banner
- * @param container A ViewGroup for hosting the banner; FrameLayout is preferred
  * @param builder Closure that runs on each ad load to create a new Builder instance
  * @param bidders Bidders participating in the auction
  * @param eventCallback listener for BannerAd events fired from Google
  * @param preloadBanner An existing BannerAd that is attached to the container on first load
  */
-fun loadRefreshingBanner(
+fun AdView.loadRefreshingBanner(
     activity: Activity,
-    container: ViewGroup,
     builder: () -> BannerAdRequest.Builder,
     bidders: Collection<Bidder<*>>,
     eventCallback: BannerAdEventCallback,
     preloadBanner: BannerAd? = null,
-) = container.doOnAttach {
-    val lifecycleOwner = it.findViewTreeLifecycleOwner() ?: throw Exception()
+    lifecycleOwner: LifecycleOwner? = findViewTreeLifecycleOwner()
+) {
+    val lifecycleOwner = lifecycleOwner ?: throw Exception()
     var lastRequestTime = TimeSource.Monotonic.markNow()
-    var bannerAd: BannerAd? = preloadBanner?.apply { container.addView(getView(activity)) }
+    var bannerAd: BannerAd? = preloadBanner?.apply { registerBannerAd(this, activity) }
     if (bannerAd == null) lastRequestTime -= 30.seconds
-    container.requestVisibleLayout()
+    requestVisibleLayout()
     lifecycleOwner.lifecycleScope.launch {
         try {
             lifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 // The while loop enables refreshing the ad tied to the lifecycle
                 while (isActive) {
                     delay(30.seconds - lastRequestTime.elapsedNow())
-                    container.waitUntilVisible()
+                    waitUntilVisible()
                     if (isActive) {
                         lastRequestTime = TimeSource.Monotonic.markNow()
-                        bannerAd = loadBanner(
+                        loadBanner(
                             builder = builder(),
                             bidders = bidders,
                             eventCallback = eventCallback,
-                        )?.apply {
-                            bannerAd?.destroy()
+                        )?.run {
                             bannerAd?.dynamicPriceAd?.destroy()
-                            container.removeAllViews()
-                            container.addView(getView(activity))
+                            bannerAd = this
                         }
                     }
                 }
             }
         } finally {
-            bannerAd?.destroy()
             bannerAd?.dynamicPriceAd?.destroy()
-            container.removeAllViews()
+            destroy() // AdView.destroy()
         }
     }
 }

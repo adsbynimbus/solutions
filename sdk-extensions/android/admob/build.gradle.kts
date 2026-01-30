@@ -33,7 +33,7 @@ kotlin {
 
         aarMetadata {
             minCompileSdk = 35
-            minAgpVersion = "8.2.0" // Copied from NextGen metadata
+            minAgpVersion = "8.5.0" // Min Required for Kotlin 2.0
         }
 
         lint {
@@ -47,8 +47,8 @@ kotlin {
     }
 
     compilerOptions {
-        apiVersion = KotlinVersion.KOTLIN_1_9
-        languageVersion = KotlinVersion.KOTLIN_1_9
+        apiVersion = KotlinVersion.KOTLIN_2_0
+        languageVersion = KotlinVersion.KOTLIN_2_0
     }
 
     explicitApi()
