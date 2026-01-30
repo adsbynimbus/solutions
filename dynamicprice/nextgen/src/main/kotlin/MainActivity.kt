@@ -69,38 +69,42 @@ class MainActivity : ComponentActivity() {
         lifecycleScope.launch {
             val startTime = Monotonic.markNow()
             val preloadBanner = adCache["banner"]
-            loadRefreshingBanner(
-                activity = this@MainActivity,
-                container = binding.adFrame,
-                builder = { BannerAdRequest.Builder(ADMANAGER_ADUNIT_ID, AdSize.BANNER) },
-                bidders = bannerBidders,
-                eventCallback = object : BannerAdEventCallback, AdEventCallback by delegate { },
-                preloadBanner = preloadBanner?.await()?.apply {
-                    // Must set the listener before attaching to the parent view
-                    adEventCallback = object : BannerAdEventCallback, AdEventCallback by delegate {
-                        override fun onAdImpression() {
-                            Log.i("Ads", "Impression: ${startTime.elapsedNow()}")
-                        }
+            AdView(binding.adFrame.context).apply {
+                binding.adFrame.addView(this)
+                // Ad must be attached or a lifecycleOwner must be passed to loadRefreshingBanner
+                loadRefreshingBanner(
+                    activity = this@MainActivity,
+                    builder = { BannerAdRequest.Builder(ADMANAGER_ADUNIT_ID, AdSize.BANNER) },
+                    bidders = bannerBidders,
+                    eventCallback = object : BannerAdEventCallback, AdEventCallback by delegate {},
+                    preloadBanner = preloadBanner?.await()?.apply {
+                        // Must set the listener before attaching to the parent view
+                        adEventCallback =
+                            object : BannerAdEventCallback, AdEventCallback by delegate {
+                                override fun onAdImpression() {
+                                    Log.i("Ads", "Impression: ${startTime.elapsedNow()}")
+                                }
 
-                        // Listeners must call BannerAd.handleEventForNimbus
-                        override fun onAppEvent(name: String, data: String?) {
-                            handleEventForNimbus(
-                                name = name,
-                                data = data,
-                                listener = object : AdController.Listener {
-                                    override fun onAdEvent(adEvent: AdEvent) {
-                                        Log.i("Nimbus Ads", adEvent.name)
-                                    }
+                                // Listeners must call AdView.handleEventForNimbus
+                                override fun onAppEvent(name: String, data: String?) {
+                                    handleEventForNimbus(
+                                        name = name,
+                                        data = data,
+                                        listener = object : AdController.Listener {
+                                            override fun onAdEvent(adEvent: AdEvent) {
+                                                Log.i("Nimbus Ads", adEvent.name)
+                                            }
 
-                                    override fun onError(error: NimbusError) {
-                                        Log.w("Nimbus Ads", "${error.message}")
-                                    }
-                                },
-                            )
-                        }
+                                            override fun onError(error: NimbusError) {
+                                                Log.w("Nimbus Ads", "${error.message}")
+                                            }
+                                        },
+                                    )
+                                }
+                            }
                     }
-                }
-            )
+                )
+            }
         }
     }
 }
