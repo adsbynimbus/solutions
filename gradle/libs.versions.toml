@@ -35,7 +35,7 @@ gson = "2.13.2"
 iabtcf = "2.0.10"
 jackson = "2.21.0"
 
-kotlin = "2.3.0"
+kotlin = "2.3.10"
 kotlin-coroutines = "1.10.2"
 
 okhttp = "5.3.2"
