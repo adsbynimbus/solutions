@@ -156,11 +156,12 @@ fun App(
                 )
             }
             composable(route = VideoInline.screen) {
-                NimbusAd(
+                DoublePreroll(modifier = Modifier.padding(4.dp).width(320.dp).height(480.dp))
+                /*NimbusAd(
                     request = NimbusRequest.forVideoAd(VideoInline.screen),
                     adManager = adManager,
                     modifier = Modifier.padding(4.dp).width(320.dp).height(480.dp),
-                )
+                ) */
             }
         }
     }
