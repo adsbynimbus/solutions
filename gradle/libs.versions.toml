@@ -4,7 +4,7 @@ ads-google = "24.9.0"
 ads-google-nextgen = { require = "[0.23.0-beta01, )", prefer = "latest.release" }
 ads-nimbus = "2.35.2"
 
-android = "9.0.0"
+android = "9.0.1"
 android-jvm = "19"
 android-min = "26"
 android-sdk = "36"
