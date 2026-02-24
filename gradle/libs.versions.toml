@@ -1,6 +1,6 @@
 [versions]
 ads-amazon = "11.1.2"
-ads-google = "24.9.0"
+ads-google = "25.0.0"
 ads-google-nextgen = { require = "[0.23.0-beta01, )", prefer = "latest.release" }
 ads-nimbus = "2.35.2"
 
