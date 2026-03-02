@@ -1,6 +1,6 @@
 package adsbynimbus.solutions.dynamicprice.util
 
-import com.google.api.ads.admanager.axis.v202508.*
+import com.google.api.ads.admanager.axis.v202602.*
 import kotlinx.coroutines.delay
 
 suspend fun AdManagerAxisClient.addTargeting(
