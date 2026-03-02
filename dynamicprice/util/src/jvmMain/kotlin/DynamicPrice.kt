@@ -1,10 +1,9 @@
 package adsbynimbus.solutions.dynamicprice.util
 
-import com.google.api.ads.admanager.axis.v202508.*
-import com.google.api.ads.admanager.axis.v202508.CustomTargetingKeyType.*
+import com.google.api.ads.admanager.axis.v202602.*
+import com.google.api.ads.admanager.axis.v202602.CustomTargetingKeyType.*
 import java.text.DecimalFormat
 import kotlinx.coroutines.delay
-import kotlin.collections.addAll
 import kotlin.collections.windowed
 import kotlin.jvm.Throws
 
