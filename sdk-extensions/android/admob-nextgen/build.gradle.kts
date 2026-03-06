@@ -24,7 +24,7 @@ kotlin {
     androidLibrary {
         namespace = "$group.nextgen"
         compileSdk = libs.versions.android.sdk.get().toInt()
-        minSdk = 21
+        minSdk = 24
         compilations.configureEach {
             compileTaskProvider.configure {
                 compilerOptions.jvmTarget = JvmTarget.JVM_17
