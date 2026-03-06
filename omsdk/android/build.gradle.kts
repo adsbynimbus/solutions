@@ -31,7 +31,10 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = !codeQL.isPresent
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"))
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                layout.settingsDirectory.file("r8-optimization-rules.pro"),
+            )
         }
     }
 

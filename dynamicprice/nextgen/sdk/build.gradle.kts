@@ -46,6 +46,12 @@ kotlin {
             artifact(dokkaJavadocJar)
             artifact(dokkaHtmlJar)
         }
+
+        @Suppress("UnstableApiUsage")
+        optimization {
+            consumerKeepRules.publish = true
+            consumerKeepRules.file(layout.settingsDirectory.file("r8-optimization-rules.pro"))
+        }
     }
 
     compilerOptions {

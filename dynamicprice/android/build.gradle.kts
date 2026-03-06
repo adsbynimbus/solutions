@@ -36,7 +36,7 @@ android {
             isMinifyEnabled = !codeQL.isPresent
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                layout.projectDirectory.file("src/main/proguard-rules.txt"),
+                layout.settingsDirectory.file("r8-optimization-rules.pro"),
             )
         }
     }
