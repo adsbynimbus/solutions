@@ -42,7 +42,7 @@ jobs:
           path: ~/.konan
           key: ${{ steps.gradle.outputs.kotlin-cache-key }}
       - name: Upload reports
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         if: ${{ !cancelled() }}
         with:
           name: gradle-reports
@@ -73,7 +73,7 @@ jobs:
           key: ${{ steps.xcodebuild.outputs.build-cache-key }}
       - name: Upload reports
         if: ${{ !cancelled() }}
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: xcodebuild-reports
           path: '~/Library/Developer/Xcode/DerivedData/**/Logs/'
