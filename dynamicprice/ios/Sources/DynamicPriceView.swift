@@ -80,8 +80,10 @@ public class DynamicPriceView : UIView, AppEventDelegate {
             return
         }
         
-        onVisibilityChanged(newWindow) { [unowned self] isVisible in
-            Task { @MainActor in isVisible ? self.startRefresh() : self.refreshTask?.cancel() }
+        onVisibilityChanged(newWindow) { isVisible in
+            Task { @MainActor [unowned self] in
+                isVisible ? self.startRefresh() : self.refreshTask?.cancel()
+            }
         }
         
         startRefresh()
