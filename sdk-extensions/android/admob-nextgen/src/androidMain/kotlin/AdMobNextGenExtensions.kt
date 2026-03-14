@@ -48,7 +48,7 @@ public fun NimbusRequest.withAdMobAdaptiveBanner(
     width: Int = context.screenWidthDp,
 ): NimbusRequest = apply {
     val adSize = when(request.imp[0].banner?.h) {
-        50, 90 -> AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(context, width)
+        50, 90 -> AdSize.getLargeAnchoredAdaptiveBannerAdSize(context, width)
         else -> AdSize.getCurrentOrientationInlineAdaptiveBannerAdSize(context, width)
     }
     interceptors.removeAll { it is AdMobNextGenRequestInterceptor }
