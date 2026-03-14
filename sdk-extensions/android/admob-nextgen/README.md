@@ -9,7 +9,7 @@ Replace the `com.adsbynimbus.android:extension-admob` module with `com.adsbynimb
 The package name for the imports is `import com.adsbynimbus.solutions.nextgen`
 
 ```kotlin
-NimbusRequest.forBannerAd(position = ..., Format.BANNER_320_50, Position.FOOTER).apply {
+NimbusRequest.forBannerAd(position = bannerName, Format.BANNER_320_50, Position.FOOTER).apply {
     withAdMobAnchoredBanner(adUnitId = "ca-pub...")
 }
 ```

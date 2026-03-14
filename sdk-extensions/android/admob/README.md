@@ -7,7 +7,7 @@ Provides support for AdMob adaptive banners
 Replace calls to `NimbusRequest.withAdMobBanner` with `NimbusRequest.withAdMobAnchoredBanner`
 
 ```kotlin
-NimbusRequest.forBannerAd(position = ..., Format.BANNER_320_50, Position.FOOTER).apply {
+NimbusRequest.forBannerAd(position = bannerName, Format.BANNER_320_50, Position.FOOTER).apply {
     withAdMobAnchoredBanner(adUnitId = "ca-pub...")
 }
 ```
