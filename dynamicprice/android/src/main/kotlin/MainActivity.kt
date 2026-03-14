@@ -44,7 +44,7 @@ class MainActivity : ComponentActivity() {
             frame.addView(preloadBanner.view, LayoutParams(MATCH_PARENT, WRAP_CONTENT, BOTTOM))
 
             frame.addView(Button(this).apply {
-                text = getString(R.string.loadInterstitial)
+                text = getString(R.string.load_interstitial)
                 setOnClickListener {
                     interstitial?.show(this@MainActivity) ?: lifecycleScope.launch {
                         runCatching {
@@ -52,7 +52,7 @@ class MainActivity : ComponentActivity() {
                                 adUnitId = ADMANAGER_ADUNIT_ID,
                                 bidders = interstitialBidders,
                             )
-                            text = getString(R.string.showInterstitial)
+                            text = getString(R.string.show_interstitial)
                         }
                     }
                 }
