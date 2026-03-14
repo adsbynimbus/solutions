@@ -76,7 +76,7 @@ extension DynamicPriceView {
 ) async -> AdManagerInterstitialAd? {
     let bids = await [
         APSAdRequest(slotId: amazonSlotId, format: .interstitial).asBidder(),
-        NimbusRequest.forInterstitialAd(position: nimbusPosition).asBidder()
+        NimbusRequest.forInterstitialAd(position: nimbusPosition).asBidder(),
     ].auction()
 
     let request = AdManagerRequest()
@@ -114,8 +114,10 @@ extension DynamicPriceView {
 
 class GoogleInterstitialListener: NSObject, FullScreenContentDelegate, AppEventDelegate {
 
-    public func adView(_ interstitialAd: InterstitialAd,
-                       didReceiveAppEvent name: String, with info: String?) {
+    public func adView(
+        _ interstitialAd: InterstitialAd,
+        didReceiveAppEvent name: String, with info: String?
+    ) {
         interstitialAd.handleEventForNimbus(name: name, info: info)
     }
 
@@ -124,24 +126,24 @@ class GoogleInterstitialListener: NSObject, FullScreenContentDelegate, AppEventD
     }
 
     func adDidRecordImpression(_ ad: FullScreenPresentingAd) {
-           print("adDidRecordImpression")
-       }
+        print("adDidRecordImpression")
+    }
 
     func adDidRecordClick(_ ad: FullScreenPresentingAd) {
-           print("adDidRecordClick")
-       }
+        print("adDidRecordClick")
+    }
 
     func adWillPresentFullScreenContent(_ ad: FullScreenPresentingAd) {
-           print("ad:adWillPresentFullScreenContent")
-       }
+        print("ad:adWillPresentFullScreenContent")
+    }
 
     func adWillDismissFullScreenContent(_ ad: FullScreenPresentingAd) {
-           print("adWillDismissFullScreenContent")
-       }
+        print("adWillDismissFullScreenContent")
+    }
 
     func adDidDismissFullScreenContent(_ ad: FullScreenPresentingAd) {
-           print("adDidDismissFullScreenContent")
-       }
+        print("adDidDismissFullScreenContent")
+    }
 }
 
 class GoogleAdListener: NSObject, BannerViewDelegate {
@@ -150,7 +152,7 @@ class GoogleAdListener: NSObject, BannerViewDelegate {
     }
 
     public func bannerView(_ bannerView: BannerView, didFailToReceiveAdWithError error: Error) {
-        Task { @MainActor in  print("Ad Error \(bannerView.adUnitID ?? "") \(error.localizedDescription)") }
+        Task { @MainActor in print("Ad Error \(bannerView.adUnitID ?? "") \(error.localizedDescription)") }
     }
 
     public func bannerViewDidRecordImpression(_ bannerView: BannerView) {

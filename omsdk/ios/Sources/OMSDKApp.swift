@@ -5,14 +5,15 @@ import SwiftUI
 struct OMSDKApp: App {
     let apiKey = Bundle.main.infoDictionary?["Nimbus API Key"] as? String ?? ""
     let publisherKey = Bundle.main.infoDictionary?["Nimbus Publisher Key"] as? String ?? ""
-    init () {
+    init() {
         Nimbus.shared.initialize(publisher: publisherKey, apiKey: apiKey)
 
         Nimbus.shared.logLevel = .info
         Nimbus.shared.testMode = true
 
-        Nimbus.shared.viewabilityProvider = .init(builder: NimbusAdViewabilityTrackerBuilder(
-            verificationProviders: [UpdatedIABVerificationProvider()])
+        Nimbus.shared.viewabilityProvider = .init(
+            builder: NimbusAdViewabilityTrackerBuilder(
+                verificationProviders: [UpdatedIABVerificationProvider()])
         )
     }
 

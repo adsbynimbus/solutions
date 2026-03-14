@@ -11,11 +11,11 @@ import Foundation
 import Testing
 
 struct BiddersTest {
-    
-    struct TestBidder : Bidder {
+
+    struct TestBidder: Bidder {
         let seconds: Double
         let bid: Bid?
-        
+
         func fetchBid() async throws -> Bid {
             nonisolated(unsafe) var continuation: UnsafeContinuation<Bid, Error>?
             let result: Bid = try await withTaskCancellationHandler {
@@ -30,17 +30,16 @@ struct BiddersTest {
                         continuation = nil
                     }
                 }
-            }
-            onCancel: {
+            } onCancel: {
                 continuation?.resume(throwing: CancellationError())
                 continuation = nil
             }
             return result
         }
     }
-    
-    struct MockError : Error { }
-    
+
+    struct MockError: Error {}
+
     let clock = ContinuousClock()
 
     @Test("Test successful auction") func testAuction() async throws {
@@ -53,7 +52,7 @@ struct BiddersTest {
         #expect(clock.now - startTime < .seconds(1.1))
         #expect(result.count == 2)
     }
-    
+
     @Test("Test auction with failed bidder") func testAuctionFailure() async throws {
         let bidders: [Bidder] = [
             TestBidder(seconds: 1, bid: .test),
@@ -64,13 +63,13 @@ struct BiddersTest {
         #expect(clock.now - startTime < .seconds(1.1))
         #expect(result.count == 1)
     }
-    
+
     @Test("Test auction with timeout") func testAuctionTimeout() async throws {
         let bidders: [Bidder] = [
             TestBidder(seconds: 1, bid: .test),
             // The following 2 bidders should timeout
             TestBidder(seconds: 4, bid: .test),
-            TestBidder(seconds: 5, bid: nil)
+            TestBidder(seconds: 5, bid: nil),
         ]
         let startTime = clock.now
         let result = await bidders.auction()

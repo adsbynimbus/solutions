@@ -66,11 +66,13 @@ Credentials can be passed directly to the Gradle build by declaring a top level 
 with the GitHub workflow actor and token.
 
 ##### .github/workflows/build.yml
+
 ```yaml
 env:
   ORG_GRADLE_PROJECT_solutionsUsername: ${{ github.actor }}
   ORG_GRADLE_PROJECT_solutionsPassword: ${{ github.token }}
 ```
+
 An example can be found in the [nextgen.yml](../../../.github/workflows/nextgen.yml) workflow.
 
 </details>

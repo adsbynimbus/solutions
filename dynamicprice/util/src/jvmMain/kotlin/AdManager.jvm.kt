@@ -61,8 +61,8 @@ fun adManagerContext(
         .withApplicationName(appName).apply {
             if (networkCode.isNotEmpty()) withNetworkCode(networkCode)
         }
-        .build()
-    )
+        .build(),
+)
 
 inline val applicationDefaultCredential: Credential
     get() = OfflineCredentials.Builder()
@@ -73,9 +73,10 @@ inline val applicationDefaultCredential: Credential
 
 @JvmInline
 value class JsonKeyFile(val path: String) {
-    inline val credential: Credential get() = OfflineCredentials.Builder()
-        .forApi(OfflineCredentials.Api.AD_MANAGER)
-        .withJsonKeyFilePath(path)
-        .build()
-        .generateCredential()
+    inline val credential: Credential
+        get() = OfflineCredentials.Builder()
+            .forApi(OfflineCredentials.Api.AD_MANAGER)
+            .withJsonKeyFilePath(path)
+            .build()
+            .generateCredential()
 }

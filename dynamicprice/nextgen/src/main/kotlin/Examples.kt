@@ -4,21 +4,17 @@ import adsbynimbus.solutions.dynamicprice.nextgen.BuildConfig.AMAZON_BANNER_SLOT
 import android.app.Activity
 import android.util.Log
 import androidx.lifecycle.*
-import com.adsbynimbus.dynamicprice.nextgen.dynamicPriceAd
-import com.adsbynimbus.dynamicprice.nextgen.handleEventForNimbus
+import com.adsbynimbus.dynamicprice.nextgen.*
 import com.adsbynimbus.openrtb.enumerations.Position
 import com.adsbynimbus.openrtb.request.Format.Companion.BANNER_320_50
 import com.adsbynimbus.request.NimbusRequest.Companion.forBannerAd
 import com.adsbynimbus.request.NimbusRequest.Companion.forInterstitialAd
-import com.amazon.aps.ads.ApsAdNetworkInfo
-import com.amazon.aps.ads.ApsAdRequest
-import com.amazon.aps.ads.model.ApsAdFormat.BANNER
-import com.amazon.aps.ads.model.ApsAdFormat.INTERSTITIAL
+import com.amazon.aps.ads.*
+import com.amazon.aps.ads.model.ApsAdFormat.*
 import com.amazon.aps.ads.model.ApsAdNetwork.GOOGLE_AD_MANAGER
 import com.google.android.libraries.ads.mobile.sdk.banner.*
 import com.google.android.libraries.ads.mobile.sdk.common.*
-import com.google.android.libraries.ads.mobile.sdk.interstitial.InterstitialAd
-import com.google.android.libraries.ads.mobile.sdk.interstitial.InterstitialAdEventCallback
+import com.google.android.libraries.ads.mobile.sdk.interstitial.*
 import kotlinx.coroutines.*
 import kotlin.coroutines.resume
 import kotlin.time.*
@@ -31,7 +27,7 @@ val interstitialBidders = listOf(
     NimbusBidder { forInterstitialAd("Interstitial") },
     ApsBidder {
         ApsAdRequest(AMAZON_BANNER_SLOT_ID, INTERSTITIAL, ApsAdNetworkInfo(GOOGLE_AD_MANAGER))
-    }
+    },
 )
 
 val bannerBidders = listOf(
@@ -44,7 +40,7 @@ val bannerBidders = listOf(
     },
     ApsBidder {
         ApsAdRequest(AMAZON_BANNER_SLOT_ID, BANNER, ApsAdNetworkInfo(GOOGLE_AD_MANAGER))
-    }
+    },
 )
 
 /**
@@ -88,8 +84,8 @@ suspend fun BannerAdPreloader.Companion.loadAdAsync(adRequest: BannerAdRequest):
                     if (it.isActive) it.resume(pollAd(adRequest.adUnitId))
                 }
 
-                override fun onAdsExhausted(preloadId: String) { }
-            }
+                override fun onAdsExhausted(preloadId: String) {}
+            },
         )
     }
 
@@ -160,7 +156,7 @@ fun AdView.loadRefreshingBanner(
     bidders: Collection<Bidder<*>>,
     eventCallback: BannerAdEventCallback,
     preloadBanner: BannerAd? = null,
-    lifecycleOwner: LifecycleOwner? = findViewTreeLifecycleOwner()
+    lifecycleOwner: LifecycleOwner? = findViewTreeLifecycleOwner(),
 ) {
     val lifecycleOwner = lifecycleOwner ?: throw Exception()
     var lastRequestTime = TimeSource.Monotonic.markNow()

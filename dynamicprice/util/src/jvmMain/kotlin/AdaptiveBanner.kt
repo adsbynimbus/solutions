@@ -56,7 +56,7 @@ suspend fun AdManagerAxisClient.addAdaptiveBannerSupport(
                                     )
                                 }
                             }
-                        }
+                        },
                     )
                     line.creativePlaceholders.onEach {
                         when {

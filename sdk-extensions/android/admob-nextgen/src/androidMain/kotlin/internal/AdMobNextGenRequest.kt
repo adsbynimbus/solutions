@@ -3,20 +3,17 @@ package com.adsbynimbus.solutions.nextgen.internal
 import android.content.Context
 import androidx.core.os.bundleOf
 import com.adsbynimbus.openrtb.request.User
-import com.adsbynimbus.request.NimbusRequest
-import com.adsbynimbus.request.NimbusResponse
-import com.adsbynimbus.request.internal.AsyncInterceptor
-import com.adsbynimbus.request.internal.NimbusRequestChange
+import com.adsbynimbus.request.*
+import com.adsbynimbus.request.internal.*
 import com.google.android.libraries.ads.mobile.sdk.MobileAds
 import com.google.android.libraries.ads.mobile.sdk.common.BaseSignalRequestBuilder
-import com.google.android.libraries.ads.mobile.sdk.signal.SignalGenerationResult
-import com.google.android.libraries.ads.mobile.sdk.signal.SignalRequest
+import com.google.android.libraries.ads.mobile.sdk.signal.*
 
 internal class AdMobNextGenRequestInterceptor(val signalRequest: SignalRequest) : AsyncInterceptor {
     override suspend fun interceptRequest(request: NimbusRequest): NimbusRequestChange? =
         when (val result = MobileAds.generateSignal(signalRequest)) {
             is SignalGenerationResult.Success -> NimbusRequestChange(
-                userChanges = User.Extension(admob_gde_signals = result.signal.signalString)
+                userChanges = User.Extension(admob_gde_signals = result.signal.signalString),
             )
             is SignalGenerationResult.Failure -> null
         }

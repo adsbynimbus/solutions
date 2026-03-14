@@ -4,9 +4,7 @@ import android.content.Context
 import android.util.Log
 import android.webkit.WebView
 import androidx.startup.Initializer
-import com.adsbynimbus.IABVerificationProvider
-import com.adsbynimbus.Nimbus
-import com.adsbynimbus.ViewabilityProvider
+import com.adsbynimbus.*
 import kotlin.time.measureTime
 
 class AppInitializer : Initializer<Nimbus> {

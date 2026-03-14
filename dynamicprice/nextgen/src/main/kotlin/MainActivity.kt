@@ -1,21 +1,17 @@
 package adsbynimbus.solutions.dynamicprice.nextgen
 
 import adsbynimbus.solutions.dynamicprice.nextgen.BuildConfig.ADMANAGER_ADUNIT_ID
+import adsbynimbus.solutions.dynamicprice.nextgen.databinding.ActivityMainBinding
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.lifecycle.lifecycleScope
-import adsbynimbus.solutions.dynamicprice.nextgen.databinding.ActivityMainBinding
 import com.adsbynimbus.NimbusError
 import com.adsbynimbus.dynamicprice.nextgen.handleEventForNimbus
-import com.adsbynimbus.render.AdController
-import com.adsbynimbus.render.AdEvent
+import com.adsbynimbus.render.*
 import com.google.android.libraries.ads.mobile.sdk.banner.*
-import com.google.android.libraries.ads.mobile.sdk.common.AdEventCallback
-import com.google.android.libraries.ads.mobile.sdk.common.AdRequest
-import com.google.android.libraries.ads.mobile.sdk.common.FullScreenContentError
-import com.google.android.libraries.ads.mobile.sdk.interstitial.InterstitialAd
-import com.google.android.libraries.ads.mobile.sdk.interstitial.InterstitialAdEventCallback
+import com.google.android.libraries.ads.mobile.sdk.common.*
+import com.google.android.libraries.ads.mobile.sdk.interstitial.*
 import kotlinx.coroutines.launch
 import kotlin.time.TimeSource.Monotonic
 
@@ -49,7 +45,7 @@ class MainActivity : ComponentActivity() {
         }
     }
     val interstitialCallback: InterstitialAdEventCallback
-        get() = object : InterstitialAdEventCallback, AdEventCallback by delegate { }
+        get() = object : InterstitialAdEventCallback, AdEventCallback by delegate {}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -102,7 +98,7 @@ class MainActivity : ComponentActivity() {
                                     )
                                 }
                             }
-                    }
+                    },
                 )
             }
         }

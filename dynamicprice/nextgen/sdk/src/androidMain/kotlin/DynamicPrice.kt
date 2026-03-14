@@ -17,7 +17,7 @@ import com.google.android.libraries.ads.mobile.sdk.interstitial.InterstitialAd
 import kotlinx.coroutines.*
 
 /** Appends Nimbus Key Values to the Ad Manager request and caches the ad for rendering. */
-public fun <T: BaseAdRequestBuilder<T>> BaseAdRequestBuilder<T>.applyDynamicPrice(
+public fun <T : BaseAdRequestBuilder<T>> BaseAdRequestBuilder<T>.applyDynamicPrice(
     nimbusAd: NimbusResponse,
     mapping: Mapping,
 ) {
@@ -80,7 +80,7 @@ public fun InterstitialAd.handleEventForNimbus(
                         code = MEDIATION_SHOW_ERROR,
                         message = "Nimbus controller failed to show",
                         mediationAdError = null,
-                    )
+                    ),
                 )
                 DynamicPriceRenderer.maybeClearInterstitial(activity)
             }

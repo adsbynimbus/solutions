@@ -1,9 +1,8 @@
 package adsbynimbus.solutions.dynamicprice
 
 import android.graphics.Rect
-import android.view.View
+import android.view.*
 import android.view.View.OnLayoutChangeListener
-import android.view.ViewTreeObserver
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.resume
 

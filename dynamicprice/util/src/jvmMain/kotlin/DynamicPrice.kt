@@ -2,16 +2,14 @@ package adsbynimbus.solutions.dynamicprice.util
 
 import com.google.api.ads.admanager.axis.v202602.*
 import com.google.api.ads.admanager.axis.v202602.CustomTargetingKeyType.*
-import java.text.DecimalFormat
 import kotlinx.coroutines.delay
-import kotlin.collections.windowed
-import kotlin.jvm.Throws
+import java.text.DecimalFormat
 
 suspend fun AdManagerAxisClient.setupDynamicPrice(
     lineItemMapping: Collection<IntProgression>,
     creativeSizes: Collection<Pair<Int, Int>>,
     companyName: String = "Nimbus",
-    orderName: String = "Nimbus Dynamic Price"
+    orderName: String = "Nimbus Dynamic Price",
 ) = runCatching {
     val nimbusCompany = findOrCreateNimbusCompany(name = companyName)
     findOrCreateNimbusAuctionIdKey() // check creation but not required for rest of script
@@ -37,7 +35,7 @@ suspend fun AdManagerAxisClient.setupDynamicPrice(
         bidValues = bidValues,
         videoBidKey = videoBidKey,
         videoBidValues = videoValues,
-        ranges = lineItemMapping
+        ranges = lineItemMapping,
     )
     // This step takes a long time to complete
     associateCreatives(lineItems, creatives)
@@ -257,7 +255,7 @@ suspend fun AdManagerAxisClient.createOrdersAndLines(
                         videoKey = videoBidKey,
                         videoValue = videoBidValues.find { it.name.toInt() == lineValue }!!,
                         creatives = creatives,
-                        targetedPlacement = placement
+                        targetedPlacement = placement,
                     )
                 }
             }.forEach {

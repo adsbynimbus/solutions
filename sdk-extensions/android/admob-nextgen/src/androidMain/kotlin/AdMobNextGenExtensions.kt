@@ -4,8 +4,7 @@ import android.content.Context
 import com.adsbynimbus.Nimbus
 import com.adsbynimbus.request.NimbusRequest
 import com.adsbynimbus.solutions.nextgen.internal.*
-import com.google.android.libraries.ads.mobile.sdk.banner.AdSize
-import com.google.android.libraries.ads.mobile.sdk.banner.BannerSignalRequest
+import com.google.android.libraries.ads.mobile.sdk.banner.*
 import com.google.android.libraries.ads.mobile.sdk.interstitial.InterstitialSignalRequest
 import com.google.android.libraries.ads.mobile.sdk.nativead.NativeSignalRequest
 import com.google.android.libraries.ads.mobile.sdk.rewarded.RewardedSignalRequest
@@ -18,7 +17,7 @@ import com.google.android.libraries.ads.mobile.sdk.rewarded.RewardedSignalReques
  * @param adUnitId ad unit id obtained from the AdMob dashboard
  */
 public fun NimbusRequest.withAdMobBanner(adUnitId: String): NimbusRequest = apply {
-    val adSize = when(request.imp[0].banner?.h) {
+    val adSize = when (request.imp[0].banner?.h) {
         50 -> AdSize.BANNER
         90 -> AdSize.LEADERBOARD
         250 -> AdSize.MEDIUM_RECTANGLE
@@ -29,7 +28,7 @@ public fun NimbusRequest.withAdMobBanner(adUnitId: String): NimbusRequest = appl
         signalRequest = BannerSignalRequest.Builder(signalType = "requester_type_2")
             .setAdSize(adSize)
             .setRequiredParams(adUnitId)
-            .build()
+            .build(),
     )
 }
 
@@ -47,7 +46,7 @@ public fun NimbusRequest.withAdMobAdaptiveBanner(
     context: Context = Nimbus.applicationContext,
     width: Int = context.screenWidthDp,
 ): NimbusRequest = apply {
-    val adSize = when(request.imp[0].banner?.h) {
+    val adSize = when (request.imp[0].banner?.h) {
         50, 90 -> AdSize.getLargeAnchoredAdaptiveBannerAdSize(context, width)
         else -> AdSize.getCurrentOrientationInlineAdaptiveBannerAdSize(context, width)
     }
@@ -56,7 +55,7 @@ public fun NimbusRequest.withAdMobAdaptiveBanner(
         signalRequest = BannerSignalRequest.Builder(signalType = "requester_type_2")
             .setAdSize(adSize)
             .setRequiredParams(adUnitId)
-            .build()
+            .build(),
     )
 }
 
@@ -72,7 +71,7 @@ public fun NimbusRequest.withAdMobInterstitial(adUnitId: String): NimbusRequest 
     interceptors += AdMobNextGenRequestInterceptor(
         signalRequest = InterstitialSignalRequest.Builder(signalType = "requester_type_2")
             .setRequiredParams(adUnitId)
-            .build()
+            .build(),
     )
 }
 
@@ -88,7 +87,7 @@ public fun NimbusRequest.withAdMobRewarded(adUnitId: String): NimbusRequest = ap
     interceptors += AdMobNextGenRequestInterceptor(
         signalRequest = RewardedSignalRequest.Builder(signalType = "requester_type_2")
             .setRequiredParams(adUnitId)
-            .build()
+            .build(),
     )
 }
 
@@ -104,6 +103,6 @@ public fun NimbusRequest.withAdMobNative(adUnitId: String): NimbusRequest = appl
     interceptors += AdMobNextGenRequestInterceptor(
         signalRequest = NativeSignalRequest.Builder(signalType = "requester_type_2")
             .setRequiredParams(adUnitId)
-            .build()
+            .build(),
     )
 }

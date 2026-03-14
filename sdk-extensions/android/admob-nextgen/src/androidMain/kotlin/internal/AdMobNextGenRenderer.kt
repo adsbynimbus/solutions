@@ -1,16 +1,13 @@
 package com.adsbynimbus.solutions.nextgen.internal
 
 import android.content.Context
-import android.view.View
-import android.view.ViewGroup
-import com.adsbynimbus.NimbusAd
-import com.adsbynimbus.NimbusError
+import android.view.*
+import com.adsbynimbus.*
 import com.adsbynimbus.NimbusError.ErrorType.*
 import com.adsbynimbus.internal.*
 import com.adsbynimbus.render.*
-import com.adsbynimbus.render.internal.trackEvent
-import com.adsbynimbus.request.internal.RenderType
-import com.adsbynimbus.request.internal.renderType
+import com.adsbynimbus.render.internal.*
+import com.adsbynimbus.request.internal.*
 import com.google.android.libraries.ads.mobile.sdk.banner.*
 import com.google.android.libraries.ads.mobile.sdk.common.*
 import com.google.android.libraries.ads.mobile.sdk.interstitial.*
@@ -57,7 +54,7 @@ public class AdMobNextGenRenderer : Renderer, Renderer.Blocking, Component {
                 )
                 else -> InterstitialAd.loadFromAdResponse(
                     adResponse = ad.markup(),
-                    adLoadCallback = NextGenAdLoaderCallback(it)
+                    adLoadCallback = NextGenAdLoaderCallback(it),
                 )
             }
         }
@@ -92,7 +89,7 @@ public class AdMobNextGenRenderer : Renderer, Renderer.Blocking, Component {
 }
 
 @JvmInline
-internal value class NextGenAdLoaderCallback<T: Ad>(val controller: AdMobNextGenAdController):
+internal value class NextGenAdLoaderCallback<T : Ad>(val controller: AdMobNextGenAdController) :
     AdLoadCallback<T>, NativeAdLoaderCallback {
 
     override fun onAdFailedToLoad(adError: LoadAdError) {

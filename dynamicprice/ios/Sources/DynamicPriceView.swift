@@ -8,10 +8,10 @@
 import GoogleMobileAds
 @preconcurrency import NimbusGAMKit
 
-fileprivate let refreshInterval: TimeInterval = 30
+private let refreshInterval: TimeInterval = 30
 
 @MainActor
-public class DynamicPriceView : UIView, AppEventDelegate {
+public class DynamicPriceView: UIView, AppEventDelegate {
 
     private let bidders: [any Bidder]
     private let googleBanner: AdManagerBannerView
@@ -23,7 +23,7 @@ public class DynamicPriceView : UIView, AppEventDelegate {
 
     /// Set to true for banner ads if they refresh when not on the screen
     public var useOnScreenCheck = false
-    
+
     public init(
         adSize: AdSize,
         adUnitId: String,
@@ -37,11 +37,11 @@ public class DynamicPriceView : UIView, AppEventDelegate {
         addSubview(googleBanner)
         googleBanner.translatesAutoresizingMaskIntoConstraints = false
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     public func loadAd() async {
         lastRequestTime = Date()
 
@@ -69,30 +69,30 @@ public class DynamicPriceView : UIView, AppEventDelegate {
         didReceiveAppEvent name: String,
         with info: String?
     ) {
-       Task { @MainActor in googleBanner.handleEventForNimbus(name: name, info: info) }
+        Task { @MainActor in googleBanner.handleEventForNimbus(name: name, info: info) }
     }
 
     public override func willMove(toWindow newWindow: UIWindow?) {
         removeVisibilityListeners()
-        
+
         guard let newWindow = newWindow else {
             self.refreshTask?.cancel()
             return
         }
-        
+
         onVisibilityChanged(newWindow) { isVisible in
             Task { @MainActor [unowned self] in
                 isVisible ? self.startRefresh() : self.refreshTask?.cancel()
             }
         }
-        
+
         startRefresh()
     }
-    
+
     public override func willMove(toSuperview newSuperview: UIView?) {
         NSLayoutConstraint.deactivate(constraints)
     }
-    
+
     public override func didMoveToSuperview() {
         guard let parent = superview else { return }
         translatesAutoresizingMaskIntoConstraints = false
@@ -105,10 +105,10 @@ public class DynamicPriceView : UIView, AppEventDelegate {
             googleBanner.centerYAnchor.constraint(equalTo: centerYAnchor),
         ])
     }
-    
+
     private func startRefresh() {
         guard refreshTask == nil || refreshTask?.isCancelled == true else { return }
-        
+
         refreshTask = Task {
             while !Task.isCancelled {
                 // If not on screen, sleep for 200 milliseconds and then check again
@@ -119,23 +119,23 @@ public class DynamicPriceView : UIView, AppEventDelegate {
 
                 await Task.sleep(seconds: refreshInterval - Date().timeIntervalSince(lastRequestTime))
                 guard !Task.isCancelled else { break }
-                
+
                 await loadAd()
             }
         }
     }
 }
 
-public extension UIView {
-    
-    var isOnScreen: Bool {
+extension UIView {
+
+    public var isOnScreen: Bool {
         guard let window else { return false }
-    
+
         return !window.bounds.intersection(convert(bounds, to: nil)).isEmpty
     }
-    
+
     @inlinable
-    func removeVisibilityListeners() -> Void {
+    public func removeVisibilityListeners() {
         NotificationCenter.default.removeObserver(
             self, name: UIWindow.didBecomeVisibleNotification, object: window)
         NotificationCenter.default.removeObserver(
@@ -145,9 +145,9 @@ public extension UIView {
         NotificationCenter.default.removeObserver(
             self, name: UIApplication.didEnterBackgroundNotification, object: UIApplication.shared)
     }
-    
+
     @inlinable
-    func onVisibilityChanged(_ target: UIWindow,  _ onChange: @escaping @Sendable (Bool) -> Void) {
+    public func onVisibilityChanged(_ target: UIWindow, _ onChange: @escaping @Sendable (Bool) -> Void) {
         NotificationCenter.default.addObserver(
             forName: UIWindow.didBecomeVisibleNotification,
             object: target,
@@ -169,8 +169,8 @@ public extension UIView {
             queue: nil
         ) { _ in onChange(false) }
     }
-    
-    func parentViewController() -> UIViewController {
+
+    public func parentViewController() -> UIViewController {
         var responder: UIResponder? = self
         while !(responder is UIViewController) {
             responder = responder?.next
