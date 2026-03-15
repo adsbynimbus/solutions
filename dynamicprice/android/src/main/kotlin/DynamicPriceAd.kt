@@ -3,34 +3,18 @@ package adsbynimbus.solutions.dynamicprice
 import android.content.Context
 import android.util.Log
 import androidx.core.view.doOnAttach
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.findViewTreeLifecycleOwner
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
+import androidx.lifecycle.*
 import com.adsbynimbus.google.handleEventForNimbus
 import com.adsbynimbus.openrtb.request.Format
 import com.adsbynimbus.request.NimbusRequest
 import com.adsbynimbus.request.NimbusRequest.Companion.forBannerAd
-import com.amazon.device.ads.DTBAdNetwork
-import com.amazon.device.ads.DTBAdNetworkInfo
-import com.amazon.device.ads.DTBAdRequest
-import com.amazon.device.ads.DTBAdSize
+import com.amazon.device.ads.*
 import com.google.android.gms.ads.AdSize
-import com.google.android.gms.ads.admanager.AdManagerAdRequest
-import com.google.android.gms.ads.admanager.AdManagerAdView
-import kotlinx.coroutines.CoroutineName
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.currentCoroutineContext
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.isActive
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.plus
+import com.google.android.gms.ads.admanager.*
+import kotlinx.coroutines.*
 import java.lang.System.currentTimeMillis
-import kotlin.time.Duration
+import kotlin.time.*
 import kotlin.time.Duration.Companion.milliseconds
-import kotlin.time.measureTimedValue
 
 /** Wrapper for AdManagerAdView that auto-refreshes and manages bidding */
 class DynamicPriceAd(
@@ -102,10 +86,10 @@ fun preloadBanner(
         }
     },
     bidders: List<Bidder<*>> = listOf(NimbusBidder(nimbusRequest), ApsBidder(amazonRequest)),
-    timeout: Duration = 1000.milliseconds
+    timeout: Duration = 1000.milliseconds,
 ) = DynamicPriceAd(
     adUnitId = adUnitId,
     adSize = AdSize.BANNER,
     bidders = bidders,
-    preloadBids = adUnitId.preloadScope.async { bidders.auction(timeout) }
+    preloadBids = adUnitId.preloadScope.async { bidders.auction(timeout) },
 )

@@ -1,19 +1,15 @@
 package adsbynimbus.solutions.dynamicprice.nextgen
 
-import com.adsbynimbus.Nimbus
-import com.adsbynimbus.NimbusAdManager
+import com.adsbynimbus.*
 import com.adsbynimbus.dynamicprice.nextgen.applyDynamicPrice
 import com.adsbynimbus.lineitem.DEFAULT_BANNER
-import com.adsbynimbus.request.NimbusRequest
-import com.adsbynimbus.request.NimbusResponse
+import com.adsbynimbus.request.*
 import com.amazon.aps.ads.*
 import com.amazon.aps.ads.listeners.ApsAdRequestListener
 import com.amazon.device.ads.AdType
-import com.google.android.libraries.ads.mobile.sdk.common.BaseAdRequestBuilder
-import com.google.android.libraries.ads.mobile.sdk.common.BaseRequest
+import com.google.android.libraries.ads.mobile.sdk.common.*
 import kotlinx.coroutines.*
-import kotlin.coroutines.resume
-import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.*
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 

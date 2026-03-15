@@ -4,18 +4,14 @@ import android.app.Activity
 import android.app.Activity.OVERRIDE_TRANSITION_CLOSE
 import android.os.Build
 import android.util.Log
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.webkit.WebView
 import androidx.annotation.WorkerThread
 import androidx.collection.LruCache
 import androidx.core.view.allViews
-import com.adsbynimbus.NimbusAd
-import com.adsbynimbus.NimbusError
-import com.adsbynimbus.dynamicprice.nextgen.DynamicPriceAd
-import com.adsbynimbus.dynamicprice.nextgen.dynamicPriceAd
-import com.adsbynimbus.internal.Platform
-import com.adsbynimbus.internal.log
+import com.adsbynimbus.*
+import com.adsbynimbus.dynamicprice.nextgen.*
+import com.adsbynimbus.internal.*
 import com.adsbynimbus.render.*
 import com.google.android.libraries.ads.mobile.sdk.banner.BannerAd
 import com.google.android.libraries.ads.mobile.sdk.common.*
@@ -24,13 +20,10 @@ import kotlinx.coroutines.*
 import kotlinx.serialization.*
 import kotlinx.serialization.json.Json
 import java.lang.AutoCloseable
-import java.net.HttpURLConnection
-import java.net.URL
-import kotlin.coroutines.resume
-import kotlin.coroutines.resumeWithException
+import java.net.*
+import kotlin.coroutines.*
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
-import kotlin.use
 
 @Serializable
 internal class DynamicPriceRenderer(
@@ -52,7 +45,7 @@ internal class DynamicPriceRenderer(
                         adController = withContext(Dispatchers.Main) { render(nimbusAd) }.apply {
                             attachDynamicPriceListener(ad, renderer.clickTracker, renderScope)
                             publisherListener?.let { listeners.add(it) }
-                        }
+                        },
                     )
                 }.onFailure {
                     withContext(Dispatchers.Main) {
@@ -61,7 +54,7 @@ internal class DynamicPriceRenderer(
                                 errorType = NimbusError.ErrorType.RENDERER_ERROR,
                                 message = "Failed to render dynamic price ad",
                                 cause = it,
-                            )
+                            ),
                         )
                     }
                 }
@@ -162,7 +155,7 @@ internal suspend inline fun NimbusAd.renderInline(container: ViewGroup): AdContr
                 override fun onError(error: NimbusError) {
                     if (continuation.isActive) continuation.resumeWithException(error)
                 }
-            }
+            },
         )
     }
 }

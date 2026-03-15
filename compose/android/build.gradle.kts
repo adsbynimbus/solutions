@@ -9,10 +9,6 @@ plugins {
 val codeQL = providers.provider { extra.properties["codeQL"] }
 val githubActions = providers.environmentVariable("GITHUB_ACTIONS")
 
-androidComponents.beforeVariants {
-    it.enable = it.name.contains("release", ignoreCase = true) || !githubActions.isPresent
-}
-
 android {
     compileSdk = libs.versions.android.sdk.get().toInt()
 
@@ -35,7 +31,7 @@ android {
         }
     }
 
-    compileOptions{
+    compileOptions {
         sourceCompatibility = JavaVersion.toVersion(libs.versions.android.jvm.get())
         targetCompatibility = JavaVersion.toVersion(libs.versions.android.jvm.get())
     }

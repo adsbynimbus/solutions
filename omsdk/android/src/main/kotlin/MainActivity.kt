@@ -5,29 +5,18 @@ package com.adsbynimbus.android.omsdk
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.*
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
+import androidx.compose.runtime.*
+import androidx.compose.ui.*
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
+import androidx.navigation.compose.*
 import com.adsbynimbus.NimbusAdManager
 import com.adsbynimbus.android.omsdk.AdTypes.*
 import com.adsbynimbus.openrtb.request.Format
@@ -50,12 +39,12 @@ fun AppBar(
     currentScreen: String,
     canNavigateBack: Boolean,
     navigateUp: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     TopAppBar(
         title = { Text(currentScreen) },
-        colors = TopAppBarDefaults.mediumTopAppBarColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = MaterialTheme.colorScheme.primaryContainer,
         ),
         modifier = modifier,
         navigationIcon = {
@@ -63,11 +52,11 @@ fun AppBar(
                 IconButton(onClick = navigateUp) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = "Back"
+                        contentDescription = "Back",
                     )
                 }
             }
-        }
+        },
     )
 }
 
@@ -95,9 +84,9 @@ fun App(
             AppBar(
                 currentScreen = currentScreen,
                 canNavigateBack = navController.previousBackStackEntry != null,
-                navigateUp = { navController.navigateUp() }
+                navigateUp = { navController.navigateUp() },
             )
-        }
+        },
     ) { innerPadding ->
         NavHost(
             navController = navController,
@@ -105,7 +94,7 @@ fun App(
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
-                .padding(innerPadding)
+                .padding(innerPadding),
         ) {
             composable(route = activity.appName) {
                 Column(
@@ -125,7 +114,7 @@ fun App(
                                 request.imp[0].video = null
                             },
                             activity = activity,
-                            listener = { }
+                            listener = {},
                         )
                     }) {
                         Text(DisplayInterstitial.screen)
@@ -136,7 +125,7 @@ fun App(
                                 request.imp[0].banner = null
                             },
                             activity = activity,
-                            listener = { }
+                            listener = {},
                         )
                     }) {
                         Text(VideoInterstitial.screen)

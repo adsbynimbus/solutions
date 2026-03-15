@@ -4,8 +4,7 @@ import android.content.Context
 import android.util.Log
 import androidx.startup.Initializer
 import com.adsbynimbus.Nimbus
-import com.amazon.device.ads.AdRegistration
-import com.amazon.device.ads.MRAIDPolicy
+import com.amazon.device.ads.*
 import com.google.android.gms.ads.MobileAds
 import kotlin.time.TimeSource.Monotonic
 import kotlin.time.measureTime

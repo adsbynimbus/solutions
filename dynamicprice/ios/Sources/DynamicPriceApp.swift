@@ -5,7 +5,7 @@ import SwiftUI
 #endif
 struct DynamicPriceApp: App {
 
-    init () {
+    init() {
         initNimbus()
         initAmazon()
     }
@@ -65,7 +65,7 @@ struct ContentView: View {
 struct InlineView: UIViewControllerRepresentable {
     let viewProvider: () -> DynamicPriceView
     let listener = GoogleAdListener()
-    
+
     init(dynamicPriceView: @autoclosure @escaping () -> DynamicPriceView) {
         self.viewProvider = dynamicPriceView
     }

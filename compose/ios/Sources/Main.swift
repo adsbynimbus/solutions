@@ -4,11 +4,11 @@ import UIKit
 
 @main
 struct iOS: App {
-	var body: some Scene {
-		WindowGroup {
-			ContentView()
-		}
-	}
+    var body: some Scene {
+        WindowGroup {
+            ContentView()
+        }
+    }
 }
 
 struct ComposeView: UIViewControllerRepresentable {
@@ -22,6 +22,6 @@ struct ComposeView: UIViewControllerRepresentable {
 struct ContentView: View {
 
     var body: some View {
-        ComposeView().ignoresSafeArea(.keyboard) // Compose has own keyboard handler
+        ComposeView().ignoresSafeArea(.keyboard)  // Compose has own keyboard handler
     }
 }

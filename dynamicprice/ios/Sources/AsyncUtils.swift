@@ -5,8 +5,8 @@
 //  Created by Jason Sznol on 4/7/25.
 //
 
-import NimbusRequestKit
 import Foundation
+import NimbusRequestKit
 
 extension Task where Success == Never, Failure == Never {
     @inlinable

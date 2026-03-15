@@ -38,7 +38,9 @@ higher due to the `addCustomTargeting` method moving from the `AdManagerAdReques
 super class `AbstractAdRequestBuilder<*>`.
 
 ###### Nimbus - Requires 2.28.0 or higher
+
 Replace calls to `applyDynamicPrice` with its method body
+
 ```kotlin
 when (response) {
     is NimbusResponse -> response.run {
@@ -51,7 +53,9 @@ when (response) {
 ```
 
 ###### Amazon
+
 Replace calls to `DTBAdUtil.INSTANCE.loadDTBParams` with its method body
+
 ```kotlin
 /** Implementation of a private helper method used by loadDTBParams to retrieve kv pairs */
 inline val DTBAdResponse.adManagerParams: Map<String, List<String>>
@@ -66,6 +70,7 @@ when (response) {
     }
 }
 ```
+
 </details>
 
 ## iOS

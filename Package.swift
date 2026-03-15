@@ -26,6 +26,6 @@ let package = Package(
             name: "OMSDK",
             dependencies: [.product(name: "NimbusKit", package: "nimbus-ios-sdk")],
             path: "omsdk/ios/Sources",
-        )
+        ),
     ]
 )

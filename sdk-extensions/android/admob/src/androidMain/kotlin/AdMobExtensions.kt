@@ -2,25 +2,17 @@ package com.adsbynimbus.solutions.admob
 
 import android.content.Context
 import androidx.core.os.bundleOf
-import com.adsbynimbus.Nimbus
-import com.adsbynimbus.NimbusError
+import com.adsbynimbus.*
 import com.adsbynimbus.NimbusError.ErrorType.NETWORK_ERROR
 import com.adsbynimbus.openrtb.request.User
 import com.adsbynimbus.render.AdMobRenderer.admob
-import com.adsbynimbus.request.NimbusRequest
-import com.adsbynimbus.request.NimbusResponse
-import com.adsbynimbus.request.internal.AsyncInterceptor
-import com.adsbynimbus.request.internal.NimbusRequestChange
+import com.adsbynimbus.request.*
+import com.adsbynimbus.request.internal.*
 import com.google.ads.mediation.admob.AdMobAdapter
-import com.google.android.gms.ads.AdFormat
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdSize
-import com.google.android.gms.ads.query.QueryInfo
-import com.google.android.gms.ads.query.QueryInfoGenerationCallback
+import com.google.android.gms.ads.*
+import com.google.android.gms.ads.query.*
 import kotlinx.coroutines.suspendCancellableCoroutine
-import kotlin.coroutines.resume
-import kotlin.coroutines.resumeWithException
-import kotlin.jvm.Throws
+import kotlin.coroutines.*
 
 /**
  * Include AdMob anchored adaptive banner in Nimbus auction.
@@ -66,7 +58,7 @@ internal suspend fun AdMobAdaptiveDemandProvider.gdeAdaptiveSignals(): String =
             object : QueryInfoGenerationCallback() {
                 override fun onFailure(error: String) {
                     if (continuation.isActive) continuation.resumeWithException(
-                        NimbusError(NETWORK_ERROR, error, null)
+                        NimbusError(NETWORK_ERROR, error, null),
                     )
                 }
 

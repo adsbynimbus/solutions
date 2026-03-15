@@ -1,23 +1,12 @@
 package adsbynimbus.solutions.dynamicprice
 
 import com.adsbynimbus.NimbusAdManager
-import com.adsbynimbus.lineitem.DEFAULT_BANNER
-import com.adsbynimbus.lineitem.applyDynamicPrice
-import com.adsbynimbus.request.NimbusRequest
-import com.adsbynimbus.request.NimbusResponse
-import com.amazon.device.ads.AdError
-import com.amazon.device.ads.DTBAdCallback
-import com.amazon.device.ads.DTBAdRequest
-import com.amazon.device.ads.DTBAdResponse
-import com.amazon.device.ads.DTBAdUtil
+import com.adsbynimbus.lineitem.*
+import com.adsbynimbus.request.*
+import com.amazon.device.ads.*
 import com.google.android.gms.ads.admanager.AdManagerAdRequest
-import kotlinx.coroutines.async
-import kotlinx.coroutines.supervisorScope
-import kotlinx.coroutines.suspendCancellableCoroutine
-import kotlinx.coroutines.withTimeout
-import kotlinx.coroutines.yield
-import kotlin.coroutines.resume
-import kotlin.coroutines.resumeWithException
+import kotlinx.coroutines.*
+import kotlin.coroutines.*
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 
@@ -53,6 +42,7 @@ val linearPriceMapping = DEFAULT_BANNER
 @JvmInline
 value class NimbusBidder(private val adRequest: NimbusRequest) : Bidder<NimbusResponse> {
     constructor(adRequest: () -> NimbusRequest) : this(adRequest())
+
     // appContext is defined in DynamicPriceAd.kt and set in the AdInitializer
     override suspend fun fetchBid(): Bid<NimbusResponse> =
         Bid(nimbusAdManager.makeRequest(appContext, adRequest))

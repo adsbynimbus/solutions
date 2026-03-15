@@ -5,9 +5,9 @@
 //  Created by Jason Sznol on 4/7/25.
 //
 
-@preconcurrency import NimbusGAMKit
 @preconcurrency import DTBiOSSDK
 import GoogleMobileAds
+@preconcurrency import NimbusGAMKit
 
 public protocol Bidder: Sendable {
     func fetchBid() async throws -> Bid
@@ -19,13 +19,13 @@ public enum Bid: Sendable {
     case test
 }
 
-public enum AuctionError : Error {
+public enum AuctionError: Error {
     case timeout
 }
 
-public extension Collection where Element == any Bidder  {
+extension Collection where Element == any Bidder {
 
-    func auction(timeout: Duration = .milliseconds(3000)) async -> [Bid] {
+    public func auction(timeout: Duration = .milliseconds(3000)) async -> [Bid] {
         await withThrowingTaskGroup(of: Bid.self, returning: [Bid].self) { group in
             for bidder in self {
                 group.addTask { try await bidder.fetchBid() }
@@ -36,15 +36,16 @@ public extension Collection where Element == any Bidder  {
                 try Task.checkCancellation()
                 throw AuctionError.timeout
             }
-            
+
             defer { group.cancelAll() }
 
             var bids: [Bid] = []
-            for _ in 0 ..< self.count {
+            for _ in 0..<self.count {
                 guard let result = await group.nextResult() else { break }
                 switch result {
-                    case .success(let bid): bids.append(bid)
-                    case .failure(let error): if case AuctionError.timeout = error {
+                case .success(let bid): bids.append(bid)
+                case .failure(let error):
+                    if case AuctionError.timeout = error {
                         group.cancelAll()
                         break
                     }
@@ -55,13 +56,13 @@ public extension Collection where Element == any Bidder  {
     }
 }
 
-public extension Bid {
+extension Bid {
 
-    func applyTargeting(to request: AdManagerRequest, priceMapping: NimbusGAMLinearPriceMapping) {
+    public func applyTargeting(to request: AdManagerRequest, priceMapping: NimbusGAMLinearPriceMapping) {
         switch self {
-        case let .nimbus(response):
+        case .nimbus(let response):
             response.applyDynamicPrice(into: request, mapping: priceMapping)
-        case let .aps(response):
+        case .aps(let response):
             response.customTargeting?.forEach {
                 request.customTargeting?[$0.key] = $0.value
             }
@@ -71,8 +72,8 @@ public extension Bid {
 }
 
 public final class NimbusBidder: Bidder {
-    
-    final class RequestListener : NimbusRequestManagerDelegate, Sendable {
+
+    final class RequestListener: NimbusRequestManagerDelegate, Sendable {
 
         nonisolated(unsafe) var continuation: UnsafeContinuation<Bid, Error>?
 
@@ -141,12 +142,12 @@ public final class APSBidder: Bidder {
     }
 }
 
-public extension NimbusRequest {
+extension NimbusRequest {
     @inlinable
-    func asBidder() -> NimbusBidder { NimbusBidder(self) }
+    public func asBidder() -> NimbusBidder { NimbusBidder(self) }
 }
 
-public extension APSAdRequest {
+extension APSAdRequest {
     @inlinable
-    func asBidder() -> APSBidder { APSBidder(self) }
+    public func asBidder() -> APSBidder { APSBidder(self) }
 }
