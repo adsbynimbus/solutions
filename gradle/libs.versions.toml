@@ -1,7 +1,7 @@
 [versions]
 ads-amazon = "11.1.2"
-ads-google = "24.9.0"
-ads-google-nextgen = "0.24.0-beta02"
+ads-google = "25.0.0"
+ads-google-nextgen = "0.24.0-beta03"
 ads-nimbus = { require = "2.35.1", reject = ["2.35.2"] }
 
 android = "9.0.1"
