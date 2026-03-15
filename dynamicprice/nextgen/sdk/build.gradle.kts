@@ -83,6 +83,12 @@ dependencies.constraints {
             because("Addresses CVE-2023-3635 reported on Okio 3.2.0")
         }
     }
+    androidMainImplementation(libs.cronet.fallback) {
+        version {
+            require("143.7445.0")
+            because("141.7340.3 causes a build error with duplicate namespaces")
+        }
+    }
 }
 
 dokka {
