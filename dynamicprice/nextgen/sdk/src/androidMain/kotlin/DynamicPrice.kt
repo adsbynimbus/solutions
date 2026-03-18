@@ -42,7 +42,14 @@ public fun BannerAd.handleEventForNimbus(
     if (name == "na_render") DynamicPriceRenderer.render(this, data, listener) { nimbusAd ->
         @Suppress("Deprecation") // Revisit this on next SDK update
         getView(activity!!).webViewParent.let {
-            nimbusAd.renderInline(it).apply {
+            /*
+                Creating the NimbusAdView with an activity context before rendering fixes a crash
+                that occurs when clicking on a companion ad.
+             */
+            val nimbusAdView = NimbusAdView(activity)
+            nimbusAd.renderInline(nimbusAdView).apply {
+                // A NimbusAdView created outside the Renderer must be added to the container
+                it.addView(nimbusAdView)
                 if (nimbusAd.type() != "video") return@apply
                 it.getChildAt(0)?.doOnLayout { webView ->
                     view?.updateLayoutParams {
