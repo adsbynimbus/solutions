@@ -32,17 +32,27 @@ public fun <T : BaseAdRequestBuilder<T>> BaseAdRequestBuilder<T>.applyDynamicPri
  * @param data associated event data passed from the `onAppEvent` callback.
  * @param listener optional listener for Nimbus Ad events and errors.
  * @param activity optional context the ad is loaded in; current activity used as the default.
+ * @return a NimbusResponse object if Nimbus won the auction or null otherwise
  */
 public fun BannerAd.handleEventForNimbus(
     name: String,
     data: String?,
     listener: AdController.Listener? = null,
     activity: Activity? = Platform.currentActivity.get(),
-) {
+): NimbusResponse? {
+    var nimbusWin: NimbusResponse? = null
     if (name == "na_render") DynamicPriceRenderer.render(this, data, listener) { nimbusAd ->
+        nimbusWin = nimbusAd
         @Suppress("Deprecation") // Revisit this on next SDK update
         getView(activity!!).webViewParent.let {
-            nimbusAd.renderInline(it).apply {
+            /*
+                Creating the NimbusAdView with an activity context before rendering fixes a crash
+                that occurs when clicking on a companion ad.
+             */
+            val nimbusAdView = NimbusAdView(activity)
+            nimbusAd.renderInline(nimbusAdView).apply {
+                // A NimbusAdView created outside the Renderer must be added to the container
+                it.addView(nimbusAdView)
                 if (nimbusAd.type() != "video") return@apply
                 it.getChildAt(0)?.doOnLayout { webView ->
                     view?.updateLayoutParams {
@@ -53,6 +63,7 @@ public fun BannerAd.handleEventForNimbus(
             }
         }
     }
+    return nimbusWin
 }
 
 /**
@@ -62,15 +73,18 @@ public fun BannerAd.handleEventForNimbus(
  * @param data associated event data passed from the `onAppEvent` callback.
  * @param listener optional listener for Nimbus Ad events and errors.
  * @param activity optional context the ad is loaded in; current activity used as the default.
+ * @return a NimbusResponse object if Nimbus won the auction or null otherwise
  */
 public fun InterstitialAd.handleEventForNimbus(
     name: String,
     data: String?,
     listener: AdController.Listener? = null,
     activity: Activity? = Platform.currentActivity.get(),
-) {
+): NimbusResponse? {
+    var nimbusWin: NimbusResponse? = null
     when (name) {
         "na_render" -> DynamicPriceRenderer.render(this, data, listener) { nimbusAd ->
+            nimbusWin = nimbusAd
             activity!!.loadBlockingAd(nimbusAd)!!
         }
         "na_show" -> DynamicPriceRenderer.renderScope.launch(Dispatchers.Main) {
@@ -86,6 +100,7 @@ public fun InterstitialAd.handleEventForNimbus(
             }
         }
     }
+    return nimbusWin
 }
 
 /**
