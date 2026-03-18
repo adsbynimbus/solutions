@@ -124,7 +124,7 @@ suspend fun AdView.loadBanner(
         suspendCancellableCoroutine { continuation ->
             val callback = object : AdLoadCallback<BannerAd> {
                 override fun onAdFailedToLoad(adError: LoadAdError) {
-                    continuation.resume(null)
+                    if (continuation.isActive) continuation.resume(null)
                 }
 
                 override fun onAdLoaded(ad: BannerAd) {
@@ -135,7 +135,7 @@ suspend fun AdView.loadBanner(
                             eventCallback.onAppEvent(name, data)
                         }
                     }
-                    continuation.resume(ad)
+                    if (continuation.isActive) continuation.resume(ad)
                 }
             }
             loadAd(adRequest = request, adLoadCallback = callback)
