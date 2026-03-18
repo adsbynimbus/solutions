@@ -8,6 +8,7 @@ import com.adsbynimbus.dynamicprice.nextgen.*
 import com.adsbynimbus.openrtb.enumerations.Position
 import com.adsbynimbus.openrtb.request.Format.Companion.BANNER_320_50
 import com.adsbynimbus.request.NimbusRequest.Companion.forBannerAd
+import com.adsbynimbus.request.NimbusRequest.Companion.forDynamicUnit
 import com.adsbynimbus.request.NimbusRequest.Companion.forInterstitialAd
 import com.amazon.aps.ads.*
 import com.amazon.aps.ads.model.ApsAdFormat.*
@@ -23,13 +24,6 @@ import kotlin.time.Duration.Companion.seconds
 /** Caches ads loaded in one activity for use in another */
 val adCache = mutableMapOf<String, Deferred<BannerAd?>>()
 
-val interstitialBidders = listOf(
-    NimbusBidder { forInterstitialAd("Interstitial") },
-    ApsBidder {
-        ApsAdRequest(AMAZON_BANNER_SLOT_ID, INTERSTITIAL, ApsAdNetworkInfo(GOOGLE_AD_MANAGER))
-    },
-)
-
 val bannerBidders = listOf(
     NimbusBidder {
         forBannerAd(
@@ -40,6 +34,18 @@ val bannerBidders = listOf(
     },
     ApsBidder {
         ApsAdRequest(AMAZON_BANNER_SLOT_ID, BANNER, ApsAdNetworkInfo(GOOGLE_AD_MANAGER))
+    },
+)
+
+val dynamicUnitBidders = listOf(
+    // NimbusBidder supports passing requests as both blocks and parameters
+    NimbusBidder(adRequest = forDynamicUnit(position = "Dynamic Unit"))
+)
+
+val interstitialBidders = listOf(
+    NimbusBidder { forInterstitialAd("Interstitial") },
+    ApsBidder {
+        ApsAdRequest(AMAZON_BANNER_SLOT_ID, INTERSTITIAL, ApsAdNetworkInfo(GOOGLE_AD_MANAGER))
     },
 )
 

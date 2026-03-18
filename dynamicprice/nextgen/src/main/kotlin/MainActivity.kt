@@ -4,6 +4,9 @@ import adsbynimbus.solutions.dynamicprice.nextgen.BuildConfig.ADMANAGER_ADUNIT_I
 import adsbynimbus.solutions.dynamicprice.nextgen.databinding.ActivityMainBinding
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
+import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+import android.widget.FrameLayout.LayoutParams
 import androidx.activity.ComponentActivity
 import androidx.lifecycle.lifecycleScope
 import com.adsbynimbus.NimbusError
@@ -99,6 +102,17 @@ class MainActivity : ComponentActivity() {
                                 }
                             }
                     },
+                )
+            }
+            AdView(binding.adFrame.context).apply {
+                binding.root.addView(this, LayoutParams(WRAP_CONTENT, WRAP_CONTENT, Gravity.CENTER))
+                loadBanner(
+                    builder = BannerAdRequest.Builder(
+                        adUnitId = ADMANAGER_ADUNIT_ID,
+                        adSize = AdSize(320, 480),
+                    ),
+                    bidders = dynamicUnitBidders,
+                    eventCallback = object : BannerAdEventCallback, AdEventCallback by delegate {},
                 )
             }
         }
