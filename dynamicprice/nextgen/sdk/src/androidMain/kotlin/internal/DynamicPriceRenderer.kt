@@ -31,6 +31,9 @@ internal class DynamicPriceRenderer(
     @SerialName("ga_click") val clickTracker: String,
 ) {
     companion object {
+        // Removing the test_demand Renderer fixes Nimbus test ads in 2.35.1 - 2.35.3
+        init { Renderer.INLINE.remove("test_demand") }
+
         fun render(
             ad: Ad,
             data: String?,
