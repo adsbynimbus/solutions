@@ -131,7 +131,9 @@ suspend fun AdView.loadBanner(
                     ad.adEventCallback = object : BannerAdEventCallback by eventCallback {
                         override fun onAppEvent(name: String, data: String?) {
                             Log.v("Ads", "[${request.adUnitId}] AppEvent Received")
-                            ad.handleEventForNimbus(name, data)
+                            ad.handleEventForNimbus(name, data)?.let {
+                                Log.i("Ads", "Nimbus ${it.network()} won auction")
+                            }
                             eventCallback.onAppEvent(name, data)
                         }
                     }

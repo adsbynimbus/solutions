@@ -98,7 +98,9 @@ class MainActivity : ComponentActivity() {
                                                 Log.w("Nimbus Ads", "${error.message}")
                                             }
                                         },
-                                    )
+                                    )?.let { nimbusAd ->
+                                        Log.i("Ads", "Nimbus ${nimbusAd.network()} won auction")
+                                    }
                                 }
                             }
                     },

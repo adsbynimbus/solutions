@@ -13,6 +13,7 @@ import com.adsbynimbus.*
 import com.adsbynimbus.dynamicprice.nextgen.*
 import com.adsbynimbus.internal.*
 import com.adsbynimbus.render.*
+import com.adsbynimbus.request.NimbusResponse
 import com.google.android.libraries.ads.mobile.sdk.banner.BannerAd
 import com.google.android.libraries.ads.mobile.sdk.common.*
 import com.google.android.libraries.ads.mobile.sdk.interstitial.InterstitialAd
@@ -38,7 +39,7 @@ internal class DynamicPriceRenderer(
             ad: Ad,
             data: String?,
             publisherListener: AdController.Listener?,
-            render: suspend (NimbusAd) -> AdController,
+            render: suspend (NimbusResponse) -> AdController,
         ) {
             renderScope.launch {
                 runCatching {
@@ -116,7 +117,7 @@ internal class DynamicPriceRenderer(
             }
         }
 
-        val adCache = LruCache<String, NimbusAd>(10)
+        val adCache = LruCache<String, NimbusResponse>(10)
 
         @OptIn(ExperimentalSerializationApi::class)
         val jsonSerializer = Json {
