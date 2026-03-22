@@ -44,8 +44,6 @@ runs:
         restore-keys: xcodebuild-${{ runner.os }}-${{ runner.arch }}-
     - name: Swift Package Cache
       uses: ./.github/actions/swift
-      with:
-        cache-read-only: false
 outputs:
   build-cache-hit:
     description: "Build Cache Hit"
