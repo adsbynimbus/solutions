@@ -43,7 +43,7 @@ jobs:
           - language: swift
             runner: macos-26
             command: >-
-              swift build --build-tests
+              swift build
               --triple arm64-apple-ios16.0-simulator
               --sdk "`xcrun --sdk iphonesimulator --show-sdk-path`"
     steps:
