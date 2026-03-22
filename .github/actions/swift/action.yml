@@ -1,0 +1,45 @@
+name: swift
+description: Configures Swift Package Manager caching
+inputs:
+  cache-read-only:
+    description: 'Use Swift Package Cache as read only'
+    required: false
+    default: ${{ github.ref != 'refs/heads/main' }}
+runs:
+  using: "composite"
+  steps:
+    - name: Restore Package.resolved
+      id: package-resolution
+      uses: actions/cache/restore@v5
+      with:
+        path: Package.resolved
+        key: swift-package-resolution-${{ hashFiles('Package.swift') }}
+        restore-keys: swift-package-resolution-
+    - name: Restore Swift Package Cache
+      id: package-cache
+      uses: actions/cache/restore@v5
+      with:
+        path: |
+          ~/Library/Caches/org.swift.swiftpm
+          ~/Library/Caches/swift-package
+          .build
+        key: swift-package-cache-${{ hashFiles('Package.resolved') }}
+        restore-keys: swift-package-cache-
+    - name: Resolve or Update Packages
+      run: swift package ${{ steps.package-cache.outputs.cache-hit == 'true' && 'resolve' || 'update' }}
+      shell: bash
+    - name: Save Swift Package Cache
+      if: steps.package-cache.outputs.cache-hit != 'true' && inputs.cache-read-only != 'true'
+      uses: actions/cache/save@v5
+      with:
+        path: |
+          ~/Library/Caches/org.swift.swiftpm
+          ~/Library/Caches/swift-package
+          .build
+        key: swift-package-cache-${{ hashFiles('Package.resolved') }}
+    - name: Save Package.resolved
+      if: steps.package-cache.outputs.cache-hit != 'true' && inputs.cache-read-only != 'true'
+      uses: actions/cache/save@v5
+      with:
+        path: Package.resolved
+        key: swift-package-resolution-${{ hashFiles('Package.swift') }}
