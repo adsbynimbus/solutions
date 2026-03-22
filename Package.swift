@@ -27,5 +27,15 @@ let package = Package(
             dependencies: [.product(name: "NimbusKit", package: "nimbus-ios-sdk")],
             path: "omsdk/ios/Sources",
         ),
+        .target(
+            name: "Prebuild-CodeQL",
+            // The dependencies should be a union of all products used in the package
+            dependencies: [
+                .product(name: "NimbusKit", package: "nimbus-ios-sdk"),
+                .product(name: "NimbusRequestAPSKit", package: "nimbus-ios-sdk"),
+                .product(name: "NimbusGAMKit", package: "nimbus-ios-sdk"),
+            ],
+            path: ".github/codeql",
+        ),
     ]
 )
