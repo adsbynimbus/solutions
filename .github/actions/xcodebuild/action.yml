@@ -29,6 +29,7 @@ runs:
       id: options
       run: echo options="-scheme ${{ inputs.scheme }}
         -destination ${{ steps.destination.outputs.destination }}
+        -clonedSourcePackagesDirPath .build
         CODE_SIGNING_ALLOWED=${{ inputs.codesign }} | xcbeautify --renderer github-actions" >> $GITHUB_OUTPUT
       shell: bash
     - name: Build Cache
@@ -41,6 +42,8 @@ runs:
           !**/*.xcbuilddata
         key: xcodebuild-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('**/*.xc*', '**/*.swift') }}
         restore-keys: xcodebuild-${{ runner.os }}-${{ runner.arch }}-
+    - name: Swift Package Cache
+      uses: ./.github/actions/swift
 outputs:
   build-cache-hit:
     description: "Build Cache Hit"
