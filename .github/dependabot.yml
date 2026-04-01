@@ -40,8 +40,7 @@ updates:
           - "androidx.*"
       kotlin:
         patterns:
-          - "org.jetbrains.kotlin*"
-          - "org.jetbrains.dokka"
+          - "org.jetbrains.*"
       other:
         patterns:
           - "*"
