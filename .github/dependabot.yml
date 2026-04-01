@@ -34,7 +34,9 @@ updates:
           - "patch"
       compose:
         patterns:
-          - "*compose*"
+          - "org.jetbrains.compose*"
+          - "androidx.compose*"
+          - "*compose"
       androidx:
         patterns:
           - "androidx.*"
