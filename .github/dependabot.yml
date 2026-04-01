@@ -34,13 +34,14 @@ updates:
           - "patch"
       compose:
         patterns:
-          - "org.jetbrains.compose"
+          - "*compose*"
       androidx:
         patterns:
           - "androidx.*"
       kotlin:
         patterns:
-          - "org.jetbrains.*"
+          - "org.jetbrains.kotlin*"
+          - "org.jetbrains.dokka"
       other:
         patterns:
           - "*"
