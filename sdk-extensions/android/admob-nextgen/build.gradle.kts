@@ -5,6 +5,8 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.dokka)
     alias(libs.plugins.dokka.javadoc)
+    alias(libs.plugins.kotest)
+    alias(libs.plugins.ksp)
     `maven-publish`
 }
 
@@ -50,6 +52,8 @@ kotlin {
             consumerKeepRules.publish = true
             consumerKeepRules.file(layout.settingsDirectory.file("r8-optimization-rules.pro"))
         }
+
+        withHostTest { }
     }
 
     compilerOptions {
@@ -60,12 +64,21 @@ kotlin {
     explicitApi()
 
     sourceSets {
-        removeIf { it.name == "commonTest" } // Fixes Unused Kotlin Source Sets warning
         androidMain.dependencies {
             api(libs.ads.nimbus)
             api(libs.ads.google.nextgen)
         }
+        named("androidHostTest") {
+            dependencies {
+                implementation(libs.bundles.test.common)
+                implementation(libs.kotest.runner)
+            }
+        }
     }
+}
+
+tasks.withType<Test>().configureEach {
+    useJUnitPlatform()
 }
 
 dependencies.constraints {
