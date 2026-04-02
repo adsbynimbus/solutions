@@ -178,7 +178,7 @@ internal class AdMobNextGenAdController(
     }
 
     override fun onAdDismissedFullScreenContent() {
-        if (view == null) destroy()
+        if (fullscreen) destroy()
     }
 
     override fun onAdFailedToShowFullScreenContent(fullScreenContentError: FullScreenContentError) {
