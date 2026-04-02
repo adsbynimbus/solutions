@@ -1,8 +1,6 @@
-@file:OptIn(ExperimentalSwiftExportDsl::class, ExperimentalKotlinGradlePluginApi::class)
+@file:OptIn(org.jetbrains.kotlin.gradle.swiftexport.ExperimentalSwiftExportDsl::class)
 
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.*
-import org.jetbrains.kotlin.gradle.swiftexport.ExperimentalSwiftExportDsl
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
@@ -14,15 +12,6 @@ plugins {
 val codeQL = providers.provider { extra.properties["codeQL"] }
 
 kotlin {
-    applyHierarchyTemplate {
-        common {
-            withAndroidTarget()
-            group("ios") {
-                withIosArm64()
-                withIosSimulatorArm64()
-            }
-        }
-    }
     androidLibrary {
         namespace = "adsbynimbus.solutions.compose"
         compileSdk = libs.versions.android.sdk.get().toInt()
