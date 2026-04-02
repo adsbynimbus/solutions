@@ -85,6 +85,29 @@ class AdMobNextGenControllerTests : FreeSpec({
                     nimbusAd.trackEvent(AdEvent.CLICKED)
                 }
             }
+
+            "fires DESTROYED event when destroy() called" {
+                controller.destroy()
+                verify {
+                    nimbusListener.onAdEvent(AdEvent.DESTROYED)
+                }
+            }
+
+            if (googleAd is InterstitialAd || googleAd is RewardedAd) {
+                "fires DESTROYED when dismissed" {
+                    adEventCallbackCapture?.onAdDismissedFullScreenContent()
+                    verify {
+                        nimbusListener.onAdEvent(AdEvent.DESTROYED)
+                    }
+                }
+            }
+
+            "calls destroy() on googleAd when destroyed" {
+                controller.destroy()
+                verify {
+                    googleAd.destroy()
+                }
+            }
         }
     }
 })
