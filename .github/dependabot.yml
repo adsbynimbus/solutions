@@ -43,6 +43,9 @@ updates:
       kotlin:
         patterns:
           - "org.jetbrains.*"
+          - "io.kotest*"
+          - "io.mockk*"
+          - "com.google.devtools.ksp"
       other:
         patterns:
           - "*"
