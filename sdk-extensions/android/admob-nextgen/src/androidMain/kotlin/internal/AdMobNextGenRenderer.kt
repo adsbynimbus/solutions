@@ -112,7 +112,9 @@ internal value class NextGenAdLoaderCallback<T : Ad>(val controller: AdMobNextGe
 internal class AdMobNextGenAdController(
     val nimbusAd: NimbusAd,
     override val view: NimbusAdView? = null,
-) : AdController(), AdEventCallback, AdLoadCallback<Ad> {
+) : AdController(), AdLoadCallback<Ad>,
+    BannerAdEventCallback, InterstitialAdEventCallback,
+    NativeAdEventCallback, RewardedAdEventCallback {
 
     inline val fullscreen: Boolean
         get() = view == null
@@ -133,6 +135,12 @@ internal class AdMobNextGenAdController(
 
     override fun onAdLoaded(ad: Ad) {
         googleAd = ad
+        when (ad) {
+            is BannerAd -> ad.adEventCallback = this
+            is InterstitialAd -> ad.adEventCallback = this
+            is NativeAd -> ad.adEventCallback = this
+            is RewardedAd -> ad.adEventCallback = this
+        }
         dispatchAdEvent(AdEvent.LOADED)
         if (started) start()
     }
@@ -170,10 +178,12 @@ internal class AdMobNextGenAdController(
     }
 
     override fun onAdDismissedFullScreenContent() {
-        if (view == null) destroy()
+        if (fullscreen) destroy()
     }
 
     override fun onAdFailedToShowFullScreenContent(fullScreenContentError: FullScreenContentError) {
         dispatchError(NimbusError(CONTROLLER_ERROR, fullScreenContentError.message, null))
     }
+
+    override fun onAppEvent(name: String, data: String?) { }
 }
