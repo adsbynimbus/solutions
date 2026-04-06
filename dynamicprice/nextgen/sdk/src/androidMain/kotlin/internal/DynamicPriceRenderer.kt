@@ -44,7 +44,7 @@ internal class DynamicPriceRenderer(
             renderScope.launch {
                 runCatching {
                     val renderer = jsonSerializer.decodeFromString(serializer(), data!!)
-                    val nimbusAd = adCache[renderer.auctionId]!!
+                    val nimbusAd = adCache.remove(renderer.auctionId)!!
                     ad.dynamicPriceAd = DynamicPriceAd(
                         adController = withContext(Dispatchers.Main) { render(nimbusAd) }.apply {
                             attachDynamicPriceListener(ad, renderer.clickTracker, renderScope)
@@ -58,7 +58,7 @@ internal class DynamicPriceRenderer(
                                 errorType = NimbusError.ErrorType.RENDERER_ERROR,
                                 message = "Failed to render dynamic price ad",
                                 cause = it,
-                            ),
+                            )
                         )
                     }
                 }

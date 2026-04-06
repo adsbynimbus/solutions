@@ -2,4 +2,6 @@
 <resources>
     <string name="loadInterstitial">Load Interstitial</string>
     <string name="showInterstitial">Show Interstitial</string>
+    <string name="loadRewarded">Load Rewarded</string>
+    <string name="showRewarded">Show Rewarded</string>
 </resources>

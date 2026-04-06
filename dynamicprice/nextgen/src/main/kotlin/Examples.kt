@@ -10,12 +10,14 @@ import com.adsbynimbus.openrtb.request.Format.Companion.BANNER_320_50
 import com.adsbynimbus.request.NimbusRequest.Companion.forBannerAd
 import com.adsbynimbus.request.NimbusRequest.Companion.forDynamicUnit
 import com.adsbynimbus.request.NimbusRequest.Companion.forInterstitialAd
+import com.adsbynimbus.request.NimbusRequest.Companion.forRewardedVideo
 import com.amazon.aps.ads.*
 import com.amazon.aps.ads.model.ApsAdFormat.*
 import com.amazon.aps.ads.model.ApsAdNetwork.GOOGLE_AD_MANAGER
 import com.google.android.libraries.ads.mobile.sdk.banner.*
 import com.google.android.libraries.ads.mobile.sdk.common.*
 import com.google.android.libraries.ads.mobile.sdk.interstitial.*
+import com.google.android.libraries.ads.mobile.sdk.rewarded.RewardedAd
 import kotlinx.coroutines.*
 import kotlin.coroutines.resume
 import kotlin.time.*
@@ -48,6 +50,8 @@ val interstitialBidders = listOf(
         ApsAdRequest(AMAZON_BANNER_SLOT_ID, INTERSTITIAL, ApsAdNetworkInfo(GOOGLE_AD_MANAGER))
     },
 )
+
+val rewardedBidders = listOf(NimbusBidder { forRewardedVideo("Rewarded") })
 
 /**
  * Starts the auction of a BannerAd request for use at app startup.
@@ -230,6 +234,34 @@ suspend fun loadInterstitial(
                 }
             }
         }
+        is AdLoadResult.Failure<*> -> null.also {
+            Log.i("Ads", "[${request.adUnitId}] ${adResponse.error.message}")
+        }
+    }
+}
+
+/**
+ * Runs an auction with a 3-second timeout and loads a Rewarded ad.
+ *
+ * @param builder A new instance should be used for each request
+ * @param bidders Bidders participating in the auction
+ */
+suspend fun loadRewarded(
+    builder: AdRequest.Builder,
+    bidders: Collection<Bidder<*>>,
+): RewardedAd? = supervisorScope {
+    val (bids, auctionTime) = measureTimedValue { bidders.auction() }
+
+    val request = builder.run {
+        bids.forEach { it.applyTargeting(this) }
+        build()
+    }
+    val (adResponse, requestTime) = measureTimedValue { RewardedAd.loadDynamicPrice(request) }
+
+    Log.v("Ads", "[${request.adUnitId}] Auction: $auctionTime AdRequest: $requestTime")
+
+    when (adResponse) {
+        is AdLoadResult.Success<RewardedAd> -> adResponse.ad
         is AdLoadResult.Failure<*> -> null.also {
             Log.i("Ads", "[${request.adUnitId}] ${adResponse.error.message}")
         }
