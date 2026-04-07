@@ -10,17 +10,19 @@ import android.widget.FrameLayout.LayoutParams
 import androidx.activity.ComponentActivity
 import androidx.lifecycle.lifecycleScope
 import com.adsbynimbus.NimbusError
-import com.adsbynimbus.dynamicprice.nextgen.handleEventForNimbus
+import com.adsbynimbus.dynamicprice.nextgen.*
 import com.adsbynimbus.render.*
 import com.google.android.libraries.ads.mobile.sdk.banner.*
 import com.google.android.libraries.ads.mobile.sdk.common.*
 import com.google.android.libraries.ads.mobile.sdk.interstitial.*
+import com.google.android.libraries.ads.mobile.sdk.rewarded.*
 import kotlinx.coroutines.launch
 import kotlin.time.TimeSource.Monotonic
 
 class MainActivity : ComponentActivity() {
 
     var interstitial: InterstitialAd? = null
+    var rewarded: RewardedAd? = null
     val binding: ActivityMainBinding by lazy {
         ActivityMainBinding.inflate(layoutInflater).also { setContentView(it.root) }
     }
@@ -47,8 +49,8 @@ class MainActivity : ComponentActivity() {
             Log.i("Ads", "Showed FullScreen")
         }
     }
-    val interstitialCallback: InterstitialAdEventCallback
-        get() = object : InterstitialAdEventCallback, AdEventCallback by delegate {}
+    val interstitialCallback: InterstitialAdEventCallback =
+        object : InterstitialAdEventCallback, AdEventCallback by delegate {}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,6 +63,29 @@ class MainActivity : ComponentActivity() {
                         eventCallback = interstitialCallback,
                     )?.also {
                         setText(R.string.showInterstitial)
+                    }
+                }
+            }
+        }
+        binding.rewarded.apply {
+            setOnClickListener {
+                rewarded?.show(this@MainActivity) {
+                    Log.i("Ads", "User Rewarded ${it.type}")
+                } ?: lifecycleScope.launch {
+                    rewarded = loadRewarded(
+                        builder = AdRequest.Builder(ADMANAGER_ADUNIT_ID),
+                        bidders = rewardedBidders,
+                    )?.also {
+                        it.adEventCallback = object : RewardedAdEventCallback, AdEventCallback by delegate {
+                            override fun onAdDismissedFullScreenContent() {
+                                rewarded = null
+                                lifecycleScope.launch {
+                                    setText(R.string.loadRewarded)
+                                }
+                            }
+                        }
+                        setText(R.string.showRewarded)
+                        Log.i("Ads", "Nimbus win: ${it.nimbusAd != null}")
                     }
                 }
             }
