@@ -107,31 +107,97 @@ public fun InterstitialAd.handleEventForNimbus(
 /** Loads a RewardedAd and conditionally wraps the response if a Nimbus bid is present */
 public suspend fun RewardedAd.Companion.loadDynamicPrice(
     request: AdRequest,
-    listener: AdController.Listener? = null,
-): AdLoadResult<RewardedAd> =
-    when (val adResponse = RewardedAd.load(request)) {
-        is AdLoadResult.Success<RewardedAd> -> {
-            val nimbusAuctionId = request.customTargeting["na_id"] ?: return adResponse
-            val rewardedAd = DynamicPriceRenderer.adCache.remove(nimbusAuctionId)?.let {
-                DynamicPriceRewardedAd(
-                    googleAd = adResponse.ad,
-                    nimbusAd = it,
-                    listener = listener,
-                )
-            }
-            when {
-                rewardedAd != null -> AdLoadResult.Success(rewardedAd)
-                adResponse.ad.isNimbusWin -> AdLoadResult.Failure(
-                    error = LoadAdError(
-                        code = NOT_FOUND,
-                        message = "Nimbus ad not found in cache",
-                    ),
-                )
-                else -> adResponse
-            }
-        }
-        is AdLoadResult.Failure<*> -> adResponse
+    nimbusListener: AdController.Listener? = null,
+): AdLoadResult<RewardedAd> = RewardedAd.load(request).run {
+    val nimbusAuctionId = request.customTargeting["na_id"] ?: return this
+    val nimbusAd = DynamicPriceRenderer.adCache.remove(nimbusAuctionId)
+    when {
+        this !is AdLoadResult.Success<RewardedAd> -> this
+        nimbusAd != null -> AdLoadResult.Success(
+            DynamicPriceRewardedAd(
+                googleAd = ad,
+                nimbusAd = nimbusAd,
+                listener = nimbusListener,
+            ),
+        )
+        ad.isNimbusWin -> AdLoadResult.Failure(
+            error = LoadAdError(
+                code = NOT_FOUND,
+                message = "Nimbus ad not found in cache",
+            ),
+        )
+        else -> this
     }
+}
+
+/** Loads a RewardedAd and conditionally wraps the response if a Nimbus bid is present */
+public fun RewardedAd.Companion.loadDynamicPrice(
+    adRequest: AdRequest,
+    adLoadCallback: AdLoadCallback<RewardedAd>,
+    nimbusListener: AdController.Listener? = null,
+) {
+    RewardedAd.load(
+        adRequest = adRequest,
+        adLoadCallback = DynamicPriceRewardedCallback(
+            callback = adLoadCallback,
+            adRequest = adRequest,
+            nimbusListener = nimbusListener,
+        ),
+    )
+}
+
+/**
+ * Wrapper callback for loading Dynamic Price Rewarded ads
+ *
+ * @param callback The AdLoadCallback to wrap
+ * @param nimbusAd The Nimbus bid if one was present
+ * @param nimbusListener Optional Nimbus AdController listener
+ */
+public class DynamicPriceRewardedCallback(
+    internal val callback: AdLoadCallback<RewardedAd>,
+    internal val nimbusAd: NimbusResponse?,
+    internal val nimbusListener: AdController.Listener? = null,
+) : AdLoadCallback<RewardedAd> by callback {
+    /**
+     * Wrapper callback for loading Dynamic Price Rewarded ads
+     *
+     * @param callback The AdLoadCallback to wrap
+     * @param adRequest The AdRequest passed to RewardedAd.load
+     * @param nimbusListener Optional Nimbus AdController listener
+     */
+    public constructor(
+        callback: AdLoadCallback<RewardedAd>,
+        adRequest: AdRequest,
+        nimbusListener: AdController.Listener? = null,
+    ) : this(
+        callback = callback,
+        nimbusAd = adRequest.customTargeting["na_id"]?.let { DynamicPriceRenderer.adCache.remove(it) },
+        nimbusListener = nimbusListener,
+    )
+
+    init {
+        if (nimbusAd != null) DynamicPriceRenderer.adCache.remove(nimbusAd.auctionId)
+    }
+
+    override fun onAdLoaded(ad: RewardedAd) {
+        when {
+            nimbusAd != null -> callback.onAdLoaded(
+                DynamicPriceRewardedAd(
+                    googleAd = ad,
+                    nimbusAd = nimbusAd,
+                    listener = nimbusListener,
+                ),
+            )
+            ad.isNimbusWin -> callback.onAdFailedToLoad(
+                adError = LoadAdError(
+                    code = NOT_FOUND,
+                    message = "Nimbus ad not found in cache",
+                ),
+            )
+            else -> callback.onAdLoaded(ad)
+        }
+    }
+}
 
 /**
  * Wrapper for a Nimbus [AdController] associated with a NextGen [Ad] object.
