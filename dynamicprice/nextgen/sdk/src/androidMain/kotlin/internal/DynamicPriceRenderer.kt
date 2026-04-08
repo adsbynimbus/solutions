@@ -103,17 +103,21 @@ internal class DynamicPriceRenderer(
         })
 
         fun maybeClearInterstitial(activity: Activity? = Platform.currentActivity.get()) {
-            when {
-                activity !is AdActivity -> return
-                Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE -> activity.run {
-                    overrideActivityTransition(OVERRIDE_TRANSITION_CLOSE, 0, 0)
-                    finish()
+            if (activity is AdActivity) activity.finishWithoutAnimation() else {
+                Platform.doOnNextActivity {
+                    if (it is AdActivity) it.finishWithoutAnimation()
                 }
-                else -> activity.run {
-                    finish()
-                    @Suppress("DEPRECATION")
-                    overridePendingTransition(0, 0)
-                }
+            }
+        }
+
+        fun Activity.finishWithoutAnimation() {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                overrideActivityTransition(OVERRIDE_TRANSITION_CLOSE, 0, 0)
+                finish()
+            } else {
+                finish()
+                @Suppress("DEPRECATION")
+                overridePendingTransition(0, 0)
             }
         }
 
