@@ -1,11 +1,11 @@
 package com.adsbynimbus.dynamicprice.nextgen.internal
 
 import android.app.Activity
+import android.content.Context
 import com.adsbynimbus.NimbusError
 import com.adsbynimbus.dynamicprice.nextgen.*
-import com.adsbynimbus.internal.Platform
-import com.adsbynimbus.render.AdController
-import com.adsbynimbus.render.AdEvent
+import com.adsbynimbus.internal.*
+import com.adsbynimbus.render.*
 import com.adsbynimbus.render.Renderer.Companion.loadBlockingAd
 import com.adsbynimbus.request.NimbusResponse
 import com.google.android.libraries.ads.mobile.sdk.common.FullScreenContentError
@@ -20,12 +20,19 @@ internal class DynamicPriceRewardedAd(
 
     var rewardListener: OnUserEarnedRewardListener? = null
 
+    fun Context.createController(): AdController? = loadBlockingAd(nimbusAd)?.apply {
+        googleAd.dynamicPriceAd = DynamicPriceAd(adController = this)
+        listeners.add(this@DynamicPriceRewardedAd)
+        if (listener != null) listeners.add(listener)
+    }
+
+    init {
+        if (googleAd.isNimbusWin) application.createController()
+    }
+
     override fun show(activity: Activity, onUserEarnedRewardListener: OnUserEarnedRewardListener) {
         if (!googleAd.isNimbusWin) googleAd.show(activity, onUserEarnedRewardListener) else {
-            activity.loadBlockingAd(nimbusAd)?.run {
-                googleAd.dynamicPriceAd = DynamicPriceAd(adController = this)
-                listeners.add(this@DynamicPriceRewardedAd)
-                if (listener != null) listeners.add(listener)
+            (googleAd.dynamicPriceAd?.adController ?: activity.createController())?.run {
                 rewardListener = onUserEarnedRewardListener
                 googleAd.show(activity) { }
                 @Suppress("DEPRECATION")
