@@ -1,5 +1,5 @@
 [versions]
-ads-amazon = "11.1.2"
+ads-amazon = "11.2.0"
 ads-google = "25.1.0"
 ads-google-nextgen = "0.25.0-beta01"
 ads-nimbus = "2.35.3"
