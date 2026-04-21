@@ -1,8 +1,8 @@
 [versions]
 ads-amazon = "11.2.0"
 ads-google = "25.2.0"
-ads-google-nextgen = "0.25.0-beta01"
-ads-nimbus = "2.35.3"
+ads-google-nextgen = "1.0.0"
+ads-nimbus = "2.36.0"
 
 android = "9.0.1"
 android-jvm = "19"
