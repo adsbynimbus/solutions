@@ -25,7 +25,7 @@ api-google-auth = "1.46.0"
 api-google-client = "2.9.0"
 
 compose-multiplatform = "1.10.3"
-compose-multiplatform-material3 = "1.11.0-alpha06"
+compose-multiplatform-material3 = "1.11.0-alpha07"
 
 commons-beanutils = "1.11.0"
 commmons-lang3 = "3.20.0"
