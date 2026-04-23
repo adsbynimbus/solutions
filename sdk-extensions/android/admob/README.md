@@ -29,6 +29,6 @@ Add the `com.adsbynimbus.solutions:extension-admob` module to you application or
 
 ```kotlin
 dependencies {
-    implementation("com.adsbynimbus.solutions:extension-admob:2.35.3")
+    implementation("com.adsbynimbus.solutions:extension-admob:2.33.0")
 }
 ```

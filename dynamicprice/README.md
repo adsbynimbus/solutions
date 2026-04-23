@@ -5,6 +5,10 @@ Official Nimbus documentation can be found at [https://docs.adsbynimbus.com/docs
 Implementations demonstrating how to run requests to Nimbus and Amazon in parallel when both
 bidders are used with Google Ad Manager.
 
+## [Android Next Gen](nextgen)
+
+Android Dynamic Price implementation and [SDK](nextgen/sdk) using the Google Mobile Ads Next Gen SDK.
+
 ## Android
 
 #### [Bidders](android/src/main/kotlin/Bidders.kt)
@@ -84,7 +88,3 @@ applying the key-value targeting from each bid to a `AdManagerRequest`.
 
 Provides a wrapper implementation for the `AdManagerBannerView` that automatically manages the bidding
 process and refreshes ads every 30 seconds when attached to the view hierarchy.
-
-## [Next Gen](nextgen)
-
-Android Dynamic Price implementation and [SDK](nextgen/sdk) using the Google Mobile Ads Next Gen SDK.
