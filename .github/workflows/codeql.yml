@@ -43,7 +43,7 @@ jobs:
           - language: swift
             runner: macos-26
             command: >-
-              swift build --build-tests
+              swift build
               --triple arm64-apple-ios16.0-simulator
               --sdk "`xcrun --sdk iphonesimulator --show-sdk-path`"
     steps:
@@ -56,6 +56,9 @@ jobs:
           cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
           cache-read-only: true
           kotlin-version: ${{ vars.CODEQL_KOTLIN }}
+      - name: Precompile Swift Packages
+        if: matrix.language == 'swift'
+        run: ${{ matrix.command }} --target Prebuild-CodeQL
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v4
         with:

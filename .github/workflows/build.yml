@@ -37,7 +37,7 @@ jobs:
         shell: bash
       - name: Cache Kotlin Native
         uses: actions/cache/save@v5
-        if: ${{ github.ref == 'refs/heads/main' && steps.gradle.outcome.kotlin-cache-hit != 'true' }}
+        if: github.ref == 'refs/heads/main' && steps.gradle.outcome.kotlin-cache-hit != 'true'
         with:
           path: ~/.konan
           key: ${{ steps.gradle.outputs.kotlin-cache-key }}
@@ -64,7 +64,7 @@ jobs:
         shell: bash
       - name: Cache DerivedData
         uses: actions/cache/save@v5
-        if: ${{ github.ref == 'refs/heads/main' && steps.xcodebuild.outcome.build-cache-hit != 'true' }}
+        if: github.ref == 'refs/heads/main' && steps.xcodebuild.outcome.build-cache-hit != 'true'
         with:
           path: |
             ~/Library/Developer/Xcode/DerivedData
