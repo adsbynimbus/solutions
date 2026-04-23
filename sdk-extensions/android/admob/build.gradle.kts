@@ -21,7 +21,7 @@ val dokkaHtmlJar by tasks.registering(Jar::class) {
 }
 
 kotlin {
-    androidLibrary {
+    android {
         namespace = "$group.admob"
         compileSdk = libs.versions.android.sdk.get().toInt()
         minSdk = 21

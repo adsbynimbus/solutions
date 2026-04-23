@@ -12,7 +12,7 @@ plugins {
 val codeQL = providers.provider { extra.properties["codeQL"] }
 
 kotlin {
-    androidLibrary {
+    android {
         namespace = "adsbynimbus.solutions.compose"
         compileSdk = libs.versions.android.sdk.get().toInt()
         minSdk = libs.versions.android.min.get().toInt()

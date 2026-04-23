@@ -22,7 +22,7 @@ val dokkaHtmlJar by tasks.registering(Jar::class) {
 }
 
 kotlin {
-    androidLibrary {
+    android {
         namespace = "$group.nextgen"
         compileSdk = libs.versions.android.sdk.get().toInt()
         minSdk = 24
