@@ -77,12 +77,6 @@ dependencies.constraints {
             because("BundleCompat.getSerializable added in 1.13.0")
         }
     }
-    androidMainImplementation(libs.cronet.fallback) {
-        version {
-            require("143.7445.0")
-            because("141.7340.3 causes a build error with duplicate namespaces")
-        }
-    }
 }
 
 dokka {
