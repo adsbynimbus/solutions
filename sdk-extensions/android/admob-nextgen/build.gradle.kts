@@ -79,14 +79,9 @@ kotlin {
 
 tasks.withType<Test>().configureEach {
     useJUnitPlatform()
-}
-
-dependencies.constraints {
-    androidMainImplementation(libs.okio) {
-        version {
-            require("[3.4.0,)")
-            because("Addresses CVE-2023-3635 reported on Okio 3.2.0")
-        }
+    // Revisit this when updating mockk where this warning originates from
+    if (JavaVersion.current() >= JavaVersion.VERSION_24) {
+        jvmArgs("--sun-misc-unsafe-memory-access=allow")
     }
 }
 

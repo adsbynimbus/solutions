@@ -1,7 +1,7 @@
 [versions]
 ads-amazon = "11.2.1"
 ads-google = "25.2.0"
-ads-google-nextgen = "1.0.0"
+ads-google-nextgen = "1.0.1"
 ads-nimbus = "2.36.1"
 
 android = "9.2.0"
@@ -92,7 +92,6 @@ compose-runtime = { module = "org.jetbrains.compose.runtime:runtime", version.re
 compose-ui = { module = "org.jetbrains.compose.ui:ui", version.ref = "compose-multiplatform" }
 compose-ui-preview = { module = "org.jetbrains.compose.ui:ui-tooling-preview", version.ref = "compose-multiplatform" }
 compose-ui-tooling = { module = "org.jetbrains.compose.ui:ui-tooling", version.ref = "compose-multiplatform" }
-cronet-fallback = { module = "org.chromium.net:cronet-fallback" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 iabtcf = { module = "com.iabtcf:iabtcf-decoder", version.ref = "iabtcf" }
 jackson = { module = "com.fasterxml.jackson.core:jackson-core", version.ref = "jackson" }
