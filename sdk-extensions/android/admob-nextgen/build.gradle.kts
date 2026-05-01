@@ -79,6 +79,10 @@ kotlin {
 
 tasks.withType<Test>().configureEach {
     useJUnitPlatform()
+    // Revisit this when updating mockk where this warning originates from
+    if (JavaVersion.current() >= JavaVersion.VERSION_24) {
+        jvmArgs("--sun-misc-unsafe-memory-access=allow")
+    }
 }
 
 dokka {
