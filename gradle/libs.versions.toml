@@ -4,7 +4,7 @@ ads-google = "25.2.0"
 ads-google-nextgen = "1.0.1"
 ads-nimbus = "2.36.1"
 
-android = "9.2.0"
+android = "9.2.1"
 android-jvm = "19"
 android-min = "26"
 android-sdk = "36"
