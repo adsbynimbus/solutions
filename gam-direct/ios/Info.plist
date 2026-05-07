@@ -28,6 +28,8 @@
 	<string>1</string>
 	<key>GADApplicationIdentifier</key>
 	<string>$(ADMANAGER_APP_ID)</string>
+	<key>GAM Direct Instream Tag</key>
+	<string>$(GAMDIRECT_INSTREAM_TAG)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>Nimbus API Key</key>

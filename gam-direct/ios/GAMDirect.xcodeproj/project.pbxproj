@@ -10,6 +10,7 @@
 		961256F62EF5C4FD00563553 /* NimbusAdMobKit in Frameworks */ = {isa = PBXBuildFile; productRef = 961256F52EF5C4FD00563553 /* NimbusAdMobKit */; };
 		961A99602EF74BEB00C685AA /* NimbusRequestAPSKit in Frameworks */ = {isa = PBXBuildFile; productRef = 961A995F2EF74BEB00C685AA /* NimbusRequestAPSKit */; };
 		961CA69D2CEA93750084BE6A /* NimbusKit in Frameworks */ = {isa = PBXBuildFile; productRef = 961CA69C2CEA93750084BE6A /* NimbusKit */; };
+		967A0D822FAD3D4C008BFA6D /* GoogleInteractiveMediaAds in Frameworks */ = {isa = PBXBuildFile; productRef = 967A0D812FAD3D4C008BFA6D /* GoogleInteractiveMediaAds */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		961CA66B2CEA91D40084BE6A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
+				967A0D822FAD3D4C008BFA6D /* GoogleInteractiveMediaAds in Frameworks */,
 				961256F62EF5C4FD00563553 /* NimbusAdMobKit in Frameworks */,
 				961CA69D2CEA93750084BE6A /* NimbusKit in Frameworks */,
 				961A99602EF74BEB00C685AA /* NimbusRequestAPSKit in Frameworks */,
@@ -68,6 +70,7 @@
 				961CA69C2CEA93750084BE6A /* NimbusKit */,
 				961256F52EF5C4FD00563553 /* NimbusAdMobKit */,
 				961A995F2EF74BEB00C685AA /* NimbusRequestAPSKit */,
+				967A0D812FAD3D4C008BFA6D /* GoogleInteractiveMediaAds */,
 			);
 			productName = OMSDKValidator;
 			productReference = 96CD481F2D679BF70029C2B5 /* GAMDirect.app */;
@@ -100,6 +103,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				961CA69B2CEA93750084BE6A /* XCRemoteSwiftPackageReference "nimbus-ios-sdk" */,
+				967A0D802FAD3D4C008BFA6D /* XCRemoteSwiftPackageReference "swift-package-manager-google-interactive-media-ads-ios" */,
 			);
 			preferredProjectObjectVersion = 90;
 			productRefGroup = 961CA6652CEA91D40084BE6A;
@@ -319,6 +323,14 @@
 				minimumVersion = 2.32.0;
 			};
 		};
+		967A0D802FAD3D4C008BFA6D /* XCRemoteSwiftPackageReference "swift-package-manager-google-interactive-media-ads-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googleads/swift-package-manager-google-interactive-media-ads-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.31.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -336,6 +348,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 961CA69B2CEA93750084BE6A /* XCRemoteSwiftPackageReference "nimbus-ios-sdk" */;
 			productName = NimbusKit;
+		};
+		967A0D812FAD3D4C008BFA6D /* GoogleInteractiveMediaAds */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 967A0D802FAD3D4C008BFA6D /* XCRemoteSwiftPackageReference "swift-package-manager-google-interactive-media-ads-ios" */;
+			productName = GoogleInteractiveMediaAds;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -1,8 +1,18 @@
 import SwiftUI
 import GoogleMobileAds
+import NimbusKit
 
 @main
 struct GAMDirectApp: App {
+    init() {
+        let apiKey = Bundle.main.infoDictionary?["Nimbus API Key"] as! String
+        let publisherKey = Bundle.main.infoDictionary?["Nimbus Publisher Key"] as! String
+
+        Nimbus.shared.initialize(publisher: publisherKey, apiKey: apiKey)
+
+        Nimbus.shared.logLevel = .debug
+        Nimbus.shared.testMode = true
+    }
     var body: some Scene {
         WindowGroup {
             ContentView()
@@ -17,6 +27,9 @@ struct ContentView: View {
                 Section("Ad Types") {
                     NavigationLink("Banner") {
                         GAMDirectUI()
+                    }
+                    NavigationLink("Instream") {
+                        GAMDirectInstream()
                     }
                 }
             }
