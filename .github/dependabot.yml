@@ -53,3 +53,9 @@ updates:
       libs:
         patterns:
           - "*"
+          -
+  - package-ecosystem: "swift"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    target-branch: "ads/update"
