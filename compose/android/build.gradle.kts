@@ -28,6 +28,7 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = !codeQL.isPresent
+            isShrinkResources = !codeQL.isPresent
         }
     }
 
