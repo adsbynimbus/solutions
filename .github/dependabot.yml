@@ -26,29 +26,28 @@ updates:
           - "*play-services-ads"
           - "*ads-mobile-sdk"
           - "com.iabtcf*"
-# Only update Android Gradle Plugin patches to maintain compatibility with JetBrains IDEA
-      android-gradle:
+
+  - package-ecosystem: "gradle"
+    directory: "/"
+    registries: "*"
+    schedule:
+      interval: "weekly"
+      build:
         patterns:
-          - "com.android.*"
-        update-types:
-          - "patch"
-      compose:
+          - "com.android.library"
+          - "org.jetbrains.kotlin*"
+          - "org.jetbrains.dokka"
+          - "com.google.devtools.ksp"
+      app:
         patterns:
           - "org.jetbrains.compose*"
-          - "androidx.compose*"
-          - "*compose"
-      androidx:
-        patterns:
           - "androidx.*"
-      kotlin:
+          - "*compose"
+      test:
         patterns:
           - "org.jetbrains.*"
           - "io.kotest*"
           - "io.mockk*"
-          - "com.google.devtools.ksp"
-      other:
+      libs:
         patterns:
           - "*"
-    ignore:
-      - dependency-name: "com.android.*"
-        update-types: [ "version-update:semver-minor", "version-update:semver-major" ]
