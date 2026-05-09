@@ -37,7 +37,7 @@ jackson = "2.21.3"
 
 kotest = "6.1.11"
 kotlin = "2.3.21"
-kotlin-coroutines = "1.10.2"
+kotlin-coroutines = "1.11.0"
 ksp = "2.3.7"
 mockk = "1.14.9"
 

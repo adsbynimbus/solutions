@@ -7,6 +7,12 @@ registries:
     username: ${{ secrets.USER }}
     password: ${{ secrets.GHP }}
 
+multi-ecosystem-groups:
+  ads:
+    target-branch: "ads/update"
+    schedule:
+      interval: "daily"
+
 updates:
   - package-ecosystem: "github-actions"
     directory: "/"
@@ -16,39 +22,41 @@ updates:
   - package-ecosystem: "gradle"
     directory: "/"
     registries: "*"
+    multi-ecosystem-group: "ads"
+    patterns:
+      - "com.adsbynimbus*"
+      - "com.amazon*"
+      - "*play-services-ads"
+      - "*ads-mobile-sdk"
+      - "com.iabtcf*"
+
+  - package-ecosystem: "gradle"
+    directory: "/"
+    registries: "*"
     schedule:
-      interval: "daily"
+      interval: "weekly"
     groups:
-      ads:
+      build:
         patterns:
-          - "com.adsbynimbus*"
-          - "com.amazon*"
-          - "*play-services-ads"
-          - "*ads-mobile-sdk"
-          - "com.iabtcf*"
-# Only update Android Gradle Plugin patches to maintain compatibility with JetBrains IDEA
-      android-gradle:
-        patterns:
-          - "com.android.*"
-        update-types:
-          - "patch"
-      compose:
+          - "com.android.library"
+          - "org.jetbrains.kotlin*"
+          - "org.jetbrains.dokka"
+          - "com.google.devtools.ksp"
+      app:
         patterns:
           - "org.jetbrains.compose*"
-          - "androidx.compose*"
-          - "*compose"
-      androidx:
-        patterns:
           - "androidx.*"
-      kotlin:
+          - "*compose"
+      test:
         patterns:
           - "org.jetbrains.*"
           - "io.kotest*"
           - "io.mockk*"
-          - "com.google.devtools.ksp"
-      other:
+      libs:
         patterns:
           - "*"
-    ignore:
-      - dependency-name: "com.android.*"
-        update-types: [ "version-update:semver-minor", "version-update:semver-major" ]
+
+  - package-ecosystem: "swift"
+    directory: "/"
+    multi-ecosystem-group: "ads"
+    patterns: ["*"]

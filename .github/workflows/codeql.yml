@@ -56,6 +56,9 @@ jobs:
           cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
           cache-read-only: true
           kotlin-version: ${{ vars.CODEQL_KOTLIN }}
+      - name: Setup Swift
+        if: matrix.language == 'swift'
+        run: sudo xcode-select --switch /Applications/Xcode_26.4.1.app
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v4
         with:

@@ -1,11 +1,11 @@
-// swift-tools-version: 6.2
+// swift-tools-version: 6.3
 import PackageDescription
 
 let package = Package(
     name: "solutions",
     platforms: [.iOS(.v16)],
     dependencies: [
-        .package(url: "https://github.com/adsbynimbus/nimbus-ios-sdk", exact: "2.32.1"),
+        .package(url: "https://github.com/adsbynimbus/nimbus-ios-sdk", exact: "2.34.0"),
     ],
     targets: [
         .target(
