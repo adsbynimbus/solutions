@@ -1,6 +1,7 @@
 [versions]
 ads-amazon = "11.3.0"
 ads-google = "25.2.0"
+ads-google-ima = "3.39.0"
 ads-google-nextgen = "1.0.1"
 ads-nimbus = "2.36.1"
 
@@ -17,6 +18,7 @@ androidx-compose-icons = "1.7.8"
 androidx-compose-material3 = "1.4.0"
 androidx-core = "1.18.0"
 androidx-lifecycle = "2.10.0"
+androidx-media3 = "1.10.0"
 androidx-navigation = "2.9.8"
 androidx-startup = "1.2.0"
 
@@ -61,9 +63,11 @@ ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 [libraries]
 ads-amazon = { module = "com.amazon.android:aps-sdk", version.ref = "ads-amazon" }
 ads-google = { module = "com.google.android.gms:play-services-ads", version.ref = "ads-google" }
+ads-google-ima = { module = "com.google.ads.interactivemedia.v3:interactivemedia", version.ref = "ads-google-ima" }
 ads-google-nextgen = { module = "com.google.android.libraries.ads.mobile.sdk:ads-mobile-sdk", version.ref = "ads-google-nextgen" }
 ads-nimbus = { module = "com.adsbynimbus.android:nimbus", version.ref = "ads-nimbus" }
 ads-nimbus-admob = { module = "com.adsbynimbus.android:extension-admob", version.ref = "ads-nimbus" }
+ads-nimbus-aps = { module = "com.adsbynimbus.android:extension-aps", version.ref = "ads-nimbus" }
 ads-nimbus-google = { module = "com.adsbynimbus.android:extension-google", version.ref = "ads-nimbus" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
 androidx-collection = { module = "androidx.collection:collection", version.ref = "androidx-collection" }
@@ -76,6 +80,9 @@ androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", versi
 androidx-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "androidx-compose" }
 androidx-core = { module = "androidx.core:core-ktx", version.ref = "androidx-core" }
 androidx-lifecycle = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidx-lifecycle" }
+androidx-media3 = { module = "androidx.media3:media3-exoplayer", version.ref = "androidx-media3" }
+androidx-media3-compose = { module = "androidx.media3:media3-ui-compose", version.ref = "androidx-media3" }
+androidx-media3-ima = { module = "androidx.media3:media3-exoplayer-ima", version.ref = "androidx-media3" }
 androidx-startup = { module = "androidx.startup:startup-runtime", version.ref = "androidx-startup" }
 api-admanager = { module = "com.google.api-ads:ads-lib", version.ref = "api-admanager" }
 api-admanager-axis = { module = "com.google.api-ads:dfp-axis", version.ref = "api-admanager" }
@@ -151,6 +158,18 @@ dynamicprice-nextgen = [
     "gson",
     "okhttp",
     "okio",
+]
+gamdirect = [
+    "ads-amazon",
+    "ads-google",
+    "ads-google-ima",
+    "ads-nimbus",
+    "ads-nimbus-admob",
+    "ads-nimbus-aps",
+    "androidx-appcompat", # Referenced by Amazon but not included in build
+    "androidx-media3",
+    "androidx-media3-ima",
+    "iabtcf", # Referenced by Amazon but not included in build
 ]
 test-common = [
     "kotest-assertions",

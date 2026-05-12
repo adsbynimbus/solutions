@@ -1,0 +1,79 @@
+import com.android.build.gradle.internal.tasks.CheckAarMetadataTask
+import org.jetbrains.kotlin.gradle.dsl.*
+
+plugins {
+    alias(libs.plugins.android.app)
+    alias(libs.plugins.kotlin.compose)
+}
+
+val codeQL = providers.provider { extra.properties["codeQL"] }
+val githubActions = providers.environmentVariable("GITHUB_ACTIONS")
+androidComponents.beforeVariants {
+    it.enable = it.name.contains("release", ignoreCase = true) || !githubActions.isPresent
+}
+
+// With minSdk 26 we do not need coreLibraryDesugaring which IMA complains about
+tasks.withType<CheckAarMetadataTask>().configureEach {
+    enabled = false
+}
+
+android {
+    compileSdk = libs.versions.android.sdk.get().toInt()
+
+    defaultConfig {
+        applicationId = "adsbynimbus.solutions.gamdirect".also { namespace = it }
+        minSdk = libs.versions.android.min.get().toInt()
+        targetSdk = libs.versions.android.sdk.get().toInt()
+        versionCode = 1
+        versionName = "1.0"
+        manifestPlaceholders["appName"] = "Nimbus GAM Direct"
+        with(providers) {
+            manifestPlaceholders["gamAppId"] = gradleProperty("adsbynimbus.solutions.admanagerAppId").get()
+            buildConfigField("String", "API_KEY", "\"${gradleProperty("adsbynimbus.solutions.apiKey").get()}\"")
+            buildConfigField("String", "PUBLISHER_KEY", "\"${gradleProperty("adsbynimbus.solutions.publisherKey").get()}\"")
+            buildConfigField("String", "ADMANAGER_ADUNIT_ID", "\"${gradleProperty("adsbynimbus.solutions.admanagerAdUnitId").get()}\"")
+            buildConfigField("String", "AMAZON_APP_KEY", "\"${gradleProperty("adsbynimbus.solutions.amazonAppId").get()}\"")
+            buildConfigField("String", "AMAZON_BANNER_SLOT_ID", "\"${gradleProperty("adsbynimbus.solutions.amazonBannerSlotId").get()}\"")
+            buildConfigField("String", "GAMDIRECT_INSTREAM_TAG", "\"${gradleProperty("adsbynimbus.solutions.gamDirectInstreamTag").get()}\"")
+        }
+    }
+
+    buildFeatures {
+        buildConfig = true
+    }
+
+    buildTypes {
+        release {
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"))
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.toVersion(libs.versions.android.jvm.get())
+        targetCompatibility = JavaVersion.toVersion(libs.versions.android.jvm.get())
+    }
+
+    lint {
+        checkReleaseBuilds = !codeQL.isPresent
+    }
+
+    packaging.resources {
+        excludes += "/META-INF/{AL2.0,LGPL2.1}"
+    }
+}
+
+kotlin.target.compilations.configureEach {
+    compileTaskProvider.configure {
+        compilerOptions.jvmTarget = JvmTarget.fromTarget(libs.versions.android.jvm.get())
+    }
+}
+
+dependencies {
+    implementation(libs.androidx.media3.compose)
+    implementation(libs.bundles.androidx)
+    implementation(libs.bundles.androidx.compose)
+    implementation(libs.bundles.gamdirect)
+    implementation(libs.kotlin.coroutines)
+}
