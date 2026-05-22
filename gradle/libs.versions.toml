@@ -7,7 +7,7 @@ ads-nimbus = "2.36.1"
 android = "9.2.1"
 android-jvm = "19"
 android-min = "26"
-android-sdk = "36"
+android-sdk = "37"
 
 androidx-appcompat = "1.7.1"
 androidx-collection = "1.6.0"
