@@ -90,8 +90,6 @@ class PlayerContainerViewController: UIViewController,
         }
     }
 
-
-
     private func requestAds() {
         // Create ad display container for ad rendering.
         let adDisplayContainer = IMAAdDisplayContainer(

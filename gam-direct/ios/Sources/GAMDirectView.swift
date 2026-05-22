@@ -100,7 +100,6 @@ public class GAMDirectView : UIView {
             return
         }
 
-
         let nimbusRequest = NimbusRequest.forBannerAd(position: adLoader.adUnitID, format: .interstitialPortrait)
         nimbusRequest.impressions[0].banner?.formats = nimbusSizes
 
