@@ -32,7 +32,7 @@ android {
             buildConfigField("String", "API_KEY", "\"${gradleProperty("adsbynimbus.solutions.apiKey").get()}\"")
             buildConfigField("String", "PUBLISHER_KEY", "\"${gradleProperty("adsbynimbus.solutions.publisherKey").get()}\"")
             buildConfigField("String", "ADMANAGER_ADUNIT_ID", "\"${gradleProperty("adsbynimbus.solutions.admanagerAdUnitId").get()}\"")
-            buildConfigField("String", "ADMANAGER_INSTREAM_TAG", "\"${gradleProperty("adsbynimbus.solutions.gamDirectInstreamTag").get()}\"")
+            buildConfigField("String", "ADMANAGER_INSTREAM_TAG", "\"${gradleProperty("adsbynimbus.solutions.admanagerInstreamTag").get()}\"")
             buildConfigField("String", "AMAZON_APP_KEY", "\"${gradleProperty("adsbynimbus.solutions.amazonAppId").get()}\"")
             buildConfigField("String", "AMAZON_BANNER_SLOT_ID", "\"${gradleProperty("adsbynimbus.solutions.amazonBannerSlotId").get()}\"")
         }
