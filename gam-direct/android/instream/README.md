@@ -1,10 +1,10 @@
-# Nimbus Instream Media3 Extension
+# Nimbus Instream Media3 Extension ![Latest Release](https://img.shields.io/github/v/tag/adsbynimbus/solutions?filter=instream*)
 
 Provides support for running Nimbus Instream ads using an extension of the Media3 IMA SDK Plugin
 
 ## Setup
 1. Follow the instructions in [Build Setup](#build-setup) to import the module in your application.
-    1. If your app minSdk < 26, enable [coreLibraryDesugaring](#core-library-desugaring) required by
+   - If your app supports minSdk < 26, enable [coreLibraryDesugaring](#core-library-desugaring) required by
        the [IMA SDK](https://developers.google.com/interactive-media-ads/docs/sdks/android/client-side/get-started#2.-add-the-ima-sdk-to-your-project)
 2. Replace the existing references to `ImaAdLoader` with the `NimbusImaAdLoader` implementation.
 3. Call `setNimbusRequest(NimbusRequest.forVideoAd(position = "preroll"))` on the
@@ -136,7 +136,7 @@ Add the `com.adsbynimbus.solutions:gamdirect-instream` module to you application
 
 ```kotlin
 dependencies {
-    implementation("com.adsbynimbus.solutions:gamdirect-instream:1.0.0")
+    implementation("com.adsbynimbus.solutions:gamdirect-instream:1.10.1")
 }
 ```
 
