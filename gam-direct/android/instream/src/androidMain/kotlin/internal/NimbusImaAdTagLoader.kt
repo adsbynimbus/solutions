@@ -474,7 +474,7 @@ internal class NimbusImaAdTagLoader(
                 if (adGroupForPositionTimeUs == C.TIME_END_OF_SOURCE) {
                     // Play the postroll by offsetting the start position just past the last non-postroll ad.
                     adsRenderingSettings.setPlayAdsAfterTime(
-                        adGroupBeforePositionTimeUs.toDouble() / C.MICROS_PER_SECOND + 1.0,
+                        (adGroupBeforePositionTimeUs.toDouble() / C.MICROS_PER_SECOND) + 1.0,
                     )
                 } else {
                     // Play ads after the midpoint between the ad to play and the one before it, to avoid

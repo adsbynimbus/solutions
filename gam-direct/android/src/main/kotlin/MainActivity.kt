@@ -17,7 +17,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.*
-import com.adsbynimbus.NimbusAdManager
 import com.adsbynimbus.openrtb.request.Format
 
 class MainActivity : ComponentActivity() {
@@ -69,7 +68,6 @@ fun App(
 
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentScreen = backStackEntry?.destination?.route ?: activity.appName
-    val adManager = remember { NimbusAdManager() }
 
     Scaffold(
         topBar = {
