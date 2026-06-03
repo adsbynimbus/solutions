@@ -14,11 +14,13 @@ val codeQL = providers.provider { extra.properties["codeQL"] }
 
 val dokkaJavadocJar by tasks.registering(Jar::class) {
     archiveClassifier.set("javadoc")
+    description = "Creates a javadoc jar for bundling with an Android Library"
     from(tasks.dokkaGeneratePublicationJavadoc.flatMap { it.outputDirectory })
 }
 
 val dokkaHtmlJar by tasks.registering(Jar::class) {
     archiveClassifier.set("html-doc")
+    description = "Creates a jar containing html docs for bundling with an Android Library"
     from(tasks.dokkaGeneratePublicationHtml.flatMap { it.outputDirectory })
 }
 
