@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalSerializationApi::class)
+
 package com.adsbynimbus.dynamicprice.nextgen.internal
 
 import android.app.Activity
@@ -120,7 +122,6 @@ internal class DynamicPriceRenderer(
 
         val adCache = LruCache<String, NimbusResponse>(10)
 
-        @OptIn(ExperimentalSerializationApi::class)
         val jsonSerializer = Json {
             coerceInputValues = true
             explicitNulls = false

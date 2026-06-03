@@ -2,6 +2,7 @@ package adsbynimbus.solutions.dynamicprice.util
 
 import com.google.api.ads.admanager.axis.v202602.*
 import kotlinx.coroutines.delay
+import kotlin.time.Duration.Companion.seconds
 
 suspend fun AdManagerAxisClient.addTargeting(
     orders: Collection<Long>,
@@ -30,9 +31,9 @@ suspend fun AdManagerAxisClient.addTargeting(
                         }
                     }
                 }
-                delay(1000)
+                delay(1.seconds)
                 lineItemService.updateLineItems(updates)
-                delay(1000)
+                delay(1.seconds)
                 orderLines.increaseOffsetBy(pageSize)
             }
         } while (orderLines.offset < totalLines)

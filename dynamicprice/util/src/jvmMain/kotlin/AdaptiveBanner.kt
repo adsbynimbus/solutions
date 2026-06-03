@@ -2,6 +2,7 @@ package adsbynimbus.solutions.dynamicprice.util
 
 import com.google.api.ads.admanager.axis.v202602.*
 import kotlinx.coroutines.delay
+import kotlin.time.Duration.Companion.seconds
 
 inline val Size.isBanner get() = width == 320 && height == 50
 inline val Size.isInterstitial get() = width == 320 && height == 480
@@ -65,9 +66,9 @@ suspend fun AdManagerAxisClient.addAdaptiveBannerSupport(
                         }
                     }
                 }
-                delay(1000)
+                delay(1.seconds)
                 lineItemService.updateLineItems(updates)
-                delay(1000)
+                delay(1.seconds)
                 orderLines.increaseOffsetBy(pageSize)
             }
         } while (orderLines.offset < totalLines)
@@ -89,9 +90,9 @@ suspend fun AdManagerAxisClient.addAdaptiveBannerSupport(
             val updates = results?.onEach {
                 it.targetingName = bannerTargetingName
             }
-            delay(1000)
+            delay(1.seconds)
             lineItemCreativeService.updateLineItemCreativeAssociations(updates)
-            delay(1000)
+            delay(1.seconds)
             bannerCreative.increaseOffsetBy(pageSize)
         }
     } while (bannerCreative.offset < totalLines)
@@ -102,9 +103,9 @@ suspend fun AdManagerAxisClient.addAdaptiveBannerSupport(
             val updates = results.onEach {
                 it.apply { targetingName = interstitialTargetingName }
             }
-            delay(1000)
+            delay(1.seconds)
             lineItemCreativeService.updateLineItemCreativeAssociations(updates)
-            delay(1000)
+            delay(1.seconds)
             interstitialCreative.increaseOffsetBy(pageSize)
         }
     } while (interstitialCreative.offset < totalLines)

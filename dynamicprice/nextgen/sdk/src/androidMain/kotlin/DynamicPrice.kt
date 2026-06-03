@@ -162,7 +162,7 @@ public class DynamicPriceRewardedCallback(
      * Wrapper callback for loading Dynamic Price Rewarded ads
      *
      * @param callback The AdLoadCallback to wrap
-     * @param adRequest The AdRequest passed to RewardedAd.load
+     * @param adRequest The AdRequest passed to `RewardedAd.load`
      * @param nimbusListener Optional Nimbus AdController listener
      */
     public constructor(
