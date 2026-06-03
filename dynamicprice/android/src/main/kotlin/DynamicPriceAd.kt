@@ -15,6 +15,7 @@ import kotlinx.coroutines.*
 import java.lang.System.currentTimeMillis
 import kotlin.time.*
 import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.seconds
 
 /** Wrapper for AdManagerAdView that auto-refreshes and manages bidding */
 class DynamicPriceAd(
@@ -53,7 +54,7 @@ class DynamicPriceAd(
                         lifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                             // The while loop enables refreshing the ad tied to the lifecycle
                             while (isActive) {
-                                delay(30_000 - (currentTimeMillis() - lastRequestTime))
+                                delay(30.seconds - (currentTimeMillis() - lastRequestTime).milliseconds)
                                 waitUntilVisible()
                                 if (isActive) loadAd(async { bidders.auction() })
                             }
@@ -86,7 +87,7 @@ fun preloadBanner(
         }
     },
     bidders: List<Bidder<*>> = listOf(NimbusBidder(nimbusRequest), ApsBidder(amazonRequest)),
-    timeout: Duration = 1000.milliseconds,
+    timeout: Duration = 1.seconds,
 ) = DynamicPriceAd(
     adUnitId = adUnitId,
     adSize = AdSize.BANNER,

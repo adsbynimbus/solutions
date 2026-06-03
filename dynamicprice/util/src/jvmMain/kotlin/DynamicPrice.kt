@@ -4,6 +4,7 @@ import com.google.api.ads.admanager.axis.v202602.*
 import com.google.api.ads.admanager.axis.v202602.CustomTargetingKeyType.*
 import kotlinx.coroutines.delay
 import java.text.DecimalFormat
+import kotlin.time.Duration.Companion.seconds
 
 suspend fun AdManagerAxisClient.setupDynamicPrice(
     lineItemMapping: Collection<IntProgression>,
@@ -13,10 +14,10 @@ suspend fun AdManagerAxisClient.setupDynamicPrice(
 ) = runCatching {
     val nimbusCompany = findOrCreateNimbusCompany(name = companyName)
     findOrCreateNimbusAuctionIdKey() // check creation but not required for rest of script
-    delay(1000)
+    delay(1.seconds)
     val bidKey = findOrCreateNimbusBidKey()
     val videoBidKey = findOrCreateNimbusVideoBidKey()
-    delay(1000)
+    delay(1.seconds)
     val bidValues = findOrCreateBidValues(key = bidKey, ranges = lineItemMapping)
     val videoValues = findOrCreateBidValues(key = videoBidKey, ranges = lineItemMapping)
     val placement = findOrCreatePlacement(name = companyName)
@@ -113,7 +114,7 @@ suspend fun AdManagerAxisClient.findOrCreateBidValues(
             existing = totalResultSetSize.takeUnless { it == 0 } ?: return@run
             addAll(results)
             values.increaseOffsetBy(pageSize)
-            delay(1000)
+            delay(1.seconds)
         }
     } while (values.offset < existing)
     val valuesToCreate = ranges.flatMap { it.toList() }
@@ -127,7 +128,7 @@ suspend fun AdManagerAxisClient.findOrCreateBidValues(
         }
     valuesToCreate.windowed(size = pageSize, step = pageSize, partialWindows = true).forEach {
         addAll(targetingService.createCustomTargetingValues(it.toTypedArray()))
-        delay(1000)
+        delay(1.seconds)
     }
     sortBy { it.name.toInt() }
 }
@@ -191,7 +192,7 @@ suspend fun AdManagerAxisClient.findOrCreateCreatives(
             existing = totalResultSetSize.takeUnless { it == 0 } ?: return@run
             addAll(results.filterIsInstance<ThirdPartyCreative>())
             creatives.increaseOffsetBy(pageSize)
-            delay(1000)
+            delay(1.seconds)
         }
     } while (creatives.offset < existing)
     val newCreatives = sizes.filter { (width, height) ->
@@ -241,7 +242,7 @@ suspend fun AdManagerAxisClient.createOrdersAndLines(
             traffickerId = trafficker.id
         }
     }.toTypedArray())
-    delay(1000)
+    delay(1.seconds)
     return buildList {
         breakdown.zip(orders).forEach { (lines, order) ->
             lines.windowed(size = pageSize, step = pageSize, partialWindows = true).map { page ->
@@ -260,7 +261,7 @@ suspend fun AdManagerAxisClient.createOrdersAndLines(
                 }
             }.forEach {
                 addAll(lineItemService.createLineItems(it.toTypedArray()))
-                delay(1000)
+                delay(1.seconds)
             }
         }
     }
@@ -326,6 +327,6 @@ suspend fun AdManagerAxisClient.associateCreatives(
     }
     associations.windowed(size = pageSize, step = pageSize, partialWindows = true).forEach {
         lineItemCreativeService.createLineItemCreativeAssociations(it.toTypedArray())
-        delay(1000)
+        delay(1.seconds)
     }
 }
