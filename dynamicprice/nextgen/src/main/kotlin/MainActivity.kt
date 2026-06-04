@@ -2,6 +2,7 @@ package adsbynimbus.solutions.dynamicprice.nextgen
 
 import adsbynimbus.solutions.dynamicprice.nextgen.BuildConfig.ADMANAGER_ADUNIT_ID
 import adsbynimbus.solutions.dynamicprice.nextgen.databinding.ActivityMainBinding
+import android.graphics.Rect
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
@@ -49,8 +50,6 @@ class MainActivity : ComponentActivity() {
             Log.i("Ads", "Showed FullScreen")
         }
     }
-    val interstitialCallback: InterstitialAdEventCallback =
-        object : InterstitialAdEventCallback, AdEventCallback by delegate {}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,7 +59,15 @@ class MainActivity : ComponentActivity() {
                     interstitial = loadInterstitial(
                         builder = AdRequest.Builder(ADMANAGER_ADUNIT_ID),
                         bidders = interstitialBidders,
-                        eventCallback = interstitialCallback,
+                        eventCallback = object : InterstitialAdEventCallback, AdEventCallback by delegate {
+                            override fun onAdDismissedFullScreenContent() {
+                                delegate.onAdDismissedFullScreenContent()
+                                interstitial = null
+                                lifecycleScope.launch {
+                                    setText(R.string.loadRewarded)
+                                }
+                            }
+                        },
                     )?.also {
                         setText(R.string.showInterstitial)
                     }
@@ -78,6 +85,7 @@ class MainActivity : ComponentActivity() {
                     )?.also {
                         it.adEventCallback = object : RewardedAdEventCallback, AdEventCallback by delegate {
                             override fun onAdDismissedFullScreenContent() {
+                                delegate.onAdDismissedFullScreenContent()
                                 rewarded = null
                                 lifecycleScope.launch {
                                     setText(R.string.loadRewarded)
@@ -96,7 +104,7 @@ class MainActivity : ComponentActivity() {
             AdView(binding.adFrame.context).apply {
                 binding.adFrame.addView(this)
                 // Ad must be attached or a lifecycleOwner must be passed to loadRefreshingBanner
-                loadRefreshingBanner(
+                /*loadRefreshingBanner(
                     activity = this@MainActivity,
                     builder = { BannerAdRequest.Builder(ADMANAGER_ADUNIT_ID, AdSize.BANNER) },
                     bidders = bannerBidders,
@@ -129,19 +137,25 @@ class MainActivity : ComponentActivity() {
                                 }
                             }
                     },
-                )
+                ) */
             }
-            AdView(binding.adFrame.context).apply {
-                binding.root.addView(this, LayoutParams(WRAP_CONTENT, WRAP_CONTENT, Gravity.CENTER))
-                loadBanner(
-                    builder = BannerAdRequest.Builder(
+           /* AdView(binding.adFrame.context).apply {
+                val adSize = AdSize(320, 480)
+                binding.root.addView(this, LayoutParams(
+                    adSize.getWidthInPixels(context),
+                    adSize.getHeightInPixels(context),
+                    Gravity.CENTER,
+                ))
+                loadRefreshingBanner(
+                    activity = this@MainActivity,
+                    builder = { BannerAdRequest.Builder(
                         adUnitId = ADMANAGER_ADUNIT_ID,
-                        adSize = AdSize(320, 480),
-                    ),
+                        adSize = adSize,
+                    ) },
                     bidders = dynamicUnitBidders,
                     eventCallback = object : BannerAdEventCallback, AdEventCallback by delegate {},
                 )
-            }
+            } */
         }
     }
 }
