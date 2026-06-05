@@ -18,8 +18,6 @@ internal class DynamicPriceRewardedAd(
     val listener: AdController.Listener?
 ) : RewardedAd by googleAd, AdController.Listener {
 
-    var rewardListener: OnUserEarnedRewardListener? = null
-
     fun Context.createController(): AdController? = loadBlockingAd(nimbusAd)?.apply {
         googleAd.dynamicPriceAd = DynamicPriceAd(adController = this)
         listeners.add(this@DynamicPriceRewardedAd)
@@ -30,14 +28,14 @@ internal class DynamicPriceRewardedAd(
         if (googleAd.isNimbusWin) application.createController()
     }
 
+    var rewardListener: OnUserEarnedRewardListener? = null
+    var shown: Boolean = false
+
     override fun show(activity: Activity, onUserEarnedRewardListener: OnUserEarnedRewardListener) {
         if (!googleAd.isNimbusWin) googleAd.show(activity, onUserEarnedRewardListener) else {
             (googleAd.dynamicPriceAd?.adController ?: activity.createController())?.run {
                 rewardListener = onUserEarnedRewardListener
-                googleAd.show(activity) { }
-                @Suppress("DEPRECATION")
-                activity.overridePendingTransition(0, 0)
-                Platform.doOnNextActivity { start() }
+                start()
             } ?: googleAd.adEventCallback?.onAdFailedToShowFullScreenContent(
                 FullScreenContentError(
                     code = MEDIATION_SHOW_ERROR,
@@ -51,15 +49,22 @@ internal class DynamicPriceRewardedAd(
         googleAd.dynamicPriceAd?.destroy()
         googleAd.dynamicPriceAd = null
         rewardListener = null
-        DynamicPriceRenderer.maybeClearInterstitial()
         googleAd.destroy()
     }
 
     override fun onAdEvent(adEvent: AdEvent) {
         when (adEvent) {
-            AdEvent.CLICKED -> googleAd.adEventCallback?.onAdClicked()
+            AdEvent.IMPRESSION -> {
+                shown = true
+                adEventCallback?.onAdShowedFullScreenContent()
+                adEventCallback?.onAdImpression()
+            }
+            AdEvent.CLICKED -> adEventCallback?.onAdClicked()
             AdEvent.COMPLETED -> rewardListener?.onUserEarnedReward(googleAd.getRewardItem())
-            AdEvent.DESTROYED -> destroy()
+            AdEvent.DESTROYED -> {
+                if (shown) adEventCallback?.onAdDismissedFullScreenContent()
+                destroy()
+            }
             else -> return
         }
     }
