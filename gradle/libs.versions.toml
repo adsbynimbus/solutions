@@ -3,7 +3,7 @@ ads-amazon = "11.3.0"
 ads-google = "25.3.0"
 ads-google-ima = "3.39.0"
 ads-google-nextgen = "1.1.1"
-ads-nimbus = "2.36.1"
+ads-nimbus = "2.37.0"
 
 android = "9.2.1"
 android-jvm = "19"
