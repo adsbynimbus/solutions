@@ -43,9 +43,8 @@ dependencyResolutionManagement {
                 maven("https://adsbynimbus-public.s3.amazonaws.com/android/sdks")
             }
             filter {
-                includeGroupAndSubgroups("com.adsbynimbus.android")
+                includeGroupAndSubgroups("com.adsbynimbus")
                 includeGroup("com.iab.omid.library.adsbynimbus")
-                includeGroup("com.adsbynimbus.openrtb")
             }
         }
         mavenCentral()

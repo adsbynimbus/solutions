@@ -4,6 +4,7 @@ ads-google = "25.4.0"
 ads-google-ima = "3.39.0"
 ads-google-nextgen = "1.2.1"
 ads-nimbus = "2.37.0"
+ads-nimbus-dynamicprice = "0.0.1"
 
 android = "9.3.0"
 android-jvm = "19"
@@ -68,6 +69,7 @@ ads-google-nextgen = { module = "com.google.android.libraries.ads.mobile.sdk:ads
 ads-nimbus = { module = "com.adsbynimbus.android:nimbus", version.ref = "ads-nimbus" }
 ads-nimbus-admob = { module = "com.adsbynimbus.android:extension-admob", version.ref = "ads-nimbus" }
 ads-nimbus-aps = { module = "com.adsbynimbus.android:extension-aps", version.ref = "ads-nimbus" }
+ads-nimbus-dynamicprice = { module = "com.adsbynimbus.dynamicprice:dynamicprice", version.ref = "ads-nimbus-dynamicprice" }
 ads-nimbus-google = { module = "com.adsbynimbus.android:extension-google", version.ref = "ads-nimbus" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
 androidx-collection = { module = "androidx.collection:collection", version.ref = "androidx-collection" }
@@ -153,6 +155,7 @@ dynamicprice-nextgen = [
     "ads-amazon",
     "ads-google-nextgen",
     "ads-nimbus",
+    "ads-nimbus-dynamicprice",
     "androidx-appcompat", # Referenced by Amazon but not included in build
     "gson",
     "okhttp",

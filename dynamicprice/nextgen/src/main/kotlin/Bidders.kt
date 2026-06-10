@@ -1,7 +1,7 @@
 package adsbynimbus.solutions.dynamicprice.nextgen
 
 import com.adsbynimbus.*
-import com.adsbynimbus.dynamicprice.nextgen.applyDynamicPrice
+import com.adsbynimbus.dynamicprice.applyDynamicPrice
 import com.adsbynimbus.lineitem.DEFAULT_BANNER
 import com.adsbynimbus.request.*
 import com.amazon.aps.ads.*
