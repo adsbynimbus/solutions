@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		961CA69D2CEA93750084BE6A /* NimbusKit in Frameworks */ = {isa = PBXBuildFile; productRef = 961CA69C2CEA93750084BE6A /* NimbusKit */; };
-		964F21682DA057D8005105AB /* NimbusGAMKit in Frameworks */ = {isa = PBXBuildFile; productRef = 964F21672DA057D8005105AB /* NimbusGAMKit */; };
 		964F216F2DA0592C005105AB /* NimbusRequestAPSKit in Frameworks */ = {isa = PBXBuildFile; productRef = 964F216E2DA0592C005105AB /* NimbusRequestAPSKit */; };
+		968EE9DA2FDB2A0800BD212E /* DynamicPrice in Frameworks */ = {isa = PBXBuildFile; productRef = 968EE9D92FDB2A0800BD212E /* DynamicPrice */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -26,7 +26,7 @@
 		963ECC312CEB6354001C3012 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Config.xcconfig; path = ../../Config.xcconfig; sourceTree = SOURCE_ROOT; };
 		963ECC342CEB64A9001C3012 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		96ABDE7B2E7B054C00D7FEDF /* DynamicPriceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DynamicPriceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		96CD481F2D679BF70029C2B5 /* DynamicPrice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DynamicPrice.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		96CD481F2D679BF70029C2B5 /* DynamicPriceApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DynamicPriceApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -46,8 +46,8 @@
 		961CA66B2CEA91D40084BE6A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
+				968EE9DA2FDB2A0800BD212E /* DynamicPrice in Frameworks */,
 				961CA69D2CEA93750084BE6A /* NimbusKit in Frameworks */,
-				964F21682DA057D8005105AB /* NimbusGAMKit in Frameworks */,
 				964F216F2DA0592C005105AB /* NimbusRequestAPSKit in Frameworks */,
 			);
 		};
@@ -66,7 +66,7 @@
 				96ABDE7C2E7B054C00D7FEDF /* Tests */,
 				963ECC312CEB6354001C3012 /* Config.xcconfig */,
 				963ECC342CEB64A9001C3012 /* Info.plist */,
-				96CD481F2D679BF70029C2B5 /* DynamicPrice.app */,
+				96CD481F2D679BF70029C2B5 /* DynamicPriceApp.app */,
 				96ABDE7B2E7B054C00D7FEDF /* DynamicPriceTests.xctest */,
 			);
 			sourceTree = "<group>";
@@ -74,9 +74,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		961CA66D2CEA91D40084BE6A /* DynamicPrice */ = {
+		961CA66D2CEA91D40084BE6A /* DynamicPriceApp */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 961CA6922CEA91D50084BE6A /* Build configuration list for PBXNativeTarget "DynamicPrice" */;
+			buildConfigurationList = 961CA6922CEA91D50084BE6A /* Build configuration list for PBXNativeTarget "DynamicPriceApp" */;
 			buildPhases = (
 				961CA66A2CEA91D40084BE6A /* Sources */,
 				961CA66B2CEA91D40084BE6A /* Frameworks */,
@@ -86,14 +86,14 @@
 			fileSystemSynchronizedGroups = (
 				961CA6AD2CEA95C30084BE6A /* Sources */,
 			);
-			name = DynamicPrice;
+			name = DynamicPriceApp;
 			packageProductDependencies = (
 				961CA69C2CEA93750084BE6A /* NimbusKit */,
-				964F21672DA057D8005105AB /* NimbusGAMKit */,
 				964F216E2DA0592C005105AB /* NimbusRequestAPSKit */,
+				968EE9D92FDB2A0800BD212E /* DynamicPrice */,
 			);
 			productName = OMSDKValidator;
-			productReference = 96CD481F2D679BF70029C2B5 /* DynamicPrice.app */;
+			productReference = 96CD481F2D679BF70029C2B5 /* DynamicPriceApp.app */;
 			productType = "com.apple.product-type.application";
 		};
 		96ABDE7A2E7B054C00D7FEDF /* DynamicPriceTests */ = {
@@ -148,13 +148,14 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				961CA69B2CEA93750084BE6A /* XCRemoteSwiftPackageReference "nimbus-ios-sdk" */,
+				968EE9D82FDB2A0800BD212E /* XCRemoteSwiftPackageReference "dynamic-price" */,
 			);
 			preferredProjectObjectVersion = 90;
 			productRefGroup = 961CA6652CEA91D40084BE6A;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				961CA66D2CEA91D40084BE6A /* DynamicPrice */,
+				961CA66D2CEA91D40084BE6A /* DynamicPriceApp */,
 				96ABDE7A2E7B054C00D7FEDF /* DynamicPriceTests */,
 			);
 		};
@@ -184,7 +185,7 @@
 /* Begin PBXTargetDependency section */
 		96ABDE802E7B054C00D7FEDF /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 961CA66D2CEA91D40084BE6A /* DynamicPrice */;
+			target = 961CA66D2CEA91D40084BE6A /* DynamicPriceApp */;
 			targetProxy = 96ABDE7F2E7B054C00D7FEDF /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -317,7 +318,7 @@
 			};
 			name = Release;
 		};
-		961CA6932CEA91D50084BE6A /* Debug configuration for PBXNativeTarget "DynamicPrice" */ = {
+		961CA6932CEA91D50084BE6A /* Debug configuration for PBXNativeTarget "DynamicPriceApp" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -336,7 +337,7 @@
 			};
 			name = Debug;
 		};
-		961CA6942CEA91D50084BE6A /* Release configuration for PBXNativeTarget "DynamicPrice" */ = {
+		961CA6942CEA91D50084BE6A /* Release configuration for PBXNativeTarget "DynamicPriceApp" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -410,11 +411,11 @@
 			);
 			defaultConfigurationName = Release;
 		};
-		961CA6922CEA91D50084BE6A /* Build configuration list for PBXNativeTarget "DynamicPrice" */ = {
+		961CA6922CEA91D50084BE6A /* Build configuration list for PBXNativeTarget "DynamicPriceApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				961CA6932CEA91D50084BE6A /* Debug configuration for PBXNativeTarget "DynamicPrice" */,
-				961CA6942CEA91D50084BE6A /* Release configuration for PBXNativeTarget "DynamicPrice" */,
+				961CA6932CEA91D50084BE6A /* Debug configuration for PBXNativeTarget "DynamicPriceApp" */,
+				961CA6942CEA91D50084BE6A /* Release configuration for PBXNativeTarget "DynamicPriceApp" */,
 			);
 			defaultConfigurationName = Release;
 		};
@@ -437,6 +438,14 @@
 				minimumVersion = 2.32.0;
 			};
 		};
+		968EE9D82FDB2A0800BD212E /* XCRemoteSwiftPackageReference "dynamic-price" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/adsbynimbus/dynamic-price";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.0.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -445,15 +454,15 @@
 			package = 961CA69B2CEA93750084BE6A /* XCRemoteSwiftPackageReference "nimbus-ios-sdk" */;
 			productName = NimbusKit;
 		};
-		964F21672DA057D8005105AB /* NimbusGAMKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 961CA69B2CEA93750084BE6A /* XCRemoteSwiftPackageReference "nimbus-ios-sdk" */;
-			productName = NimbusGAMKit;
-		};
 		964F216E2DA0592C005105AB /* NimbusRequestAPSKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 961CA69B2CEA93750084BE6A /* XCRemoteSwiftPackageReference "nimbus-ios-sdk" */;
 			productName = NimbusRequestAPSKit;
+		};
+		968EE9D92FDB2A0800BD212E /* DynamicPrice */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 968EE9D82FDB2A0800BD212E /* XCRemoteSwiftPackageReference "dynamic-price" */;
+			productName = DynamicPrice;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

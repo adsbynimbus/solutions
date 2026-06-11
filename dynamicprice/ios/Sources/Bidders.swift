@@ -6,8 +6,8 @@
 //
 
 @preconcurrency import DTBiOSSDK
+@preconcurrency import DynamicPrice
 import GoogleMobileAds
-@preconcurrency import NimbusGAMKit
 
 public protocol Bidder: Sendable {
     func fetchBid() async throws -> Bid

@@ -30,8 +30,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "961CA66D2CEA91D40084BE6A"
-               BuildableName = "DynamicPrice.app"
-               BlueprintName = "DynamicPrice"
+               BuildableName = "DynamicPriceApp.app"
+               BlueprintName = "DynamicPriceApp"
                ReferencedContainer = "container:dynamicprice/ios/DynamicPrice.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
