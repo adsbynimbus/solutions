@@ -4,7 +4,8 @@ ads-google = "25.4.0"
 ads-google-ima = "3.39.0"
 ads-google-nextgen = "1.2.1"
 ads-nimbus = "2.37.0"
-ads-nimbus-dynamicprice = "0.0.1"
+ads-nimbus-dynamicprice = "1.0.1"
+ads-nimbus-dynamicprice-legacy = "1.0.0-beta"
 
 android = "9.3.0"
 android-jvm = "19"
@@ -70,7 +71,7 @@ ads-nimbus = { module = "com.adsbynimbus.android:nimbus", version.ref = "ads-nim
 ads-nimbus-admob = { module = "com.adsbynimbus.android:extension-admob", version.ref = "ads-nimbus" }
 ads-nimbus-aps = { module = "com.adsbynimbus.android:extension-aps", version.ref = "ads-nimbus" }
 ads-nimbus-dynamicprice = { module = "com.adsbynimbus.dynamicprice:dynamicprice", version.ref = "ads-nimbus-dynamicprice" }
-ads-nimbus-google = { module = "com.adsbynimbus.android:extension-google", version.ref = "ads-nimbus" }
+ads-nimbus-dynamicprice-legacy = { module = "com.adsbynimbus.dynamicprice:dynamicprice-legacy", version.ref = "ads-nimbus-dynamicprice-legacy" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
 androidx-collection = { module = "androidx.collection:collection", version.ref = "androidx-collection" }
 androidx-compose-activity = { module = "androidx.activity:activity-compose", version.ref = "androidx-compose-activity" }
@@ -147,7 +148,7 @@ dynamicprice = [
     "ads-amazon",
     "ads-google",
     "ads-nimbus",
-    "ads-nimbus-google",
+    "ads-nimbus-dynamicprice-legacy",
     "androidx-appcompat", # Referenced by Amazon but not included in build
     "iabtcf", # Referenced by Amazon but not included in build
 ]
