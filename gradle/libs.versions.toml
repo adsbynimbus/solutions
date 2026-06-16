@@ -37,7 +37,7 @@ gson = "2.14.0"
 iabtcf = "2.0.10"
 jackson = "2.22.0"
 
-kotest = "6.1.11"
+kotest = "6.2.0"
 kotlin = "2.4.0"
 kotlin-coroutines = "1.11.0"
 ksp = "2.3.9"
