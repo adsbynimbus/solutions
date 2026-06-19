@@ -48,7 +48,7 @@ jobs:
               --sdk "`xcrun --sdk iphonesimulator --show-sdk-path`"
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Setup Gradle
         if: matrix.language == 'java-kotlin'
         uses: ./.github/actions/gradle
