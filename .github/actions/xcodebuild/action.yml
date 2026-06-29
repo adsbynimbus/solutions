@@ -37,7 +37,7 @@ runs:
       shell: bash
     - name: Build Cache
       id: build-cache
-      uses: actions/cache/restore@v5
+      uses: actions/cache/restore@v6
       with:
         path: |
           ~/Library/Developer/Xcode/DerivedData
