@@ -10,15 +10,15 @@ plugins {
 
 val codeQL = providers.provider { extra.properties["codeQL"] }
 
-val dokkaJavadocJar by tasks.registering(Jar::class) {
-    description = "Creates a javadoc jar using Dokka"
-    archiveClassifier.set("javadoc")
+val dokkaJavadocJar = tasks.register<Jar>("dokkaJavadocJar") {
+    archiveClassifier = "javadoc"
+    description = "Creates a javadoc jar for bundling with an Android Library"
     from(tasks.dokkaGeneratePublicationJavadoc.flatMap { it.outputDirectory })
 }
 
-val dokkaHtmlJar by tasks.registering(Jar::class) {
-    description = "Creates a HTML documentation jar using Dokka"
-    archiveClassifier.set("html-doc")
+val dokkaHtmlJar = tasks.register<Jar>("dokkaHtmlJar") {
+    archiveClassifier = "html-doc"
+    description = "Creates a jar containing html docs for bundling with an Android Library"
     from(tasks.dokkaGeneratePublicationHtml.flatMap { it.outputDirectory })
 }
 
