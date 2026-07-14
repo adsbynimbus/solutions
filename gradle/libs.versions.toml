@@ -38,7 +38,7 @@ iabtcf = "2.0.10"
 jackson = "2.22.0"
 
 kotest = "6.2.1"
-kotlin = "2.4.0"
+kotlin = "2.4.10"
 kotlin-coroutines = "1.11.0"
 ksp = "2.3.9"
 mockk = "1.14.11"
