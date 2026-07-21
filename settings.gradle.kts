@@ -43,9 +43,8 @@ dependencyResolutionManagement {
                 maven("https://adsbynimbus-public.s3.amazonaws.com/android/sdks")
             }
             filter {
-                includeGroupAndSubgroups("com.adsbynimbus.android")
+                includeGroupAndSubgroups("com.adsbynimbus")
                 includeGroup("com.iab.omid.library.adsbynimbus")
-                includeGroup("com.adsbynimbus.openrtb")
             }
         }
         mavenCentral()
@@ -75,7 +74,6 @@ include(":compose:android")
 include(":compose:shared")
 include(":dynamicprice:android")
 include(":dynamicprice:nextgen")
-include(":dynamicprice:nextgen:sdk")
 include(":dynamicprice:util")
 include(":gam-direct:android")
 include(":gam-direct:android:instream")

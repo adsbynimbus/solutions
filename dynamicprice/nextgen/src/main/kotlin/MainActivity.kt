@@ -10,7 +10,7 @@ import android.widget.FrameLayout.LayoutParams
 import androidx.activity.ComponentActivity
 import androidx.lifecycle.lifecycleScope
 import com.adsbynimbus.NimbusError
-import com.adsbynimbus.dynamicprice.nextgen.*
+import com.adsbynimbus.dynamicprice.*
 import com.adsbynimbus.render.*
 import com.google.android.libraries.ads.mobile.sdk.banner.*
 import com.google.android.libraries.ads.mobile.sdk.common.*

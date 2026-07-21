@@ -5,8 +5,8 @@
 //  Created by Jason Sznol on 9/4/24.
 //
 
+@preconcurrency import DynamicPrice
 import GoogleMobileAds
-@preconcurrency import NimbusGAMKit
 
 private let refreshInterval: TimeInterval = 30
 

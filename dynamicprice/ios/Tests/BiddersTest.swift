@@ -6,7 +6,7 @@
 //  Copyright © 2025 AdsByNimbus. All rights reserved.
 //
 
-import DynamicPrice
+import DynamicPriceApp
 import Foundation
 import Testing
 

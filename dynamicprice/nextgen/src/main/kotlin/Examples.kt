@@ -4,7 +4,7 @@ import adsbynimbus.solutions.dynamicprice.nextgen.BuildConfig.AMAZON_BANNER_SLOT
 import android.app.Activity
 import android.util.Log
 import androidx.lifecycle.*
-import com.adsbynimbus.dynamicprice.nextgen.*
+import com.adsbynimbus.dynamicprice.*
 import com.adsbynimbus.openrtb.enumerations.Position
 import com.adsbynimbus.openrtb.request.Format.Companion.BANNER_320_50
 import com.adsbynimbus.request.NimbusRequest.Companion.forBannerAd

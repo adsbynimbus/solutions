@@ -6,8 +6,8 @@
 //
 
 import DTBiOSSDK
+@preconcurrency import DynamicPrice
 @preconcurrency import GoogleMobileAds
-@preconcurrency import NimbusGAMKit
 
 /// Fill in with your own price mapping
 public let priceMapping = NimbusGAMLinearPriceMapping(granularities: [])
