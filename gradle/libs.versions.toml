@@ -5,7 +5,7 @@ ads-google-ima = "3.39.0"
 ads-google-nextgen = "1.2.1"
 ads-nimbus = "2.37.0"
 
-android = "9.2.1"
+android = "9.3.0"
 android-jvm = "19"
 android-min = "26"
 android-sdk = "37"
