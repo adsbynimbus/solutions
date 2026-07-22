@@ -2,7 +2,7 @@
 ads-amazon = "12.0.0"
 ads-google = "25.4.0"
 ads-google-ima = "3.39.0"
-ads-google-nextgen = "1.2.1"
+ads-google-nextgen = "1.3.0"
 ads-nimbus = "2.37.0"
 ads-nimbus-dynamicprice = "1.0.1"
 ads-nimbus-dynamicprice-legacy = "1.0.0-beta"
