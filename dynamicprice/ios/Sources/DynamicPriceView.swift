@@ -52,13 +52,6 @@ public class DynamicPriceView: UIView, AppEventDelegate {
 
         bids.forEach {
             $0.applyTargeting(to: request, priceMapping: priceMapping)
-            if case .nimbus(let nimbusBid) = $0 {
-                googleBanner.applyDynamicPrice(
-                    requestManager: nimbusRequestManager,
-                    delegate: delegate,
-                    ad: nimbusBid
-                )
-            }
         }
 
         googleBanner.load(request)
@@ -69,7 +62,7 @@ public class DynamicPriceView: UIView, AppEventDelegate {
         didReceiveAppEvent name: String,
         with info: String?
     ) {
-        Task { @MainActor in googleBanner.handleEventForNimbus(name: name, info: info) }
+        Task { @MainActor in banner.handleEventForNimbus(name: name, info: info) }
     }
 
     public override func willMove(toWindow newWindow: UIWindow?) {
@@ -81,8 +74,8 @@ public class DynamicPriceView: UIView, AppEventDelegate {
         }
 
         onVisibilityChanged(newWindow) { isVisible in
-            Task { @MainActor [unowned self] in
-                isVisible ? self.startRefresh() : self.refreshTask?.cancel()
+            Task { @MainActor [weak self = self] in
+                isVisible ? self?.startRefresh() : self?.refreshTask?.cancel()
             }
         }
 

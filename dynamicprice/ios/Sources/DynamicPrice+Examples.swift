@@ -95,18 +95,8 @@ extension DynamicPriceView {
 
             ad.fullScreenContentDelegate = fullScreenDelegate
             ad.appEventDelegate = appEventDelegate
-            bids.forEach {
-                if case .nimbus(let nimbusBid) = $0 {
-                    ad.applyDynamicPrice(
-                        ad: nimbusBid,
-                        requestManager: nimbusRequestManager,
-                        delegate: fullScreenDelegate)
-                }
-            }
 
-            Task { @MainActor in
-                continuation.resume(returning: ad)
-            }
+            continuation.resume(returning: ad)
         }
     }
 }

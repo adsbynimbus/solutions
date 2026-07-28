@@ -6,7 +6,7 @@ let package = Package(
     platforms: [.iOS(.v16)],
     dependencies: [
         .package(url: "https://github.com/adsbynimbus/nimbus-ios-sdk", exact: "2.34.0"),
-        .package(url: "https://github.com/adsbynimbus/dynamic-price", exact: "0.0.1"),
+        .package(url: "https://github.com/adsbynimbus/dynamic-price", exact: "1.0.0"),
     ],
     targets: [
         .target(
