@@ -435,7 +435,7 @@
 			repositoryURL = "https://github.com/adsbynimbus/nimbus-ios-sdk";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.32.0;
+				minimumVersion = 2.34.0;
 			};
 		};
 		968EE9D82FDB2A0800BD212E /* XCRemoteSwiftPackageReference "dynamic-price" */ = {
@@ -443,7 +443,7 @@
 			repositoryURL = "https://github.com/adsbynimbus/dynamic-price";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.0.1;
+				minimumVersion = 1.0.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

@@ -51,7 +51,7 @@ struct ContentView: View {
                                 print("No ad to show")
                                 return
                             }
-                            interstitialAd.presentDynamicPrice(fromRootViewController: vc)
+                            interstitialAd.present(from: vc)
                         }
                     }
                 }
