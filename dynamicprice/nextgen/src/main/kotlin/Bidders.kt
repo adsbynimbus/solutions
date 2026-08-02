@@ -70,20 +70,11 @@ suspend inline fun ApsAdRequest.loadAsync(): ApsAd = suspendCancellableCoroutine
     })
 }
 
-/** Returns a map of key-value parameters used by APS */
-inline val ApsAd.adManagerParams: Map<String, List<String>>
-    get() = when (dtbAds.first().dtbAdType) {
-        AdType.VIDEO -> defaultVideoAdsRequestCustomParams.mapValues { listOf(it.value) }
-        else -> defaultDisplayAdsRequestCustomParams
-    }
-
 /** Applies targeting values from a Bid to an AdManagerAdRequest.Builder */
 inline fun <reified T> Bid<out T>.applyTargeting(request: BaseAdRequestBuilder<*>) {
     when (response) {
         is NimbusResponse -> request.applyDynamicPrice(response, linearPriceMapping)
-        is ApsAd if response.adCount > 0 -> response.adManagerParams.forEach {
-            request.putCustomTargeting(it.key, it.value)
-        }
+        is ApsAd -> Aps.appendCustomTargetToRequestBuilder(response, request)
     }
 }
 
