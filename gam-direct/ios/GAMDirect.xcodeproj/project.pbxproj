@@ -320,7 +320,7 @@
 			repositoryURL = "https://github.com/adsbynimbus/nimbus-ios-sdk";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.32.0;
+				minimumVersion = 2.34.1;
 			};
 		};
 		967A0D802FAD3D4C008BFA6D /* XCRemoteSwiftPackageReference "swift-package-manager-google-interactive-media-ads-ios" */ = {
@@ -328,7 +328,7 @@
 			repositoryURL = "https://github.com/googleads/swift-package-manager-google-interactive-media-ads-ios";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 3.31.0;
+				minimumVersion = 3.32.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

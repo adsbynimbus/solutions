@@ -70,12 +70,3 @@ dependencies {
     implementation(libs.bundles.dynamicprice.nextgen)
     implementation(libs.kotlin.coroutines)
 }
-
-configurations.configureEach {
-    resolutionStrategy.eachDependency {
-        if (requested.module == libs.ads.amazon.get().module) {
-            useVersion("10.1.1")
-            because("11+ will not serve ads due to failed GMA 24+ check")
-        }
-    }
-}

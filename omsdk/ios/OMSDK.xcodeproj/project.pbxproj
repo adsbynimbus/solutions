@@ -306,7 +306,7 @@
 			repositoryURL = "https://github.com/adsbynimbus/nimbus-ios-sdk";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.32.0;
+				minimumVersion = 2.34.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
