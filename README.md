@@ -6,14 +6,14 @@ Official Nimbus documentation can be found at [https://docs.adsbynimbus.com/docs
 
 | Platform                                             | Supported Languages | Latest Version                                                                                                                       |
 |------------------------------------------------------|---------------------|--------------------------------------------------------------------------------------------------------------------------------------|
-| Android                                              | Java, Kotlin        | ![Android](https://img.shields.io/badge/release-v2.37.0-blue)                                                                        |
+| Android                                              | Java, Kotlin        | ![Android](https://img.shields.io/badge/release-v2.37.1-blue)                                                                        |
 | [iOS](https://github.com/adsbynimbus/nimbus-ios-sdk) | Swift               | [![iOS](https://img.shields.io/github/v/release/adsbynimbus/nimbus-ios-sdk)](https://github.com/adsbynimbus/nimbus-ios-sdk/releases) |
 | [Unity](https://github.com/adsbynimbus/nimbus-unity) | C#                  | [![Unity](https://img.shields.io/github/v/release/adsbynimbus/nimbus-unity)](https://github.com/adsbynimbus/nimbus-unity/releases)   |
 
 []()
 
 ## Build / IDE Setup
-Android Studio Panda 4 `2025.3.4` or newer with the
+Android Studio Quail 3 `2026.1.3` or newer with the
 latest [Kotlin Multiplatform Plugin](https://www.jetbrains.com/help/kotlin-multiplatform-dev/multiplatform-plugin-releases.html#release-details)
 is recommended.
 
@@ -25,14 +25,14 @@ or passed via the command line.
 #### gradle.properties
 ```properties
 # Override the Android Gradle Plugin to a canary version
-android.gradle=9.3.0-alpha01
+android.gradle=9.4.0-alpha07
 # Override the bytecode used to build the project
 android.jvm=21
 ```
 
 #### CLI
 ```shell
-./gradlew build -Dandroid.gradle=9.3.0-alpha01 -Dandroid.jvm=21
+./gradlew build -Dandroid.gradle=9.4.0-alpha07 -Dandroid.jvm=21
 ```
 ```shell
 xcodebuild -scheme Solutions -destination "platform=iOS Simulator,name=iPhone 17" build-for-testing | xcbeautify
