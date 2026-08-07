@@ -5,11 +5,13 @@ enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {
     repositories {
-        google {
-            mavenContent {
+        exclusiveContent {
+            forRepository {
+                google()
+            }
+            filter {
                 includeGroupAndSubgroups("androidx")
                 includeGroupAndSubgroups("com.android")
-                includeGroupAndSubgroups("com.google")
             }
         }
         mavenCentral()
