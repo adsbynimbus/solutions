@@ -6,7 +6,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
 }
 
-val codeQL = providers.provider { extra.properties["codeQL"] }
+val codeQL = providers.environmentVariablesPrefixedBy("CODEQL").map { it.any() }
 val githubActions = providers.environmentVariable("GITHUB_ACTIONS")
 androidComponents.beforeVariants {
     it.enable = it.name.contains("release", ignoreCase = true) || !githubActions.isPresent

@@ -6,7 +6,7 @@ plugins {
     alias(libs.plugins.compose.multiplatform)
 }
 
-val codeQL = providers.provider { extra.properties["codeQL"] }
+val codeQL = providers.environmentVariablesPrefixedBy("CODEQL").map { it.any() }
 val githubActions = providers.environmentVariable("GITHUB_ACTIONS")
 
 android {
