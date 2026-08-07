@@ -35,8 +35,7 @@ jobs:
             runner: ubuntu-latest
             # The blank line between Gradle commands is required when using >-
             command: >-
-              ./gradlew assemble --init-script gradle/codeql.init.gradle.kts
-              -Dorg.gradle.configuration-cache.read-only=true
+              ./gradlew assemble -Dorg.gradle.configuration-cache.read-only=true
               ${{ vars.CODEQL_KOTLIN && format('-Pkotlin.gradle={0}', vars.CODEQL_KOTLIN) || '' }}
 
               ./gradlew --stop
@@ -60,7 +59,7 @@ jobs:
         if: matrix.language == 'swift'
         run: sudo xcode-select --switch /Applications/Xcode_26.6.0.app
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v4.37.4
+        uses: github/codeql-action/init@v4.37.6
         with:
           languages: ${{ matrix.language }}
           build-mode: ${{ matrix.language == 'actions' && 'none' || 'manual' }}
@@ -70,6 +69,6 @@ jobs:
         run: ${{ matrix.command }}
         shell: bash
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v4.37.4
+        uses: github/codeql-action/analyze@v4.37.6
         with:
           category: "/language:${{ matrix.language }}"

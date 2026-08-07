@@ -10,7 +10,7 @@ plugins {
     `maven-publish`
 }
 
-val codeQL = providers.provider { extra.properties["codeQL"] }
+val codeQL = providers.environmentVariablesPrefixedBy("CODEQL").map { it.any() }
 
 val dokkaJavadocJar = tasks.register<Jar>("dokkaJavadocJar") {
     archiveClassifier = "javadoc"

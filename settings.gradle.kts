@@ -1,14 +1,17 @@
 @file:Suppress("UnstableApiUsage")
 
+enableFeaturePreview("ENHANCED_GRAPH_ORDERING")
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {
     repositories {
-        google {
-            mavenContent {
+        exclusiveContent {
+            forRepository {
+                google()
+            }
+            filter {
                 includeGroupAndSubgroups("androidx")
                 includeGroupAndSubgroups("com.android")
-                includeGroupAndSubgroups("com.google")
             }
         }
         mavenCentral()
@@ -22,6 +25,7 @@ val androidGradleOverride = providers.gradleProperty("android.gradle").filter {
 }
 val androidJvmOverride = providers.gradleProperty("android.jvm")
 val kotlinOverride = providers.gradleProperty("kotlin.gradle")
+val codeQL = providers.environmentVariablesPrefixedBy("CODEQL").map { it.any() }
 
 dependencyResolutionManagement {
     repositories {
@@ -63,6 +67,24 @@ gradle.beforeProject {
             if (requested.group == "com.fasterxml.jackson.core") {
                 useVersion(if (requested.module.name == "jackson-annotations") "2.22" else "2.22.1")
                 because("Fixes CWE-918 (SSRF)")
+            }
+        }
+    }
+    if (codeQL.get()) {
+        tasks.withType<JavaCompile>().configureEach {
+            outputs.upToDateWhen { false }
+        }
+        tasks.withType<GroovyCompile>().configureEach {
+            outputs.upToDateWhen { false }
+        }
+        tasks.withType<ScalaCompile>().configureEach {
+            outputs.upToDateWhen { false }
+        }
+        // All kotlin compilation tasks including compileAndroidMain from
+        // com.android.kotlin.multiplatform.library
+        with(Regex("compile.*[Android|Kotlin]")) {
+            tasks.named { it.contains(this) }.configureEach {
+                outputs.upToDateWhen { false }
             }
         }
     }
