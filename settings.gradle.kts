@@ -73,6 +73,10 @@ gradle.lifecycle.beforeProject {
                         useVersion(if (requested.module.name == "jackson-annotations") "2.22" else "2.22.1")
                         because("Fixes CWE-918 (SSRF)")
                     }
+                    "io.opentelemetry" -> {
+                        useVersion("1.65.0")
+                        because("Fixes CVE-2026-45292")
+                    }
                 }
             }
         }
