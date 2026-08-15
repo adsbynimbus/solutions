@@ -12,9 +12,9 @@ android-jvm = "19"
 android-min = "26"
 android-sdk = "37"
 
-androidx-appcompat = "1.7.1"
+androidx-appcompat = "1.8.0"
 androidx-collection = "1.6.0"
-androidx-compose = "1.11.4"
+androidx-compose = "1.12.0"
 androidx-compose-activity = "1.13.0"
 androidx-compose-icons = "1.7.8"
 androidx-compose-material3 = "1.4.0"
@@ -28,8 +28,8 @@ api-admanager = "5.13.0"
 api-google-auth = "1.50.0"
 api-google-client = "2.9.0"
 
-compose-multiplatform = "1.11.1"
-compose-multiplatform-material3 = "1.11.0-alpha07"
+compose-multiplatform = "1.12.0-rc01"
+compose-multiplatform-material3 = "1.12.0-alpha03"
 
 commons-beanutils = "1.11.0"
 commmons-lang3 = "3.20.0"
@@ -39,8 +39,8 @@ gson = "2.14.0"
 iabtcf = "2.0.10"
 jackson = "2.22.1"
 
-kotest = "6.2.3"
-kotlin = "2.4.10"
+kotest = "6.2.4"
+kotlin = "2.4.20-RC"
 kotlin-coroutines = "1.11.0"
 ksp = "2.3.11"
 mockk = "1.14.11"
@@ -114,7 +114,12 @@ okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
 slf4j = { module = "org.slf4j:slf4j-simple", version.ref = "slf4j" }
 
 [bundles]
-androidx = ["androidx-collection", "androidx-lifecycle", "androidx-startup"]
+androidx = [
+    "androidx-collection",
+    "androidx-core",
+    "androidx-lifecycle",
+    "androidx-startup",
+]
 androidx-compose = [
     "androidx-compose-activity",
     "androidx-compose-icons-core",

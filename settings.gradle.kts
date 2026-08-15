@@ -25,7 +25,6 @@ val androidGradleOverride = providers.gradleProperty("android.gradle").filter {
 }
 val androidJvmOverride = providers.gradleProperty("android.jvm")
 val kotlinOverride = providers.gradleProperty("kotlin.gradle")
-val codeQL = providers.environmentVariablesPrefixedBy("CODEQL").map { it.any() }
 
 dependencyResolutionManagement {
     repositories {
@@ -61,16 +60,28 @@ dependencyResolutionManagement {
     }
 }
 
-gradle.beforeProject {
-    buildscript.configurations.configureEach {
-        resolutionStrategy.eachDependency {
-            if (requested.group == "com.fasterxml.jackson.core") {
-                useVersion(if (requested.module.name == "jackson-annotations") "2.22" else "2.22.1")
-                because("Fixes CWE-918 (SSRF)")
+gradle.lifecycle.beforeProject {
+    arrayOf(buildscript.configurations, configurations).forEach {
+        it.configureEach {
+            resolutionStrategy.eachDependency {
+                when (requested.module.group) {
+                    "org.jsoup" -> {
+                        useVersion("1.23.1")
+                        because("Fixes CWE-79")
+                    }
+                    "com.fasterxml.jackson", "com.fasterxml.jackson.core" -> {
+                        useVersion(if (requested.module.name == "jackson-annotations") "2.22" else "2.22.1")
+                        because("Fixes CWE-918 (SSRF)")
+                    }
+                    "io.opentelemetry" -> {
+                        useVersion("1.65.0")
+                        because("Fixes CVE-2026-45292")
+                    }
+                }
             }
         }
     }
-    if (codeQL.get()) {
+    if (providers.environmentVariablesPrefixedBy("CODEQL").map { it.any() }.get()) {
         tasks.withType<JavaCompile>().configureEach {
             outputs.upToDateWhen { false }
         }
