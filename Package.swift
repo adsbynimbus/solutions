@@ -6,6 +6,7 @@ let package = Package(
     platforms: [.iOS(.v17)],
     dependencies: [
         .package(url: "https://github.com/adsbynimbus/nimbus-ios-sdk", exact: "3.0.0-rc.4"),
+        .package(url: "https://github.com/adsbynimbus/nimbus-ios-swiftui", exact: "1.0.0-rc.4"),
         .package(url: "https://github.com/adsbynimbus/dynamic-price", branch: "3.0/main"),
         .package(url: "https://github.com/adsbynimbus/swift-package-aps", exact: "5.6.4"),
     ],
@@ -26,7 +27,10 @@ let package = Package(
         ),
         .target(
             name: "OMSDK",
-            dependencies: [.product(name: "NimbusKit", package: "nimbus-ios-sdk")],
+            dependencies: [
+                .product(name: "NimbusKit", package: "nimbus-ios-sdk"),
+                .product(name: "NimbusSwiftUI", package: "nimbus-ios-swiftui"),
+            ],
             path: "omsdk/ios/Sources",
         ),
     ]
