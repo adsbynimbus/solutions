@@ -6,22 +6,23 @@
 //
 
 import DTBiOSSDK
-@preconcurrency import DynamicPrice
-@preconcurrency import GoogleMobileAds
+import DynamicPrice
+import GoogleMobileAds
+import NimbusKit
 
 /// Fill in with your own price mapping
-public let priceMapping = NimbusGAMLinearPriceMapping(granularities: [])
-
-public let nimbusRequestManager = NimbusRequestManager()
+public let priceMapping = LinearPriceMapping(
+    LinearPriceGranularity(min: 0, max: 500, step: 1)
+)
 
 extension DynamicPriceView {
 
     /// Convenience initializer for running Amazon and Nimbus as parallel bidders
     @inlinable public convenience init(
-        adSize: AdSize,
+        adSize: GoogleMobileAds.AdSize,
         adUnitId: String,
         apsRequest: APSAdRequest,
-        nimbusRequest: NimbusRequest
+        nimbusRequest: InlineAd,
     ) {
         self.init(
             adSize: adSize,
@@ -34,16 +35,16 @@ extension DynamicPriceView {
     @inlinable public static func footerBannerAd(
         googleAdUnitId: String,
         amazonSlotId: String,
-        nimbusPosition: String
+        nimbusPosition: String,
     ) -> DynamicPriceView {
         DynamicPriceView(
             adSize: AdSizeBanner,
             adUnitId: googleAdUnitId,
             apsRequest: APSAdRequest(slotId: amazonSlotId, format: .banner),
-            nimbusRequest: .forBannerAd(
+            nimbusRequest: Nimbus.bannerAd(
                 position: nimbusPosition,
-                format: .banner320x50,
-                adPosition: .footer
+                size: .banner,
+                adPosition: .footer,
             )
         )
     }
@@ -52,16 +53,15 @@ extension DynamicPriceView {
     @inlinable public static func inlineMrecAd(
         googleAdUnitId: String,
         amazonSlotId: String,
-        nimbusPosition: String
+        nimbusPosition: String,
     ) -> DynamicPriceView {
         DynamicPriceView(
             adSize: AdSizeMediumRectangle,
             adUnitId: googleAdUnitId,
             apsRequest: APSAdRequest(slotId: amazonSlotId, format: .MREC),
-            nimbusRequest: .forBannerAd(
+            nimbusRequest: Nimbus.bannerAd(
                 position: nimbusPosition,
-                format: .letterbox,
-                adPosition: .unknown
+                size: .mrec,
             )
         )
     }
@@ -72,11 +72,11 @@ extension DynamicPriceView {
     amazonSlotId: String,
     nimbusPosition: String,
     appEventDelegate: AppEventDelegate,
-    fullScreenDelegate: FullScreenContentDelegate?
+    fullScreenDelegate: FullScreenContentDelegate?,
 ) async -> AdManagerInterstitialAd? {
     let bids = await [
         APSAdRequest(slotId: amazonSlotId, format: .interstitial).asBidder(),
-        NimbusRequest.forInterstitialAd(position: nimbusPosition).asBidder(),
+        Nimbus.interstitialAd(position: nimbusPosition).asBidder(),
     ].auction()
 
     let request = AdManagerRequest()
@@ -84,28 +84,20 @@ extension DynamicPriceView {
 
     bids.forEach { $0.applyTargeting(to: request, priceMapping: priceMapping) }
 
-    return try? await withUnsafeThrowingContinuation { continuation in
-        AdManagerInterstitialAd.load(with: googleAdUnitId, request: request) { ad, error in
-            if let error = error {
-                continuation.resume(throwing: error)
-                return
-            }
-
-            guard let ad = ad else { return }
-
-            ad.fullScreenContentDelegate = fullScreenDelegate
-            ad.appEventDelegate = appEventDelegate
-
-            continuation.resume(returning: ad)
-        }
+    guard let ad = try? await AdManagerInterstitialAd.load(with: googleAdUnitId, request: request) else {
+        return nil
     }
-}
 
+    ad.fullScreenContentDelegate = fullScreenDelegate
+    ad.appEventDelegate = appEventDelegate
+
+    return ad
+}
 
 class GoogleInterstitialListener: NSObject, FullScreenContentDelegate, AppEventDelegate {
 
     public func adView(
-        _ interstitialAd: InterstitialAd,
+        _ interstitialAd: GoogleMobileAds.InterstitialAd,
         didReceiveAppEvent name: String, with info: String?
     ) {
         interstitialAd.handleEventForNimbus(name: name, info: info)
@@ -128,11 +120,11 @@ class GoogleInterstitialListener: NSObject, FullScreenContentDelegate, AppEventD
     }
 
     func adWillDismissFullScreenContent(_ ad: FullScreenPresentingAd) {
-        print("adWillDismissFullScreenContent")
+        print("ad:adWillDismissFullScreenContent")
     }
 
     func adDidDismissFullScreenContent(_ ad: FullScreenPresentingAd) {
-        print("adDidDismissFullScreenContent")
+        print("ad:adDidDismissFullScreenContent")
     }
 }
 

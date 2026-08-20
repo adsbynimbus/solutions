@@ -1,17 +1,17 @@
+import Foundation
 import NimbusKit
-import OMSDK_Adsbynimbus
 
-final class UpdatedIABVerificationProvider: NimbusVerificationProvider {
+final class UpdatedIABVerificationProvider: NimbusKit.Configuration.VerificationProvider {
 
     let verificationUrl = URL(string: "https://\(Bundle.main.infoDictionary?["Compliance Script URL"] as! String)")!
 
-    func verificationMarkup(ad: NimbusAd) -> String {
-        guard let range = ad.markup.range(
+    func verificationMarkup(response: NimbusResponse) -> String {
+        guard let range = response.bid.adm.range(
             of: "</body>",
             options: .backwards
-        ) else { return ad.markup }
-        
-        var modifiedMarkup = ad.markup
+        ) else { return response.bid.adm }
+
+        var modifiedMarkup = response.bid.adm
         modifiedMarkup.insert(
             contentsOf: getScriptContents(),
             at: range.lowerBound
@@ -19,8 +19,8 @@ final class UpdatedIABVerificationProvider: NimbusVerificationProvider {
         return modifiedMarkup
     }
 
-    func verificationResource(ad: NimbusAd) -> OMIDAdsbynimbusVerificationScriptResource? {
-        OMIDAdsbynimbusVerificationScriptResource(
+    func verificationResource(response: NimbusResponse) -> Configuration.VerificationScriptResource? {
+        Configuration.VerificationScriptResource(
             url: verificationUrl,
             vendorKey: "iabtechlab.com-omid",
             parameters: "iabtechlab-Adsbynimbus"

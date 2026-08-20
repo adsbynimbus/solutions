@@ -19,6 +19,10 @@ struct GAMDirectInstream: UIViewControllerRepresentable {
     }
 
     func updateUIViewController(_ uiViewController: PlayerContainerViewController, context: Context) {}
+
+    static func dismantleUIViewController(_ uiViewController: PlayerContainerViewController, coordinator: ()) {
+        uiViewController.destroy()
+    }
 }
 
 class PlayerContainerViewController: UIViewController,
@@ -59,6 +63,11 @@ class PlayerContainerViewController: UIViewController,
         return videoView
     }()
 
+    public func destroy() {
+        adsManager?.destroy()
+        contentPlayer.pause()
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -78,6 +87,12 @@ class PlayerContainerViewController: UIViewController,
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         playerLayer.frame = videoView.layer.bounds
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        adsManager?.pause()
+        contentPlayer.pause()
     }
 
     override func viewWillTransition(
@@ -118,13 +133,10 @@ class PlayerContainerViewController: UIViewController,
         }
 
         Task {
-            let nimbusRequest = NimbusRequest.forVideoAd(position: "instream")
-            nimbusRequest.impressions[0].video?.placementType = .inStream
-            nimbusRequest.impressions[0].video?.width = 300 // Use the video player width
-            nimbusRequest.impressions[0].video?.height = 250 // Use the video player height
-
-            // Fetch ad can be found in Nimbus+Async.swift
-            guard let nimbusAd = try? await nimbusRequest.fetchAd() else {
+            let instreamRequest = Nimbus.instreamVideo(position: "instream") {
+                video(width: 300, height: 250, placementType: .inStream)
+            }
+            guard let nimbusAd = try? await instreamRequest.fetch().response else {
                 print("Nimbus did not return a bid, starting playback")
                 contentPlayer.play()
                 return
@@ -137,7 +149,7 @@ class PlayerContainerViewController: UIViewController,
             )
 
             let nimbusImaAd = IMAAdsRequest(
-                adsResponse: nimbusAd.markup,
+                adsResponse: nimbusAd.bid.adm,
                 adDisplayContainer: adDisplayContainer,
                 contentPlayhead: contentPlayhead,
                 userContext: nil

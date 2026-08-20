@@ -1,4 +1,5 @@
 import NimbusKit
+import NimbusSwiftUI
 import SwiftUI
 
 @main
@@ -6,15 +7,11 @@ struct OMSDKApp: App {
     let apiKey = Bundle.main.infoDictionary?["Nimbus API Key"] as? String ?? ""
     let publisherKey = Bundle.main.infoDictionary?["Nimbus Publisher Key"] as? String ?? ""
     init() {
-        Nimbus.shared.initialize(publisher: publisherKey, apiKey: apiKey)
+        Nimbus.initialize(publisherKey: publisherKey, apiKey: apiKey)
 
-        Nimbus.shared.logLevel = .info
-        Nimbus.shared.testMode = true
+        Nimbus.configuration.testMode = true
 
-        Nimbus.shared.viewabilityProvider = .init(
-            builder: NimbusAdViewabilityTrackerBuilder(
-                verificationProviders: [UpdatedIABVerificationProvider()])
-        )
+        Nimbus.configuration.verificationProviders = [UpdatedIABVerificationProvider()]
     }
 
     var body: some Scene {
@@ -25,71 +22,43 @@ struct OMSDKApp: App {
 }
 
 struct ContentView: View {
-    let adManager = NimbusAdManager()
-
     var body: some View {
         NavigationStack {
             List {
                 Section("Ad Types") {
                     NavigationLink("Display Ad HTML - Inline") {
-                        InlineView(
-                            adManager: adManager,
-                            request: NimbusRequest.forBannerAd(position: "Display Ad HTML", format: .letterbox))
+                        InlineAdView(ad: Nimbus.bannerAd(position: "Display Ad HTML", size: .mrec))
+                            .onEvent { debugPrint("Banner Event: \($0)") }
+                            .onError { debugPrint("Banner Error: \($0)") }
+                            .frame(width: 300, height: 250)
                     }
                     NavigationLink("Video Ad Native - Inline") {
-                        InlineView(
-                            adManager: adManager,
-                            request: NimbusRequest.forVideoAd(position: "Video Ad Native"))
+                        InlineAdView(ad: Nimbus.inlineAd(position: "Video Ad Native") {
+                            video()
+                        })
+                            .onEvent { debugPrint("Video Event: \($0)") }
+                            .onError { debugPrint("Video Error: \($0)") }
+                            .frame(width: 300, height: 250)
                     }
-                    Text("Display Ad HTML - Interstitial").onTapGesture {
-                        guard let vc = UIApplication.shared.firstKeyWindow?.rootViewController else { return }
-                        adManager.showBlockingAd(
-                            request: NimbusRequest.forBannerAd(
-                                position: "Interstitial Display HTML",
-                                format: .interstitialPortrait,
-                                adPosition: .fullScreen),
-                            adPresentingViewController: vc)
+                    NavigationLink("Display Ad HTML - Interstitial") {
+                        FullscreenAdView(ad: Nimbus.fullscreenAd(position: "Interstitial Display HTML") {
+                            banner(size: AdSize.interstitialPortrait)
+                        })
+                            .onEvent { debugPrint("Interstitial Banner Event: \($0)") }
+                            .onError { debugPrint("Interstitial Banner Error: \($0)") }
                     }
-                    Text("Video Ad Native - Interstitial").onTapGesture {
-                        guard let vc = UIApplication.shared.firstKeyWindow?.rootViewController else { return }
-                        adManager.showBlockingAd(
-                            request: NimbusRequest.forVideoAd(position: "Interstitial Video Native"),
-                            adPresentingViewController: vc)
+                    NavigationLink("Video Ad Native - Interstitial") {
+                        FullscreenAdView(ad: Nimbus.fullscreenAd(position: "Interstitial Display HTML") {
+                            video()
+                        })
+                            .onEvent { debugPrint("Interstitial Video Event: \($0)") }
+                            .onError { debugPrint("Interstitail Video Error: \($0)") }
                     }
                 }
             }
             .navigationTitle("Nimbus OMSDK Validator")
             .navigationBarTitleDisplayMode(.inline)
         }
-    }
-}
-
-struct InlineView: UIViewControllerRepresentable {
-    let adManager: NimbusAdManager
-    let request: NimbusRequest
-
-    func makeUIViewController(context: Context) -> some UIViewController {
-        let vc = UIViewController()
-
-        adManager.showAd(
-            request: request,
-            container: vc.view,
-            adPresentingViewController: vc
-        )
-
-        return vc
-    }
-
-    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {}
-}
-
-
-extension UIApplication {
-    var firstKeyWindow: UIWindow? {
-        connectedScenes.compactMap { $0 as? UIWindowScene }
-            .filter { $0.activationState == .foregroundActive }
-            .first?.keyWindow
-
     }
 }
 

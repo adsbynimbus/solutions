@@ -6,15 +6,16 @@
 //
 
 @preconcurrency import DTBiOSSDK
-@preconcurrency import DynamicPrice
+import DynamicPrice
 import GoogleMobileAds
+import NimbusKit
 
 public protocol Bidder: Sendable {
     func fetchBid() async throws -> Bid
 }
 
 public enum Bid: Sendable {
-    case nimbus(NimbusAd)
+    case nimbus(NimbusResponse)
     case aps(APSAd)
     case test
 }
@@ -58,10 +59,10 @@ extension Collection where Element == any Bidder {
 
 extension Bid {
 
-    public func applyTargeting(to request: AdManagerRequest, priceMapping: NimbusGAMLinearPriceMapping) {
+    public func applyTargeting(to request: AdManagerRequest, priceMapping: LinearPriceMapping) {
         switch self {
         case .nimbus(let response):
-            response.applyDynamicPrice(into: request, mapping: priceMapping)
+            response.applyDynamicPrice(request, mapping: priceMapping)
         case .aps(let response):
             response.customTargeting?.forEach {
                 request.customTargeting?[$0.key] = $0.value
@@ -73,42 +74,20 @@ extension Bid {
 
 public final class NimbusBidder: Bidder {
 
-    final class RequestListener: NimbusRequestManagerDelegate, Sendable {
+    private let provider: @Sendable () -> Ad
 
-        nonisolated(unsafe) var continuation: UnsafeContinuation<Bid, Error>?
-
-        func didCompleteNimbusRequest(request: NimbusRequest, ad: NimbusAd) {
-            continuation?.resume(returning: .nimbus(ad))
-            continuation = nil
-        }
-
-        func didFailNimbusRequest(request: NimbusRequest, error: NimbusError) {
-            continuation?.resume(throwing: error)
-            continuation = nil
-        }
-    }
-
-    private let provider: @Sendable () -> NimbusRequest
-
-    public init(_ request: @autoclosure @escaping @Sendable () -> NimbusRequest) {
+    public init(_ request: @autoclosure @escaping @Sendable () -> Ad) {
         provider = request
     }
 
     public func fetchBid() async throws -> Bid {
         let request = provider()
-        let requestManager = NimbusRequestManager()
-        let listener = RequestListener()
-        requestManager.delegate = listener
-        let bid = try await withTaskCancellationHandler {
-            try await withUnsafeThrowingContinuation { continuation in
-                listener.continuation = continuation
-                requestManager.performRequest(request: request)
-            }
+        let response = try await withTaskCancellationHandler {
+            try await request.fetch().response!
         } onCancel: {
-            listener.continuation?.resume(throwing: CancellationError())
-            listener.continuation = nil
+
         }
-        return bid
+        return .nimbus(response)
     }
 }
 
@@ -142,7 +121,7 @@ public final class APSBidder: Bidder {
     }
 }
 
-extension NimbusRequest {
+extension Ad {
     @inlinable
     public func asBidder() -> NimbusBidder { NimbusBidder(self) }
 }

@@ -1,11 +1,11 @@
 //
 //  DynamicPriceView.swift
-//
+//  DynamicPrice
 //
 //  Created by Jason Sznol on 9/4/24.
 //
 
-@preconcurrency import DynamicPrice
+import DynamicPrice
 import GoogleMobileAds
 
 private let refreshInterval: TimeInterval = 30
@@ -172,5 +172,14 @@ extension UIView {
             }
         }
         return (responder as? UIViewController)!
+    }
+}
+
+extension Task where Success == Never, Failure == Never {
+    @inlinable
+    static func sleep(seconds: TimeInterval) async {
+        if seconds > 0 {
+            try? await Task.sleep(nanoseconds: UInt64(seconds) * 1_000_000_000)
+        }
     }
 }

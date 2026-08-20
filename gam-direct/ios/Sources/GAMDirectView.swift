@@ -5,10 +5,11 @@
 //  Created by Jason Sznol on 11/26/25.
 //
 
-@preconcurrency import DTBiOSSDK
+import DTBiOSSDK
 import GoogleMobileAds
-@preconcurrency import NimbusKit
-@preconcurrency import NimbusAdMobKit
+import NimbusKit
+import NimbusAPSKit
+import NimbusAdMobKit
 
 fileprivate let refreshInterval: TimeInterval = 30
 
@@ -31,29 +32,42 @@ func exampleBanner(
 public class GAMDirectView : UIView {
 
     private let adLoader: AdLoader
-    private let adManagerAdSizes: [AdSize]
+    private let adManagerAdSizes: [GoogleMobileAds.AdSize]
     private let apsSlotId: String
     private let apsSize: APSAdFormat
     private let admobBiddingId: String
-    private let nimbusSizes: Set<NimbusAdFormat>
+    private let nimbusSizes: Set<RTB.Format>
     private var lastRequestTime: Date = Date.distantPast
     private var refreshTask: Task<Void, Error>?
+    private weak var nimbusAd: InlineAd?
 
-    /// Set this delegate to receive events from the GAMBannerView
+    /// Set this delegate to receive events from the AdManagerBannerView
     public weak var googleDelegate: BannerViewDelegate?
-    /// Set this delegate to receive events from the NimbusAdView
-    public weak var nimbusDelegate: AdControllerDelegate?
+    /// Set this callback to receive events from the Nimbus InlineAd
+    public var nimbusOnEvent: ((AdEvent) -> Void)? {
+        didSet {
+            guard let onEvent = nimbusOnEvent else { return }
+            nimbusAd?.onEvent(onEvent)
+        }
+    }
+    /// Set this callback to receive errors from the Nimbus InlineAdAd
+    public var nimbusOnError: ((NimbusError) -> Void)? {
+        didSet {
+            guard let onError = nimbusOnError else { return }
+            nimbusAd?.onError(onError)
+        }
+    }
 
     /// Set to true for banner ads if they refresh when not on the screen
     public var useOnScreenCheck = false
 
     public init(
         directAdUnitId: String,
-        adManagerAdSizes: [AdSize],
+        adManagerAdSizes: [GoogleMobileAds.AdSize],
         apsSlotId: String,
         apsSize: APSAdFormat,
         admobBiddingAdUnitId: String,
-        nimbusSizes: Set<NimbusAdFormat> = [],
+        nimbusSizes: Set<RTB.Format> = [],
     ) {
         self.adLoader = AdLoader(
             adUnitID: directAdUnitId,
@@ -73,6 +87,11 @@ public class GAMDirectView : UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    public func destroy() {
+        guard let nimbusAd else { return }
+        nimbusAd.destroy()
+    }
+
     public func loadAd() async {
         lastRequestTime = Date()
 
@@ -81,7 +100,6 @@ public class GAMDirectView : UIView {
             if subviews.count > 1 {
                 let view = subviews[0]
                 view.removeFromSuperview()
-                (view as? NimbusAdView)?.destroy()
             }
         }
 
@@ -90,6 +108,7 @@ public class GAMDirectView : UIView {
         adManagerRequest.customTargeting = ["nimbus":"true"]
 
         if let directAd = try? await adLoader.loadAd(request: adManagerRequest, sizes: adManagerAdSizes) {
+            nimbusAd?.destroy()
             directAd.delegate = googleDelegate
             addSubview(directAd)
             directAd.translatesAutoresizingMaskIntoConstraints = false
@@ -100,27 +119,28 @@ public class GAMDirectView : UIView {
             return
         }
 
-        let nimbusRequest = NimbusRequest.forBannerAd(position: adLoader.adUnitID, format: .interstitialPortrait)
-        nimbusRequest.impressions[0].banner?.formats = nimbusSizes
+        let apsAdRequest = apsSlotId.isEmpty ? nil : APSAdRequest(
+            slotUUID: apsSlotId,
+            adNetworkInfo: APSAdNetworkInfo(networkName: .nimbus)
+        )
+        apsAdRequest?.setAdFormat(apsSize)
+        let apsAd = try? await apsAdRequest?.loadAd()
 
-        let apsAdRequest = APSAdRequest(slotUUID: apsSlotId, adNetworkInfo: APSAdNetworkInfo(networkName: .nimbus))
-        apsAdRequest.setAdFormat(apsSize)
-        if let apsAd = try? await apsAdRequest.loadAd() {
-            nimbusRequest.addAPSResponse(apsAd)
+        let nextAd = Nimbus.bannerAd(
+            position: adLoader.adUnitID,
+            size: .interstitialPortrait,
+            addFormats: nimbusSizes,
+        ) {
+            if let apsAd {
+                aps(ads: [apsAd])
+            }
+            // Add AdMob Bidding
+            admob(bannerAdUnitId: admobBiddingId)
         }
 
-        // Add AdMob Bidding
-        nimbusRequest.withAdMobBanner(adUnitId: admobBiddingId)
-
-        // Uses an async implementation of the manual request and render flow
-        // NimbusAdManager.showAd() = NimbusRequestManager.performRequest + Nimbus.load(ad)
-        if let nimbusAd = try? await nimbusRequest.fetchAd() {
-            _ = Nimbus.load(
-                ad: nimbusAd,
-                container: self,
-                adPresentingViewController: parentViewController() ?? UIApplication.rootViewController!,
-                delegate: nimbusDelegate
-            )
+        if let loadedAd = try? await nextAd.show(in: self) {
+            nimbusAd?.destroy()
+            nimbusAd = loadedAd
         }
     }
 
@@ -134,7 +154,7 @@ public class GAMDirectView : UIView {
         }
 
         onVisibilityChanged(newWindow) { isVisible in
-            Task { @MainActor [unowned self] in
+            Task { @MainActor in
                 isVisible ? self.startRefresh() : self.refreshTask?.cancel()
             }
         }
@@ -221,9 +241,9 @@ public extension UIView {
 extension AdLoader {
     final class RequestListener : NSObject, Sendable, AdManagerBannerAdLoaderDelegate {
         nonisolated(unsafe) var continuation: UnsafeContinuation<AdManagerBannerView, Error>?
-        let sizes: [AdSize]
+        let sizes: [GoogleMobileAds.AdSize]
 
-        init(sizes: [AdSize]) {
+        init(sizes: [GoogleMobileAds.AdSize]) {
             self.sizes = sizes
         }
 
@@ -243,7 +263,7 @@ extension AdLoader {
     }
 
     @MainActor
-    func loadAd(request: AdManagerRequest, sizes: [AdSize]) async throws -> AdManagerBannerView {
+    func loadAd(request: AdManagerRequest, sizes: [GoogleMobileAds.AdSize]) async throws -> AdManagerBannerView {
         let listener = RequestListener(sizes: sizes)
         let adView: AdManagerBannerView = try await withTaskCancellationHandler {
             try await withUnsafeThrowingContinuation { c in

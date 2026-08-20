@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		961CA69D2CEA93750084BE6A /* NimbusKit in Frameworks */ = {isa = PBXBuildFile; productRef = 961CA69C2CEA93750084BE6A /* NimbusKit */; };
-		964F216F2DA0592C005105AB /* NimbusRequestAPSKit in Frameworks */ = {isa = PBXBuildFile; productRef = 964F216E2DA0592C005105AB /* NimbusRequestAPSKit */; };
+		966F6A7C3037631600F1E5E2 /* DTBiOSSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 966F6A7B3037631600F1E5E2 /* DTBiOSSDK */; };
 		968EE9DA2FDB2A0800BD212E /* DynamicPrice in Frameworks */ = {isa = PBXBuildFile; productRef = 968EE9D92FDB2A0800BD212E /* DynamicPrice */; };
 /* End PBXBuildFile section */
 
@@ -26,7 +26,7 @@
 		963ECC312CEB6354001C3012 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Config.xcconfig; path = ../../Config.xcconfig; sourceTree = SOURCE_ROOT; };
 		963ECC342CEB64A9001C3012 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		96ABDE7B2E7B054C00D7FEDF /* DynamicPriceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DynamicPriceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		96CD481F2D679BF70029C2B5 /* DynamicPriceApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DynamicPriceApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		96CD481F2D679BF70029C2B5 /* DynamicPriceApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = DynamicPriceApp.app; path = "/Users/jason/Work/nimbus-solutions/dynamicprice/ios/build/Debug-iphoneos/DynamicPriceApp.app"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -46,9 +46,9 @@
 		961CA66B2CEA91D40084BE6A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
+				966F6A7C3037631600F1E5E2 /* DTBiOSSDK in Frameworks */,
 				968EE9DA2FDB2A0800BD212E /* DynamicPrice in Frameworks */,
 				961CA69D2CEA93750084BE6A /* NimbusKit in Frameworks */,
-				964F216F2DA0592C005105AB /* NimbusRequestAPSKit in Frameworks */,
 			);
 		};
 		96ABDE782E7B054C00D7FEDF /* Frameworks */ = {
@@ -66,7 +66,6 @@
 				96ABDE7C2E7B054C00D7FEDF /* Tests */,
 				963ECC312CEB6354001C3012 /* Config.xcconfig */,
 				963ECC342CEB64A9001C3012 /* Info.plist */,
-				96CD481F2D679BF70029C2B5 /* DynamicPriceApp.app */,
 				96ABDE7B2E7B054C00D7FEDF /* DynamicPriceTests.xctest */,
 			);
 			sourceTree = "<group>";
@@ -89,8 +88,8 @@
 			name = DynamicPriceApp;
 			packageProductDependencies = (
 				961CA69C2CEA93750084BE6A /* NimbusKit */,
-				964F216E2DA0592C005105AB /* NimbusRequestAPSKit */,
 				968EE9D92FDB2A0800BD212E /* DynamicPrice */,
+				966F6A7B3037631600F1E5E2 /* DTBiOSSDK */,
 			);
 			productName = OMSDKValidator;
 			productReference = 96CD481F2D679BF70029C2B5 /* DynamicPriceApp.app */;
@@ -149,6 +148,7 @@
 			packageReferences = (
 				961CA69B2CEA93750084BE6A /* XCRemoteSwiftPackageReference "nimbus-ios-sdk" */,
 				968EE9D82FDB2A0800BD212E /* XCRemoteSwiftPackageReference "dynamic-price" */,
+				966F6A1B303759A600F1E5E2 /* XCRemoteSwiftPackageReference "swift-package-aps" */,
 			);
 			preferredProjectObjectVersion = 90;
 			productRefGroup = 961CA6652CEA91D40084BE6A;
@@ -246,7 +246,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				MERGED_BINARY_TYPE = automatic;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -307,7 +307,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				MERGED_BINARY_TYPE = automatic;
 				SDKROOT = iphoneos;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -363,7 +363,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = adsbynimbus.solutions.DynamicPriceTests;
@@ -385,7 +384,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = adsbynimbus.solutions.DynamicPriceTests;
@@ -435,15 +433,23 @@
 			repositoryURL = "https://github.com/adsbynimbus/nimbus-ios-sdk";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.34.1;
+				minimumVersion = "3.0.0-rc.4";
+			};
+		};
+		966F6A1B303759A600F1E5E2 /* XCRemoteSwiftPackageReference "swift-package-aps" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/adsbynimbus/swift-package-aps";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.6.4;
 			};
 		};
 		968EE9D82FDB2A0800BD212E /* XCRemoteSwiftPackageReference "dynamic-price" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/adsbynimbus/dynamic-price";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
+				branch = 3.0/main;
+				kind = branch;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -454,10 +460,10 @@
 			package = 961CA69B2CEA93750084BE6A /* XCRemoteSwiftPackageReference "nimbus-ios-sdk" */;
 			productName = NimbusKit;
 		};
-		964F216E2DA0592C005105AB /* NimbusRequestAPSKit */ = {
+		966F6A7B3037631600F1E5E2 /* DTBiOSSDK */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 961CA69B2CEA93750084BE6A /* XCRemoteSwiftPackageReference "nimbus-ios-sdk" */;
-			productName = NimbusRequestAPSKit;
+			package = 966F6A1B303759A600F1E5E2 /* XCRemoteSwiftPackageReference "swift-package-aps" */;
+			productName = DTBiOSSDK;
 		};
 		968EE9D92FDB2A0800BD212E /* DynamicPrice */ = {
 			isa = XCSwiftPackageProductDependency;
