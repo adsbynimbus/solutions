@@ -2,16 +2,18 @@ import SwiftUI
 import GoogleMobileAds
 import NimbusKit
 
+#if !SWIFT_PACKAGE
 @main
+#endif
 struct GAMDirectApp: App {
+    static let adManagerId = Bundle.main.infoDictionary?["Ad Manager Ad Unit Id"] as! String
     init() {
         let apiKey = Bundle.main.infoDictionary?["Nimbus API Key"] as! String
         let publisherKey = Bundle.main.infoDictionary?["Nimbus Publisher Key"] as! String
 
-        Nimbus.shared.initialize(publisher: publisherKey, apiKey: apiKey)
+        Nimbus.initialize(publisherKey: publisherKey, apiKey: apiKey)
 
-        Nimbus.shared.logLevel = .debug
-        Nimbus.shared.testMode = true
+        Nimbus.configuration.testMode = true
     }
     var body: some Scene {
         WindowGroup {
@@ -43,7 +45,7 @@ struct GAMDirectUI: UIViewRepresentable {
     typealias UIViewType = GAMDirectView
     
     func makeUIView(context: Context) -> GAMDirectView {
-        .init(directAdUnitId: "",
+        .init(directAdUnitId: GAMDirectApp.adManagerId,
               adManagerAdSizes: [AdSizeBanner],
               apsSlotId: "",
               apsSize: .banner,
@@ -52,4 +54,8 @@ struct GAMDirectUI: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: GAMDirectView, context: Context) { }
+
+    static func dismantleUIView(_ uiView: GAMDirectView, coordinator: ()) {
+        uiView.destroy()
+    }
 }

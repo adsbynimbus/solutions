@@ -2,7 +2,7 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>AdManager AdUnit Id</key>
+	<key>Ad Manager Ad Unit Id</key>
 	<string>$(ADMANAGER_ADUNIT_ID)</string>
 	<key>Amazon App Id</key>
 	<string>$(AMAZON_APP_ID)</string>
