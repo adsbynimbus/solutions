@@ -45,7 +45,7 @@ kotlin-coroutines = "1.11.0"
 ksp = "2.3.11"
 mockk = "1.14.11"
 
-okhttp = "5.4.0"
+okhttp = "5.5.0"
 okio = "3.18.1"
 
 slf4j = "2.0.18"
