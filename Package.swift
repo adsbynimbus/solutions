@@ -5,16 +5,16 @@ let package = Package(
     name: "solutions",
     platforms: [.iOS(.v16)],
     dependencies: [
-        .package(url: "https://github.com/adsbynimbus/nimbus-ios-sdk", exact: "2.34.1"),
-        .package(url: "https://github.com/adsbynimbus/dynamic-price", exact: "1.0.0"),
-        .package(url: "https://github.com/facebook/FBAudienceNetwork", exact: "6.21.1"),
+        .package(url: "https://github.com/adsbynimbus/nimbus-ios-sdk", exact: "3.0.0-rc.4"),
+        .package(url: "https://github.com/adsbynimbus/dynamic-price", branch: "3.0/main"),
+        .package(url: "https://github.com/adsbynimbus/swift-package-aps", exact: "5.6.4"),
     ],
     targets: [
         .target(
             name: "DynamicPriceApp",
             dependencies: [
                 .product(name: "NimbusKit", package: "nimbus-ios-sdk"),
-                .product(name: "NimbusRequestAPSKit", package: "nimbus-ios-sdk"),
+                .product(name: "DTBiOSSDK", package: "swift-package-aps"),
                 .product(name: "DynamicPrice", package: "dynamic-price"),
             ],
             path: "dynamicprice/ios/Sources",

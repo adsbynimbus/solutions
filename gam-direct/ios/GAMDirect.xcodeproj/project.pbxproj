@@ -8,9 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		961256F62EF5C4FD00563553 /* NimbusAdMobKit in Frameworks */ = {isa = PBXBuildFile; productRef = 961256F52EF5C4FD00563553 /* NimbusAdMobKit */; };
-		961A99602EF74BEB00C685AA /* NimbusRequestAPSKit in Frameworks */ = {isa = PBXBuildFile; productRef = 961A995F2EF74BEB00C685AA /* NimbusRequestAPSKit */; };
 		961CA69D2CEA93750084BE6A /* NimbusKit in Frameworks */ = {isa = PBXBuildFile; productRef = 961CA69C2CEA93750084BE6A /* NimbusKit */; };
+		966F6A803037638300F1E5E2 /* NimbusAPSKit in Frameworks */ = {isa = PBXBuildFile; productRef = 966F6A7F3037638300F1E5E2 /* NimbusAPSKit */; };
 		967A0D822FAD3D4C008BFA6D /* GoogleInteractiveMediaAds in Frameworks */ = {isa = PBXBuildFile; productRef = 967A0D812FAD3D4C008BFA6D /* GoogleInteractiveMediaAds */; };
+		96AA4A993037692B00358884 /* NimbusAdMobKit in Frameworks */ = {isa = PBXBuildFile; productRef = 96AA4A983037692B00358884 /* NimbusAdMobKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,8 +34,9 @@
 			files = (
 				967A0D822FAD3D4C008BFA6D /* GoogleInteractiveMediaAds in Frameworks */,
 				961256F62EF5C4FD00563553 /* NimbusAdMobKit in Frameworks */,
+				96AA4A993037692B00358884 /* NimbusAdMobKit in Frameworks */,
+				966F6A803037638300F1E5E2 /* NimbusAPSKit in Frameworks */,
 				961CA69D2CEA93750084BE6A /* NimbusKit in Frameworks */,
-				961A99602EF74BEB00C685AA /* NimbusRequestAPSKit in Frameworks */,
 			);
 		};
 /* End PBXFrameworksBuildPhase section */
@@ -47,7 +49,15 @@
 				963ECC312CEB6354001C3012 /* Config.xcconfig */,
 				963ECC342CEB64A9001C3012 /* Info.plist */,
 				96CD481F2D679BF70029C2B5 /* GAMDirect.app */,
+				966F6A7E3037638300F1E5E2 /* Frameworks */,
 			);
+			sourceTree = "<group>";
+		};
+		966F6A7E3037638300F1E5E2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -69,8 +79,9 @@
 			packageProductDependencies = (
 				961CA69C2CEA93750084BE6A /* NimbusKit */,
 				961256F52EF5C4FD00563553 /* NimbusAdMobKit */,
-				961A995F2EF74BEB00C685AA /* NimbusRequestAPSKit */,
 				967A0D812FAD3D4C008BFA6D /* GoogleInteractiveMediaAds */,
+				966F6A7F3037638300F1E5E2 /* NimbusAPSKit */,
+				96AA4A983037692B00358884 /* NimbusAdMobKit */,
 			);
 			productName = OMSDKValidator;
 			productReference = 96CD481F2D679BF70029C2B5 /* GAMDirect.app */;
@@ -104,6 +115,8 @@
 			packageReferences = (
 				961CA69B2CEA93750084BE6A /* XCRemoteSwiftPackageReference "nimbus-ios-sdk" */,
 				967A0D802FAD3D4C008BFA6D /* XCRemoteSwiftPackageReference "swift-package-manager-google-interactive-media-ads-ios" */,
+				966F6A7D3037635300F1E5E2 /* XCRemoteSwiftPackageReference "nimbus-ios-aps" */,
+				96AA4A973037692B00358884 /* XCRemoteSwiftPackageReference "nimbus-ios-admob" */,
 			);
 			preferredProjectObjectVersion = 90;
 			productRefGroup = 961CA6652CEA91D40084BE6A;
@@ -320,7 +333,15 @@
 			repositoryURL = "https://github.com/adsbynimbus/nimbus-ios-sdk";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.34.1;
+				minimumVersion = "3.0.0-rc.4";
+			};
+		};
+		966F6A7D3037635300F1E5E2 /* XCRemoteSwiftPackageReference "nimbus-ios-aps" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/adsbynimbus/nimbus-ios-aps";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = "5.0.0-rc.4";
 			};
 		};
 		967A0D802FAD3D4C008BFA6D /* XCRemoteSwiftPackageReference "swift-package-manager-google-interactive-media-ads-ios" */ = {
@@ -331,6 +352,14 @@
 				minimumVersion = 3.32.0;
 			};
 		};
+		96AA4A973037692B00358884 /* XCRemoteSwiftPackageReference "nimbus-ios-admob" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/adsbynimbus/nimbus-ios-admob";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = "13.0.0-rc.4";
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -339,20 +368,25 @@
 			package = 961CA69B2CEA93750084BE6A /* XCRemoteSwiftPackageReference "nimbus-ios-sdk" */;
 			productName = NimbusAdMobKit;
 		};
-		961A995F2EF74BEB00C685AA /* NimbusRequestAPSKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 961CA69B2CEA93750084BE6A /* XCRemoteSwiftPackageReference "nimbus-ios-sdk" */;
-			productName = NimbusRequestAPSKit;
-		};
 		961CA69C2CEA93750084BE6A /* NimbusKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 961CA69B2CEA93750084BE6A /* XCRemoteSwiftPackageReference "nimbus-ios-sdk" */;
 			productName = NimbusKit;
 		};
+		966F6A7F3037638300F1E5E2 /* NimbusAPSKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 966F6A7D3037635300F1E5E2 /* XCRemoteSwiftPackageReference "nimbus-ios-aps" */;
+			productName = NimbusAPSKit;
+		};
 		967A0D812FAD3D4C008BFA6D /* GoogleInteractiveMediaAds */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 967A0D802FAD3D4C008BFA6D /* XCRemoteSwiftPackageReference "swift-package-manager-google-interactive-media-ads-ios" */;
 			productName = GoogleInteractiveMediaAds;
+		};
+		96AA4A983037692B00358884 /* NimbusAdMobKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 96AA4A973037692B00358884 /* XCRemoteSwiftPackageReference "nimbus-ios-admob" */;
+			productName = NimbusAdMobKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
