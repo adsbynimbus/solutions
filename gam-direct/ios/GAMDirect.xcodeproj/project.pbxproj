@@ -17,7 +17,7 @@
 /* Begin PBXFileReference section */
 		963ECC312CEB6354001C3012 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Config.xcconfig; path = ../../Config.xcconfig; sourceTree = SOURCE_ROOT; };
 		963ECC342CEB64A9001C3012 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		96CD481F2D679BF70029C2B5 /* GAMDirect.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GAMDirect.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		96AA4A5D3037688F00358884 /* GAMDirect.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = GAMDirect.app; path = "/Users/jason/Work/nimbus-solutions/gam-direct/ios/build/Debug-iphoneos/GAMDirect.app"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -48,16 +48,7 @@
 				961CA6AD2CEA95C30084BE6A /* Sources */,
 				963ECC312CEB6354001C3012 /* Config.xcconfig */,
 				963ECC342CEB64A9001C3012 /* Info.plist */,
-				96CD481F2D679BF70029C2B5 /* GAMDirect.app */,
-				966F6A7E3037638300F1E5E2 /* Frameworks */,
 			);
-			sourceTree = "<group>";
-		};
-		966F6A7E3037638300F1E5E2 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -84,7 +75,7 @@
 				96AA4A983037692B00358884 /* NimbusAdMobKit */,
 			);
 			productName = OMSDKValidator;
-			productReference = 96CD481F2D679BF70029C2B5 /* GAMDirect.app */;
+			productReference = 96AA4A5D3037688F00358884 /* GAMDirect.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -192,7 +183,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				MERGED_BINARY_TYPE = automatic;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -254,7 +245,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				MERGED_BINARY_TYPE = automatic;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;

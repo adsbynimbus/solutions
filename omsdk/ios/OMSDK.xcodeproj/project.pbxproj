@@ -8,12 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		961CA69D2CEA93750084BE6A /* NimbusKit in Frameworks */ = {isa = PBXBuildFile; productRef = 961CA69C2CEA93750084BE6A /* NimbusKit */; };
+		966EA7AA303688930078C754 /* NimbusSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 966EA7A9303688930078C754 /* NimbusSwiftUI */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		963ECC312CEB6354001C3012 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Config.xcconfig; path = ../../Config.xcconfig; sourceTree = SOURCE_ROOT; };
 		963ECC342CEB64A9001C3012 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		96CD481F2D679BF70029C2B5 /* OMSDK.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OMSDK.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		96AA4A663037688F00358884 /* OMSDK.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = OMSDK.app; path = "/Users/jason/Work/nimbus-solutions/omsdk/ios/build/Debug-iphoneos/OMSDK.app"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -28,6 +29,7 @@
 		961CA66B2CEA91D40084BE6A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
+				966EA7AA303688930078C754 /* NimbusSwiftUI in Frameworks */,
 				961CA69D2CEA93750084BE6A /* NimbusKit in Frameworks */,
 			);
 		};
@@ -40,7 +42,6 @@
 				961CA6AD2CEA95C30084BE6A /* Sources */,
 				963ECC312CEB6354001C3012 /* Config.xcconfig */,
 				963ECC342CEB64A9001C3012 /* Info.plist */,
-				96CD481F2D679BF70029C2B5 /* OMSDK.app */,
 			);
 			sourceTree = "<group>";
 		};
@@ -62,9 +63,10 @@
 			name = OMSDK;
 			packageProductDependencies = (
 				961CA69C2CEA93750084BE6A /* NimbusKit */,
+				966EA7A9303688930078C754 /* NimbusSwiftUI */,
 			);
 			productName = OMSDKValidator;
-			productReference = 96CD481F2D679BF70029C2B5 /* OMSDK.app */;
+			productReference = 96AA4A663037688F00358884 /* OMSDK.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -94,6 +96,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				961CA69B2CEA93750084BE6A /* XCRemoteSwiftPackageReference "nimbus-ios-sdk" */,
+				966EA7A8303688930078C754 /* XCRemoteSwiftPackageReference "nimbus-ios-swiftui" */,
 			);
 			preferredProjectObjectVersion = 90;
 			productRefGroup = 961CA6652CEA91D40084BE6A;
@@ -169,7 +172,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				MERGED_BINARY_TYPE = automatic;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -230,7 +233,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				MERGED_BINARY_TYPE = automatic;
 				SDKROOT = iphoneos;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -309,6 +312,14 @@
 				minimumVersion = "3.0.0-rc.4";
 			};
 		};
+		966EA7A8303688930078C754 /* XCRemoteSwiftPackageReference "nimbus-ios-swiftui" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/adsbynimbus/nimbus-ios-swiftui";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = "1.0.0-rc.4";
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -316,6 +327,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 961CA69B2CEA93750084BE6A /* XCRemoteSwiftPackageReference "nimbus-ios-sdk" */;
 			productName = NimbusKit;
+		};
+		966EA7A9303688930078C754 /* NimbusSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 966EA7A8303688930078C754 /* XCRemoteSwiftPackageReference "nimbus-ios-swiftui" */;
+			productName = NimbusSwiftUI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

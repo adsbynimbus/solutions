@@ -3,7 +3,7 @@ import PackageDescription
 
 let package = Package(
     name: "solutions",
-    platforms: [.iOS(.v16)],
+    platforms: [.iOS(.v17)],
     dependencies: [
         .package(url: "https://github.com/adsbynimbus/nimbus-ios-sdk", exact: "3.0.0-rc.4"),
         .package(url: "https://github.com/adsbynimbus/dynamic-price", branch: "3.0/main"),
