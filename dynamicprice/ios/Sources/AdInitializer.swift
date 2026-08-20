@@ -13,10 +13,9 @@ extension DynamicPriceApp {
         let apiKey = Bundle.main.infoDictionary?["Nimbus API Key"] as! String
         let publisherKey = Bundle.main.infoDictionary?["Nimbus Publisher Key"] as! String
 
-        Nimbus.shared.initialize(publisher: publisherKey, apiKey: apiKey)
+        Nimbus.initialize(publisherKey: publisherKey, apiKey: apiKey)
 
-        Nimbus.shared.logLevel = .debug
-        Nimbus.shared.testMode = true
+        Nimbus.configuration.testMode = true
     }
 
     func initAmazon() {
