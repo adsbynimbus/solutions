@@ -59,7 +59,7 @@ jobs:
         if: matrix.language == 'swift'
         run: sudo xcode-select --switch /Applications/Xcode_26.6.0.app
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v4.37.7
+        uses: github/codeql-action/init@v4.37.8
         with:
           languages: ${{ matrix.language }}
           build-mode: ${{ matrix.language == 'actions' && 'none' || 'manual' }}
@@ -69,6 +69,6 @@ jobs:
         run: ${{ matrix.command }}
         shell: bash
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v4.37.7
+        uses: github/codeql-action/analyze@v4.37.8
         with:
           category: "/language:${{ matrix.language }}"
