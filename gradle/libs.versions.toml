@@ -4,7 +4,7 @@ ads-google = "25.4.0"
 ads-google-ima = "3.40.0"
 ads-google-nextgen = "1.4.0"
 ads-nimbus = "2.37.2"
-ads-nimbus-dynamicprice = "1.0.1"
+ads-nimbus-dynamicprice = "1.1.1"
 ads-nimbus-dynamicprice-legacy = "1.0.0"
 
 android = "9.3.2"

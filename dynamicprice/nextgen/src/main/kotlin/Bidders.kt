@@ -1,8 +1,7 @@
 package adsbynimbus.solutions.dynamicprice.nextgen
 
 import com.adsbynimbus.*
-import com.adsbynimbus.dynamicprice.applyDynamicPrice
-import com.adsbynimbus.lineitem.DEFAULT_BANNER
+import com.adsbynimbus.dynamicprice.*
 import com.adsbynimbus.request.*
 import com.amazon.aps.ads.*
 import com.amazon.aps.ads.listeners.ApsAdRequestListener
@@ -38,7 +37,12 @@ suspend inline fun Collection<Bidder<*>>.auction(
 val nimbusAdManager by lazy { NimbusAdManager() }
 
 /** Price Mapping used by Nimbus, should be replaced by Publisher specific price mapping */
-val linearPriceMapping = DEFAULT_BANNER
+val linearPriceMapping = LinearPriceMapping(
+    LinearPriceGranularity(0, 300, 1),
+    LinearPriceGranularity(300, 800, 5),
+    LinearPriceGranularity(800, 2000, 50),
+    LinearPriceGranularity(2000, 3500, 100)
+)
 
 /** Loads a bid from Nimbus using the global NimbusAdManager instance */
 @JvmInline
@@ -70,9 +74,9 @@ suspend inline fun ApsAdRequest.loadAsync(): ApsAd = suspendCancellableCoroutine
 }
 
 /** Applies targeting values from a Bid to an AdManagerAdRequest.Builder */
-inline fun <reified T> Bid<out T>.applyTargeting(request: BaseAdRequestBuilder<*>) {
+fun <T, U: BaseAdRequestBuilder<U>> Bid<T>.applyTargeting(request: U) {
     when (response) {
-        is NimbusResponse -> request.applyDynamicPrice(response, linearPriceMapping)
+        is NimbusResponse -> response.applyDynamicPrice(request, linearPriceMapping)
         is ApsAd -> Aps.appendCustomTargetToRequestBuilder(response, request)
     }
 }
