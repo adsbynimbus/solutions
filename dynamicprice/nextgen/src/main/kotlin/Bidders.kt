@@ -6,7 +6,6 @@ import com.adsbynimbus.lineitem.DEFAULT_BANNER
 import com.adsbynimbus.request.*
 import com.amazon.aps.ads.*
 import com.amazon.aps.ads.listeners.ApsAdRequestListener
-import com.amazon.device.ads.AdType
 import com.google.android.libraries.ads.mobile.sdk.common.*
 import kotlinx.coroutines.*
 import kotlin.coroutines.*
