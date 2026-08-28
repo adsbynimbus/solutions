@@ -7,7 +7,7 @@ bidders are used with Google Ad Manager.
 
 ## [Android Next Gen](nextgen)
 
-Android Dynamic Price implementation and [SDK](nextgen/sdk) using the Google Mobile Ads Next Gen SDK.
+Android Dynamic Price implementation using the Google Mobile Ads Next Gen SDK.
 
 ## Android
 
@@ -29,7 +29,7 @@ Coroutine implementation for fetching bids and loading an `AdManagerInterstitial
 
 [Migration Guide](https://developers.google.com/ad-manager/mobile-ads-sdk/android/migration#migrate-to-v24)
 
-Support for Google Mobile Ads 24 is available starting from the following versions:
+Support for Google Mobile Ads 24+ is available starting from the following versions:
 
 - Nimbus Android: [2.30.0](https://docs.adsbynimbus.com/docs/sdk/android/changelog#id-2.30.0-5-13-25)
 - Amazon APS Android: [11.0.0](https://ams.amazon.com/webpublisher/uam/docs/aps-mobile/android/release-notes) (Link requires Login)
