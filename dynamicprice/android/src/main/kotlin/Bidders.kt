@@ -1,7 +1,7 @@
 package adsbynimbus.solutions.dynamicprice
 
 import com.adsbynimbus.NimbusAdManager
-import com.adsbynimbus.lineitem.*
+import com.adsbynimbus.dynamicprice.*
 import com.adsbynimbus.request.*
 import com.amazon.device.ads.*
 import com.google.android.gms.ads.admanager.AdManagerAdRequest
@@ -36,7 +36,12 @@ suspend inline fun Collection<Bidder<*>>.auction(
 val nimbusAdManager by lazy { NimbusAdManager() }
 
 /** Price Mapping used by Nimbus, should be replaced by Publisher specific price mapping */
-val linearPriceMapping = DEFAULT_BANNER
+val linearPriceMapping = LinearPriceMapping(
+    LinearPriceGranularity(0, 300, 1),
+    LinearPriceGranularity(300, 800, 5),
+    LinearPriceGranularity(800, 2000, 50),
+    LinearPriceGranularity(2000, 3500, 100)
+)
 
 /** Loads a bid from Nimbus using the global NimbusAdManager instance */
 @JvmInline
@@ -71,7 +76,7 @@ suspend fun DTBAdRequest.loadAsync(): DTBAdResponse = suspendCancellableCoroutin
 /** Applies targeting values from a Bid to an AdManagerAdRequest.Builder */
 inline fun <reified T> Bid<out T>.applyTargeting(request: AdManagerAdRequest.Builder) {
     when (response) {
-        is NimbusResponse -> request.applyDynamicPrice(ad = response, mapping = linearPriceMapping)
+        is NimbusResponse -> response.applyDynamicPrice(request, mapping = linearPriceMapping)
         is DTBAdResponse -> DTBAdUtil.INSTANCE.loadDTBParams(request, response)
     }
 }
