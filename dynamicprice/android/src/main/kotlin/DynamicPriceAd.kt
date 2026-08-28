@@ -4,7 +4,7 @@ import android.content.Context
 import android.util.Log
 import androidx.core.view.doOnAttach
 import androidx.lifecycle.*
-import com.adsbynimbus.google.handleEventForNimbus
+import com.adsbynimbus.dynamicprice.*
 import com.adsbynimbus.openrtb.request.Format
 import com.adsbynimbus.request.NimbusRequest
 import com.adsbynimbus.request.NimbusRequest.Companion.forBannerAd

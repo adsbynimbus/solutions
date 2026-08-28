@@ -2,7 +2,7 @@ package adsbynimbus.solutions.dynamicprice
 
 import adsbynimbus.solutions.dynamicprice.BuildConfig.AMAZON_BANNER_SLOT_ID
 import android.content.Context
-import com.adsbynimbus.google.handleEventForNimbus
+import com.adsbynimbus.dynamicprice.*
 import com.adsbynimbus.request.NimbusRequest.Companion.forInterstitialAd
 import com.amazon.aps.ads.*
 import com.amazon.aps.ads.model.ApsAdFormat.INTERSTITIAL
