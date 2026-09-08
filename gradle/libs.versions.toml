@@ -7,7 +7,7 @@ ads-nimbus = "2.37.2"
 ads-nimbus-dynamicprice = "1.1.1"
 ads-nimbus-dynamicprice-legacy = "1.1.0"
 
-android = "9.3.2"
+android = "9.4.0"
 android-jvm = "19"
 android-min = "26"
 android-sdk = "37"
@@ -24,9 +24,9 @@ androidx-media3 = "1.11.0"
 androidx-navigation = "2.10.0"
 androidx-startup = "1.2.0"
 
-api-admanager = "5.13.0"
-api-google-auth = "1.51.0"
-api-google-client = "2.9.0"
+api-admanager = "5.14.0"
+api-google-auth = "1.52.0"
+api-google-client = "2.9.1"
 
 compose-multiplatform = "1.12.0"
 compose-multiplatform-material3 = "1.12.0-alpha03"
@@ -46,9 +46,9 @@ ksp = "2.3.11"
 mockk = "1.14.11"
 
 okhttp = "5.5.0"
-okio = "3.18.1"
+okio = "3.18.2"
 
-slf4j = "2.0.18"
+slf4j = "2.0.19"
 
 [plugins]
 android-app = { id = "com.android.application", version.ref = "android" }
