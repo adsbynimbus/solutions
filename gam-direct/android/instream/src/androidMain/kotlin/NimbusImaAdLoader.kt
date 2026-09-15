@@ -95,7 +95,7 @@ class NimbusImaAdLoader(
                 require(request.imp[0].banner == null && request.imp[0].native == null) {
                     "Only video objects are supported for Instream "
                 }
-                request.imp[0].video?.placement = PlacementType.IN_FEED
+                request.imp[0].video?.placement = PlacementType.IN_STREAM
                 configureViewability("Google", MediaLibraryInfo.VERSION)
             }
         }
