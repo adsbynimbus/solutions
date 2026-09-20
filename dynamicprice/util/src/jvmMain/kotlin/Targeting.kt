@@ -1,6 +1,6 @@
 package adsbynimbus.solutions.dynamicprice.util
 
-import com.google.api.ads.admanager.axis.v202602.*
+import com.google.api.ads.admanager.axis.v202608.*
 import kotlinx.coroutines.delay
 import kotlin.time.Duration.Companion.seconds
 

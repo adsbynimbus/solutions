@@ -1,7 +1,7 @@
 package adsbynimbus.solutions.dynamicprice.util
 
-import com.google.api.ads.admanager.axis.utils.v202602.*
-import com.google.api.ads.admanager.axis.v202602.*
+import com.google.api.ads.admanager.axis.utils.v202608.*
+import com.google.api.ads.admanager.axis.v202608.*
 
 fun findBy(id: Long): Statement = statement {
     where("id = :id")
