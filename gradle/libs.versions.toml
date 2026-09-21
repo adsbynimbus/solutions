@@ -3,6 +3,7 @@ ads-amazon = "12.0.2"
 ads-google = "25.5.0"
 ads-google-ima = "3.40.0"
 ads-google-nextgen = "1.4.0"
+ads-max = "13.6.4"
 ads-nimbus = "2.37.2"
 ads-nimbus-dynamicprice = "1.1.1"
 ads-nimbus-dynamicprice-legacy = "1.1.0"
@@ -68,6 +69,7 @@ ads-amazon = { module = "com.amazon.android:aps-sdk", version.ref = "ads-amazon"
 ads-google = { module = "com.google.android.gms:play-services-ads", version.ref = "ads-google" }
 ads-google-ima = { module = "com.google.ads.interactivemedia.v3:interactivemedia", version.ref = "ads-google-ima" }
 ads-google-nextgen = { module = "com.google.android.libraries.ads.mobile.sdk:ads-mobile-sdk", version.ref = "ads-google-nextgen" }
+ads-max = { module = "com.applovin:applovin-sdk", version.ref = "ads-max" }
 ads-nimbus = { module = "com.adsbynimbus.android:nimbus", version.ref = "ads-nimbus" }
 ads-nimbus-admob = { module = "com.adsbynimbus.android:extension-admob", version.ref = "ads-nimbus" }
 ads-nimbus-aps = { module = "com.adsbynimbus.android:extension-aps", version.ref = "ads-nimbus" }
@@ -180,6 +182,10 @@ gamdirect = [
     "androidx-appcompat", # Referenced by Amazon but not included in build
     "androidx-media3",
     "iabtcf", # Referenced by Amazon but not included in build
+]
+max-mediation = [
+    "ads-nimbus",
+    "ads-max",
 ]
 test-common = [
     "kotest-assertions",
