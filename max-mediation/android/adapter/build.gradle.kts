@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.dokka)
     alias(libs.plugins.dokka.javadoc)
+    alias(libs.plugins.kotest)
     `maven-publish`
 }
 
@@ -46,6 +47,8 @@ kotlin {
             artifact(dokkaJavadocJar)
             artifact(dokkaHtmlJar)
         }
+
+        withHostTest { }
     }
 
     compilerOptions {
@@ -56,10 +59,25 @@ kotlin {
     explicitApi()
 
     sourceSets {
-        removeIf { it.name == "commonTest" }
         androidMain.dependencies {
-            api(libs.ads.nimbus)
+            api(libs.ads.nimbus.asProvider().flatMap{ library ->
+                providers.provider {
+                    library.copy().apply {
+                        version {
+                            require("3.0.0-rc.5")
+                            library.version?.let { prefer(it) }
+                        }
+                    }
+                }
+            })
             api(libs.ads.max)
+        }
+        named("androidHostTest") {
+            dependencies {
+                implementation(libs.bundles.test.common)
+                implementation(libs.kotest.runner)
+                implementation(libs.kotlin.coroutines)
+            }
         }
     }
 }
@@ -82,6 +100,13 @@ dokka {
                 remoteUrl("https://github.com/adsbynimbus/solutions/tree/main/max-mediation/android/adapter/src/$name/kotlin")
             }
         }
+    }
+}
+
+tasks.withType<Test>().configureEach {
+    useJUnitPlatform()
+    if (JavaVersion.current() >= JavaVersion.VERSION_24) {
+        jvmArgs("--sun-misc-unsafe-memory-access=allow")
     }
 }
 
