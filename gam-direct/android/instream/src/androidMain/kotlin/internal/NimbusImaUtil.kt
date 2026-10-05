@@ -120,7 +120,7 @@ fun getFriendlyObstructionPurpose(purpose: @AdOverlayInfo.Purpose Int): Friendly
 
 object ImaFactory {
     fun createImaSdkSettings(): ImaSdkSettings = ImaSdkFactory.getInstance().createImaSdkSettings().apply {
-        setLanguage(Util.getSystemLanguageCodes()[0])
+        language = Util.getSystemLanguageCodes()[0]
     }
 
     fun createAdsRenderingSettings(): AdsRenderingSettings =

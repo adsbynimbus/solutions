@@ -44,6 +44,8 @@ android {
     packaging.resources {
         excludes += "/META-INF/{AL2.0,LGPL2.1}"
     }
+
+    testOptions.unitTests.isIncludeAndroidResources = true
 }
 
 androidComponents.beforeVariants {
@@ -60,4 +62,5 @@ dependencies {
     implementation(projects.compose.shared)
     implementation(libs.bundles.androidx)
     implementation(libs.bundles.androidx.compose)
+    debugImplementation(libs.androidx.compose.ui.tooling)
 }

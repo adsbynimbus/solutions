@@ -48,6 +48,8 @@ android {
     packaging.resources {
         excludes += "/META-INF/{AL2.0,LGPL2.1}"
     }
+
+    testOptions.unitTests.isIncludeAndroidResources = true
 }
 
 androidComponents.beforeVariants {
@@ -65,4 +67,5 @@ dependencies {
     implementation(libs.bundles.androidx)
     implementation(libs.bundles.androidx.compose)
     implementation(libs.kotlin.coroutines)
+    debugImplementation(libs.androidx.compose.ui.tooling)
 }
