@@ -62,6 +62,8 @@ android {
     packaging.resources {
         excludes += "/META-INF/{AL2.0,LGPL2.1}"
     }
+
+    testOptions.unitTests.isIncludeAndroidResources = true
 }
 
 kotlin.target.compilations.configureEach {
@@ -77,4 +79,5 @@ dependencies {
     implementation(libs.bundles.gamdirect)
     implementation(libs.kotlin.coroutines)
     implementation(projects.gamDirect.android.instream)
+    debugImplementation(libs.androidx.compose.ui.tooling)
 }

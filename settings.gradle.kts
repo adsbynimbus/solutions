@@ -70,16 +70,16 @@ gradle.lifecycle.beforeProject {
                         because("Fixes CVE-2026-84939")
                     }
                     "org.jsoup" -> {
-                        useVersion("1.23.1")
-                        because("Fixes CWE-79")
+                        useVersion("1.23.2")
+                        because("1.23.1 Fixes CWE-79")
                     }
                     "com.fasterxml.jackson", "com.fasterxml.jackson.core" -> {
-                        useVersion(if (requested.module.name == "jackson-annotations") "2.22" else "2.22.1")
-                        because("Fixes CWE-918 (SSRF)")
+                        useVersion(if (requested.module.name == "jackson-annotations") "2.22" else "2.22.3")
+                        because("Fixes multiple CVEs")
                     }
                     "io.opentelemetry" -> {
-                        useVersion("1.65.0")
-                        because("Fixes CVE-2026-45292")
+                        useVersion("1.66.0")
+                        because("1.65.0 Fixes CVE-2026-45292")
                     }
                 }
             }
