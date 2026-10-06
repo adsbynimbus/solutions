@@ -1,28 +1,26 @@
-package adsbynimbus.solutions.mediation.max
+package com.applovin.enterprise.apps.demoapp
 
-import android.graphics.Rect
+import android.graphics.*
 import android.view.*
-import android.view.View.OnLayoutChangeListener
-import android.widget.FrameLayout
+import android.view.View.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
 import androidx.compose.ui.platform.*
-import androidx.compose.ui.viewinterop.AndroidView
-import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.compose.ui.viewinterop.*
+import com.applovin.mediation.*
+import com.applovin.mediation.ads.*
 import kotlinx.coroutines.*
 import kotlin.coroutines.*
 
 @Composable
 fun BannerAdScreen(modifier: Modifier = Modifier) {
-    val lifecycleOwner = LocalLifecycleOwner.current
-    val window = LocalWindowInfo.current
     Box {
         MaxInlineAd(
-            onLoadAd = {
-
-            },
+            adUnitId = "5c524ca3afafbecf",
+            adFormat = MaxAdFormat.BANNER,
+            listener = DefaultMaxMediationListener(),
             modifier = modifier.align(Alignment.BottomCenter),
         )
     }
@@ -30,18 +28,19 @@ fun BannerAdScreen(modifier: Modifier = Modifier) {
 
 @Composable
 fun BannerVideoScreen(modifier: Modifier = Modifier) {
-    val lifecycleOwner = LocalLifecycleOwner.current
     MaxInlineAd(
-        onLoadAd = {
-
-        },
+        adUnitId = "fa8e3a4d5564d0a",
+        adFormat = MaxAdFormat.MREC,
+        listener = DefaultMaxMediationListener(),
         modifier = modifier,
     )
 }
 
 @Composable
 fun MaxInlineAd(
-    onLoadAd: (FrameLayout) -> Unit,
+    adUnitId: String,
+    adFormat: MaxAdFormat,
+    listener: MaxAdViewAdListener,
     modifier: Modifier = Modifier,
 ) {
     if (LocalInspectionMode.current) {
@@ -49,15 +48,17 @@ fun MaxInlineAd(
         return
     }
 
-    val context = LocalContext.current
-    val adView = remember { FrameLayout(context) }
+    val adView = remember {
+        MaxAdView(adUnitId, adFormat).apply {
+            setListener(listener)
+            loadAd()
+        }
+    }
 
     AndroidView(modifier = modifier.wrapContentSize(), factory = { adView })
 
-    onLoadAd(adView)
-
     DisposableEffect(Unit) {
-        onDispose {  }
+        onDispose { adView.destroy() }
     }
 }
 

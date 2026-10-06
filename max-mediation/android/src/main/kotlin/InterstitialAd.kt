@@ -1,4 +1,4 @@
-package adsbynimbus.solutions.mediation.max
+package com.applovin.enterprise.apps.demoapp
 
 import androidx.activity.compose.LocalActivity
 import androidx.compose.material3.*

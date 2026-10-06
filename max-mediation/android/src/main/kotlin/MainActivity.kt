@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalMaterial3Api::class)
 
-package adsbynimbus.solutions.mediation.max
+package com.applovin.enterprise.apps.demoapp
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -35,6 +35,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.applovin.sdk.AppLovinSdk
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -94,6 +95,11 @@ fun App(
                             content = { Text(it.title) },
                         )
                     }
+                    Button(
+                        onClick = { AppLovinSdk.getInstance(activity).showMediationDebugger() },
+                        modifier = Modifier.fillMaxWidth(fraction = 0.75f),
+                        content = { Text("Launch Mediation Debugger") },
+                    )
                 }
             }
             AdTypes.entries.forEach { adType ->

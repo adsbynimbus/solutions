@@ -25,7 +25,7 @@ val dokkaHtmlJar = tasks.register<Jar>("dokkaHtmlJar") {
 
 kotlin {
     android {
-        namespace = "com.adsbynimbus.solutions.max"
+        namespace = "com.adsbynimbus.mediation.max"
         compileSdk = libs.versions.android.sdk.get().toInt()
         minSdk = 21
         compilations.configureEach {
@@ -71,6 +71,7 @@ kotlin {
                 }
             })
             api(libs.ads.max)
+            api(libs.ads.google)
         }
         named("androidHostTest") {
             dependencies {

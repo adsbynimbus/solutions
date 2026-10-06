@@ -23,13 +23,17 @@
             </intent-filter>
         </activity>
 
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="${gamAppId}"/>
+
         <provider
             android:name="androidx.startup.InitializationProvider"
             android:authorities="${applicationId}.androidx-startup"
             android:exported="false">
             <!-- This entry makes AdsInitializer discoverable. -->
             <meta-data
-                android:name="adsbynimbus.solutions.mediation.max.AdInitializer"
+                android:name="com.applovin.enterprise.apps.demoapp.AdInitializer"
                 android:value="androidx.startup"/>
         </provider>
     </application>

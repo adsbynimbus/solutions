@@ -12,17 +12,16 @@ android {
     compileSdk = libs.versions.android.sdk.get().toInt()
 
     defaultConfig {
-        applicationId = "adsbynimbus.solutions.mediation.max".also { namespace = it }
+        applicationId = "com.applovin.enterprise.apps.demoapp".also { namespace = it }
         minSdk = libs.versions.android.min.get().toInt()
         targetSdk = libs.versions.android.sdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
-        manifestPlaceholders["appName"] = "Nimbus Max Mediation"
+        manifestPlaceholders["appName"] = "AppLovin MAX Demo App"
         with(providers) {
+            manifestPlaceholders["gamAppId"] = gradleProperty("adsbynimbus.solutions.admanagerAppId").get()
             buildConfigField("String", "API_KEY", "\"${gradleProperty("adsbynimbus.solutions.apiKey").get()}\"")
             buildConfigField("String", "PUBLISHER_KEY", "\"${gradleProperty("adsbynimbus.solutions.publisherKey").get()}\"")
-            buildConfigField("String", "AMAZON_APP_KEY", "\"${gradleProperty("adsbynimbus.solutions.amazonAppId").get()}\"")
-            buildConfigField("String", "AMAZON_BANNER_SLOT_ID", "\"${gradleProperty("adsbynimbus.solutions.amazonBannerSlotId").get()}\"")
             buildConfigField("String", "MAX_ADUNIT_ID", "\"${gradleProperty("adsbynimbus.solutions.maxAdUnitId").get()}\"")
             buildConfigField("String", "MAX_SDK_KEY", "\"${gradleProperty("adsbynimbus.solutions.maxSdkKey").get()}\"")
         }
@@ -65,6 +64,7 @@ kotlin.target.compilations.configureEach {
 }
 
 dependencies {
+    implementation(projects.maxMediation.android.adapter)
     implementation(libs.bundles.androidx)
     implementation(libs.bundles.androidx.compose)
     implementation(libs.bundles.max.mediation)
