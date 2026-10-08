@@ -5,10 +5,10 @@ let package = Package(
     name: "solutions",
     platforms: [.iOS(.v17)],
     dependencies: [
-        .package(url: "https://github.com/adsbynimbus/nimbus-ios-sdk", exact: "3.0.0-rc.4"),
-        .package(url: "https://github.com/adsbynimbus/nimbus-ios-admob", exact: "13.0.0-rc.4"),
-        .package(url: "https://github.com/adsbynimbus/nimbus-ios-aps", exact: "5.0.0-rc.4"),
-        .package(url: "https://github.com/adsbynimbus/nimbus-ios-swiftui", exact: "1.0.0-rc.4"),
+        .package(url: "https://github.com/adsbynimbus/nimbus-ios-sdk", exact: "3.0.0-rc.5"),
+        .package(url: "https://github.com/adsbynimbus/nimbus-ios-admob", exact: "13.0.0-rc.5"),
+        .package(url: "https://github.com/adsbynimbus/nimbus-ios-aps", exact: "5.0.0-rc.5"),
+        .package(url: "https://github.com/adsbynimbus/nimbus-ios-swiftui", exact: "1.0.0-rc.5"),
         .package(url: "https://github.com/adsbynimbus/dynamic-price", branch: "3.0/main"),
         .package(url: "https://github.com/adsbynimbus/swift-package-aps", exact: "5.6.4"),
         .package(

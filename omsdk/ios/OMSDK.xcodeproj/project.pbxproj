@@ -14,7 +14,7 @@
 /* Begin PBXFileReference section */
 		963ECC312CEB6354001C3012 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Config.xcconfig; path = ../../Config.xcconfig; sourceTree = SOURCE_ROOT; };
 		963ECC342CEB64A9001C3012 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		96AA4A663037688F00358884 /* OMSDK.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = OMSDK.app; path = "/Users/jason/Work/nimbus-solutions/omsdk/ios/build/Debug-iphoneos/OMSDK.app"; sourceTree = "<absolute>"; };
+		96654DFF3077FCA80060EE38 /* OMSDK.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OMSDK.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -42,6 +42,7 @@
 				961CA6AD2CEA95C30084BE6A /* Sources */,
 				963ECC312CEB6354001C3012 /* Config.xcconfig */,
 				963ECC342CEB64A9001C3012 /* Info.plist */,
+				96654DFF3077FCA80060EE38 /* OMSDK.app */,
 			);
 			sourceTree = "<group>";
 		};
@@ -66,7 +67,7 @@
 				966EA7A9303688930078C754 /* NimbusSwiftUI */,
 			);
 			productName = OMSDKValidator;
-			productReference = 96AA4A663037688F00358884 /* OMSDK.app */;
+			productReference = 96654DFF3077FCA80060EE38 /* OMSDK.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -309,7 +310,7 @@
 			repositoryURL = "https://github.com/adsbynimbus/nimbus-ios-sdk";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = "3.0.0-rc.4";
+				minimumVersion = "3.0.0-rc.5";
 			};
 		};
 		966EA7A8303688930078C754 /* XCRemoteSwiftPackageReference "nimbus-ios-swiftui" */ = {
@@ -317,7 +318,7 @@
 			repositoryURL = "https://github.com/adsbynimbus/nimbus-ios-swiftui";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = "1.0.0-rc.4";
+				minimumVersion = "1.0.0-rc.5";
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

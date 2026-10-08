@@ -25,8 +25,8 @@
 /* Begin PBXFileReference section */
 		963ECC312CEB6354001C3012 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Config.xcconfig; path = ../../Config.xcconfig; sourceTree = SOURCE_ROOT; };
 		963ECC342CEB64A9001C3012 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		96654DF23077FC850060EE38 /* DynamicPriceApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DynamicPriceApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		96ABDE7B2E7B054C00D7FEDF /* DynamicPriceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DynamicPriceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		96CD481F2D679BF70029C2B5 /* DynamicPriceApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = DynamicPriceApp.app; path = "/Users/jason/Work/nimbus-solutions/dynamicprice/ios/build/Debug-iphoneos/DynamicPriceApp.app"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -67,6 +67,7 @@
 				963ECC312CEB6354001C3012 /* Config.xcconfig */,
 				963ECC342CEB64A9001C3012 /* Info.plist */,
 				96ABDE7B2E7B054C00D7FEDF /* DynamicPriceTests.xctest */,
+				96654DF23077FC850060EE38 /* DynamicPriceApp.app */,
 			);
 			sourceTree = "<group>";
 		};
@@ -92,7 +93,7 @@
 				966F6A7B3037631600F1E5E2 /* DTBiOSSDK */,
 			);
 			productName = OMSDKValidator;
-			productReference = 96CD481F2D679BF70029C2B5 /* DynamicPriceApp.app */;
+			productReference = 96654DF23077FC850060EE38 /* DynamicPriceApp.app */;
 			productType = "com.apple.product-type.application";
 		};
 		96ABDE7A2E7B054C00D7FEDF /* DynamicPriceTests */ = {
@@ -433,7 +434,7 @@
 			repositoryURL = "https://github.com/adsbynimbus/nimbus-ios-sdk";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = "3.0.0-rc.4";
+				minimumVersion = "3.0.0-rc.5";
 			};
 		};
 		966F6A1B303759A600F1E5E2 /* XCRemoteSwiftPackageReference "swift-package-aps" */ = {

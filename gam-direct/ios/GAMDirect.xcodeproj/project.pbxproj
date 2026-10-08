@@ -17,7 +17,7 @@
 /* Begin PBXFileReference section */
 		963ECC312CEB6354001C3012 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Config.xcconfig; path = ../../Config.xcconfig; sourceTree = SOURCE_ROOT; };
 		963ECC342CEB64A9001C3012 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		96AA4A5D3037688F00358884 /* GAMDirect.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = GAMDirect.app; path = "/Users/jason/Work/nimbus-solutions/gam-direct/ios/build/Debug-iphoneos/GAMDirect.app"; sourceTree = "<absolute>"; };
+		96654DE43077FC850060EE38 /* GAMDirect.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GAMDirect.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -48,6 +48,7 @@
 				961CA6AD2CEA95C30084BE6A /* Sources */,
 				963ECC312CEB6354001C3012 /* Config.xcconfig */,
 				963ECC342CEB64A9001C3012 /* Info.plist */,
+				96654DE43077FC850060EE38 /* GAMDirect.app */,
 			);
 			sourceTree = "<group>";
 		};
@@ -75,7 +76,7 @@
 				96AA4A983037692B00358884 /* NimbusAdMobKit */,
 			);
 			productName = OMSDKValidator;
-			productReference = 96AA4A5D3037688F00358884 /* GAMDirect.app */;
+			productReference = 96654DE43077FC850060EE38 /* GAMDirect.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -324,7 +325,7 @@
 			repositoryURL = "https://github.com/adsbynimbus/nimbus-ios-sdk";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = "3.0.0-rc.4";
+				minimumVersion = "3.0.0-rc.5";
 			};
 		};
 		966F6A7D3037635300F1E5E2 /* XCRemoteSwiftPackageReference "nimbus-ios-aps" */ = {
@@ -332,7 +333,7 @@
 			repositoryURL = "https://github.com/adsbynimbus/nimbus-ios-aps";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = "5.0.0-rc.4";
+				minimumVersion = "5.0.0-rc.5";
 			};
 		};
 		967A0D802FAD3D4C008BFA6D /* XCRemoteSwiftPackageReference "swift-package-manager-google-interactive-media-ads-ios" */ = {
@@ -348,7 +349,7 @@
 			repositoryURL = "https://github.com/adsbynimbus/nimbus-ios-admob";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = "13.0.0-rc.4";
+				minimumVersion = "13.0.0-rc.5";
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
