@@ -13,7 +13,7 @@ android-min = "26"
 android-sdk = "37"
 
 androidx-appcompat = "1.8.0"
-androidx-collection = "1.6.0"
+androidx-collection = "1.7.0"
 androidx-compose = "1.12.1"
 androidx-compose-activity = "1.13.0"
 androidx-compose-icons = "1.7.8"
