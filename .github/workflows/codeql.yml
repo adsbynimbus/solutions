@@ -40,7 +40,7 @@ jobs:
 
               ./gradlew --stop
           - language: swift
-            runner: xcode-27
+            runner: macos-26
             command: >-
               swift build --build-tests
               --triple arm64-apple-ios27.2-simulator
@@ -57,7 +57,7 @@ jobs:
           kotlin-version: ${{ vars.CODEQL_KOTLIN }}
       - name: Setup Swift
         if: matrix.language == 'swift'
-        run: sudo xcode-select --switch /Applications/Xcode_27.2.app
+        run: sudo xcode-select --switch /Applications/Xcode_26.6.0.app
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v4.38.2
         with:
