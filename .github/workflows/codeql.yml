@@ -43,7 +43,7 @@ jobs:
             runner: xcode-27
             command: >-
               swift build --build-tests
-              --triple arm64-apple-ios17.0-simulator
+              --triple arm64-apple-ios27.2-simulator
               --sdk "`xcrun --sdk iphonesimulator --show-sdk-path`"
     steps:
       - name: Checkout repository
