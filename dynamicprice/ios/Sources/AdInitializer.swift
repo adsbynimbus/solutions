@@ -21,10 +21,13 @@ extension DynamicPriceApp {
     func initAmazon() {
         let appKey = Bundle.main.infoDictionary?["Amazon App Id"] as! String
 
-        DTBAds.sharedInstance().setAppKey(appKey)
-        DTBAds.sharedInstance().testMode = true
+        let apsConfig = APSInitConfig()
+        apsConfig.testMode = true
+        apsConfig.logLevel = APSLogLevel.debug
+        apsConfig.mraidPolicy = APSMraidPolicy.dfp
+        apsConfig.mraidSupportedVersions = [APSMraidVersion2_0, APSMraidVersion3_0]
 
-        DTBAds.sharedInstance().setLogLevel(DTBLogLevelDebug)
+        APS.initialize(withAppKey: appKey, config: apsConfig)
     }
 
     static let amazonBannerSlot = Bundle.main.infoDictionary?["Amazon Banner Slot Id"] as! String

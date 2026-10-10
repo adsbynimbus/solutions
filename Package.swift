@@ -7,10 +7,10 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/adsbynimbus/nimbus-ios-sdk", exact: "3.0.0-rc.5"),
         .package(url: "https://github.com/adsbynimbus/nimbus-ios-admob", exact: "13.0.0-rc.5"),
-        .package(url: "https://github.com/adsbynimbus/nimbus-ios-aps", exact: "5.0.0-rc.5"),
+        .package(url: "https://github.com/adsbynimbus/nimbus-ios-aps", branch: "main"),
         .package(url: "https://github.com/adsbynimbus/nimbus-ios-swiftui", exact: "1.0.0-rc.5"),
         .package(url: "https://github.com/adsbynimbus/dynamic-price", branch: "3.0/main"),
-        .package(url: "https://github.com/adsbynimbus/swift-package-aps", exact: "5.6.4"),
+        .package(url: "https://github.com/amzn/swift-package-manager-amazon-aps", exact: "5.6.6"),
         .package(
             url: "https://github.com/googleads/swift-package-manager-google-interactive-media-ads-ios",
             exact: "3.33.0"
@@ -21,7 +21,10 @@ let package = Package(
             name: "DynamicPriceApp",
             dependencies: [
                 .product(name: "NimbusKit", package: "nimbus-ios-sdk"),
-                .product(name: "DTBiOSSDK", package: "swift-package-aps"),
+                .product(
+                    name: "AmazonPublisherServicesSDK",
+                    package: "swift-package-manager-amazon-aps"
+                ),
                 .product(name: "DynamicPrice", package: "dynamic-price"),
             ],
             path: "dynamicprice/ios/Sources",
