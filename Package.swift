@@ -21,7 +21,10 @@ let package = Package(
             name: "DynamicPriceApp",
             dependencies: [
                 .product(name: "NimbusKit", package: "nimbus-ios-sdk"),
-                .product(name: "DTBiOSSDK", package: "swift-package-aps"),
+                .product(
+                    name: "AmazonPublisherServicesSDK",
+                    package: "swift-package-manager-amazon-aps"
+                ),
                 .product(name: "DynamicPrice", package: "dynamic-price"),
             ],
             path: "dynamicprice/ios/Sources",
