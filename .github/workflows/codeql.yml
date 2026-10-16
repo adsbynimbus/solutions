@@ -40,7 +40,7 @@ jobs:
 
               ./gradlew --stop
           - language: swift
-            runner: macos-26
+            runner: macos-latest
             command: >-
               swift build --build-tests
               --triple arm64-apple-ios17.0-simulator
@@ -55,9 +55,6 @@ jobs:
           cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
           cache-read-only: true
           kotlin-version: ${{ vars.CODEQL_KOTLIN }}
-      - name: Setup Swift
-        if: matrix.language == 'swift'
-        run: sudo xcode-select --switch /Applications/Xcode_26.6.0.app
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v4.38.3
         with:
