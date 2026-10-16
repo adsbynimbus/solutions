@@ -9,15 +9,23 @@ registries:
   aps:
     type: git
     url: https://aps.amazon.com
+    username: "anonymous"
+    password: "none"
   aps-git:
     type: git
     url: https://git.amazon.com
+    username: "anonymous"
+    password: "none"
   aps-swift:
     type: git
     url: https://d14jk8f50gmy3e.cloudfront.net
+    username: "anonymous"
+    password: "none"
   ima:
     type: git
     url: https://imasdk.googleapis.com
+    username: "anonymous"
+    password: "none"
 
 multi-ecosystem-groups:
   ads:
