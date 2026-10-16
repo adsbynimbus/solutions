@@ -6,6 +6,18 @@ registries:
     url: https://maven.pkg.github.com
     username: ${{ secrets.USER }}
     password: ${{ secrets.GHP }}
+  aps:
+    type: git
+    url: https://aps.amazon.com
+  aps-git:
+    type: git
+    url: https://git.amazon.com
+  aps-swift:
+    type: git
+    url: https://d14jk8f50gmy3e.cloudfront.net
+  ima:
+    type: git
+    url: https://imasdk.googleapis.com
 
 multi-ecosystem-groups:
   ads:
@@ -41,16 +53,6 @@ updates:
           - "org.jetbrains.kotlin*"
           - "org.jetbrains.dokka"
           - "com.google.devtools.ksp"
-      app:
-        patterns:
-          - "org.jetbrains.compose*"
-          - "androidx.*"
-          - "*compose"
-      test:
-        patterns:
-          - "org.jetbrains.*"
-          - "io.kotest*"
-          - "io.mockk*"
       libs:
         patterns:
           - "*"
@@ -59,5 +61,6 @@ updates:
 
   - package-ecosystem: "swift"
     directory: "/"
+    registries: "*"
     multi-ecosystem-group: "ads"
     patterns: ["*"]
