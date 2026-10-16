@@ -341,7 +341,7 @@
 			repositoryURL = "https://github.com/googleads/swift-package-manager-google-interactive-media-ads-ios";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 3.32.0;
+				minimumVersion = 3.33.0;
 			};
 		};
 		96AA4A973037692B00358884 /* XCRemoteSwiftPackageReference "nimbus-ios-admob" */ = {
