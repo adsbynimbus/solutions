@@ -42,9 +42,13 @@ jobs:
           - language: swift
             runner: xcode-27
             command: >-
-              swift build --build-tests
-              --triple arm64-apple-ios17.0-simulator
-              --sdk "`xcrun --sdk iphonesimulator --show-sdk-path`"
+              xcodebuild -disableAutomaticPackageResolution
+              -skipMacroValidation -skipPackagePluginValidation -skipPackageUpdates
+              COMPILATION_CACHE_ENABLE_CACHING=NO
+              CLANG_ENABLE_EXPLICIT_MODULES=NO
+              SWIFT_ENABLE_EXPLICIT_MODULES=NO
+              SWIFT_EMIT_LOC_STRINGS=NO
+              SDK_STAT_CACHE_ENABLE=NO
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
@@ -55,9 +59,12 @@ jobs:
           cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
           cache-read-only: true
           kotlin-version: ${{ vars.CODEQL_KOTLIN }}
-      - name: Setup Swift
+      - name: Setup Xcode
+        id: xcodebuild
         if: matrix.language == 'swift'
-        run: sudo xcode-select --switch /Applications/Xcode_27.1.app
+        uses: ./.github/actions/xcodebuild
+        with:
+          resolve-packages: true
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v4.38.3
         with:
@@ -66,7 +73,7 @@ jobs:
           config-file: ./.github/codeql/config.yml
       - name: Build
         if: matrix.language != 'actions'
-        run: ${{ matrix.command }}
+        run: ${{ matrix.command }} ${{ matrix.language == 'swift' && steps.xcodebuild.outputs.options || '' }}
         shell: bash
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v4.38.3
