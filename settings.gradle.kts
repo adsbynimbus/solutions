@@ -74,11 +74,11 @@ gradle.lifecycle.beforeProject {
                         because("1.23.1 Fixes CWE-79")
                     }
                     "com.fasterxml.jackson", "com.fasterxml.jackson.core" -> {
-                        useVersion(if (requested.module.name == "jackson-annotations") "2.22" else "2.22.3")
+                        useVersion(if (requested.module.name == "jackson-annotations") "2.22" else "2.22.4")
                         because("Fixes multiple CVEs")
                     }
                     "io.opentelemetry" -> {
-                        useVersion("1.66.0")
+                        useVersion("1.67.0")
                         because("1.65.0 Fixes CVE-2026-45292")
                     }
                 }
