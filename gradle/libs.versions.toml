@@ -38,7 +38,7 @@ commons-lang3 = "3.21.0"
 dokka = "2.3.0-Beta"
 gson = "2.14.0"
 iabtcf = "2.0.10"
-jackson = "2.22.3"
+jackson = "2.22.4"
 
 kotest = "6.2.6"
 kotlin = "2.4.21"
