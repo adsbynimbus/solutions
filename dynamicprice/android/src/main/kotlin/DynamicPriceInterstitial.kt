@@ -2,8 +2,8 @@ package adsbynimbus.solutions.dynamicprice
 
 import adsbynimbus.solutions.dynamicprice.BuildConfig.AMAZON_BANNER_SLOT_ID
 import android.content.Context
+import com.adsbynimbus.Nimbus
 import com.adsbynimbus.dynamicprice.*
-import com.adsbynimbus.request.NimbusRequest.Companion.forInterstitialAd
 import com.amazon.aps.ads.*
 import com.amazon.aps.ads.model.ApsAdFormat.INTERSTITIAL
 import com.amazon.aps.ads.model.ApsAdNetwork.GOOGLE_AD_MANAGER
@@ -13,7 +13,7 @@ import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.*
 
 val interstitialBidders = listOf(
-    NimbusBidder { forInterstitialAd("Interstitial") },
+    NimbusBidder { Nimbus.interstitialAd("Interstitial") },
     ApsBidder {
         ApsAdRequest(AMAZON_BANNER_SLOT_ID, INTERSTITIAL, ApsAdNetworkInfo(GOOGLE_AD_MANAGER))
     },

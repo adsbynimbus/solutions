@@ -1,8 +1,8 @@
 package adsbynimbus.solutions.dynamicprice
 
-import com.adsbynimbus.NimbusAdManager
+import com.adsbynimbus.Ad
+import com.adsbynimbus.NimbusResponse
 import com.adsbynimbus.dynamicprice.*
-import com.adsbynimbus.request.*
 import com.amazon.device.ads.*
 import com.google.android.gms.ads.admanager.AdManagerAdRequest
 import kotlinx.coroutines.*
@@ -32,9 +32,6 @@ suspend inline fun Collection<Bidder<*>>.auction(
     }
 }
 
-/** A global instance of the NimbusAdManager for loading all Nimbus ads */
-val nimbusAdManager by lazy { NimbusAdManager() }
-
 /** Price Mapping used by Nimbus, should be replaced by Publisher specific price mapping */
 val linearPriceMapping = LinearPriceMapping(
     LinearPriceGranularity(0, 300, 1),
@@ -45,12 +42,11 @@ val linearPriceMapping = LinearPriceMapping(
 
 /** Loads a bid from Nimbus using the global NimbusAdManager instance */
 @JvmInline
-value class NimbusBidder(private val adRequest: NimbusRequest) : Bidder<NimbusResponse> {
-    constructor(adRequest: () -> NimbusRequest) : this(adRequest())
+value class NimbusBidder(private val adRequest: Ad) : Bidder<NimbusResponse> {
+    constructor(adRequest: () -> Ad) : this(adRequest())
 
-    // appContext is defined in DynamicPriceAd.kt and set in the AdInitializer
     override suspend fun fetchBid(): Bid<NimbusResponse> =
-        Bid(nimbusAdManager.makeRequest(appContext, adRequest))
+        Bid(adRequest.fetch().response!!)
 }
 
 /** Loads a bid from Amazon using a coroutine [loadAsync] defined in AsyncUtils */

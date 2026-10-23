@@ -15,7 +15,7 @@ class AdInitializer : Initializer<Map<String, DynamicPriceAd>> {
         appContext = context
         val nimbusStartup = measureTime {
             Nimbus.initialize(context, BuildConfig.PUBLISHER_KEY, BuildConfig.API_KEY)
-            Nimbus.testMode = true
+            Nimbus.configuration.testMode = true
         }
 
         val amazonStartup = measureTime {
