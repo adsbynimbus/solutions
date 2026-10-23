@@ -68,7 +68,7 @@ fun ComposePlayerView(modifier: Modifier = Modifier) {
     val adLoader = remember {
         NimbusImaAdLoader.Builder(context)
             .setImaSdkSettings(imaSettings)
-            .setNimbusRequest(NimbusRequest.forVideoAd("preroll"))
+            .setNimbusRequest("preroll")
             .build()
     }
     var player by remember { mutableStateOf<Player?>(null) }

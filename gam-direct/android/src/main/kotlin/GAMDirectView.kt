@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalTime::class)
-
 package adsbynimbus.solutions.gamdirect
 
 import android.content.*
@@ -8,8 +6,6 @@ import android.widget.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.*
-import com.adsbynimbus.*
-import com.adsbynimbus.openrtb.request.Format
 import com.adsbynimbus.render.*
 import com.adsbynimbus.request.*
 import com.amazon.aps.ads.*
@@ -35,7 +31,7 @@ value class AdManagerAdUnit(val id: String) {
 @Composable
 fun GAMDirectView(
     adManagerAdUnit: AdManagerAdUnit,
-    nimbusAdSize: Format,
+    nimbusAdSize: com.adsbynimbus.AdSize,
     admobBiddingId: String = "",
     apsSlotId: String = "",
     googleListener: AdListener? = null,
