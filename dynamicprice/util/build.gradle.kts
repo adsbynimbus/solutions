@@ -14,7 +14,7 @@ kotlin {
         compilations.configureEach {
             compileTaskProvider.configure {
                 compilerOptions {
-                    jvmTarget = JvmTarget.fromTarget(libs.versions.android.jvm.get())
+                    jvmTarget = JvmTarget.JVM_25
                 }
             }
         }
