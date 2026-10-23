@@ -2,12 +2,10 @@ package com.adsbynimbus.solutions.admob
 
 import android.content.Context
 import androidx.core.os.bundleOf
-import com.adsbynimbus.*
-import com.adsbynimbus.NimbusError.ErrorType.NETWORK_ERROR
-import com.adsbynimbus.openrtb.request.User
-import com.adsbynimbus.render.AdMobRenderer.admob
+import com.adsbynimbus.internal.Platform
 import com.adsbynimbus.request.*
 import com.adsbynimbus.request.internal.*
+import com.adsbynimbus.request.internal.NimbusRequestDelta.UserDelta
 import com.google.ads.mediation.admob.AdMobAdapter
 import com.google.android.gms.ads.*
 import com.google.android.gms.ads.query.*
@@ -21,18 +19,15 @@ import kotlin.coroutines.*
  *
  * @param adUnitId ad unit id obtained from the AdMob dashboard
  */
-public fun NimbusRequest.withAdMobAnchoredBanner(adUnitId: String): NimbusRequest = apply {
-    interceptors.removeAll { it is AdMobAdaptiveDemandProvider }
-    interceptors += AdMobAdaptiveDemandProvider(adUnitId)
+public fun DemandBuilder.withAdMobAnchoredBanner(adUnitId: String) {
+    demandHandlers += DemandHandler { it.add(AdMobAdaptiveDemandProvider(adUnitId)) }
 }
 
-internal class AdMobAdaptiveDemandProvider(val adUnitId: String) : AsyncInterceptor {
-    override suspend fun interceptRequest(request: NimbusRequest): NimbusRequestChange =
-        NimbusRequestChange(userChanges = User.Extension(admob_gde_signals = gdeAdaptiveSignals()))
-
-    override fun onAdResponse(nimbusResponse: NimbusResponse) {
-        if (nimbusResponse.network() == admob) nimbusResponse.placementIdOverride = adUnitId
-    }
+internal class AdMobAdaptiveDemandProvider(val adUnitId: String) : NimbusRequestInterceptor {
+    override suspend fun modifyRequest(request: NimbusRequest): List<NimbusRequestDelta>? =
+        runCatching { gdeAdaptiveSignals() }.getOrNull()?.let {
+            listOf(UserDelta("admob_gde_signals", it))
+        }
 }
 
 internal inline val Context.screenWidthDp: Int
@@ -41,9 +36,12 @@ internal inline val Context.screenWidthDp: Int
 @Throws(Exception::class)
 internal suspend fun AdMobAdaptiveDemandProvider.gdeAdaptiveSignals(): String =
     suspendCancellableCoroutine { continuation ->
-        val adaptiveSize = Nimbus.applicationContext.let {
-            AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(it, it.screenWidthDp)
+        val context = Platform.currentActivity.get() ?: run {
+            if (continuation.isActive) continuation.resumeWithException(RuntimeException())
+            return@suspendCancellableCoroutine
         }
+        val adaptiveSize =
+            AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(context, context.screenWidthDp)
 
         val googleRequest = AdRequest.Builder()
             .setRequestAgent("nimbus")
@@ -54,11 +52,11 @@ internal suspend fun AdMobAdaptiveDemandProvider.gdeAdaptiveSignals(): String =
             ))
             .build()
 
-        QueryInfo.generate(Nimbus.applicationContext, AdFormat.BANNER, googleRequest, adUnitId,
+        QueryInfo.generate(context, AdFormat.BANNER, googleRequest, adUnitId,
             object : QueryInfoGenerationCallback() {
                 override fun onFailure(error: String) {
                     if (continuation.isActive) continuation.resumeWithException(
-                        NimbusError(NETWORK_ERROR, error, null),
+                        RuntimeException(),
                     )
                 }
 
