@@ -4,30 +4,29 @@ import android.widget.FrameLayout
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
-import com.adsbynimbus.NimbusAdManager
-import com.adsbynimbus.render.AdController
-import com.adsbynimbus.request.NimbusRequest
+import com.adsbynimbus.AdEvent
+import com.adsbynimbus.InlineAd
+import com.adsbynimbus.NimbusError
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 @Composable
 fun NimbusAd(
-    request: NimbusRequest,
+    ad: InlineAd,
     modifier: Modifier = Modifier,
-    adManager: NimbusAdManager = remember { NimbusAdManager() },
-    listener: AdController.Listener? = null,
+    scope: CoroutineScope = rememberCoroutineScope(),
+    onError: NimbusError.Listener = { },
+    onEvent: AdEvent.Listener = { },
 ) {
-    var controller: AdController? by remember { mutableStateOf(null) }
+    val inlineAd: InlineAd = remember { ad.onError(onError).onEvent(onEvent) }
 
     AndroidView(
         modifier = modifier,
         factory = { context ->
             FrameLayout(context).apply {
-                adManager.showAd(request, this) {
-                    controller = it.apply {
-                        if (listener != null) listeners.add(listener)
-                    }
-                }
+                scope.launch { inlineAd.show(this@apply) }
             }
         },
-        onRelease = { controller?.destroy() },
+        onRelease = { ad.destroy() },
     )
 }
