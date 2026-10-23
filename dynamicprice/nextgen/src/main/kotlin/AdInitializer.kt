@@ -22,7 +22,7 @@ class AdInitializer : Initializer<Map<String, Deferred<BannerAd?>>> {
     override fun create(context: Context): Map<String, Deferred<BannerAd?>> {
         val nimbusInit = measureTime {
             Nimbus.initialize(context, BuildConfig.PUBLISHER_KEY, BuildConfig.API_KEY)
-            Nimbus.testMode = true
+            Nimbus.configuration.testMode = true
         }
 
         val amazonInit = measureTime {
