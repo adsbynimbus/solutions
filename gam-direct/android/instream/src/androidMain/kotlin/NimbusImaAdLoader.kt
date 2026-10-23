@@ -13,9 +13,10 @@ import androidx.media3.common.util.Util.*
 import androidx.media3.datasource.*
 import androidx.media3.exoplayer.source.ads.*
 import androidx.media3.exoplayer.source.ads.AdsLoader
-import com.adsbynimbus.openrtb.enumerations.*
-import com.adsbynimbus.request.*
+import com.adsbynimbus.InlineAd
+import com.adsbynimbus.Nimbus
 import com.adsbynimbus.solutions.gamdirect.instream.internal.NimbusImaAdTagLoader
+import com.adsbynimbus.viewability
 import com.google.ads.interactivemedia.v3.api.*
 import com.google.ads.interactivemedia.v3.api.AdErrorEvent.*
 import com.google.ads.interactivemedia.v3.api.AdEvent.*
@@ -60,8 +61,7 @@ class NimbusImaAdLoader(
     internal val playAdBeforeStartPosition: Boolean,
     internal val debugModeEnabled: Boolean,
     internal val enableCustomTabs: Boolean,
-    internal val nimbusRequest: NimbusRequest?,
-    internal val requestManager: RequestManager?,
+    internal val nimbusRequest: InlineAd?,
 ) : AdsLoader {
 
     /** Builder for [NimbusImaAdLoader].  */
@@ -83,25 +83,15 @@ class NimbusImaAdLoader(
         private var playAdBeforeStartPosition = true
         private var debugModeEnabled = false
         private var enableCustomTabs = false
-        private var nimbusRequest: NimbusRequest? = null
-        private var requestManager: RequestManager? = null
+        private var nimbusRequest: InlineAd? = null
 
         /**
          * Sets the instream video NimbusRequest object
          */
-        fun setNimbusRequest(videoRequest: NimbusRequest): Builder = apply {
-            nimbusRequest = videoRequest.apply {
-                requireNotNull(request.imp[0].video)
-                require(request.imp[0].banner == null && request.imp[0].native == null) {
-                    "Only video objects are supported for Instream "
-                }
-                request.imp[0].video?.placement = PlacementType.IN_STREAM
-                configureViewability("Google", MediaLibraryInfo.VERSION)
+        fun setNimbusRequest(position: String): Builder = apply {
+            nimbusRequest = Nimbus.instreamVideo(position) {
+                viewability("Google", MediaLibraryInfo.VERSION)
             }
-        }
-
-        fun setNimbusRequestManager(requestManager: RequestManager): Builder = apply {
-            this.requestManager = requestManager
         }
 
         /**
@@ -326,7 +316,6 @@ class NimbusImaAdLoader(
                 debugModeEnabled = debugModeEnabled,
                 enableCustomTabs = enableCustomTabs,
                 nimbusRequest = nimbusRequest,
-                requestManager = requestManager,
             )
         }
     }
