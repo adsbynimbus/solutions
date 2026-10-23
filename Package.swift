@@ -13,7 +13,7 @@ let package = Package(
         .package(url: "https://github.com/amzn/swift-package-manager-amazon-aps", exact: "5.6.6"),
         .package(
             url: "https://github.com/googleads/swift-package-manager-google-interactive-media-ads-ios",
-            exact: "3.33.0"
+            exact: "3.34.1"
         ),
     ],
     targets: [
