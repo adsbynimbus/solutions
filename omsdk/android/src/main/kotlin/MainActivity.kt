@@ -17,10 +17,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.*
-import com.adsbynimbus.NimbusAdManager
+import com.adsbynimbus.AdSize
+import com.adsbynimbus.Nimbus
 import com.adsbynimbus.android.omsdk.AdTypes.*
-import com.adsbynimbus.openrtb.request.Format
-import com.adsbynimbus.request.NimbusRequest
+import com.adsbynimbus.banner
+import com.adsbynimbus.video
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
 
@@ -73,11 +76,11 @@ val ComponentActivity.appName get() = applicationInfo.loadLabel(packageManager).
 fun App(
     activity: ComponentActivity,
     navController: NavHostController = rememberNavController(),
+    scope: CoroutineScope = rememberCoroutineScope(),
 ) {
 
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentScreen = backStackEntry?.destination?.route ?: activity.appName
-    val adManager = remember { NimbusAdManager() }
 
     Scaffold(
         topBar = {
@@ -109,24 +112,20 @@ fun App(
                         Text(VideoInline.screen)
                     }
                     Button(onClick = {
-                        adManager.showBlockingAd(
-                            request = NimbusRequest.forInterstitialAd(DisplayInterstitial.screen).apply {
-                                request.imp[0].video = null
-                            },
-                            activity = activity,
-                            listener = {},
-                        )
+                        scope.launch {
+                            Nimbus.fullscreenAd(DisplayInterstitial.screen) {
+                                banner(AdSize.InterstitialPortrait)
+                            }.show(from = activity)
+                        }
                     }) {
                         Text(DisplayInterstitial.screen)
                     }
                     Button(onClick = {
-                        adManager.showBlockingAd(
-                            request = NimbusRequest.forInterstitialAd(VideoInterstitial.screen).apply {
-                                request.imp[0].banner = null
-                            },
-                            activity = activity,
-                            listener = {},
-                        )
+                        scope.launch {
+                            Nimbus.fullscreenAd(VideoInterstitial.screen) {
+                                video()
+                            }.show(from = activity)
+                        }
                     }) {
                         Text(VideoInterstitial.screen)
                     }
@@ -139,15 +138,13 @@ fun App(
             }
             composable(route = DisplayInline.screen) {
                 NimbusAd(
-                    request = NimbusRequest.forBannerAd(DisplayInline.screen, Format.MREC),
-                    adManager = adManager,
+                    ad = Nimbus.bannerAd(DisplayInline.screen, AdSize.Mrec),
                     modifier = Modifier.padding(4.dp),
                 )
             }
             composable(route = VideoInline.screen) {
                 NimbusAd(
-                    request = NimbusRequest.forVideoAd(VideoInline.screen),
-                    adManager = adManager,
+                    ad = Nimbus.inlineAd(VideoInline.screen) { video() },
                     modifier = Modifier.padding(4.dp).width(320.dp).height(480.dp),
                 )
             }
