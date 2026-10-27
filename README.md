@@ -3,17 +3,18 @@
 
 # Nimbus Solutions Engineering
 Official Nimbus documentation can be found at [https://docs.adsbynimbus.com/docs/](https://docs.adsbynimbus.com/docs/)
+and 3.0 SDK documentation at [https://docs.adsbynimbus.com/docs/nimbus-3.0-sdk-documentation](https://docs.adsbynimbus.com/docs/nimbus-3.0-sdk-documentation)
 
 | Platform                                             | Supported Languages | Latest Version                                                                                                                       |
 |------------------------------------------------------|---------------------|--------------------------------------------------------------------------------------------------------------------------------------|
-| Android                                              | Java, Kotlin        | ![Android](https://img.shields.io/badge/release-v2.37.2-blue)                                                                        |
+| Android                                              | Java, Kotlin        | ![Android](https://img.shields.io/badge/release-v3.0.0-rc.6-blue)                                                                    |
 | [iOS](https://github.com/adsbynimbus/nimbus-ios-sdk) | Swift               | [![iOS](https://img.shields.io/github/v/release/adsbynimbus/nimbus-ios-sdk)](https://github.com/adsbynimbus/nimbus-ios-sdk/releases) |
 | [Unity](https://github.com/adsbynimbus/nimbus-unity) | C#                  | [![Unity](https://img.shields.io/github/v/release/adsbynimbus/nimbus-unity)](https://github.com/adsbynimbus/nimbus-unity/releases)   |
 
 []()
 
 ## Build / IDE Setup
-Android Studio Quail 3 `2026.1.3` or newer with the
+Android Studio Rabbit 1 `2026.2.1` or newer with the
 latest [Kotlin Multiplatform Plugin](https://www.jetbrains.com/help/kotlin-multiplatform-dev/multiplatform-plugin-releases.html#release-details)
 is recommended.
 
@@ -25,14 +26,14 @@ or passed via the command line.
 #### gradle.properties
 ```properties
 # Override the Android Gradle Plugin to a canary version
-android.gradle=9.5.0-alpha08
+android.gradle=9.5.0-rc02
 # Override the bytecode used to build the project
 android.jvm=21
 ```
 
 #### CLI
 ```shell
-./gradlew build -Dandroid.gradle=9.4.0-alpha07 -Dandroid.jvm=21
+./gradlew build -Dandroid.gradle=9.5.0-rc02 -Dandroid.jvm=21
 ```
 ```shell
 xcodebuild -scheme Solutions -destination "platform=iOS Simulator,name=iPhone 17" build-for-testing | xcbeautify

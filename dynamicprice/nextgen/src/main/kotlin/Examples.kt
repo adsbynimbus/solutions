@@ -4,13 +4,9 @@ import adsbynimbus.solutions.dynamicprice.nextgen.BuildConfig.AMAZON_BANNER_SLOT
 import android.app.Activity
 import android.util.Log
 import androidx.lifecycle.*
+import com.adsbynimbus.Nimbus
 import com.adsbynimbus.dynamicprice.*
-import com.adsbynimbus.openrtb.enumerations.Position
-import com.adsbynimbus.openrtb.request.Format.Companion.BANNER_320_50
-import com.adsbynimbus.request.NimbusRequest.Companion.forBannerAd
-import com.adsbynimbus.request.NimbusRequest.Companion.forDynamicUnit
-import com.adsbynimbus.request.NimbusRequest.Companion.forInterstitialAd
-import com.adsbynimbus.request.NimbusRequest.Companion.forRewardedVideo
+import com.adsbynimbus.rtb.Position
 import com.amazon.aps.ads.*
 import com.amazon.aps.ads.model.ApsAdFormat.*
 import com.amazon.aps.ads.model.ApsAdNetwork.GOOGLE_AD_MANAGER
@@ -28,10 +24,10 @@ val adCache = mutableMapOf<String, Deferred<BannerAd?>>()
 
 val bannerBidders = listOf(
     NimbusBidder {
-        forBannerAd(
+        Nimbus.bannerAd(
             position = "Top Banner",
-            format = BANNER_320_50,
-            screenPosition = Position.FOOTER,
+            size = com.adsbynimbus.AdSize.Banner,
+            adPosition = Position.Footer,
         )
     },
     ApsBidder {
@@ -41,17 +37,17 @@ val bannerBidders = listOf(
 
 val dynamicUnitBidders = listOf(
     // NimbusBidder supports passing requests as both blocks and parameters
-    NimbusBidder(adRequest = forDynamicUnit(position = "Dynamic Unit"))
+    NimbusBidder(adRequest = Nimbus.dynamicUnit(position = "Dynamic Unit"))
 )
 
 val interstitialBidders = listOf(
-    NimbusBidder { forInterstitialAd("Interstitial") },
+    NimbusBidder { Nimbus.interstitialAd("Interstitial") },
     ApsBidder {
         ApsAdRequest(AMAZON_BANNER_SLOT_ID, INTERSTITIAL, ApsAdNetworkInfo(GOOGLE_AD_MANAGER))
     },
 )
 
-val rewardedBidders = listOf(NimbusBidder { forRewardedVideo("Rewarded") })
+val rewardedBidders = listOf(NimbusBidder { Nimbus.rewardedAd("Rewarded") })
 
 /**
  * Starts the auction of a BannerAd request for use at app startup.
@@ -136,7 +132,7 @@ suspend fun AdView.loadBanner(
                         override fun onAppEvent(name: String, data: String?) {
                             Log.v("Ads", "[${request.adUnitId}] AppEvent Received")
                             ad.handleEventForNimbus(name, data)?.let {
-                                Log.i("Ads", "Nimbus ${it.network()} won auction")
+                                Log.i("Ads", "Nimbus ${it.bid.ext.omp?.buyer} won auction")
                             }
                             eventCallback.onAppEvent(name, data)
                         }

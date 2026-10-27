@@ -33,7 +33,7 @@ internal class NimbusImaAdTagLoader(
     private val supportedMimeTypes: List<String>,
     private val adTagDataSpec: DataSpec,
     private val adsId: Any,
-) : Listener, RequestManager {
+) : Listener {
     private val period: Timeline.Period = Timeline.Period()
     private val handler: Handler = createHandler(Looper.getMainLooper(), null)
     private val componentListener: ComponentListener = ComponentListener()
@@ -1106,19 +1106,16 @@ internal class NimbusImaAdTagLoader(
             }
         }
 
-        inline val requestManager: RequestManager
-            get() = configuration.requestManager ?: this@NimbusImaAdTagLoader
-
         override fun onAdError(adErrorEvent: AdErrorEvent) {
             if (adErrorEvent.userRequestContext == "direct" && configuration.nimbusRequest != null) {
                 (MainScope() + CoroutineName("NimbusDirect")).launch {
                     runCatching {
-                        requestManager.makeRequest(configuration.context, configuration.nimbusRequest)
+                        configuration.nimbusRequest.fetch().response!!
                     }.onFailure {
                         handleError(adErrorEvent)
                     }.onSuccess { nimbusResponse ->
                         val nimbusImaRequest = ImaFactory.createAdsRequest().apply {
-                            setAdsResponse(nimbusResponse.bid.markup)
+                            setAdsResponse(nimbusResponse.bid.adm)
                             pendingAdRequestContext = Any().also { setUserRequestContext(it) }
                             configuration.enableContinuousPlayback?.let { setContinuousPlayback(it) }
                             if (configuration.vastLoadTimeoutMs > -1) {

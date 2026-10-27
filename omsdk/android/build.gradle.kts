@@ -21,6 +21,7 @@ android {
         with(providers) {
             buildConfigField("String", "API_KEY", "\"${gradleProperty("adsbynimbus.solutions.apiKey").get()}\"")
             buildConfigField("String", "PUBLISHER_KEY", "\"${gradleProperty("adsbynimbus.solutions.publisherKey").get()}\"")
+            buildConfigField("String", "IAB_VERIFICATION_URL", "\"${gradleProperty("adsbynimbus.solutions.verificationUrl").get()}\"")
         }
     }
 

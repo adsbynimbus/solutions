@@ -114,17 +114,10 @@ class MainActivity : ComponentActivity() {
                                     handleEventForNimbus(
                                         name = name,
                                         data = data,
-                                        listener = object : AdController.Listener {
-                                            override fun onAdEvent(adEvent: AdEvent) {
-                                                Log.i("Nimbus Ads", adEvent.name)
-                                            }
-
-                                            override fun onError(error: NimbusError) {
-                                                Log.w("Nimbus Ads", "${error.message}")
-                                            }
-                                        },
+                                        onError = { Log.w("Nimbus Ads", "${it.message}") },
+                                        onEvent =  { Log.i("Nimbus Ads", it.name) }
                                     )?.let { nimbusAd ->
-                                        Log.i("Ads", "Nimbus ${nimbusAd.network()} won auction")
+                                        Log.i("Ads", "Nimbus ${nimbusAd.bid.ext.omp?.buyer} won auction")
                                     }
                                 }
                             }

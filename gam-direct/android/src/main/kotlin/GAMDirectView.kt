@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalTime::class)
-
 package adsbynimbus.solutions.gamdirect
 
 import android.content.*
@@ -8,13 +6,19 @@ import android.widget.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.*
-import com.adsbynimbus.*
-import com.adsbynimbus.openrtb.request.Format
+import com.adsbynimbus.AdEvent
+import com.adsbynimbus.InlineAd
+import com.adsbynimbus.Nimbus
+import com.adsbynimbus.NimbusError
+import com.adsbynimbus.admobBanner
+import com.adsbynimbus.aps
+import com.adsbynimbus.demand
 import com.adsbynimbus.render.*
 import com.adsbynimbus.request.*
 import com.amazon.aps.ads.*
 import com.amazon.aps.ads.listeners.*
 import com.amazon.aps.ads.model.*
+import com.amazon.device.ads.DTBAdResponse
 import com.google.android.gms.ads.*
 import com.google.android.gms.ads.admanager.*
 import com.google.android.gms.ads.formats.*
@@ -35,11 +39,12 @@ value class AdManagerAdUnit(val id: String) {
 @Composable
 fun GAMDirectView(
     adManagerAdUnit: AdManagerAdUnit,
-    nimbusAdSize: Format,
+    nimbusAdSize: com.adsbynimbus.AdSize,
     admobBiddingId: String = "",
     apsSlotId: String = "",
     googleListener: AdListener? = null,
-    nimbusListener: AdController.Listener? = null,
+    onError: NimbusError.Listener = { },
+    onEvent: AdEvent.Listener = { },
 ) {
     AndroidView(
         factory = { GAMDirectView(it) },
@@ -49,7 +54,8 @@ fun GAMDirectView(
             it.adManagerAdUnit = adManagerAdUnit
             it.googleListener = googleListener
             it.nimbusAdSize = nimbusAdSize
-            it.nimbusListener = nimbusListener
+            it.nimbusErrorListener = onError
+            it.nimbusEventListener = onEvent
         }
     )
 }
@@ -58,7 +64,7 @@ class GAMDirectView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0,
-) : FrameLayout(context, attrs, defStyleAttr), Renderer.Listener, NimbusError.Listener {
+) : FrameLayout(context, attrs, defStyleAttr) {
 
     private var lastRequestTime = TimeSource.Monotonic.markNow() - 60.seconds
     private lateinit var adLoader: SuspendAdLoader
@@ -71,13 +77,21 @@ class GAMDirectView @JvmOverloads constructor(
             field = value
             adLoader = SuspendAdLoader(context, value.id, value.adSize)
         }
-    var nimbusAdSize: Format = Format.BANNER_320_50
+    var nimbusAdSize: com.adsbynimbus.AdSize = com.adsbynimbus.AdSize.Banner
 
-    var adController: AdController? = null
+    var adController: InlineAd? = null
     var googleListener: AdListener? = null
-    var nimbusListener: AdController.Listener? = null
+    var nimbusErrorListener: NimbusError.Listener = { }
+        set(value) {
+            field = value
+            adController?.onError(value)
+        }
+    var nimbusEventListener: AdEvent.Listener = { }
+        set(value) {
+            field = value
+            adController?.onEvent(value)
+        }
     var refreshJob: Job? = null
-    val requestManager by lazy { NimbusAdManager() }
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
@@ -115,33 +129,28 @@ class GAMDirectView @JvmOverloads constructor(
         }
 
         if (directAdView.isFailure) {
-            val nimbusRequest = NimbusRequest.forBannerAd(
-                position = adManagerAdUnit.id,
-                format = nimbusAdSize,
-            )
-            if (apsSlotId.isNotEmpty()) runCatching {
-                nimbusRequest.addApsResponse(
-                    ApsAdRequest(apsSlotId, ApsAdNetworkInfo(ApsAdNetwork.NIMBUS)).loadAsync(),
-                )
+            val apsResult = apsSlotId.takeIf { it.isNotBlank() }?.runCatching {
+                ApsAdRequest(this, ApsAdNetworkInfo(ApsAdNetwork.NIMBUS)).loadAsync()
             }
-            if (admobBiddingId.isNotEmpty()) nimbusRequest.withAdMobBanner(admobBiddingId)
-
-            runCatching {
-                requestManager.makeRequest(context, nimbusRequest)
-            }.onSuccess {
-                Renderer.loadAd(it, this, this)
+            val nimbusAd = Nimbus.bannerAd(
+                position = adManagerAdUnit.id,
+                size = nimbusAdSize,
+            ) {
+                demand {
+                    if (admobBiddingId.isNotEmpty()) admobBanner(admobBiddingId)
+                    apsResult?.onSuccess {
+                        aps(listOf(it.apsParams))
+                    }
+                }
+            }
+            if (nimbusAd.fetch().response != null) {
+                adController = nimbusAd
+                    .onError(nimbusErrorListener)
+                    .onEvent(nimbusEventListener)
+                    .show(this)
             }
         }
     }
-
-    override fun onAdRendered(controller: AdController) {
-        adController?.destroy()
-        adController = controller
-        nimbusListener?.let { controller.listeners.add(it) }
-        if (childCount > 1) removeViews(0, childCount - 1)
-    }
-
-    override fun onError(error: NimbusError) {}
 }
 
 /** Loads an APS ad using a coroutine */
@@ -158,6 +167,10 @@ suspend inline fun ApsAdRequest.loadAsync(): ApsAd = suspendCancellableCoroutine
         },
     )
 }
+
+val ApsAd.apsParams: Map<String, List<String>>
+    get() = if (isVideo) defaultVideoAdsRequestCustomParams.mapValues { listOf(it.value) } else
+        defaultDisplayAdsRequestCustomParams
 
 class SuspendAdLoader(
     context: Context,

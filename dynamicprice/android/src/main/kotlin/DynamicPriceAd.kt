@@ -4,10 +4,9 @@ import android.content.Context
 import android.util.Log
 import androidx.core.view.doOnAttach
 import androidx.lifecycle.*
+import com.adsbynimbus.InlineAd
+import com.adsbynimbus.Nimbus
 import com.adsbynimbus.dynamicprice.*
-import com.adsbynimbus.openrtb.request.Format
-import com.adsbynimbus.request.NimbusRequest
-import com.adsbynimbus.request.NimbusRequest.Companion.forBannerAd
 import com.amazon.device.ads.*
 import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.admanager.*
@@ -80,7 +79,7 @@ val String.preloadScope get() = MainScope() + CoroutineName("PreLoad $this")
 /** Loads a 320x50 banner on app startup for use on the first screen */
 fun preloadBanner(
     adUnitId: String = BuildConfig.ADMANAGER_ADUNIT_ID,
-    nimbusRequest: NimbusRequest = forBannerAd("Banner", Format.BANNER_320_50),
+    nimbusRequest: InlineAd = Nimbus.bannerAd("Banner", com.adsbynimbus.AdSize.Banner),
     amazonRequest: () -> DTBAdRequest = {
         DTBAdRequest(DTBAdNetworkInfo(DTBAdNetwork.GOOGLE_AD_MANAGER)).apply {
             setSizes(DTBAdSize(320, 50, BuildConfig.AMAZON_BANNER_SLOT_ID))
