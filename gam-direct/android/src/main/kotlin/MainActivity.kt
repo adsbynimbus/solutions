@@ -16,7 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.*
-import com.adsbynimbus.openrtb.request.Format
+import com.adsbynimbus.AdSize
 
 class MainActivity : ComponentActivity() {
 
@@ -102,7 +102,7 @@ fun App(
             composable(route = "banner") {
                 GAMDirectView(
                     adManagerAdUnit = AdManagerAdUnit(id = BuildConfig.ADMANAGER_ADUNIT_ID),
-                    nimbusAdSize = Format.BANNER_320_50,
+                    nimbusAdSize = AdSize.Banner,
                 )
             }
             composable(route = "instream") {
