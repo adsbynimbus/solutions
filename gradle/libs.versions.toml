@@ -50,6 +50,8 @@ mockk = "1.14.11"
 
 okhttp = "5.5.1"
 okio = "3.18.2"
+#noinspection NewerVersionAvailable
+protobuf = "3.25.9"
 
 slf4j = "2.0.20"
 
@@ -115,6 +117,7 @@ kotlin-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", 
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
 okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
+protobuf = { module = "com.google.protobuf:protobuf-javalite", version.ref = "protobuf" }
 slf4j = { module = "org.slf4j:slf4j-simple", version.ref = "slf4j" }
 
 [bundles]
@@ -160,6 +163,7 @@ dynamicprice = [
     "ads-nimbus-dynamicprice-legacy",
     "androidx-appcompat", # Referenced by Amazon but not included in build
     "iabtcf", # Referenced by Amazon but not included in build
+    "protobuf",
 ]
 dynamicprice-nextgen = [
     "ads-amazon",
@@ -170,6 +174,7 @@ dynamicprice-nextgen = [
     "gson",
     "okhttp",
     "okio",
+    "protobuf",
 ]
 gamdirect = [
     "ads-amazon",
@@ -181,6 +186,7 @@ gamdirect = [
     "androidx-appcompat", # Referenced by Amazon but not included in build
     "androidx-media3",
     "iabtcf", # Referenced by Amazon but not included in build
+    "protobuf",
 ]
 test-common = [
     "kotest-assertions",
