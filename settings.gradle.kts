@@ -81,6 +81,10 @@ gradle.lifecycle.beforeProject {
                         useVersion("1.67.0")
                         because("1.65.0 Fixes CVE-2026-45292")
                     }
+                    "com.google.guava" if requested.module.name == "guava" -> {
+                        useVersion("33.7.2-${requested.version?.substringAfter("-")}")
+                        because("33.7.2 fixes CVE-2026-102554")
+                    }
                 }
             }
         }
