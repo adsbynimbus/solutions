@@ -64,6 +64,18 @@ kotlin {
     }
 }
 
+dependencies {
+    constraints {
+        androidMainImplementation(libs.protobuf) {
+            version {
+                prefer(requiredVersion)
+                require("[3.25.5,)")
+                because("Fixes CVE-2024-7254")
+            }
+        }
+    }
+}
+
 dokka {
     moduleName = "AdMob Solutions"
     dokkaGeneratorIsolation = ClassLoaderIsolation()

@@ -73,6 +73,18 @@ kotlin {
     }
 }
 
+dependencies {
+    constraints {
+        androidMainImplementation(libs.protobuf) {
+            version {
+                prefer(requiredVersion)
+                require("[3.25.5,)")
+                because("Fixes CVE-2024-7254")
+            }
+        }
+    }
+}
+
 tasks.withType<Test>().configureEach {
     useJUnitPlatform()
     // Revisit this when updating mockk where this warning originates from
