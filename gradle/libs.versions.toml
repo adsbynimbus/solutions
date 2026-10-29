@@ -9,7 +9,7 @@ ads-nimbus-aps = "10.0.2"
 ads-nimbus-dynamicprice = "3.0.0-rc.1"
 ads-nimbus-dynamicprice-legacy = "3.0.0-rc.1"
 
-android = "9.4.1"
+android = "9.5.0"
 android-jvm = "19"
 android-min = "26"
 android-sdk = "37"
