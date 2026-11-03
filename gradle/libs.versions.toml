@@ -45,7 +45,7 @@ jackson = "2.22.4"
 kotest = "6.2.6"
 kotlin = "2.4.21"
 kotlin-coroutines = "1.11.0"
-ksp = "2.3.12"
+ksp = "2.3.13"
 mockk = "1.14.11"
 
 okhttp = "5.5.1"
