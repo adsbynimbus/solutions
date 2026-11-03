@@ -27,7 +27,7 @@ androidx-navigation = "2.10.2"
 androidx-startup = "1.2.0"
 
 api-admanager = "5.14.0"
-api-google-auth = "1.54.0"
+api-google-auth = "1.55.0"
 api-google-client = "2.9.2"
 
 compose-multiplatform = "1.12.2"
@@ -51,7 +51,7 @@ mockk = "1.14.11"
 okhttp = "5.5.1"
 okio = "3.18.2"
 #noinspection NewerVersionAvailable
-protobuf = "3.25.9"
+protobuf = "4.36.2"
 
 slf4j = "2.0.20"
 
