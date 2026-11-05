@@ -18,7 +18,7 @@ import com.google.android.libraries.ads.mobile.sdk.banner.*
  * @param context optional context, defaults to application context
  * @param width optional max width in density pixels; defaults to full screen width
  */
-public fun DemandBuilder.withAdMobAdaptiveBanner(
+public fun DemandBuilder.admobAdaptiveBanner(
     adUnitId: String,
     adSize: com.adsbynimbus.AdSize,
     context: Context = Platform.currentActivity.get()!!,

@@ -19,7 +19,7 @@ import kotlin.coroutines.*
  *
  * @param adUnitId ad unit id obtained from the AdMob dashboard
  */
-public fun DemandBuilder.withAdMobAnchoredBanner(adUnitId: String) {
+public fun DemandBuilder.admobAnchoredBanner(adUnitId: String) {
     demandHandlers += DemandHandler { it.add(AdMobAdaptiveDemandProvider(adUnitId)) }
 }
 
