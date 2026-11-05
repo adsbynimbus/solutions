@@ -3,11 +3,10 @@
 
 # Nimbus Solutions Engineering
 Official Nimbus documentation can be found at [https://docs.adsbynimbus.com/docs/](https://docs.adsbynimbus.com/docs/)
-and 3.0 SDK documentation at [https://docs.adsbynimbus.com/docs/nimbus-3.0-sdk-documentation](https://docs.adsbynimbus.com/docs/nimbus-3.0-sdk-documentation)
 
 | Platform                                             | Supported Languages | Latest Version                                                                                                                       |
 |------------------------------------------------------|---------------------|--------------------------------------------------------------------------------------------------------------------------------------|
-| Android                                              | Java, Kotlin        | ![Android](https://img.shields.io/badge/release-v3.0.0-rc.6-blue)                                                                    |
+| Android                                              | Java, Kotlin        | ![Android](https://img.shields.io/badge/release-v3.0.0-blue)                                                                         |
 | [iOS](https://github.com/adsbynimbus/nimbus-ios-sdk) | Swift               | [![iOS](https://img.shields.io/github/v/release/adsbynimbus/nimbus-ios-sdk)](https://github.com/adsbynimbus/nimbus-ios-sdk/releases) |
 | [Unity](https://github.com/adsbynimbus/nimbus-unity) | C#                  | [![Unity](https://img.shields.io/github/v/release/adsbynimbus/nimbus-unity)](https://github.com/adsbynimbus/nimbus-unity/releases)   |
 
