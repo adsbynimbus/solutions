@@ -13,7 +13,7 @@ Official Nimbus documentation can be found at [https://docs.adsbynimbus.com/docs
 []()
 
 ## Build / IDE Setup
-Android Studio Rabbit 1 `2026.2.1` or newer with the
+Android Studio Rabbit 1 `2026.2.2` or newer with the
 latest [Kotlin Multiplatform Plugin](https://www.jetbrains.com/help/kotlin-multiplatform-dev/multiplatform-plugin-releases.html#release-details)
 is recommended.
 
@@ -25,14 +25,14 @@ or passed via the command line.
 #### gradle.properties
 ```properties
 # Override the Android Gradle Plugin to a canary version
-android.gradle=9.5.0-rc02
+android.gradle=9.6.0-alpha02
 # Override the bytecode used to build the project
 android.jvm=21
 ```
 
 #### CLI
 ```shell
-./gradlew build -Dandroid.gradle=9.5.0-rc02 -Dandroid.jvm=21
+./gradlew build -Dandroid.gradle=9.6.0-alpha02 -Dandroid.jvm=21
 ```
 ```shell
 xcodebuild -scheme Solutions -destination "platform=iOS Simulator,name=iPhone 17" build-for-testing | xcbeautify
