@@ -5,11 +5,11 @@ let package = Package(
     name: "solutions",
     platforms: [.iOS(.v17)],
     dependencies: [
-        .package(url: "https://github.com/adsbynimbus/nimbus-ios-sdk", exact: "3.0.0-rc.5"),
-        .package(url: "https://github.com/adsbynimbus/nimbus-ios-admob", exact: "13.0.0-rc.5"),
-        .package(url: "https://github.com/adsbynimbus/nimbus-ios-aps", branch: "main"),
-        .package(url: "https://github.com/adsbynimbus/nimbus-ios-swiftui", exact: "1.0.0-rc.5"),
-        .package(url: "https://github.com/adsbynimbus/dynamic-price", branch: "3.0/main"),
+        .package(url: "https://github.com/adsbynimbus/nimbus-ios-sdk", exact: "3.0.0"),
+        .package(url: "https://github.com/adsbynimbus/nimbus-ios-admob", exact: "13.0.0"),
+        .package(url: "https://github.com/adsbynimbus/nimbus-ios-aps", branch: "5.0.0"),
+        .package(url: "https://github.com/adsbynimbus/nimbus-ios-swiftui", exact: "1.0.0"),
+        .package(url: "https://github.com/adsbynimbus/dynamic-price", from: "3.0.0"),
         .package(url: "https://github.com/amzn/swift-package-manager-amazon-aps", exact: "5.6.6"),
         .package(
             url: "https://github.com/googleads/swift-package-manager-google-interactive-media-ads-ios",
