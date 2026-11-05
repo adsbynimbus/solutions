@@ -17,7 +17,7 @@ dependencyResolutionManagement {
 }
 
 // build.gradle.kts
-implementation("com.adsbynimbus.dynamicprice:dynamicprice:+")
+implementation("com.adsbynimbus.dynamicprice:dynamicprice:3.+")
 ```
 
 

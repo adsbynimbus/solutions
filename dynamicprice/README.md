@@ -1,6 +1,7 @@
 # Dynamic Price
 
-Official Nimbus documentation can be found at [https://docs.adsbynimbus.com/docs/extended-documentation/dynamic-price](https://docs.adsbynimbus.com/docs/extended-documentation/dynamic-price)
+Dynamic Price documentation and modules are available in the
+[Dynamic Price GitHub Repository](https://github.com/adsbynimbus/dynamic-price)
 
 Implementations demonstrating how to run requests to Nimbus and Amazon in parallel when both
 bidders are used with Google Ad Manager.
@@ -24,58 +25,6 @@ process and refreshes ads every 30 seconds using a lifecycleScope.
 #### [DynamicPriceInterstitial](android/src/main/kotlin/DynamicPriceInterstitial.kt)
 
 Coroutine implementation for fetching bids and loading an `AdManagerInterstitialAd`.
-
-### Google Mobile Ads 24
-
-[Migration Guide](https://developers.google.com/ad-manager/mobile-ads-sdk/android/migration#migrate-to-v24)
-
-Support for Google Mobile Ads 24+ is available starting from the following versions:
-
-- Nimbus Android: [2.30.0](https://docs.adsbynimbus.com/docs/sdk/android/changelog#id-2.30.0-5-13-25)
-- Amazon APS Android: [11.0.0](https://ams.amazon.com/webpublisher/uam/docs/aps-mobile/android/release-notes) (Link requires Login)
-
-<details>
-<summary>Workaround for older SDK Versions</summary>
-<br/>
-Previous versions of the Nimbus and Amazon SDKs will crash at runtime when used with version 24 or
-higher due to the `addCustomTargeting` method moving from the `AdManagerAdRequest.Builder` to the
-super class `AbstractAdRequestBuilder<*>`.
-
-###### Nimbus - Requires 2.28.0 or higher
-
-Replace calls to `applyDynamicPrice` with its method body
-
-```kotlin
-when (response) {
-    is NimbusResponse -> response.run {
-        dynamicPriceAdCache.put(auctionId, this)
-        targetingMap(linearPriceMapping).forEach {
-            request.addCustomTargeting(it.key, it.value)
-        }
-    }
-}
-```
-
-###### Amazon
-
-Replace calls to `DTBAdUtil.INSTANCE.loadDTBParams` with its method body
-
-```kotlin
-/** Implementation of a private helper method used by loadDTBParams to retrieve kv pairs */
-inline val DTBAdResponse.adManagerParams: Map<String, List<String>>
-    get() = when (dtbAds.first().dtbAdType) {
-        AdType.VIDEO -> defaultVideoAdsRequestCustomParams.mapValues { listOf(it.value) }
-        else -> defaultDisplayAdsRequestCustomParams
-    }
-
-when (response) {
-    is DTBAdResponse if response.adCount > 0 -> response.adManagerParams.forEach {
-        request.addCustomTargeting(it.key, it.value)
-    }
-}
-```
-
-</details>
 
 ## iOS
 
