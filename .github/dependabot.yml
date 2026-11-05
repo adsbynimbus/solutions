@@ -55,12 +55,6 @@ updates:
     schedule:
       interval: "weekly"
     groups:
-      build:
-        patterns:
-          - "com.android.library"
-          - "org.jetbrains.kotlin*"
-          - "org.jetbrains.dokka"
-          - "com.google.devtools.ksp"
       libs:
         patterns:
           - "*"
