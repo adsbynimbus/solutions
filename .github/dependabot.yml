@@ -55,17 +55,13 @@ updates:
     schedule:
       interval: "weekly"
     groups:
-      build:
-        patterns:
-          - "com.android.library"
-          - "org.jetbrains.kotlin*"
-          - "org.jetbrains.dokka"
-          - "com.google.devtools.ksp"
       libs:
         patterns:
           - "*"
     ignore:
       - dependency-name: "org.jetbrains.compose.material3:material3"
+      - dependency-name: "com.google.protobuf:protobuf-javalite"
+        update-types: [ "version-update:semver-major" ]
 
   - package-ecosystem: "swift"
     directory: "/"
