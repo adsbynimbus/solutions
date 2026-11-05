@@ -37,7 +37,7 @@ commons-beanutils = "1.11.0"
 commons-configuration2 = "2.15.1"
 commons-lang3 = "3.21.0"
 
-dokka = "2.3.0-Beta"
+dokka = "2.3.0"
 gson = "2.15.0"
 iabtcf = "2.0.10"
 jackson = "2.22.4"
