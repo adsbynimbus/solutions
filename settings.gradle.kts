@@ -70,7 +70,7 @@ gradle.lifecycle.beforeProject {
                         because("Fixes CVE-2026-84939")
                     }
                     "org.jsoup" -> {
-                        useVersion("1.23.2")
+                        useVersion("1.24.1")
                         because("1.23.1 fixes CWE-79")
                     }
                     "com.fasterxml.jackson", "com.fasterxml.jackson.core" -> {
@@ -82,7 +82,7 @@ gradle.lifecycle.beforeProject {
                         because("1.65.0 fixes CVE-2026-45292")
                     }
                     "com.google.guava" if requested.module.name == "guava" -> {
-                        useVersion("33.7.2-${requested.version?.substringAfter("-")}")
+                        useVersion("33.8.0-${requested.version?.substringAfter("-")}")
                         because("33.7.2 fixes CVE-2026-102554")
                     }
                 }
