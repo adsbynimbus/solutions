@@ -1,5 +1,5 @@
 [versions]
-ads-amazon = "12.0.4"
+ads-amazon = "12.0.5"
 ads-google = "25.5.0"
 ads-google-ima = "3.40.0"
 ads-google-nextgen = "1.6.0"
@@ -27,7 +27,7 @@ androidx-navigation = "2.10.2"
 androidx-startup = "1.2.0"
 
 api-admanager = "5.14.0"
-api-google-auth = "1.56.0"
+api-google-auth = "1.57.0"
 api-google-client = "2.9.2"
 
 compose-multiplatform = "1.12.2"
@@ -40,13 +40,13 @@ commons-lang3 = "3.21.0"
 dokka = "2.3.0"
 gson = "2.15.0"
 iabtcf = "2.0.10"
-jackson = "2.22.4"
+jackson = "2.23.0"
 
 kotest = "6.2.6"
 kotlin = "2.4.21"
 kotlin-coroutines = "1.11.0"
 ksp = "2.3.13"
-mockk = "1.14.11"
+mockk = "1.14.12"
 
 okhttp = "5.5.1"
 okio = "3.18.2"
