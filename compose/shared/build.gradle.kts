@@ -30,9 +30,9 @@ kotlin {
     iosArm64()
     iosSimulatorArm64()
 
-    swiftExport {
+    export.swift {
         moduleName = "Shared"
-        flattenPackage = "adsbynimbus.solutions.compose"
+        rootPackage = "adsbynimbus.solutions.compose"
     }
 
     sourceSets {
