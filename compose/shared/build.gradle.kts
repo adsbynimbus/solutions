@@ -33,11 +33,6 @@ kotlin {
     swiftExport {
         moduleName = "Shared"
         flattenPackage = "adsbynimbus.solutions.compose"
-        configure {
-            // SWIFT_EXPORT_COROUTINES_SUPPORT_TURNED_ON does not exist in Kotlin 2.2.21 which
-            // is still used by the CodeQL build until support for 2.3.0 is added
-            settings.put("enableCoroutinesSupport", "true")
-        }
     }
 
     sourceSets {
