@@ -30,8 +30,7 @@ api-admanager = "5.14.0"
 api-google-auth = "1.57.0"
 api-google-client = "2.9.2"
 
-compose-multiplatform = "1.12.2"
-compose-multiplatform-material3 = "1.12.0-alpha03"
+compose-multiplatform = "1.13.0-beta02"
 
 commons-beanutils = "1.11.0"
 commons-configuration2 = "2.15.1"
@@ -43,7 +42,7 @@ iabtcf = "2.0.10"
 jackson = "2.23.0"
 
 kotest = "6.2.6"
-kotlin = "2.4.21"
+kotlin = "2.5.0-RC"
 kotlin-coroutines = "1.11.0"
 ksp = "2.3.13"
 mockk = "1.14.12"
@@ -101,7 +100,7 @@ commons-beanutils = { module = "commons-beanutils:commons-beanutils", version.re
 commons-configuration2 = { module = "org.apache.commons:commons-configuration2", version.ref = "commons-configuration2" }
 commons-lang3 = { module = "org.apache.commons:commons-lang3", version.ref = "commons-lang3" }
 compose-foundation = { module = "org.jetbrains.compose.foundation:foundation", version.ref = "compose-multiplatform" }
-compose-material3 = { module = "org.jetbrains.compose.material3:material3", version.ref = "compose-multiplatform-material3" }
+compose-material3 = { module = "org.jetbrains.compose.material3:material3", version.ref = "compose-multiplatform" }
 compose-resources = { module = "org.jetbrains.compose.components:components-resources", version.ref = "compose-multiplatform" }
 compose-runtime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "compose-multiplatform" }
 compose-ui = { module = "org.jetbrains.compose.ui:ui", version.ref = "compose-multiplatform" }
