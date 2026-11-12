@@ -14,7 +14,11 @@ val codeQL = providers.environmentVariablesPrefixedBy("CODEQL").map { it.any() }
 kotlin {
     android {
         namespace = "adsbynimbus.solutions.compose"
-        compileSdk = libs.versions.android.sdk.get().toInt()
+        compileSdk {
+            version = release(libs.versions.android.sdk.get().toInt()) {
+                minorApiLevel = 2
+            }
+        }
         minSdk = libs.versions.android.min.get().toInt()
         compilations.configureEach {
             compileTaskProvider.configure {

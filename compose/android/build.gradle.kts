@@ -10,7 +10,11 @@ val codeQL = providers.environmentVariablesPrefixedBy("CODEQL").map { it.any() }
 val githubActions = providers.environmentVariable("GITHUB_ACTIONS")
 
 android {
-    compileSdk = libs.versions.android.sdk.get().toInt()
+    compileSdk  {
+        version = release(libs.versions.android.sdk.get().toInt()) {
+            minorApiLevel = 2
+        }
+    }
 
     defaultConfig {
         applicationId = "adsbynimbus.solutions.compose.app".also { namespace = it }
