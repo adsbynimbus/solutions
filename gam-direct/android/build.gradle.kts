@@ -77,7 +77,6 @@ dependencies {
     implementation(libs.bundles.androidx)
     implementation(libs.bundles.androidx.compose)
     implementation(libs.bundles.gamdirect)
-    implementation(libs.kotlin.coroutines)
     implementation(projects.gamDirect.android.instream)
     debugImplementation(libs.androidx.compose.ui.tooling)
 }

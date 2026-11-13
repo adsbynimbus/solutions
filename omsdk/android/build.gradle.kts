@@ -68,6 +68,7 @@ dependencies {
     implementation(libs.bundles.androidx)
     implementation(libs.bundles.androidx.compose)
     implementation(libs.kotlin.coroutines)
+    implementation(libs.kotlin.serialization.json)
     implementation(libs.protobuf)
     debugImplementation(libs.androidx.compose.ui.tooling)
 }

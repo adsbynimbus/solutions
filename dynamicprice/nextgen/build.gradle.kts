@@ -68,5 +68,4 @@ kotlin.target.compilations.configureEach {
 dependencies {
     implementation(libs.bundles.androidx)
     implementation(libs.bundles.dynamicprice.nextgen)
-    implementation(libs.kotlin.coroutines)
 }

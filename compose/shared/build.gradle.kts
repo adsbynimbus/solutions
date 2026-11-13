@@ -42,7 +42,6 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(libs.bundles.compose)
-            implementation(libs.kotlin.coroutines)
         }
     }
 }
