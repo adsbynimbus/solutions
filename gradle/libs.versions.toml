@@ -42,7 +42,7 @@ iabtcf = "2.0.10"
 jackson = "2.23.0"
 
 kotest = "6.2.7"
-kotlin = "2.5.0-RC"
+kotlin = "2.4.21"
 kotlin-coroutines = "1.11.0"
 kotlin-serialization = "1.13.0"
 ksp = "2.3.13"
