@@ -5,7 +5,7 @@ let package = Package(
     name: "solutions",
     platforms: [.iOS(.v17)],
     dependencies: [
-        .package(url: "https://github.com/adsbynimbus/nimbus-ios-sdk", exact: "3.0.0"),
+        .package(url: "https://github.com/adsbynimbus/nimbus-ios-sdk", exact: "3.1.0"),
         .package(url: "https://github.com/adsbynimbus/nimbus-ios-admob", exact: "13.0.0"),
         .package(url: "https://github.com/adsbynimbus/nimbus-ios-aps", branch: "5.0.0"),
         .package(url: "https://github.com/adsbynimbus/nimbus-ios-swiftui", exact: "1.0.0"),
