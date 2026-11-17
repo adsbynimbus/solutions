@@ -10,8 +10,6 @@ Official Nimbus documentation can be found at [https://docs.adsbynimbus.com/docs
 | [iOS](https://github.com/adsbynimbus/nimbus-ios-sdk) | Swift               | [![iOS](https://img.shields.io/github/v/release/adsbynimbus/nimbus-ios-sdk)](https://github.com/adsbynimbus/nimbus-ios-sdk/releases) |
 | [Unity](https://github.com/adsbynimbus/nimbus-unity) | C#                  | [![Unity](https://img.shields.io/github/v/release/adsbynimbus/nimbus-unity)](https://github.com/adsbynimbus/nimbus-unity/releases)   |
 
-[]()
-
 ## Build / IDE Setup
 Android Studio Rabbit 1 `2026.2.2` or newer with the
 latest [Kotlin Multiplatform Plugin](https://www.jetbrains.com/help/kotlin-multiplatform-dev/multiplatform-plugin-releases.html#release-details)
