@@ -20,13 +20,16 @@ fun NimbusAd(
 ) {
     val inlineAd: InlineAd = remember { ad.onError(onError).onEvent(onEvent) }
 
+    DisposableEffect(Unit) {
+        onDispose { ad.destroy() }
+    }
+
     AndroidView(
         modifier = modifier,
         factory = { context ->
             FrameLayout(context).apply {
                 scope.launch { inlineAd.show(this@apply) }
             }
-        },
-        onRelease = { ad.destroy() },
+        }
     )
 }
