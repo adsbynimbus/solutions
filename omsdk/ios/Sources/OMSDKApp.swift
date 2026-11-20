@@ -21,43 +21,53 @@ struct OMSDKApp: App {
     }
 }
 
+enum AdTypes : String, CaseIterable {
+    case DisplayInline = "Display Ad HTML - Inline"
+    case VideoInline = "Video Ad Native - Inline"
+    case DisplayInterstitial = "Display Ad HTML - Interstitial"
+    case VideoInterstitial = "Video Ad Native - Interstitial"
+}
+
 struct ContentView: View {
     var body: some View {
         NavigationStack {
             List {
                 Section("Ad Types") {
-                    NavigationLink("Display Ad HTML - Inline") {
-                        InlineAdView(ad: Nimbus.bannerAd(position: "Display Ad HTML", size: .mrec))
-                            .onEvent { debugPrint("Banner Event: \($0)") }
-                            .onError { debugPrint("Banner Error: \($0)") }
-                            .frame(width: 300, height: 250)
-                    }
-                    NavigationLink("Video Ad Native - Inline") {
-                        InlineAdView(ad: Nimbus.inlineAd(position: "Video Ad Native") {
-                            video()
-                        })
-                            .onEvent { debugPrint("Video Event: \($0)") }
-                            .onError { debugPrint("Video Error: \($0)") }
-                            .frame(width: 300, height: 250)
-                    }
-                    NavigationLink("Display Ad HTML - Interstitial") {
-                        FullscreenAdView(ad: Nimbus.fullscreenAd(position: "Interstitial Display HTML") {
-                            banner(size: AdSize.interstitialPortrait)
-                        })
-                            .onEvent { debugPrint("Interstitial Banner Event: \($0)") }
-                            .onError { debugPrint("Interstitial Banner Error: \($0)") }
-                    }
-                    NavigationLink("Video Ad Native - Interstitial") {
-                        FullscreenAdView(ad: Nimbus.fullscreenAd(position: "Interstitial Display HTML") {
-                            video()
-                        })
-                            .onEvent { debugPrint("Interstitial Video Event: \($0)") }
-                            .onError { debugPrint("Interstitail Video Error: \($0)") }
+                    ForEach(AdTypes.allCases, id: \.self) { adType in
+                        NavigationLink(adType.rawValue, value: adType)
                     }
                 }
             }
             .navigationTitle("Nimbus OMSDK Validator")
             .navigationBarTitleDisplayMode(.inline)
+            .navigationDestination(for: AdTypes.self) { destination in
+                switch destination {
+                case .DisplayInline:
+                    InlineAdView(ad: Nimbus.bannerAd(position: "Display Ad HTML", size: .mrec))
+                        .onEvent { debugPrint("Banner Event: \($0)") }
+                        .onError { debugPrint("Banner Error: \($0)") }
+                        .frame(width: 300, height: 250)
+                case .VideoInline:
+                    InlineAdView(ad: Nimbus.inlineAd(position: "Video Ad Native") {
+                        video()
+                    })
+                        .onEvent { debugPrint("Video Event: \($0)") }
+                        .onError { debugPrint("Video Error: \($0)") }
+                        .frame(width: 300, height: 250)
+                case .DisplayInterstitial:
+                    FullscreenAdView(ad: Nimbus.fullscreenAd(position: "Interstitial Display HTML") {
+                        banner(size: AdSize.interstitialPortrait)
+                    })
+                        .onEvent { debugPrint("Interstitial Banner Event: \($0)") }
+                        .onError { debugPrint("Interstitial Banner Error: \($0)") }
+                case .VideoInterstitial:
+                    FullscreenAdView(ad: Nimbus.fullscreenAd(position: "Interstitial Display HTML") {
+                        video()
+                    })
+                        .onEvent { debugPrint("Interstitial Video Event: \($0)") }
+                        .onError { debugPrint("Interstitail Video Error: \($0)") }
+                }
+            }
         }
     }
 }

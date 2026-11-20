@@ -15,10 +15,9 @@ class AppInitializer : Initializer<Nimbus> {
         val startupTime = measureTime {
             initialize(context, BuildConfig.PUBLISHER_KEY, BuildConfig.API_KEY)
             configuration.testMode = true
+            configuration.verificationProviders += IABVerificationProvider
             Logger.add(Logger.Default(level = Log.VERBOSE))
         }
-
-        //configuration.verificationProviders
 
         Log.i("Nimbus", "Startup Time: $startupTime")
 

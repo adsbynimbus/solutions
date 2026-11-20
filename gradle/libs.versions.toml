@@ -30,7 +30,7 @@ api-admanager = "5.14.0"
 api-google-auth = "1.58.0"
 api-google-client = "2.9.2"
 
-compose-multiplatform = "1.13.0-beta02"
+compose-multiplatform = "1.13.0-rc01"
 
 commons-beanutils = "1.11.0"
 commons-configuration2 = "2.15.1"
