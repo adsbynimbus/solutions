@@ -25,7 +25,7 @@ android {
         minSdk = libs.versions.android.min.get().toInt()
         targetSdk = libs.versions.android.sdk.get().toInt()
         versionCode = 1
-        versionName = "1.0"
+        versionName = libs.versions.ads.nimbus.asProvider().get()
         manifestPlaceholders["appName"] = "Nimbus GAM Direct"
         with(providers) {
             manifestPlaceholders["gamAppId"] = gradleProperty("adsbynimbus.solutions.admanagerAppId").get()
