@@ -10,7 +10,7 @@ let package = Package(
         .package(url: "https://github.com/adsbynimbus/nimbus-ios-aps", branch: "5.0.0"),
         .package(url: "https://github.com/adsbynimbus/nimbus-ios-swiftui", exact: "1.0.0"),
         .package(url: "https://github.com/adsbynimbus/dynamic-price", from: "3.0.0"),
-        .package(url: "https://github.com/amzn/swift-package-manager-amazon-aps", exact: "5.6.6"),
+        .package(url: "https://github.com/amzn/swift-package-manager-amazon-aps", exact: "5.7.0"),
         .package(
             url: "https://github.com/googleads/swift-package-manager-google-interactive-media-ads-ios",
             exact: "3.34.1"
